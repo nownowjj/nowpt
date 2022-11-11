@@ -9,7 +9,7 @@ public class mainController {
     @RequestMapping("/main")
     public String main(){
 
-        String str = "you succesful heroku!!";
+        String str = "you succesful heroku server live!!";
 
         return str;
     }
