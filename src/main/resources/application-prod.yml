@@ -1,4 +1,5 @@
-
+server:
+  port: 8080
 #local
 spring:
   profiles:
