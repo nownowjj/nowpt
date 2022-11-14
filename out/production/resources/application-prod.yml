@@ -1,12 +1,11 @@
 server:
-  port: 8080
-#local
+  port: ${PORT}
+#prod
 spring:
   profiles:
-    active: prod
+    active: default
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    #    url: jdbc:postgresql://localhost:5432/account
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
