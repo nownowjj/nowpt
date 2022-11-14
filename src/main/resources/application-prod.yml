@@ -1,6 +1,4 @@
-server:
-  port: 8080
-#local
+#prod
 spring:
   profiles:
     active: prod
