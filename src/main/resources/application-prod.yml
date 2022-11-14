@@ -1,7 +1,9 @@
+server:
+  port: ${PORT:8080}
 #prod
 spring:
   profiles:
-    active: prod
+    active: default
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: ${SPRING_DATASOURCE_URL}
