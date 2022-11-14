@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class mainController {
 
-    @RequestMapping("/main")
+    @RequestMapping({"/main","/"})
     public String main(){
 
         String str = "success heroku github  1114!!!";
