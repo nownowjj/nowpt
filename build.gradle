@@ -57,15 +57,17 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-//querydsl 추가 시작
-def querydslDir = "$buildDir/generated/querydsl"
+// querydsl 설정
+def querydslDir = "src/main/generated/queryDsl"
 
 querydsl {
+    library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslDir
 }
+// build시 사용할 sourceSet 추가 설정
 sourceSets {
-    main.java.srcDir querydslDir
+    main.java.srcDirs = ['src/main/java', querydslDir]
 }
 compileQuerydsl{
     options.annotationProcessorPath = configurations.querydsl
