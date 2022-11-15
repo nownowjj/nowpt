@@ -58,26 +58,34 @@ tasks.withType(JavaCompile) {
 }
 
 // querydsl 설정
-def querydslDir = "src/main/generated/queryDsl"
+def querydslDir = "src/main/generated"
 
 querydsl {
     library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslDir
 }
-// build시 사용할 sourceSet 추가 설정
-sourceSets {
-    main.java.srcDirs = ['src/main/java', querydslDir]
-}
+
 compileQuerydsl{
     options.annotationProcessorPath = configurations.querydsl
 }
+
 configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
     querydsl.extendsFrom compileClasspath
 }
+
+// build시 사용할 sourceSet 추가 설정
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslDir]
+        }
+    }
+}
+
 // 이 부분이 추가.
 tasks.withType(JavaCompile) {
     options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
