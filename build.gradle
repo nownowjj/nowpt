@@ -78,4 +78,8 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
+// 이 부분이 추가.
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
 //querydsl 추가 끝
