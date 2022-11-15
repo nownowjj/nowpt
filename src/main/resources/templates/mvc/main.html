@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+      th:with="metaTitle='메인'">
+<head>
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+<!-- content -->
+<th:block layout:fragment="content">
+  <div id="wrap">
+    <!--  popUp 창    -->
+      <div th:each="list : ${lists}">
+          <div th:text="${list.membId}"></div>
+          <div th:text="${list.membNm}"></div>
+        </div>
+      </div>
+
+  </div>
+
+  <script th:inline="javascript">
+
+    $(document).ready(function(){
+      console.log([[${lists}]]);
+    })
+
+
+  </script>
+
+
+
+</th:block>
+<!-- //content -->
+
+
+
+
+</body>
+</html>
