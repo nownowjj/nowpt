@@ -11,9 +11,14 @@ plugins {
 
     // Querydsl
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
+    // moowork.node 추가
+    id "com.moowork.node" version "1.3.1"
 }
 
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
+// node
+apply plugin: "com.moowork.node"
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -68,32 +73,58 @@ tasks.withType(JavaCompile) {
 }
 
 // querydsl 설정
-def querydslDir = "src/main/generated/queryDsl"
+//def querydslDir = "src/main/generated/queryDsl"
+def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
-    library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslDir
 }
 
-compileQuerydsl{
-    options.annotationProcessorPath = configurations.querydsl
+sourceSets {
+    main.java.srcDir querydslDir
 }
 
 configurations {
-//    compileOnly {
-//        extendsFrom annotationProcessor
-//    }
     querydsl.extendsFrom compileClasspath
 }
 
-// build시 사용할 sourceSet 추가 설정
-sourceSets {
-    main.java.srcDirs = ['src/main/java', querydslDir]
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }
 
-// 이 부분이 추가.
-tasks.withType(JavaCompile) {
-    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+/**
+ * comileQuerydsl.doFirst 추가
+ */
+compileQuerydsl.doFirst {
+    if(file(querydslDir).exists() )
+        delete(file(querydslDir))
 }
 //querydsl 추가 끝
+
+
+// React
+def webappDir = "$projectDir/frontend/my-app"
+
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${webappDir}")
+    args = ["run", "build"]
+}
+
+task copyWebApp(type: Copy) {
+    from 'frontend/my-app/build'
+    into "build/resources/main/static"
+}
+
+copyWebApp.dependsOn(appNpmInstall)
+compileJava.dependsOn(copyWebApp)
+
+
+
+
+
+//
+// 이 부분이 추가.
+//tasks.withType(JavaCompile) {
+//    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+//}
