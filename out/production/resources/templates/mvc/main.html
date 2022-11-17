@@ -18,9 +18,10 @@
       <div th:each="list : ${lists.data}">
           <div th:text="${list.membId}"></div>
           <div th:text="${list.membNm}"></div>
-        </div>
       </div>
 
+    <h1>포맷전 : [[${now}]]</h1>
+    <h1>포맷후 : [[${strNowDate}]]</h1>
   </div>
 
   <script th:inline="javascript">
