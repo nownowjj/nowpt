@@ -35,21 +35,21 @@
 
 
 
-    console.log("goToSchool function 실행")
     goToSchool();
-    console.log("arriveAtSchool_tobe promise function 실행")
-    arriveAtSchool_tobe().then(function(){
-    console.log("promise then > study function 실행")
-      study();
-    });
+    arriveAtSchool_asis();
+    study();
 
 
     // 일반적인 함수 실행시 학교 도착 펑션은 1초후 출력
-    function go(){
+    function promise(){
       console.log("=============")
+      console.log("goToSchool function 실행")
       goToSchool();
-      arriveAtSchool_asis();
-      study();
+      console.log("arriveAtSchool_tobe promise function 실행")
+      arriveAtSchool_tobe().then(function(){
+        console.log("promise then > study function 실행")
+        study();
+      });
     }
 
 
