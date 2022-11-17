@@ -1,16 +1,15 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
-        mooworkVersion = '1.2.0'
     }
 
-    repositories {
-        gradlePluginPortal()
-    }
-
-    dependencies {
-        classpath "com.github.node-gradle:gradle-node-plugin:3.1.1"
-    }
+//    repositories {
+//        gradlePluginPortal()
+//    }
+//
+//    dependencies {
+//        classpath "com.github.node-gradle:gradle-node-plugin:3.1.1"
+//    }
 }
 
 plugins {
@@ -21,34 +20,16 @@ plugins {
     // Querydsl
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 
-    // moowork.node 추가
-//    id "com.github.node-gradle.node" version "3.2.1"
+//    # moowork.node 추가
+    id "com.moowork.node" version "1.3.1"
 }
 
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'application'
-apply plugin: 'com.github.node-gradle.node'
+
 // node
-//apply plugin: "com.moowork.node"
+apply plugin: "com.moowork.node"
 //apply plugin: 'com.github.node-gradle.node'
-
-//node {
-//    // 2
-//    version = '12.22.12'
-//    npmVersion = '6.14.16'
-//
-//    // 3
-//    download = true
-//
-//    // 4
-//    nodeProjectDir = file("${project.projectDir}/frontend/my-app")
-//
-//}
-
-
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -72,7 +53,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // 오라클 클라우드에 접속하기 위한 라이브러리 추가
-//    implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
     implementation ('com.oracle.ojdbc:ojdbc8:19.3.0.0'){
         exclude group: 'com.oracle.ojdbc', module: 'simplefan'
         exclude group: 'com.oracle.ojdbc', module: 'ons'
@@ -101,6 +81,27 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+
+// React Build
+def webappDir = "$projectDir/src/main/frontend"
+
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${webappDir}")
+    args = ["run", "build"]
+}
+
+task copyWebApp(type: Copy) {
+    from 'frontend/build'
+    into "build/resources/main/static"
+}
+
+copyWebApp.dependsOn(appNpmInstall)
+compileJava.dependsOn(copyWebApp)
+
+
+
+
+
 
 // querydsl 설정
 //def querydslDir = "src/main/generated/queryDsl"
@@ -133,33 +134,3 @@ compileQuerydsl.doFirst {
 //querydsl 추가 끝
 
 
-// React
-def webappDir = "$projectDir/src/main/frontend/my-app"
-
-
-node {
-    version = '17.6.0'
-    npmVersion = '8.5.1'
-    download=true
-    workDir = file("${projectDir}/.gradle/nodejs")
-    npmWorkDir=file("${projectDir}/.gradle/npm")
-}
-
-task appNpmInstall(type: NpmTask) {
-    workingDir = file("${projectDir}/src/main/frontend/my-app")
-    args = ["install"]
-}
-
-task appNpmBuild(type: NpmTask) {
-    workingDir = file("${projectDir}/src/main/frontend/my-app")
-    args = ['run', 'build']
-}
-
-task copyWebApp(type: Copy) {
-    from "src/main/frontend/my-app/build"
-    into 'build/resources/main/static/.'
-}
-
-appNpmBuild.dependsOn appNpmInstall
-copyWebApp.dependsOn appNpmBuild
-compileJava.dependsOn copyWebApp
