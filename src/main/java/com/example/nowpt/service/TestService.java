@@ -1,6 +1,6 @@
 package com.example.nowpt.service;
 
-import com.example.nowpt.model.Member;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

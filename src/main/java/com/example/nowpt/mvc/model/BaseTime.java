@@ -1,4 +1,4 @@
-package com.example.nowpt.model;
+package com.example.nowpt.mvc.model;
 
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;

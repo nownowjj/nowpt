@@ -1,4 +1,4 @@
-package com.example.nowpt.model;
+package com.example.nowpt.mvc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

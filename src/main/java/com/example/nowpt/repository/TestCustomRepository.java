@@ -1,6 +1,6 @@
 package com.example.nowpt.repository;
 
-import com.example.nowpt.model.Member;
+import com.example.nowpt.mvc.model.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

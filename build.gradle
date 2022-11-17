@@ -37,7 +37,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // 오라클 클라우드에 접속하기 위한 라이브러리 추가
-    implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
+//    implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
+    implementation ('com.oracle.ojdbc:ojdbc8:19.3.0.0'){
+        exclude group: 'com.oracle.ojdbc', module: 'simplefan'
+        exclude group: 'com.oracle.ojdbc', module: 'ons'
+    }
     implementation 'com.oracle.database.security:osdt_cert'
     implementation 'com.oracle.database.security:oraclepki'
     implementation 'com.oracle.database.security:osdt_core'
@@ -85,11 +89,7 @@ configurations {
 
 // build시 사용할 sourceSet 추가 설정
 sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', querydslDir]
-        }
-    }
+    main.java.srcDirs = ['src/main/java', querydslDir]
 }
 
 // 이 부분이 추가.
