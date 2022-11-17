@@ -1,6 +1,15 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
+        mooworkVersion = '1.2.0'
+    }
+
+    repositories {
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath "com.github.node-gradle:gradle-node-plugin:3.1.1"
     }
 }
 
@@ -17,6 +26,11 @@ plugins {
 }
 
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
+apply plugin: 'com.github.node-gradle.node'
 // node
 //apply plugin: "com.moowork.node"
 //apply plugin: 'com.github.node-gradle.node'
@@ -120,43 +134,32 @@ compileQuerydsl.doFirst {
 
 
 // React
-def frontendDir = "$projectDir/frontend/my-app"
+def webappDir = "$projectDir/src/main/frontend/my-app"
 
-sourceSets {
-    main {
-        resources { srcDirs = ["$projectDir/src/main/resources"]
-        }
-    }
+
+node {
+    version = '17.6.0'
+    npmVersion = '8.5.1'
+    download=true
+    workDir = file("${projectDir}/.gradle/nodejs")
+    npmWorkDir=file("${projectDir}/.gradle/npm")
 }
 
-processResources { dependsOn "copyReactBuildFiles" }
-
-task installReact(type: Exec) {
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "audit", "fix"
-        commandLine 'npm.cmd', 'install' }
-    else {
-        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
-    }
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${projectDir}/src/main/frontend/my-app")
+    args = ["install"]
 }
 
-task buildReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "run-script", "build"
-    } else {
-        commandLine "npm", "run-script", "build"
-    }
+task appNpmBuild(type: NpmTask) {
+    workingDir = file("${projectDir}/src/main/frontend/my-app")
+    args = ['run', 'build']
 }
 
-task copyReactBuildFiles(type: Copy) {
-    dependsOn "buildReact"
-    from "$frontendDir/build"
-    into "$projectDir/src/main/resources/static"
+task copyWebApp(type: Copy) {
+    from "src/main/frontend/my-app/build"
+    into 'build/resources/main/static/.'
 }
+
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
