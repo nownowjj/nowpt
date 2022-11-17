@@ -13,23 +13,26 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 
     // moowork.node 추가
-    id "com.github.node-gradle.node" version "3.2.1"
+//    id "com.github.node-gradle.node" version "3.2.1"
 }
 
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 // node
 //apply plugin: "com.moowork.node"
-apply plugin: 'com.github.node-gradle.node'
+//apply plugin: 'com.github.node-gradle.node'
 
-node {
-    // 2
-    version = '12.22.12'
-    npmVersion = '6.14.16'
-
-    // 3
-    download = true
-
-}
+//node {
+//    // 2
+//    version = '12.22.12'
+//    npmVersion = '6.14.16'
+//
+//    // 3
+//    download = true
+//
+//    // 4
+//    nodeProjectDir = file("${project.projectDir}/frontend/my-app")
+//
+//}
 
 
 
@@ -117,27 +120,43 @@ compileQuerydsl.doFirst {
 
 
 // React
-def webappDir = "$projectDir/frontend/my-app"
+def frontendDir = "$projectDir/frontend/my-app"
 
-task appNpmInstall(type: NpmTask) {
-    workingDir = file("${webappDir}")
-    args = ["run", "build"]
+sourceSets {
+    main {
+        resources { srcDirs = ["$projectDir/src/main/resources"]
+        }
+    }
 }
 
-task copyWebApp(type: Copy) {
-    from 'frontend/my-app/build'
-    into "build/resources/main/static"
+processResources { dependsOn "copyReactBuildFiles" }
+
+task installReact(type: Exec) {
+    workingDir "$frontendDir"
+    inputs.dir "$frontendDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "audit", "fix"
+        commandLine 'npm.cmd', 'install' }
+    else {
+        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
+    }
 }
 
-copyWebApp.dependsOn(appNpmInstall)
-compileJava.dependsOn(copyWebApp)
+task buildReact(type: Exec) {
+    dependsOn "installReact"
+    workingDir "$frontendDir"
+    inputs.dir "$frontendDir"
+    group = BasePlugin.BUILD_GROUP
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine "npm.cmd", "run-script", "build"
+    } else {
+        commandLine "npm", "run-script", "build"
+    }
+}
 
-
-
-
-
-//
-// 이 부분이 추가.
-//tasks.withType(JavaCompile) {
-//    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-//}
+task copyReactBuildFiles(type: Copy) {
+    dependsOn "buildReact"
+    from "$frontendDir/build"
+    into "$projectDir/src/main/resources/static"
+}
