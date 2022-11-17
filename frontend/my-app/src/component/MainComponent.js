@@ -34,7 +34,7 @@ class MainComponent  extends Component {
             <div>
                 {this.state.message}, api
                 <br/>
-                Dashboard 페이지
+                Dashboard 페이지 dd
             </div>
         )
     }
