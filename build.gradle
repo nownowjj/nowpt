@@ -12,13 +12,16 @@ plugins {
     // Querydsl
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 
+    //node
+    id 'com.github.node-gradle.node' version '3.4.0'
+
 }
 
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 apply plugin: 'java'
 
 // node
-//apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -71,8 +74,20 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+
+
+
 // React Build
 def webappDir = "$projectDir/src/main/frontend"
+
+node {
+    version = '16.17.0'
+    npmVersion = '8.15.0'
+    download = true
+    nodeProjectDir = file("${project.projectDir}/src/main/frontend")
+//    workDir = file("${project.projectDir}/src/main/frontend/build/nodejs")
+//    npmWorkDir = file("${project.projectDir}/src/main/frontend/build/npm")
+}
 
 sourceSets {
     main {
