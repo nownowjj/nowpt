@@ -24,6 +24,7 @@ spring:
 
 logging:
   level:
+    '[com.example.nowpt]': debug
     org:
       hibernate:
         type:

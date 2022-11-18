@@ -19,4 +19,13 @@ public class ApiController {
 
         return result;
     }
+    @GetMapping("/api/test")
+    public HashMap api2(){
+        HashMap result = new HashMap();
+        result.put("test","Hello~React");
+
+        log.debug("restCheck2 : {}" ,result);
+
+        return result;
+    }
 }
