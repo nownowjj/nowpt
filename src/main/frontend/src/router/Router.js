@@ -11,8 +11,8 @@ const Router = () => {
 
             <HeaderComponent/>
             <Routes>
-                <Route path="/home" element={<MainComponent />} />
-                <Route path="/test" element={<TestComponent />} />
+                <Route path="/api" element={<MainComponent />} />
+                <Route path="/api/test" element={<TestComponent />} />
             </Routes>
 
         </BrowserRouter>
