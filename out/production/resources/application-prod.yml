@@ -19,7 +19,7 @@ spring:
     show-sql: true
   thymeleaf:
     cache: false
-    prefix: classpath:templates/
+    prefix: classpath:/static/
     suffix: .html
 
 logging:

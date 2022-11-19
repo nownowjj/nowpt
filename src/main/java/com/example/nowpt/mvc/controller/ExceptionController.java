@@ -3,6 +3,7 @@ package com.example.nowpt.mvc.controller;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,22 +24,22 @@ public class ExceptionController implements ErrorController   {
     /**
      * 오류를 처리합니다.
      * **/
-    @RequestMapping(value = "/error")
-    public ResponseEntity<Object> handleNoHandlerFoundException(HttpServletResponse response, HttpServletRequest request) {
-        int status = response.getStatus();
+    @RequestMapping("/error")
+    public String handleError(HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-//        System.out.println(status);  //오류 상태
-//        System.out.println(request.getRequestURI());  //요청 주소
-        log.debug("ExceptionCheck : error_status : {} , error_Url : {} " , status,request.getRequestURI());
+        if(status != null) {
+            int statusCode = Integer.valueOf(status.toString());
 
-        //아래 코드는 샘플 응답코드입니다. 오류에 따라 원하는 방식으로 리턴하면 되겠습니다.
-        if (Objects.equals(request.getContentType(), MediaType.APPLICATION_JSON_VALUE)) {
-            Map<String, Object> body = Map.of("error", "Not Found", "timestamp", System.currentTimeMillis());
-            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+            if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                return "errorpages/error-403";
+            } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                log.debug("404 NOT FOUND : {}",Integer.valueOf(status.toString()));
+                return "index.html";
+            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return "errorpages/error-500";
+            }
         }
-        if(response.getStatus() == 404){
-            log.debug("404 ERROR!");
-        }
-        return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+        return "errorpages/error";
     }
 }

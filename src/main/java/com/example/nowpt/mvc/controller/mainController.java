@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 public class mainController {
 
     @Autowired private TestService testService;
-
-//    @RequestMapping({"/main","/"})
     @RequestMapping("/main")
     public String main(Model model){
 

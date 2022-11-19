@@ -189,11 +189,10 @@ module.exports = function (webpackEnv) {
   return {
 
     devServer: {
-      static: './dist',
-      hot: true,
-      historyApiFallback: {
-        index: '/index.html',
-      },
+      contentBase: path.join(__dirname, 'dist'),
+      compress:true,
+      port:3000 ,
+      historyApiFallback: true,
     },
     target: ['browserslist'],
     // Webpack noise constrained to errors and warnings
