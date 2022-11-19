@@ -8,6 +8,7 @@ const Router = () => {
 
     return (
         <BrowserRouter>
+
             <HeaderComponent/>
             <Routes>
                 <Route path="/home" element={<MainComponent />} />

@@ -14,7 +14,7 @@ class TestComponent  extends Component {
     }
 
     getApi = () => {
-        axios.get("http://localhost:8123/api/test")
+        axios.get("/api/test")
             .then(res => {
                 console.log(res);
                 this.setState({
