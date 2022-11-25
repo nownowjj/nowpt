@@ -14,9 +14,10 @@ class MainComponent  extends Component {
     }
 
     getApi = () => {
-        axios.get("/api")
+        axios.get("/api/main")
             .then(res => {
                 console.log(res);
+                console.log("api/main fail")
                 this.setState({
                     message: res.data.message
                 })

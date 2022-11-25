@@ -35,7 +35,7 @@ public class ExceptionController implements ErrorController   {
                 return "errorpages/error-403";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 log.debug("404 NOT FOUND : {}",Integer.valueOf(status.toString()));
-                return "index";
+                return "index.html";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return "errorpages/error-500";
             }

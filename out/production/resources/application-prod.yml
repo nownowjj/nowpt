@@ -17,10 +17,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  thymeleaf:
-    cache: false
-    prefix: classpath:/static/
-    suffix: .html
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/static/
+#    suffix: .html
 
 logging:
   level:

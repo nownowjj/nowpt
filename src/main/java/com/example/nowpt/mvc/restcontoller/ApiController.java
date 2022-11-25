@@ -12,7 +12,7 @@ import java.util.HashMap;
 @RequestMapping("/api")
 public class ApiController {
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public HashMap api(){
         HashMap result = new HashMap();
         result.put("message","안녕하세요");
