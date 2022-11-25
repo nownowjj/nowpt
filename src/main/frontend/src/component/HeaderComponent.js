@@ -1,15 +1,12 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import {NavLink} from "react-router-dom";
 import { useNavigate } from "react-router";
+import {li} from "./style";
 
 
-const li =
-    {width:"50%",height:"50px",
-        display:"flex",alignItems:"center",
-        paddingLeft:"10px",fontSize:"18px",
-        cursor:"pointer",border:"1px solid red"}
+// const li =
+//     {width:"50%",height:"50px",
+//         display:"flex",alignItems:"center",
+//         paddingLeft:"10px",fontSize:"18px",
+//         cursor:"pointer",border:"1px solid red"}
 
 
 // const HeaderComponent =() => {

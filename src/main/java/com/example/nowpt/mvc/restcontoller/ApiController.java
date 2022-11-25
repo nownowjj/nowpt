@@ -1,6 +1,7 @@
 package com.example.nowpt.mvc.restcontoller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +13,17 @@ import java.util.HashMap;
 @RequestMapping("/api")
 public class ApiController {
 
-    @GetMapping("/main")
-    public HashMap api(){
+//    @GetMapping("/main")
+//    public HashMap api(){
+//        HashMap result = new HashMap();
+//        result.put("message","안녕하세요");
+//
+//        log.debug("restCheck : {}" ,result);
+//
+//        return result;
+//    }
+//    @GetMapping("/main")
+    public ModelMap api(){
         HashMap result = new HashMap();
         result.put("message","안녕하세요");
 
@@ -21,6 +31,8 @@ public class ApiController {
 
         return result;
     }
+
+
     @GetMapping("/test")
     public HashMap api2(){
         HashMap result = new HashMap();
