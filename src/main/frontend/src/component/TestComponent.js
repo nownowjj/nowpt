@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import {fetchTest} from "../api/Api";
 
 class TestComponent  extends Component {
     constructor(props) {
@@ -9,26 +10,30 @@ class TestComponent  extends Component {
         }
     }
 
+
     componentDidMount() {
         this.getApi();
     }
 
     getApi = () => {
-        axios.get("/api/test")
-            .then(res => {
-                console.log(res);
+        fetchTest()
+            .then(response => {
+                console.log(response)
                 this.setState({
-                    test: res.data.test
+                    test:response.test
                 })
             })
-            .catch(res => console.log(res))
+            .catch(response => console.log(response))
+        // axios.get("/api/test")
+        // axios.get("http://localhost:8123/api/test")
+        //     .then(res => {
+        //         console.log(res);
+        //         this.setState({
+        //             test: res.data.test
+        //         })
+        //     })
+        //     .catch(res => console.log(res))
     }
-
-
-
-
-
-
     render() {
         return (
             <div>

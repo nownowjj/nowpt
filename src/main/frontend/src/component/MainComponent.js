@@ -14,7 +14,8 @@ class MainComponent  extends Component {
     }
 
     getApi = () => {
-        axios.get("/api/main")
+        // axios.get("/api/main")
+        axios.get("http://localhost:8123/api/main")
             .then(res => {
                 console.log(res);
                 console.log("api/main fail")
