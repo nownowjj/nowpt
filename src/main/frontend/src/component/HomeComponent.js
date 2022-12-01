@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {homeTest} from "../api/Api";
+import mguImg from "../assets/mgu.jpg"
 
 class HomeComponent  extends Component {
     constructor(props) {
@@ -38,6 +39,9 @@ class HomeComponent  extends Component {
                 {this.state.message}, api
                 <br/>
                 Home 페이지
+                <br/>
+                <img src={mguImg}/>
+
             </div>
         )
     }
