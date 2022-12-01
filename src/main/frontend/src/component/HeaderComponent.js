@@ -35,6 +35,13 @@ function HeaderComponent (){
                 >
                         테스트
                 </li>
+                <li
+                    style={li}
+                    onClick={() => navigate("/login")}
+                    className="Sli cmli "
+                >
+                        로그인
+                </li>
 
 
             </ul>

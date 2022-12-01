@@ -64,13 +64,17 @@ dependencies {
 
     //jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
-    //security
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    //thymeleaf
-//    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-//    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+
+    //utils
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.modelmapper:modelmapper:3.0.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.nowpt.mvc.model;
 
+import com.example.nowpt.cmm.code.Cd;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,14 +8,18 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_member2")
+@Table(name = "tb_member")
 //, indexes = @Index(columnList = "memb_sn")
 @SequenceGenerator(name = "member_seq", allocationSize = 1, initialValue = 1, sequenceName = "member_seq")
 @DynamicInsert
@@ -24,13 +29,20 @@ import javax.persistence.*;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 //@DiscriminatorColumn(name = "DTYPE")
-public class Member extends Base {
+public class Member extends Base implements UserDetails{
+    private static final long serialVersionUID = 1L;
+
     //회원번호
-    @Id
-    @Column(name = "memb_sn")
-    @GeneratedValue(generator = "member_seq", strategy = GenerationType.SEQUENCE)
+    @Id@Column(name = "memb_sn")@GeneratedValue(generator = "member_seq", strategy = GenerationType.SEQUENCE)
     private Long memberSn;
+
     //회원구분
+    @OneToOne@JoinColumn(name = Cd.CODE_ID_MEMBER_TY)
+    private CmmnCodeDetail membCls;
+
+    //회원상태
+    @OneToOne@JoinColumn(name = Cd.CODE_ID_MEMBER_STTUS)
+    private CmmnCodeDetail membSttusCd;
 
     //회원ID
     @Column(name = "memb_id", length = 12, nullable = false, unique = true)
@@ -69,7 +81,45 @@ public class Member extends Base {
     private String lastLoginDtm;
 
     //-------------------------------------------------------
+    //SecurityConfig
     //-------------------------------------------------------
+    @Transient
+    private Collection<SimpleGrantedAuthority> authorities;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.membPw;
+    }
+
+    @Override
+    public String getUsername() {//ID? SN?
+        return String.valueOf(this.membId);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
+
 
