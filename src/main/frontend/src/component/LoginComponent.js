@@ -59,7 +59,7 @@ const LoginComponent = () => {
                 console.log('decodedJwtData: ' + decodedJwtData)
                 console.log('Is admin: ' + isAdmin)
                 alert('로그인에 성공하였습니다!');
-                navigate("/moneyCharge");
+                navigate("/api/test");
             }).catch(error => {
             alert('아이디나 비밀번호를 확인해주세요.');
         });

@@ -12,6 +12,16 @@ import java.util.HashMap;
 @RequestMapping("/api")
 public class ApiController {
 
+    @GetMapping("/home")
+    public HashMap home(){
+        HashMap result = new HashMap();
+        result.put("message","home입니다");
+
+        log.debug("restCheck : {}" ,result);
+
+        return result;
+    }
+    
     @GetMapping("/main")
     public HashMap api(){
         HashMap result = new HashMap();
@@ -21,6 +31,7 @@ public class ApiController {
 
         return result;
     }
+    
     @GetMapping("/test")
     public HashMap api2(){
         HashMap result = new HashMap();

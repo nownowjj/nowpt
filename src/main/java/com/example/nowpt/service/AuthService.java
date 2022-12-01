@@ -36,13 +36,14 @@ public class AuthService {
             throw new RuntimeException("존재하지 않는 유저 입니다.");
         }
 
-//        if(! pe.matches(pw, mem.getPassword())) {
-//            throw new RuntimeException("비밀번호가 틀립니다.");
-//        }
+        if(! pe.matches(pw, mem.getPassword())) {
+            throw new RuntimeException("비밀번호가 틀립니다.");
+        }
 
-//        if(! Cd.MEMBER_STTUS_OK.equals(mem.getMembSttusCd().getCodeValue())) {
-//            throw new RuntimeException("유저 상태가 정상이 아닙니다.");
-//        }
+        if(! Cd.MEMBER_STTUS_OK.equals(mem.getMembSttusCd().getCodeValue())) {
+            throw new RuntimeException("유저 상태가 정상이 아닙니다.");
+        }
+
         MemberLoginHst mlg = new MemberLoginHst();
         mlg.setConnectIp(ip);
         mlg.setMemberSn(mem);

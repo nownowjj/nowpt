@@ -22,24 +22,16 @@ class TestComponent  extends Component {
                 this.setState({
                     test:response.test
                 })
-            })
-            .catch(response => console.log(response))
-        // axios.get("/api/test")
-        // axios.get("http://localhost:8123/api/test")
-        //     .then(res => {
-        //         console.log(res);
-        //         this.setState({
-        //             test: res.data.test
-        //         })
-        //     })
-        //     .catch(res => console.log(res))
+            }).catch(error =>{
+              console.log(error);
+        });
     }
     render() {
         return (
             <div>
                 {this.state.test}, api2
                 <br/>
-                Main > Test 페이지
+                 Test 페이지
             </div>
         )
     }

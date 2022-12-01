@@ -57,9 +57,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				Claims claims = JwtTokenProvider.getClaims(jwt);
 				String membId = String.valueOf(claims.get("membId"));
 				UserDetails ud = cds.loadUserByUsername(membId);
-				log.info("ud@{}",ud);
+				log.debug("ud@{}",ud);
 				UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
-				log.info("upat@{}",upat);
+				log.debug("upat@{}",upat);
 				upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 				SecurityContextHolder.getContext().setAuthentication(upat);
 			}

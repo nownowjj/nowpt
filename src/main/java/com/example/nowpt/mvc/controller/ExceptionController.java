@@ -27,19 +27,23 @@ public class ExceptionController implements ErrorController   {
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
+        log.debug("Exception 컨트롤러 진입");
         if(status != null) {
             int statusCode = Integer.valueOf(status.toString());
 
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                log.debug("Exception 403");
                 return "errorpages/error-403";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
+                log.debug("Exception 404");
                 log.debug("404 NOT FOUND : {}",Integer.valueOf(status.toString()));
                 return "index.html";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                log.debug("Exception 500");
                 return "errorpages/error-500";
             }
         }
+        log.debug("no if");
         return "index.html";
     }
 }

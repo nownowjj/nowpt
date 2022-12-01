@@ -24,6 +24,7 @@ public class AuthEntryPoint_DENIED implements AuthenticationEntryPoint{
 		Object exType = request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 		log.debug("[JwtAuthenticationEntryPoint]! err: {}, {}, {}", authException.getMessage(), request.getRequestURI(), exType);
 		if(request.getRequestURI().startsWith("/api")) {
+			log.debug("/api로 시작");
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -31,6 +32,7 @@ public class AuthEntryPoint_DENIED implements AuthenticationEntryPoint{
 			response.setContentType("application/json; charset=UTF-8");
 			out.print(new Gson().toJson(RVO.builder().msg("인증에 실패 하였습니다.").data(authException.getMessage()).code(ApiCd.NOT_AUTH).build()));
 		} else {
+			log.debug("에러로 이동");
 			response.sendRedirect("/error");
 		}
 	}

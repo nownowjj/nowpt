@@ -19,10 +19,20 @@ function HeaderComponent (){
                 <li
                     style={li}
                     onClick={() => {
-                        navigate("/main")
+                        navigate("/")
                     }
                     }
-                    className="Fli on cmli"
+                    // className="Fli on cmli"
+                >
+                    홈
+                </li>
+                <li
+                    style={li}
+                    onClick={() => {
+                        navigate("/api/main")
+                    }
+                    }
+                    // className="Fli on cmli"
                 >
                      메인
                 </li>
@@ -30,15 +40,13 @@ function HeaderComponent (){
 
                 <li
                     style={li}
-                    onClick={() => navigate("/test")}
-                    className="Sli cmli "
+                    onClick={() => navigate("/api/test")}
                 >
                         테스트
                 </li>
                 <li
                     style={li}
-                    onClick={() => navigate("/login")}
-                    className="Sli cmli "
+                    onClick={() => navigate("/api/login")}
                 >
                         로그인
                 </li>

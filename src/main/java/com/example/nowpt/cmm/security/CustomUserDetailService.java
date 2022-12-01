@@ -25,7 +25,8 @@ public class CustomUserDetailService implements UserDetailsService{
 		Member member = memRepo.findByMembId(username);
 
 		if(member == null) throw new UsernameNotFoundException("유저가 존재하지 않습니다.");
-		log.debug("해당 username getUsername{}",member.getUsername());
+		log.debug("해당 username getUsername : {}",member.getUsername());
+		log.debug("해당 userpw : {}",member.getPassword());
 
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(member.getMembCls().getCodeValue()));

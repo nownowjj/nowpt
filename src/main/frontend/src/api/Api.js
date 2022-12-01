@@ -27,7 +27,20 @@ const request = (options) => {
 };
 
 
-// 회원가입시 사용할 api
+//
+export function homeTest() {
+    return request({
+        url: API_BASE + "/home",
+        method: 'GET'
+    });
+}
+export function mainTest() {
+    return request({
+        url: API_BASE + "/main",
+        method: 'GET'
+    });
+}
+
 export function fetchTest() {
     return request({
         url: API_BASE + "/test",

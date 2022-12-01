@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import axios from "axios";
+import {mainTest} from "../api/Api";
 
 class MainComponent  extends Component {
     constructor(props) {
@@ -14,18 +14,17 @@ class MainComponent  extends Component {
     }
 
     getApi = () => {
-        // axios.get("/api/main")
-        axios.get("http://localhost:8123/api/main")
-            .then(res => {
-                console.log(res);
-                console.log("api/main fail")
+        mainTest()
+            .then(response => {
+                console.log(response);
+                console.log("api/main")
                 this.setState({
-                    message: res.data.message
+                    message: response.message
                 })
-            })
-            .catch(res => console.log(res))
+            }).catch(error =>{
+            console.log(error)
+        });
     }
-
 
 
 
@@ -34,9 +33,9 @@ class MainComponent  extends Component {
     render() {
         return (
             <div>
-                {this.state.message}, api
+                {this.state.message}, 비로그인시 api 호출안함
                 <br/>
-                Dashboard 페이지
+                Main 페이지
             </div>
         )
     }

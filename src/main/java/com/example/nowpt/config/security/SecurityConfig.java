@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers( "/error/**","/static/css/**","/static/js/**");
+		web.ignoring().antMatchers( "/error/**","/static/css/**","/static/js/**","/favicon.ico","/static/**","/manifest.json","/logo192.png");
 	}
 	
 	@Override
@@ -48,12 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.accessDeniedHandler(cad)
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers( "/api/**","/api/auth/**","/error").permitAll()
+					.antMatchers( "/","/api/home","/api/main","/api/auth/**","/error").permitAll()
 					.antMatchers("/api/*/admin/**").hasAuthority("ROLE_ADMIN")
 //					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
 					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
 					.antMatchers("/api/*/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
-					.antMatchers("/public/**", "/api/**").permitAll()
+//					.antMatchers("/public/**", "/api/**").permitAll()
 					.anyRequest().authenticated()
 				.and()
 				// 웹 시큐리티 전 'authenticationJwtTokenFilter(토큰 유효성 검사 및 토큰을 기반으로 사용자 정보 설정하는 필터)' 라는 필터를 거치도록 설정.
