@@ -40,6 +40,6 @@ public class ExceptionController implements ErrorController   {
                 return "errorpages/error-500";
             }
         }
-        return "errorpages/error";
+        return "index.html";
     }
 }

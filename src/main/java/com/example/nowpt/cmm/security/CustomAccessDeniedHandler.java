@@ -33,7 +33,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 		} else {
 			//response.sendRedirect("/public/login");
 			//response.sendError(HttpServletResponse.SC_UNAUTHORIZED, accessDeniedException.getMessage());
-			response.sendRedirect("/public/denied");
+			response.sendRedirect("/error");
 		}
 	}
 

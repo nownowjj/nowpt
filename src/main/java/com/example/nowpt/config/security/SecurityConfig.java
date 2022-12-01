@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/js/**","/public/**", "/error/**", "/webjars/**", "/files/**", "/swagger-ui/**", "/v3/api-docs/**", "/favicon*", "/WEB-INF/views/error/errorPage.jsp");
+		web.ignoring().antMatchers( "/error/**","/static/css/**","/static/js/**");
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.accessDeniedHandler(cad)
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers( "/api/auth/**").permitAll()
+					.antMatchers( "/api/**","/api/auth/**","/error").permitAll()
 					.antMatchers("/api/*/admin/**").hasAuthority("ROLE_ADMIN")
 //					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
 					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")

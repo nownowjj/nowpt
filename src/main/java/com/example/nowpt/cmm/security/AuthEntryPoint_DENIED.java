@@ -31,7 +31,7 @@ public class AuthEntryPoint_DENIED implements AuthenticationEntryPoint{
 			response.setContentType("application/json; charset=UTF-8");
 			out.print(new Gson().toJson(RVO.builder().msg("인증에 실패 하였습니다.").data(authException.getMessage()).code(ApiCd.NOT_AUTH).build()));
 		} else {
-			response.sendRedirect("/public/login");
+			response.sendRedirect("/error");
 		}
 	}
 }
