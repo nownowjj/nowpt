@@ -13,7 +13,7 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 
     //node
-    id 'com.github.node-gradle.node' version '3.4.0'
+//    id 'com.github.node-gradle.node' version '3.4.0'
 
 }
 
@@ -21,7 +21,7 @@ apply plugin: "com.ewerk.gradle.plugins.querydsl"
 apply plugin: 'java'
 
 // node
-apply plugin: 'com.github.node-gradle.node'
+//apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
