@@ -1,23 +1,23 @@
-//{
-//  "name": "nowpt",
-//  "version": "1.0.0",
-//  "description": "heroku server spring boot 배포 , oracle cloud DB 연동",
-//  "main": "index.js",
-//  "scripts": {
-//    "test": "echo \"Error: no test specified\" && exit 1"
-//  },
-//  "engines": {
-//    "node": "16.17.0",
-//    "npm": "8.15.0"
-//  },
-//  "repository": {
-//    "type": "git",
-//    "url": "git+https://github.com/nownowjj/nowpt.git"
-//  },
-//  "author": "",
-//  "license": "ISC",
-//  "bugs": {
-//    "url": "https://github.com/nownowjj/nowpt/issues"
-//  },
-//  "homepage": "https://github.com/nownowjj/nowpt#readme"
-//}
+{
+  "name": "nowpt",
+  "version": "1.0.0",
+  "description": "heroku server spring boot 배포 , oracle cloud DB 연동",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "16.17.0",
+    "npm": "8.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nownowjj/nowpt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nownowjj/nowpt/issues"
+  },
+  "homepage": "https://github.com/nownowjj/nowpt#readme"
+}
