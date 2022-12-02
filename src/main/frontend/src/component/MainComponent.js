@@ -33,7 +33,7 @@ class MainComponent  extends Component {
     render() {
         return (
             <div>
-                {this.state.message}, 비로그인시 api 호출안함
+                api : {this.state.message}, 홈,메인은 로그인을 하지 않아도 api를 호출 합니다.
                 <br/>
                 Main 페이지
             </div>

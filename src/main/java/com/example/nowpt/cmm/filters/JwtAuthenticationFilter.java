@@ -29,8 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 		// 헤더에서 JWT 를 받아옵니다.
 		log.debug("[요청 url]{}",request.getRequestURI());
-		log.debug("[요청 header]{}",request.getHeader("accessToken"));
-		log.debug("[JwtAuthenticationFilter]{}, {}", request.getRequestURI(), request.getHeader("Authorization"));
+//		log.debug("[요청 header]{}",request.getHeader("accessToken"));
+//		log.debug("[JwtAuthenticationFilter]{}, {}", request.getRequestURI(), request.getHeader("Authorization"));
 		
 		if(request.getRequestURI().startsWith("/api")) {
 			log.debug("jwt 인증 진행");
@@ -47,19 +47,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
 	private void jwtAuthStart(HttpServletRequest req) {
 		log.debug("jwtAuthStart");
-
 		try {
 			String jwt = getJwtFromRequest(req);
 
-			log.debug("jwt is {}", jwt);
-			log.debug("cds is {}", cds);
+//			log.debug("jwt is {}", jwt);
+//			log.debug("cds is {}", cds);
 			if(jwt != null && JwtTokenProvider.validateToken(jwt)) {
 				Claims claims = JwtTokenProvider.getClaims(jwt);
 				String membId = String.valueOf(claims.get("membId"));
 				UserDetails ud = cds.loadUserByUsername(membId);
-				log.debug("ud@{}",ud);
+//				log.debug("ud@{}",ud);
 				UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
-				log.debug("upat@{}",upat);
+//				log.debug("upat@{}",upat);
 				upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 				SecurityContextHolder.getContext().setAuthentication(upat);
 			}

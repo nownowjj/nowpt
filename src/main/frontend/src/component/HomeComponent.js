@@ -18,8 +18,6 @@ class HomeComponent  extends Component {
         // axios.get("/api/main")
         homeTest()
             .then(response => {
-                console.log(response);
-                console.log("api/home")
                 this.setState({
                     message: response.message
                 })
@@ -29,18 +27,14 @@ class HomeComponent  extends Component {
     }
 
 
-
-
-
-
     render() {
         return (
             <div>
-                {this.state.message}, api
+                api : {this.state.message}
                 <br/>
                 Home 페이지
                 <br/>
-                <img src={mguImg}/>
+                <img src={mguImg} alt="img"/>
 
             </div>
         )

@@ -1,4 +1,4 @@
-import {BrowserRouter, HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import HeaderComponent from "../component/HeaderComponent";
 import MainComponent from "../component/MainComponent";
 import TestComponent from "../component/TestComponent";

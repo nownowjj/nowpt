@@ -10,12 +10,10 @@ import com.example.nowpt.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @RestController
 @Slf4j
@@ -26,15 +24,32 @@ public class ApiAuthRestController {
     private AuthService authService;
 
 
+    @GetMapping("/home")
+    public HashMap home(){
+        HashMap result = new HashMap();
+        result.put("message","home입니다");
+
+        log.debug("restCheck : {}" ,result);
+
+        return result;
+    }
+    @GetMapping("/main")
+    public HashMap api(){
+        HashMap result = new HashMap();
+        result.put("message","안녕하세요");
+
+        log.debug("restCheck : {}" ,result);
+
+        return result;
+    }
     @PostMapping("/userLogin")
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr());
-
-        log.debug("token Check!! : {} " ,token);
-        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getAccessToken()) + " AccessToken check");
-        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getTokenType()) + " Type check");
-        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getRole()) + " Role check");
+//        log.debug("token Check!! : {} " ,token);
+//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getAccessToken()) + " AccessToken check");
+//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getTokenType()) + " Type check");
+//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getRole()) + " Role check");
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 

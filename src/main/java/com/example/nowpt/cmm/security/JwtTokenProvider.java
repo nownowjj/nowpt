@@ -18,7 +18,7 @@ public class JwtTokenProvider {
 		Map<String, Object> claims = new HashMap<>();
 		log.debug("토큰 프로바이드");
 		log.debug("권한 : {}",authority);
-		log.debug("[토큰정보]{},{},{}",authority,id,pw);
+		log.debug("[토큰정보] : {}, : {} , : {}",authority,id,pw);
 
 
 		claims.put("membId", id);

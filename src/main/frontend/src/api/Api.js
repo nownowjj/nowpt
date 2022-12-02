@@ -30,13 +30,13 @@ const request = (options) => {
 //
 export function homeTest() {
     return request({
-        url: API_BASE + "/home",
+        url: API_BASE + "/auth/home",
         method: 'GET'
     });
 }
 export function mainTest() {
     return request({
-        url: API_BASE + "/main",
+        url: API_BASE + "/auth/main",
         method: 'GET'
     });
 }

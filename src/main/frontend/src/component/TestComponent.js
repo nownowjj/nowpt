@@ -1,40 +1,60 @@
-import React, {Component} from "react";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
 import {fetchTest} from "../api/Api";
 
-class TestComponent  extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            test: ""
-        }
-    }
+
+const TestComponent = () => {
+
+    const [test,setTest] = useState([]);
+    const [test2,setTest2] = useState("");
+    const [lists,setLists] = useState([]);
+    // const [listSize,setListSize] = useState("");
 
 
-    componentDidMount() {
-        this.getApi();
-    }
-
-    getApi = () => {
+    useEffect(()=> {
         fetchTest()
             .then(response => {
-                console.log(response)
-                this.setState({
-                    test:response.test
-                })
-            }).catch(error =>{
-              console.log(error);
-        });
-    }
-    render() {
+                // console.log(response);
+                // console.log("nm : "+response.test)
+                // console.log("auth : "+response.test2[0].authority)
+                console.log("-- login Hst --")
+                console.log(response.test3)
+                setTest(response.test)
+                setTest2(response.test2[0].authority)
+                setLists(response.test3)
+                // setListSize(response.test3.length);
+            }).catch(error => {
+            alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")
+            console.log(error);
+        }, []);
+
+    },[]);
+
+
         return (
             <div>
-                {this.state.test}, api2
+                 로그인한 유저의 name :  {test}
+                <br/>
+                 로그인한 유저의 Authorities :  {test2}
+                <br/>
+                로그인 성공시 api 요청
                 <br/>
                  Test 페이지
+                <br/>
+                <div>
+                    {
+                        lists.map((list) =>
+                            <div key={list.loginSn}>
+                                <div>{list.loginSn}번째 : {list.frstRegistDt} </div>
+                            </div>
+
+
+
+                        )
+                    }
+
+                </div>
             </div>
         )
-    }
 }
 
 export default TestComponent ;

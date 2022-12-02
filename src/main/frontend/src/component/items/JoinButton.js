@@ -27,7 +27,7 @@ const Button = (data) => {
                     border: "2px solid #ef4746",
                 }),
             }}
-            onClick={() => data.onClick()}
+            // onClick={() => data.onClick()}
         >
             {data.value}
         </StButton>

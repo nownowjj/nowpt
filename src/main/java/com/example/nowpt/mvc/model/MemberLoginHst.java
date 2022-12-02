@@ -22,10 +22,12 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class MemberLoginHst extends Base{
-    @Id@GeneratedValue(generator = "memLoginHst_seq", strategy = GenerationType.SEQUENCE)@Column(name = "login_sn")
+    @Id
+    @GeneratedValue(generator = "memLoginHst_seq", strategy = GenerationType.SEQUENCE)@Column(name = "login_sn")
     private Long loginSn;
 
-    @ManyToOne@JoinColumn(name = "member_sn")
+    @ManyToOne
+    @JoinColumn(name = "member_sn")
     private Member memberSn;
 
     @Column(name = "connect_ip")

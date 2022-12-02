@@ -1,17 +1,26 @@
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 import {li} from "./style";
+import {useEffect, useState} from "react";
+import isAuth from "./isAuth";
 
 
-// const li =
-//     {width:"50%",height:"50px",
-//         display:"flex",alignItems:"center",
-//         paddingLeft:"10px",fontSize:"18px",
-//         cursor:"pointer",border:"1px solid red"}
-
-
-// const HeaderComponent =() => {
-function HeaderComponent (){
+function HeaderComponent (props) {
     const navigate = useNavigate();
+    const [auth,setAuth] = useState("");
+
+    const logout =() => {
+        if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
+            window.sessionStorage.removeItem("accessToken");
+            navigate("/api/login");
+        } else {
+            return false;
+        }
+    }
+
+    useEffect(()=>{
+        setAuth(isAuth());
+    })
+
 
     return (
         <div id='hideUl' className="sider siderOn">
@@ -42,7 +51,7 @@ function HeaderComponent (){
                     style={li}
                     onClick={() => navigate("/api/test")}
                 >
-                        테스트
+                        어드민 기능 테스트
                 </li>
                 <li
                     style={li}
@@ -50,8 +59,32 @@ function HeaderComponent (){
                 >
                         로그인
                 </li>
+                <li
+                    style={li}
+                    onClick={() => logout()}
+                >
+                        로그아웃
+                </li>
 
 
+                {
+                    auth === "ROLE_ADMIN"
+                    ?
+                <li
+                    style={li}
+
+                >
+                    어드민만 보임
+                </li>
+                        :
+                <li
+                    style={li}>
+                    ㄴㄴㄴ..
+                </li>
+                }
+                <p>접속한 계정의 ROLE : {auth}</p>
+
+                    
             </ul>
         </div>
 
