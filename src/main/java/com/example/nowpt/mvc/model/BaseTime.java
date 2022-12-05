@@ -1,5 +1,6 @@
 package com.example.nowpt.mvc.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,6 +26,7 @@ public class BaseTime {
 	// Entity 생성될 때 생성
 	@CreatedDate
 	@Column(name = "frst_regist_dt", nullable = false)
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private LocalDateTime frstRegistDt;
 	
 	// Entity 수정 됐을 때

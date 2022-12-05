@@ -41,10 +41,13 @@ const TestComponent = () => {
                  Test 페이지
                 <br/>
                 <div>
+                            <h2>로그인 기록</h2>
                     {
-                        lists.map((list) =>
-                            <div key={list.loginSn}>
-                                <div>{list.loginSn}번째 : {list.frstRegistDt} </div>
+                        lists.map((lists) =>
+                            <div key={lists.loginSn}>
+                                <span>{lists.loginSn}번째 : {lists.frstRegistDt} ,</span>
+                                <span>접속 id : {lists.memberSn.membId} , </span>
+                                <span>권한 : {lists.memberSn.membCls.codeValue}</span>
                             </div>
 
 
