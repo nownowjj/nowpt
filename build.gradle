@@ -13,7 +13,7 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 
     //node
-//    id 'com.github.node-gradle.node' version '3.4.0'
+    id 'com.github.node-gradle.node' version '3.4.0'
 
 }
 
@@ -21,7 +21,7 @@ apply plugin: "com.ewerk.gradle.plugins.querydsl"
 apply plugin: 'java'
 
 // node
-//apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -87,59 +87,59 @@ tasks.withType(JavaCompile) {
 
 
 // React Build
-def webappDir = "$projectDir/src/main/frontend"
-
-node {
-    version = '16.17.0'
-    npmVersion = '8.15.0'
-    download = true
-    nodeProjectDir = file("${project.projectDir}/src/main/frontend")
+//def webappDir = "$projectDir/src/main/frontend"
+//
+//node {
+//    version = '16.17.0'
+//    npmVersion = '8.15.0'
+//    download = true
+//    nodeProjectDir = file("${project.projectDir}/src/main/frontend")
 //    workDir = file("${project.projectDir}/src/main/frontend/build/nodejs")
 //    npmWorkDir = file("${project.projectDir}/src/main/frontend/build/npm")
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
-        }
-    }
-}
-
-processResources {
-    dependsOn "copyWebApp"
-}
-
-task copyWebApp(type: Copy) {
-    dependsOn "buildReact"
-    from "$webappDir/build"
-    into "$projectDir/src/main/resources/static"
-}
-
-task buildReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$webappDir"
-    inputs.dir "$webappDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "run-script", "build"
-    } else {
-        commandLine "npm", "run-script", "build"
-    }
-}
-
-task installReact(type: Exec) {
-    workingDir "$webappDir"
-    inputs.dir "$webappDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine 'npm.cmd', 'audit', 'fix'
-        commandLine 'npm.cmd', 'install'
-    } else {
-        commandLine 'npm', 'audit ', 'fix'
-        commandLine 'npm', 'install'
-    }
-}
+//}
+//
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ["$webappDir/build", "$projectDir/src/main/resources"]
+//        }
+//    }
+//}
+//
+//processResources {
+//    dependsOn "copyWebApp"
+//}
+//
+//task copyWebApp(type: Copy) {
+//    dependsOn "buildReact"
+//    from "$webappDir/build"
+//    into "$projectDir/src/main/resources/static"
+//}
+//
+//task buildReact(type: Exec) {
+//    dependsOn "installReact"
+//    workingDir "$webappDir"
+//    inputs.dir "$webappDir"
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine "npm.cmd", "run-script", "build"
+//    } else {
+//        commandLine "npm", "run-script", "build"
+//    }
+//}
+//
+//task installReact(type: Exec) {
+//    workingDir "$webappDir"
+//    inputs.dir "$webappDir"
+//    group = BasePlugin.BUILD_GROUP
+//    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+//        commandLine 'npm.cmd', 'audit', 'fix'
+//        commandLine 'npm.cmd', 'install'
+//    } else {
+//        commandLine 'npm', 'audit ', 'fix'
+//        commandLine 'npm', 'install'
+//    }
+//}
 
 
 
