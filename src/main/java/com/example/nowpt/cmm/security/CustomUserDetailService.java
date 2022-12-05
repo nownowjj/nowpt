@@ -32,7 +32,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		authorities.add(new SimpleGrantedAuthority(member.getMembCls().getCodeValue()));
 		log.info(new SimpleGrantedAuthority(member.getMembCls().getCodeValue())+" 권한정보");
 		member.setAuthorities(authorities);
-		log.info("Member auth : {}",member.getAuthorities());
+		log.debug("Member auth : {}",member.getAuthorities());
 		return member;
 	}
 }
