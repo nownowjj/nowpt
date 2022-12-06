@@ -1,10 +1,13 @@
 package com.example.nowpt.mvc.restcontoller;
 
+import com.example.nowpt.mvc.model.MbrPrinciple;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +27,9 @@ public class ApiController {
     @GetMapping("/test")
     public HashMap api2(@AuthenticationPrincipal MemberMoney member){
 
+
         HashMap result = new HashMap();
+        // 권한
 
         log.debug("======test========");
         result.put("test",member.getMembNm());

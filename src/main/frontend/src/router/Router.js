@@ -1,9 +1,9 @@
 import {HashRouter, Route, Routes} from "react-router-dom";
 import HeaderComponent from "../component/HeaderComponent";
-import MainComponent from "../component/MainComponent";
-import TestComponent from "../component/TestComponent";
-import LoginComponent from "../component/LoginComponent";
-import HomeComponent from "../component/HomeComponent";
+import MainComponent from "../pages/MainComponent";
+import TestComponent from "../pages/TestComponent";
+import LoginComponent from "../pages/LoginComponent";
+import HomeComponent from "../pages/HomeComponent";
 
 
 const Router = () => {

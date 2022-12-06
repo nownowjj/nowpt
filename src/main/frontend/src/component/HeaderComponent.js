@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router";
-import {li} from "./style";
+import {li} from "../styles/style";
 import {useEffect, useState} from "react";
-import isAuth from "./isAuth";
+import isAuth from "../services/isAuth";
 
 
 function HeaderComponent(props) {

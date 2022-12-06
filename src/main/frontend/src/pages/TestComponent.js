@@ -7,7 +7,6 @@ const TestComponent = () => {
     const [test,setTest] = useState([]);
     const [test2,setTest2] = useState("");
     const [lists,setLists] = useState([]);
-    // const [listSize,setListSize] = useState("");
 
 
     useEffect(()=> {
@@ -15,13 +14,12 @@ const TestComponent = () => {
             .then(response => {
                 // console.log(response);
                 // console.log("nm : "+response.test)
-                // console.log("auth : "+response.test2[0].authority)
-                console.log("-- login Hst --")
-                console.log(response.test3)
-                setTest(response.test)
-                setTest2(response.test2[0].authority)
-                setLists(response.test3)
-                // setListSize(response.test3.length);
+                // console.log("Authority : "+ JSON.stringify(response.test2[0].authority));
+                // console.log("-- login Hst --");
+                // console.log(response.test3);
+                setTest(response.test);
+                setTest2(response.test2[0].authority);
+                setLists(response.test3);
             }).catch(error => {
             alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")
             console.log(error);
@@ -47,7 +45,18 @@ const TestComponent = () => {
                             <div key={lists.loginSn}>
                                 <span>{lists.loginSn}번째 : {lists.frstRegistDt} ,</span>
                                 <span>접속 id : {lists.memberSn.membId} , </span>
-                                <span>권한 : {lists.memberSn.membCls.codeValue}</span>
+
+                                <span>
+                                    권한 :
+                                    {
+                                        lists.memberSn.membCls.codeValue === "ROLE_ADMIN"
+                                        ?"어드민"
+                                            :
+                                            "유저"
+
+                                    }
+                                </span>
+
                             </div>
 
 
