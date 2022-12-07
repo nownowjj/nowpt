@@ -42,35 +42,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http.cors().and().csrf().disable()
 				.exceptionHandling()
 					.authenticationEntryPoint(aep)
 					.accessDeniedHandler(cad)
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers( "/","/api/auth/**","/error").permitAll()
+					.antMatchers( "/","/api/auth/**","/error").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
 					.antMatchers("/api/test/**").hasAuthority("ROLE_ADMIN")
-//					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
-					.antMatchers("/api/*/seller/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
 					.antMatchers("/api/*/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
-//					.antMatchers("/public/**", "/api/**").permitAll()
-					.anyRequest().authenticated()
+					.anyRequest().authenticated() // 위에서 따로 지정한 접근허용 리소스 설정 후 그 외 나머지 리소스들은 무조건 인증을 완료해야 접근 가능
 				.and()
-				// 웹 시큐리티 전 'authenticationJwtTokenFilter(토큰 유효성 검사 및 토큰을 기반으로 사용자 정보 설정하는 필터)' 라는 필터를 거치도록 설정.
-//				.formLogin()
-//					.loginPage("/api/v2/auth/sellerLogin")
-//					.loginProcessingUrl("/api/v2/auth/sellerLogin")// 로그인 Form Action Url, default: /login
-//					.defaultSuccessUrl("/api/v2/seller/sellerMain")// 로그인 성공 후 이동 페이지
-//					.usernameParameter("memb_id")
-//					.passwordParameter("memb_pw")
-//					.failureUrl("/api/v2/auth/login/error")
-//					.failureUrl("/api/v2/auth/sellerLogin") // 로그인 실패 후 이동 페이지
-//				.and()
-//				.logout()
-//					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//					.logoutSuccessUrl("/api/v1/thymeleaf/test")
-//					.invalidateHttpSession(true)
-//				.and()
-				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 커스텀 필터 등록하며, 기존에 지정된 필터에 앞서 실행
 	}
 }

@@ -16,7 +16,7 @@ const TestComponent = () => {
                 // console.log("nm : "+response.test)
                 // console.log("Authority : "+ JSON.stringify(response.test2[0].authority));
                 // console.log("-- login Hst --");
-                // console.log(response.test3);
+                console.log(response.test3);
                 setTest(response.test);
                 setTest2(response.test2[0].authority);
                 setLists(response.test3);

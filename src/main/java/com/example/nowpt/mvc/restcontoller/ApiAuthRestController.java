@@ -5,8 +5,11 @@ import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
+import com.example.nowpt.mvc.service.MapperSerivce;
 import com.example.nowpt.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +17,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class ApiAuthRestController {
 
     @Autowired
     private AuthService authService;
+
+
+    private MapperSerivce mapperSerivce;
+
+
 
 
     @GetMapping("/home")
@@ -37,11 +47,18 @@ public class ApiAuthRestController {
     public HashMap api(){
         HashMap result = new HashMap();
         result.put("message","안녕하세요");
-
         log.debug("restCheck : {}" ,result);
 
         return result;
     }
+
+    @GetMapping("/batis")
+    public String batis(){
+        List<Member> members = mapperSerivce.selectAllMember();
+        log.debug("batisCheck : {}", members);
+        return null;
+    }
+
     @PostMapping("/userLogin")
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());

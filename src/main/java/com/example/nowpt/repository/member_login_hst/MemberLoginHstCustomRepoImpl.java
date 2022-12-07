@@ -1,6 +1,7 @@
 package com.example.nowpt.repository.member_login_hst;
 
 import com.example.nowpt.mvc.model.MemberLoginHst;
+import com.example.nowpt.mvc.model.QMember;
 import com.example.nowpt.mvc.model.QMemberLoginHst;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,13 @@ public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 	@Override
 	public List<MemberLoginHst> selectAllLoginHst(){
 		QMemberLoginHst qMemberLoginHst = QMemberLoginHst.memberLoginHst;
+//		QMember qMember = QMember.member;
 		return
-//				qf.selectFrom(qMemberLoginHst)
-				qf.select(qMemberLoginHst)
-						.from(qMemberLoginHst)
+				qf.selectFrom(qMemberLoginHst)
+//				qf.select(qMemberLoginHst)
+//						.from(qMemberLoginHst)
+//						.join(qMemberLoginHst.memberSn,qMember)
+						.where(qMemberLoginHst.useYn.eq("Y"))
 						.orderBy(qMemberLoginHst.frstRegistDt.desc())
 						.limit(10)
 				  .fetch();
