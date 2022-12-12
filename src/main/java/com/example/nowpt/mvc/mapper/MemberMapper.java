@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface MemberMapper {
-    public List<Member> selectAllMember();
+    List<Member> selectAllMember();
 
 //    List<Map<String,String>> selectAllMember();// select 의 값이 여러개라면 List에 Map을 담고
     // Map<KEY, VALUE> value는 Object 타입을 넣을 수도 있다(Map<String, Object>).

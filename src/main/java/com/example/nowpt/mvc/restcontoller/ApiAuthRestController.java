@@ -5,9 +5,10 @@ import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
+import com.example.nowpt.mvc.mapper.MemberMapper;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
-import com.example.nowpt.mvc.service.MapperSerivce;
+import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,11 @@ public class ApiAuthRestController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private MapperService mapperService;
 
-    private MapperSerivce mapperSerivce;
+    @Autowired
+    private MemberMapper memberMapper;
 
 
 
@@ -52,12 +56,11 @@ public class ApiAuthRestController {
         return result;
     }
 
-    @GetMapping("/batis")
-    public String batis(){
-        List<Member> members = mapperSerivce.selectAllMember();
-        log.debug("batisCheck : {}", members);
-        return null;
-    }
+//    @GetMapping("/batis")
+//    public List<Member> batis(){
+//        log.debug("batis : {}",mapperService.selectAllMember());
+//        return mapperService.selectAllMember();
+//    }
 
     @PostMapping("/userLogin")
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){

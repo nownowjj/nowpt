@@ -15,7 +15,7 @@ const Router = () => {
             <Routes>
                 <Route path="/" element={<HomeComponent />} />
                 <Route path="/api/main" element={<MainComponent />} />
-                <Route path="/api/test" element={<TestComponent />} />
+                <Route path="/api/test/jpa" element={<TestComponent />} />
                 <Route path="/api/login" element={<LoginComponent />} />
             </Routes>
 

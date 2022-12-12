@@ -17,6 +17,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+mybatis:
+  type-aliases-package: com.example.nowpt.mvc.dto  # entity가 존재하는 경로작성.
+  mapper-locations: mapper/**.xml        # XmlMapper.xml이 존재하는 경로작성.
 #  thymeleaf:
 #    cache: false
 #    prefix: classpath:/static/

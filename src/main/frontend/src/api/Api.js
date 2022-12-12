@@ -43,7 +43,13 @@ export function mainTest() {
 
 export function fetchTest() {
     return request({
-        url: API_BASE + "/test",
+        url: API_BASE + "/test/jpa",
+        method: 'GET'
+    });
+}
+export function batisTest() {
+    return request({
+        url: API_BASE + "/test/batis",
         method: 'GET'
     });
 }

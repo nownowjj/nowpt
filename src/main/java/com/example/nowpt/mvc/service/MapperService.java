@@ -12,13 +12,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MapperSerivce {
+public class MapperService {
 
+    @Autowired
     private MemberMapper memberMapper;
 
     public List<Member> selectAllMember() {
-        List<Member> members = memberMapper.selectAllMember();
-        return members;
+        return memberMapper.selectAllMember();
     }
 
 }

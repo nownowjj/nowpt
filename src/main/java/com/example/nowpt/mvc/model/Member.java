@@ -1,10 +1,7 @@
 package com.example.nowpt.mvc.model;
 
 import com.example.nowpt.cmm.code.Cd;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +23,7 @@ import java.util.Collection;
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-
+@Data
 @Inheritance(strategy = InheritanceType.JOINED)
 //@DiscriminatorColumn(name = "DTYPE")
 public class Member extends Base implements UserDetails{
@@ -120,6 +117,10 @@ public class Member extends Base implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+//    public Member(){
+//
+//    }
 }
 
 

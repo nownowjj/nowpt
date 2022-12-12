@@ -48,7 +48,7 @@ function HeaderComponent(props) {
 
                 <li
                     style={li}
-                    onClick={() => navigate("/api/test")}
+                    onClick={() => navigate("/api/test/jpa")}
                 >
                     어드민 기능 테스트
                 </li>
