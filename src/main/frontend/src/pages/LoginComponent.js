@@ -3,8 +3,6 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router";
 import Button from "../component/JoinButton";
 import {ACCESS_TOKEN, login} from "../api/Api";
-import {responseData} from "../component/HeaderComponent";
-import isAuth from "../services/isAuth";
 
 function LoginComponent () {
 

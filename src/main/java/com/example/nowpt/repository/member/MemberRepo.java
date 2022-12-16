@@ -10,6 +10,7 @@ public interface MemberRepo extends JpaRepository<Member, Long>, MemberCustomRep
 	
 
 	boolean existsByMembId(String membId);
-	
-	
+
+
+	Member findByMemberSn(Long membSn);
 }

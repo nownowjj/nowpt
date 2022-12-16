@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.authorizeHttpRequests()
 					.antMatchers( "/","/api/auth/**","/error").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
 					.antMatchers("/api/test/**").hasAuthority("ROLE_ADMIN")
-					.antMatchers("/api/*/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
+					.antMatchers("/api/common/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
 					.anyRequest().authenticated() // 위에서 따로 지정한 접근허용 리소스 설정 후 그 외 나머지 리소스들은 무조건 인증을 완료해야 접근 가능
 				.and()
 				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 커스텀 필터 등록하며, 기존에 지정된 필터에 앞서 실행

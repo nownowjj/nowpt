@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {batisTest, fetchTest} from "../api/Api";
-import {error} from "bfj/src/events";
 
 
 const TestComponent = () => {
@@ -79,8 +78,8 @@ const TestComponent = () => {
                 <h2>모든 유저 : mybatis</h2>
                 {
                     selectAll.map((lists)=>
-                        <div key={lists.membSn}>
-                            <span>Sn : {lists.membSn} ,Nm : {lists.membNm} , Id : {lists.membId}</span>
+                        <div key={lists.memb_sn}>
+                            <span>Sn : {lists.memb_sn} ,Nm : {lists.memb_nm} , Id : {lists.memb_id} ,Email : {lists.email_addr}</span>
                         </div>
                     )
                 }

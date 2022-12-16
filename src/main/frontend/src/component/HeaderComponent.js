@@ -7,6 +7,7 @@ import isAuth from "../services/isAuth";
 function HeaderComponent(props) {
     const navigate = useNavigate();
     const [auth, setAuth] = useState("");
+    const Admin = "ROLE_ADMIN";
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
@@ -15,6 +16,14 @@ function HeaderComponent(props) {
         } else {
             return false;
         }
+    }
+
+    const goMyPage = () => {
+        if(auth == null){
+            alert("로그인을 해주세요");
+            return false;
+        }
+        navigate("/api/common/myPage")
     }
 
     useEffect(() => {
@@ -65,9 +74,8 @@ function HeaderComponent(props) {
                     로그아웃
                 </li>
 
-
                 {
-                    auth === "ROLE_ADMIN"
+                    auth === Admin
                         ?
                         <li
                             style={li}
@@ -76,12 +84,29 @@ function HeaderComponent(props) {
                             어드민만 보임
                         </li>
                         :
-                        <li
-                            style={li}>
-                            ㄴㄴㄴ..
-                        </li>
+                        null
                 }
-                <p>접속한 계정의 ROLE : {auth}</p>
+                
+                <li
+                    style={li}
+                    onClick={() =>{
+                        goMyPage();
+                    }
+                }
+                >
+                    내 정보
+                </li>
+                
+                <p>
+                    접속한 계정의 ROLE :
+                    {
+                        auth != null
+                        ?
+                            auth
+                            :
+                            "비로그인"
+                    }
+                </p>
 
 
             </ul>

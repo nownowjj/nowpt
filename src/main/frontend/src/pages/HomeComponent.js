@@ -36,6 +36,7 @@ class HomeComponent  extends Component {
                 <br/>
                 <img src={mguImg} alt="img"/>
 
+
             </div>
         )
     }

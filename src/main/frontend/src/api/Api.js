@@ -26,7 +26,13 @@ const request = (options) => {
         );
 };
 
-
+// Sn 추출
+export function getMembInfo(){
+    return request({
+        url:API_BASE+"/common/getMembInfo",
+        method:'GET'
+    })
+}
 //
 export function homeTest() {
     return request({
@@ -51,6 +57,13 @@ export function batisTest() {
     return request({
         url: API_BASE + "/test/batis",
         method: 'GET'
+    });
+}
+export function updateMembAddr(email) {
+    console.log("param : " + email)
+    return request({
+        url: API_BASE + "/common/updateEmail/" + email,
+        method: 'PUT'
     });
 }
 

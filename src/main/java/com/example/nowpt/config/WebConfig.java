@@ -15,6 +15,7 @@ import java.io.IOException;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    public static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry
@@ -41,7 +42,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("*");
+//                .allowedMethods("*");
+                .allowedMethods(ALLOWED_METHOD_NAMES.split(","));
     }
 
     @Bean
