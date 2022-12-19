@@ -5,6 +5,7 @@ import TestComponent from "../pages/TestComponent";
 import LoginComponent from "../pages/LoginComponent";
 import HomeComponent from "../pages/HomeComponent";
 import MyPageComponent from "../pages/MyPageComponent";
+import CalculatorComponent from "../pages/CalculatorComponent";
 
 
 const Router = () => {
@@ -19,6 +20,7 @@ const Router = () => {
                 <Route path="/api/test/jpa" element={<TestComponent />} />
                 <Route path="/api/login" element={<LoginComponent />} />
                 <Route path="/api/common/myPage" element={<MyPageComponent />} />
+                <Route path="/api/calculator" element={<CalculatorComponent />} />
             </Routes>
 
         </HashRouter>

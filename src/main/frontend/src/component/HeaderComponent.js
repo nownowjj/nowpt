@@ -19,7 +19,7 @@ function HeaderComponent(props) {
     }
 
     const goMyPage = () => {
-        if(auth == null){
+        if (auth == null) {
             alert("로그인을 해주세요");
             return false;
         }
@@ -32,7 +32,7 @@ function HeaderComponent(props) {
 
 
     return (
-        <div id='hideUl' className="sider siderOn">
+        <div className="sider siderOn">
             <ul style={{border: "1px solid black", margin: "0px"}}>
                 <li style={li}
                     onClick={() => {
@@ -86,22 +86,30 @@ function HeaderComponent(props) {
                         :
                         null
                 }
-                
+
                 <li
                     style={li}
-                    onClick={() =>{
+                    onClick={() => {
                         goMyPage();
                     }
-                }
+                    }
                 >
                     내 정보
                 </li>
-                
+
+
+                <li
+                    style={li}
+                    onClick={() => navigate("/api/calculator")}
+                >
+                    계산기
+                </li>
+
                 <p>
                     접속한 계정의 ROLE :
                     {
                         auth != null
-                        ?
+                            ?
                             auth
                             :
                             "비로그인"

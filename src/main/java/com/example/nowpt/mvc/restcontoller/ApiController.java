@@ -51,6 +51,7 @@ public class ApiController {
     }
 
     @GetMapping("/batis")
+    @SuppressWarnings("unchecked")
     public HashMap batis(){
         log.debug("batis : {}",mapperService.selectAllMember());
         HashMap result = new HashMap();
