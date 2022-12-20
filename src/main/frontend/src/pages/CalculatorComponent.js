@@ -10,8 +10,6 @@ function CalculatorComponent() {
 
     const [pointCheck, setPointCheck] = useState(true);
 
-    const [su,setSu] = useState("");
-
     const getNum = (e) => {
         console.log("getNum : " + e.target.value);
         setCalc((prev) => prev + e.target.value);
@@ -53,19 +51,6 @@ function CalculatorComponent() {
 
 
 
-    const changeHandle=(value)=>{
-        console.log(value);
-        setSu(value);
-    }
-    const wprhq=()=>{
-        console.log(calc +"의 제곱을 할거임");
-        const firstSu = calc;
-        console.log("firstSu : " + firstSu);
-        const secondSu = su;
-        console.log("secondSu : " + su);
-        var result=  Math.pow(firstSu,secondSu);
-        setCalc(result);
-    }
 
 
     // 하나씩 삭제 버튼
@@ -138,10 +123,7 @@ function CalculatorComponent() {
                 <Button value="." onClick={getPoint}>
                     .
                 </Button>
-                <Button  onClick={wprhq} >
-                    제곱
-                </Button>
-                
+
                 <CalButton onClick={getResult}>=</CalButton>
             </ButtonContainer>
         </MainContainer>
@@ -188,7 +170,7 @@ const CalButton = styled(Button)`
 `;
 
 const ZeroButton = styled(Button)`
-  grid-column: 1/2;
+  grid-column: 1/3;
 `;
 
 const InputBar = styled.input`
