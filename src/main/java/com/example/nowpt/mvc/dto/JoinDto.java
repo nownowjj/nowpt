@@ -7,7 +7,6 @@ import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class JoinDto {
 	@NonNull
 	private String membId;

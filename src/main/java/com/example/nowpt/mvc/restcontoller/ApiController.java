@@ -35,25 +35,16 @@ public class ApiController {
 
 
         HashMap result = new HashMap();
-        // 권한
-
-        log.debug("======test========");
         result.put("test",member.getMembNm());
-
-        log.debug("======test2========");
         result.put("test2",member.getAuthorities());
-
         result.put("test3",testService.selectAllLoginHst());
-
-        log.debug("restCheck2 : {}" ,result);
-
         return result;
     }
 
     @GetMapping("/batis")
     @SuppressWarnings("unchecked")
     public HashMap batis(){
-        log.debug("batis : {}",mapperService.selectAllMember());
+//        log.debug("batis : {}",mapperService.selectAllMember());
         HashMap result = new HashMap();
         result.put("selectAll",mapperService.selectAllMember());
         return result;

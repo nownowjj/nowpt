@@ -20,6 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 로그인, 회원가입 등과 같이 권한이 없어도 사용할 수 있는 api
+ *
+ */
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -56,12 +60,6 @@ public class ApiAuthRestController {
         return result;
     }
 
-//    @GetMapping("/batis")
-//    public List<Member> batis(){
-//        log.debug("batis : {}",mapperService.selectAllMember());
-//        return mapperService.selectAllMember();
-//    }
-
     @PostMapping("/userLogin")
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
@@ -69,7 +67,7 @@ public class ApiAuthRestController {
 //        log.debug("token Check!! : {} " ,token);
 //        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getAccessToken()) + " AccessToken check");
 //        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getTokenType()) + " Type check");
-//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getRole()) + " Role check");
+        log.debug(ResponseEntity.ok(new JwtAuthenticationResponse(token).getRole()) + " Role check");
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 

@@ -61,6 +61,8 @@ public class AuthService {
                 return (MemberMoney) memRepo.save(memChk);
             }
         } else {
+            log.debug("회원가입 진행 {}",joinDto);
+
             MemberMoney newMem = mm.map(joinDto, MemberMoney.class);
             newMem.setMoneyBlce(0L);
             newMem.setMembPw(pe.encode(newMem.getPassword()));
