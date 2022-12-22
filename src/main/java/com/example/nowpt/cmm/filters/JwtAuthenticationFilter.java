@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	}
 
 	private void jwtAuthStart(HttpServletRequest req) {
-		log.debug("jwtAuthStart");
+		log.debug("jwtAuthStart req : {}", req);
 		try {
 			String jwt = getJwtFromRequest(req);
 

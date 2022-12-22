@@ -81,6 +81,12 @@ dependencies {
 
     // OAuth2
 
+    //kakao login json
+    implementation 'org.json:json:20171018'
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.3'
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.0"
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
 }
 
 tasks.withType(JavaCompile) {
