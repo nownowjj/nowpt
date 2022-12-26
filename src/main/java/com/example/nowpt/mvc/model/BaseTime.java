@@ -26,11 +26,21 @@ public class BaseTime {
 	// Entity 생성될 때 생성
 	@CreatedDate
 	@Column(name = "frst_regist_dt", nullable = false)
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
+//	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private LocalDateTime frstRegistDt;
 	
 	// Entity 수정 됐을 때
 	@LastModifiedDate
 	@Column(name = "last_change_dt", nullable = false)
 	private LocalDateTime lastChangeDt;
+
+
+
+
+
+
+
+
+
+
 }

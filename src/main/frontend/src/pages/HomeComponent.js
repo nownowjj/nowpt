@@ -1,36 +1,31 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import {homeTest} from "../api/Api";
 import mguImg from "../assets/mgu.jpg"
 
-class HomeComponent  extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            message: ""
-        }
-    }
+const HomeComponent =(props)=>{
+    const [message,setMessage] = useState("");
+    const [test,setTest] = useState("");
 
-    componentDidMount() {
-        this.getApi();
-    }
+    useEffect(()=> {
+        console.log("Home 4 !!")
+        console.log(props.oauth + "< Home props")
 
-    getApi = () => {
-        // axios.get("/api/main")
+        setTest(props.oauth);
+
+    },[props]);
+
+    useEffect(()=>{
         homeTest()
             .then(response => {
-                this.setState({
-                    message: response.message
-                })
-            }).catch(error =>{
+                setMessage(response.message)
+            }).catch(error => {
             console.log(error)
         });
-    }
+    },[]);
 
-
-    render() {
         return (
             <div>
-                api : {this.state.message}
+                api : {message}
                 <br/>
                 Home 페이지
                 <br/>
@@ -40,6 +35,4 @@ class HomeComponent  extends Component {
             </div>
         )
     }
-}
-
 export default HomeComponent ;

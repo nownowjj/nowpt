@@ -1,6 +1,7 @@
 import {ACCESS_TOKEN} from "../api/Api";
 
 const isAuth=()=>{
+    // console.log("isAuth");
     if(sessionStorage.getItem(ACCESS_TOKEN) != null){
             let jwt = sessionStorage.getItem(ACCESS_TOKEN);
             let jwtData = jwt.split('.')[1];

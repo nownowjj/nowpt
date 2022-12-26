@@ -2,6 +2,7 @@ package com.example.nowpt.mvc.model;
 
 import com.example.nowpt.cmm.code.Cd;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -76,6 +77,10 @@ public class Member extends Base implements UserDetails{
     //최종로그인일시
     @Column(name = "last_login_dtm", length = 14)
     private String lastLoginDtm;
+
+    @Column(name = "profile_image" , length = 255 )
+//    @ColumnDefault()
+    private String profileImage;
 
     //-------------------------------------------------------
     //SecurityConfig

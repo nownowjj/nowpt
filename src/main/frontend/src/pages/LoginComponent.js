@@ -3,6 +3,9 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router";
 import Button from "../component/JoinButton";
 import {ACCESS_TOKEN, login} from "../api/Api";
+import {KAKAO_AUTH_URL} from "../api/KaKaoUrl";
+import '../styles/style.css'
+import KakaoLogin from "react-kakao-login";
 
 function LoginComponent () {
 
@@ -52,8 +55,6 @@ function LoginComponent () {
                 let decodedJwtData = JSON.parse(decodedJwtJsonData);
                 let isAdmin = decodedJwtData.roles;
                 console.log('Is admin: ' + isAdmin);
-
-
                 // console.log("==================")
                 // console.log('jwtData: ' + jwtData)
                 // console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
@@ -66,13 +67,13 @@ function LoginComponent () {
         // console.log("login 함수 종료")
     }
 
+    //
+    // const startLogin=()=>{
+    //
+    // }
+
     return (
         <div>
-            {/**/}
-            <div>
-               {/*<HeaderComponent value="sss"></HeaderComponent>*/}
-            </div>
-            {/**/}
             <h3>로그인 페이지</h3>
             <form onSubmit={handleSubmit}>
             <Input
@@ -97,13 +98,27 @@ function LoginComponent () {
                 value="로그인"
             />
             </form>
+
+            <a
+                // onClick={startLogin}
+                href={KAKAO_AUTH_URL}
+            >
+                <div
+                    className="kakao_btn"
+                >
+                </div>
+            </a>
+
+            {/*<KaKaoBtn href={KAKAO_AUTH_URL}>*/}
+            {/*    <span>카카오계정 로그인</span>*/}
+            {/*</KaKaoBtn>*/}
         </div>
     )
 }
 
 const Input = styled.input`
 border-radius: 4px;
-border: 2px solid #ef4746;
+border: 2px solid #e8e8e8;
 padding: 10px;
 font-size: 1rem;
 margin: 15px;
@@ -115,6 +130,22 @@ margin: 15px;
 ::placeholder {
     font-size: 0.8rem;
 }
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+`;
+
+const KaKaoBtn = styled.div`
+border-radius: 4px;
+border: 2px solid yellow;
+background-color:yellow;
+padding: 10px;
+font-size: 1rem;
+margin: 15px;
+
 
 ::-webkit-outer-spin-button,
 ::-webkit-inner-spin-button {

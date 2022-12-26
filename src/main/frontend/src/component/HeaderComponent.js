@@ -4,10 +4,11 @@ import {useEffect, useState} from "react";
 import isAuth from "../services/isAuth";
 
 
-function HeaderComponent(props) {
+const  HeaderComponent=(props)=> {
     const navigate = useNavigate();
     const [auth, setAuth] = useState("");
     const Admin = "ROLE_ADMIN";
+    const [test,setTest] = useState(null);
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
@@ -26,9 +27,22 @@ function HeaderComponent(props) {
         navigate("/api/common/myPage")
     }
 
+    // function isLogin(){
+    //     console.log("값이 없어");
+    //
+    //     if(!props.oauth && props.oauth === "undefined" && props.oauth === undefined){
+    //     console.log("값이 이쪄 : " + props.oauth);
+    //         setTest(props.oauth);
+    //         console.log(props.oauth + ": 값?")
+    //     }
+    //
+    //     return false;
+    // }
+
     useEffect(() => {
         setAuth(isAuth());
-    })
+        // isLogin();
+    },[])
 
 
     return (
@@ -115,6 +129,7 @@ function HeaderComponent(props) {
                             "비로그인"
                     }
                 </p>
+
 
 
             </ul>

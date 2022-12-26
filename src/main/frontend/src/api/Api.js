@@ -26,7 +26,7 @@ const request = (options) => {
         );
 };
 
-// Sn 추출
+//  추출
 export function getMembInfo(){
     return request({
         url:API_BASE+"/common/getMembInfo",
@@ -73,5 +73,14 @@ export function login(loginDto) {
         url: API_BASE + "/auth/userLogin",
         method: 'POST',
         body: JSON.stringify(loginDto)
+    });
+}
+
+// 카카오 로그인 api
+export function kakaoLogin(code) {
+    return request({
+        url: API_BASE.replace("/api","") + "/oauth/kakao?code="+code,
+        method: 'GET',
+        // body: JSON.stringify(code)
     });
 }

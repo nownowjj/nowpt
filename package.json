@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/nownowjj/nowpt/issues"
   },
-  "homepage": "https://github.com/nownowjj/nowpt#readme"
+  "homepage": "https://github.com/nownowjj/nowpt#readme",
+  "dependencies": {
+    "react-redux": "^8.0.5",
+    "useractions": "^0.7.0"
+  }
 }

@@ -1,44 +1,38 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import {mainTest} from "../api/Api";
 
-class MainComponent  extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            message: ""
-        }
-    }
+const MainComponent = () => {
+    const [message,setMessage] = useState("");
 
-    componentDidMount() {
-        this.getApi();
-    }
 
-    getApi = () => {
+    useEffect(()=>{
+
+
+
         mainTest()
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 console.log("api/main")
-                this.setState({
-                    message: response.message
-                })
+                    setMessage(response.message)
             }).catch(error =>{
             console.log(error)
         });
-    }
+
+
+
+    })
 
 
 
 
 
-    render() {
-        return (
-            <div>
-                api : {this.state.message}, 홈,메인은 로그인을 하지 않아도 api를 호출 합니다.
-                <br/>
-                Main 페이지
-            </div>
-        )
-    }
+    return (
+        <div>
+            api : {message}, 홈,메인은 로그인을 하지 않아도 api를 호출 합니다.
+            <br/>
+            Main 페이지
+        </div>
+    )
 }
 
 export default MainComponent ;

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 @Service
 public class OAuthService{
@@ -29,7 +30,7 @@ public class OAuthService{
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=77cbf4dbfe4487f6bb02d3360642a389"); // TODO REST_API_KEY 입력
-            sb.append("&redirect_uri=http://localhost:8060/oauth/kakao"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&redirect_uri=http://localhost:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
@@ -46,7 +47,7 @@ public class OAuthService{
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println("response body : " + result);
+            System.out.println("response body getKakaoAccessToken : " + result);
 
             //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
@@ -69,7 +70,7 @@ public class OAuthService{
 
 
 
-    public void createKakaoUser(String token)  {
+    public JsonElement createKakaoUser(String token)  {
 
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
@@ -106,15 +107,21 @@ public class OAuthService{
             if(hasEmail){
                 email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
             }
+            String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
+            String profile_image = element.getAsJsonObject().get("properties").getAsJsonObject().get("profile_image").getAsString();
+
 
             System.out.println("id : " + id);
             System.out.println("email : " + email);
+            System.out.println("nickname : " + nickname);
+            System.out.println("profile_image : " + profile_image);
 
             br.close();
-
+            return element;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

@@ -1,4 +1,4 @@
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import HeaderComponent from "../component/HeaderComponent";
 import MainComponent from "../pages/MainComponent";
 import TestComponent from "../pages/TestComponent";
@@ -6,12 +6,18 @@ import LoginComponent from "../pages/LoginComponent";
 import HomeComponent from "../pages/HomeComponent";
 import MyPageComponent from "../pages/MyPageComponent";
 import CalculatorComponent from "../pages/CalculatorComponent";
+import KakaoRedirectHandler from "../api/KakaoRedirectHandler";
+import Oauth from "../api/Oauth";
 
 
 const Router = () => {
 
+
+
+
+
     return (
-        <HashRouter>
+        <BrowserRouter>
 
             <HeaderComponent/>
             <Routes>
@@ -21,9 +27,11 @@ const Router = () => {
                 <Route path="/api/login" element={<LoginComponent />} />
                 <Route path="/api/common/myPage" element={<MyPageComponent />} />
                 <Route path="/api/calculator" element={<CalculatorComponent />} />
+
+                <Route path="/oauth" element={<Oauth />} />
             </Routes>
 
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 

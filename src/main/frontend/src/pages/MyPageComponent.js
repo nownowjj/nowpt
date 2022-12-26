@@ -16,6 +16,7 @@ const MyPageComponent = () => {
     useEffect(() => {
         getMembInfo()
             .then(response => {
+                console.log("ss")
                 console.log(response);
                 setMembInfo(response);
             })
@@ -83,6 +84,7 @@ const MyPageComponent = () => {
             <div>membId : {membInfo.membId}</div>
             <div>membNm : {membInfo.membNm}</div>
             <div>frstRegistDt : {membInfo.frstRegistDt}</div>
+            <div>profile_image : {membInfo.profileImage}</div>
         </div>
     )
 }
