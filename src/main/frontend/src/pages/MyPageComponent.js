@@ -19,11 +19,14 @@ const MyPageComponent = () => {
                 console.log("ss")
                 console.log(response);
                 setMembInfo(response);
+
             })
             .catch(error => {
                 console.log(error);
             })
     }, []);
+
+    const leftIcon = { backgroundImage: "url("+ membInfo.profileImage +")" , width:"300px",height:"300px",backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover",borderRadius:"50%"};
 
     const changeEmail=(value)=>{
         // console.log(value);
@@ -85,6 +88,7 @@ const MyPageComponent = () => {
             <div>membNm : {membInfo.membNm}</div>
             <div>frstRegistDt : {membInfo.frstRegistDt}</div>
             <div>profile_image : {membInfo.profileImage}</div>
+            <div style={leftIcon}></div>
         </div>
     )
 }
