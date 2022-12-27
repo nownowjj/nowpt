@@ -23,6 +23,7 @@ public class CustomUserDetailService implements UserDetailsService{
 
 //		log.debug(username + "로그인창 입력한 username");
 		Member member = memRepo.findByMembId(username);
+//		Member member = memRepo.findByMembIdOrEmailAddr(username);
 
 		if(member == null) throw new UsernameNotFoundException("유저가 존재하지 않습니다.");
 //		log.debug("해당 username getUsername : {}",member.getUsername());

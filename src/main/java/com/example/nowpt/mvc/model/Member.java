@@ -59,7 +59,7 @@ public class Member extends Base implements UserDetails{
     private String mobileNo;
 
     //이메일주소
-    @Column(name = "email_addr", length = 100)
+    @Column(name = "email_addr", length = 100, nullable = false,unique = true)
     private String emailAddr;
 
     //우편번호
@@ -79,7 +79,6 @@ public class Member extends Base implements UserDetails{
     private String lastLoginDtm;
 
     @Column(name = "profile_image" , length = 255 )
-//    @ColumnDefault()
     private String profileImage;
 
     //-------------------------------------------------------

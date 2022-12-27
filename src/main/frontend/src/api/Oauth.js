@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom';
-import {kakaoLogin} from "./Api";
+import {ACCESS_TOKEN, kakaoLogin} from "./Api";
 import HomeComponent from "../pages/HomeComponent";
 import HeaderComponent from "../component/HeaderComponent";
 
@@ -8,7 +8,7 @@ const Oauth = () => {
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
 
-    const [oauth, setOauth] = useState("");
+    // const [oauth, setOauth] = useState("");
     // console.log("code" + code);
     // console.log("OAuth")
 
@@ -18,21 +18,17 @@ const Oauth = () => {
         //         await
         kakaoLogin(code)
             .then(response => {
-                let data = response.datas.id;
-                // setOauth(response.datas);
-                setOauth(data);
+
                 console.log("1 !!")
-                console.log(response.datas.id);
-                if (response.datas.id) {
-                    console.log("response에 id가 존재함")
-                    // setTimeout(() => {
-                        console.log("2!! setTimeOut!!")
-                        navigate('/')
-                    // }, 0.5)
-                }
+                console.log(response.token.accessToken);
+                sessionStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
+
+                console.log('로그인에 성공하였습니다!');
+                navigate("/api/common/mypage");
 
             })
             .catch(error => {
+                alert("카카오 로그인 실패");
                 console.log(error);
                 navigate('/api/main');
             })
@@ -50,7 +46,7 @@ const Oauth = () => {
         //         navigate('/api/main');
         //     }
         // })();
-    },[oauth]);
+    },[]);
 
     return (
         <div>
@@ -60,13 +56,13 @@ const Oauth = () => {
             {/*    )*/}
             {/*}*/}
 
-            {
-                oauth !== "undefined" && "" && undefined
-                ?
-                    <HeaderComponent oauth={oauth}/>
-                    :
-                    <HeaderComponent oauth={"dldldl"}/>
-            }
+            {/*{*/}
+            {/*    oauth !== "undefined" && "" && undefined*/}
+            {/*    ?*/}
+            {/*        <HeaderComponent oauth={oauth}/>*/}
+            {/*        :*/}
+            {/*        <HeaderComponent oauth={"dldldl"}/>*/}
+            {/*}*/}
         </div>
     )
 }

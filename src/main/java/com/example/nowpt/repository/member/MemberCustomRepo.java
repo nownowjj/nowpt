@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface MemberCustomRepo {
 	Member memberChkById(String id);
 
+
+	Member memberChkByEmail(String email);
 }

@@ -7,10 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepo extends JpaRepository<Member, Long>, MemberCustomRepo{
 	Member findByMembId(String membId);
+
+//	Member findByMembIdOrEmailAddr(String membId, String emailAddr);
 	
 
 	boolean existsByMembId(String membId);
 
 
 	Member findByMemberSn(Long membSn);
+
+//	Member findByMembEmailAddr(String emailAddr);
+
 }

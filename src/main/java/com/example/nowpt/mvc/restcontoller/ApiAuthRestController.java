@@ -39,7 +39,7 @@ public class ApiAuthRestController {
     @Autowired
     private MemberMapper memberMapper;
 
-
+    String sns = "N";
 
 
     @GetMapping("/home")
@@ -63,7 +63,7 @@ public class ApiAuthRestController {
     @PostMapping("/userLogin")
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
-        String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr());
+        String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
 //        log.debug("token Check!! : {} " ,token);
 //        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getAccessToken()) + " AccessToken check");
 //        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getTokenType()) + " Type check");

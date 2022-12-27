@@ -18,4 +18,13 @@ public class MemberCustomRepoImpl implements MemberCustomRepo{
 		QMember qmem = QMember.member;
 		return qf.selectFrom(qmem).where(qmem.membId.eq(id).and(qmem.useYn.eq("Y"))).fetchOne();
 	}
+
+	@Override
+	public Member memberChkByEmail(String email) {
+		log.debug("이메일 존재 여부 확인");
+		QMember qMember = QMember.member;
+		return qf.
+				selectFrom(qMember)
+				.where(qMember.emailAddr.eq(email).and(qMember.useYn.eq("Y"))).fetchOne();
+	}
 }

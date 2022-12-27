@@ -16,10 +16,9 @@ const MyPageComponent = () => {
     useEffect(() => {
         getMembInfo()
             .then(response => {
-                console.log("ss")
+                console.log("myPage")
                 console.log(response);
                 setMembInfo(response);
-
             })
             .catch(error => {
                 console.log(error);

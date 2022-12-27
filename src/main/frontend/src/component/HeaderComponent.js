@@ -24,6 +24,7 @@ const  HeaderComponent=(props)=> {
             alert("로그인을 해주세요");
             return false;
         }
+        console.log("dd")
         navigate("/api/common/myPage")
     }
 
@@ -42,7 +43,8 @@ const  HeaderComponent=(props)=> {
     useEffect(() => {
         setAuth(isAuth());
         // isLogin();
-    },[])
+        console.log("권한체크");
+    })
 
 
     return (

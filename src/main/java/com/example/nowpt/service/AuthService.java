@@ -29,16 +29,38 @@ public class AuthService {
 
     @Autowired private PasswordEncoder pe;
 
-    public String gettoken(String id, String pw, String ip) {
-        Member mem = memRepo.memberChkById(id);
+    public String gettoken(String id, String pw, String ip, String sns) {
+
+        Member mem = new Member();
+
+        // 일반 로그인일 경우
+        /**
+         * @Params (membId, pw , ip , Y )
+         */
+        if (!(sns.equals("Y"))){
+            // membId로 검증
+             mem = memRepo.memberChkById(id);
+
+             // 일반 로그인은 비밀번호 체크가 필요함
+            if(! pe.matches(pw, mem.getPassword())) {
+                throw new RuntimeException("비밀번호가 틀립니다.");
+            }
+
+        }
+        // 소셜 로그인일 경우
+        /**
+         * @params (social_id , pw , ip, N)
+         */
+        else{
+            // 이메일로 검증
+            mem = memRepo.memberChkById(id);
+        }
 
         if(mem == null) {
             throw new RuntimeException("존재하지 않는 유저 입니다.");
         }
 
-        if(! pe.matches(pw, mem.getPassword())) {
-            throw new RuntimeException("비밀번호가 틀립니다.");
-        }
+
 
         if(! Cd.MEMBER_STTUS_OK.equals(mem.getMembSttusCd().getCodeValue())) {
             throw new RuntimeException("유저 상태가 정상이 아닙니다.");

@@ -15,12 +15,12 @@ const TestComponent = () => {
         fetchTest()
             .then(response => {
                 console.log("--jpa api--")
-                // console.log("nm : "+response.test)
+                console.log(response.test2[0].role)
                 // console.log("Authority : "+ JSON.stringify(response.test2[0].authority));
                 // console.log("-- login Hst --");
                 console.log(response.test3);
                 setTest(response.test);
-                setTest2(response.test2[0].authority);
+                setTest2(response.test2[0].role);
                 setLists(response.test3);
             }).catch(error => {
             alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")

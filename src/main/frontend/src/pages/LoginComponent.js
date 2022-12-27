@@ -43,24 +43,24 @@ function LoginComponent () {
             .then(response => {
                 // login api request가 success면 response 객체에 accessToken이 담겨온다 그걸 session이든 local이든 set해서 사용하쟈.
                 sessionStorage.setItem(ACCESS_TOKEN, response.accessToken);
-                // console.log(response)
+                console.log(response)
                 // console.log("accessToken : " + response.accessToken);
                 // console.log("tokenType :  " + response.tokenType);
                 // console.log("role : " + response.role);
 
-                let jwt = response.accessToken;
-
-                let jwtData = jwt.split('.')[1];
-                let decodedJwtJsonData = window.atob(jwtData);
-                let decodedJwtData = JSON.parse(decodedJwtJsonData);
-                let isAdmin = decodedJwtData.roles;
-                console.log('Is admin: ' + isAdmin);
+                // let jwt = response.accessToken;
+                //
+                // let jwtData = jwt.split('.')[1];
+                // let decodedJwtJsonData = window.atob(jwtData);
+                // let decodedJwtData = JSON.parse(decodedJwtJsonData);
+                // let isAdmin = decodedJwtData.roles;
+                // console.log('Is admin: ' + isAdmin);
                 // console.log("==================")
                 // console.log('jwtData: ' + jwtData)
                 // console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
                 // console.log('decodedJwtData: ' + decodedJwtData)
-                alert('로그인에 성공하였습니다!');
-                navigate("/api/test/jpa");
+                console.log('로그인에 성공하였습니다!');
+                navigate("/api/common/mypage");
             }).catch(error => {
             alert('아이디나 비밀번호를 확인해주세요.');
         });
