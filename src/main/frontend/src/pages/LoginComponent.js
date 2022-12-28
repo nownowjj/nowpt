@@ -60,7 +60,7 @@ function LoginComponent () {
                 // console.log('decodedJwtJsonData: ' + decodedJwtJsonData)
                 // console.log('decodedJwtData: ' + decodedJwtData)
                 console.log('로그인에 성공하였습니다!');
-                navigate("/api/common/mypage");
+                navigate("/go/common/mypage");
             }).catch(error => {
             alert('아이디나 비밀번호를 확인해주세요.');
         });

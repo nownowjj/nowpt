@@ -13,7 +13,7 @@ const  HeaderComponent=(props)=> {
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
             window.sessionStorage.removeItem("accessToken");
-            navigate("/api/login");
+            navigate("/go/login");
         } else {
             return false;
         }
@@ -25,7 +25,7 @@ const  HeaderComponent=(props)=> {
             return false;
         }
         console.log("dd")
-        navigate("/api/common/myPage")
+        navigate("/go/common/myPage")
     }
 
     // function isLogin(){
@@ -62,7 +62,7 @@ const  HeaderComponent=(props)=> {
                 <li
                     style={li}
                     onClick={() => {
-                        navigate("/api/main")
+                        navigate("/go/main")
                     }
                     }
                     // className="Fli on cmli"
@@ -73,13 +73,13 @@ const  HeaderComponent=(props)=> {
 
                 <li
                     style={li}
-                    onClick={() => navigate("/api/test/jpa")}
+                    onClick={() => navigate("/go/test/jpa")}
                 >
                     어드민 기능 테스트
                 </li>
                 <li
                     style={li}
-                    onClick={() => navigate("/api/login")}
+                    onClick={() => navigate("/go/login")}
                 >
                     로그인
                 </li>
@@ -116,7 +116,7 @@ const  HeaderComponent=(props)=> {
 
                 <li
                     style={li}
-                    onClick={() => navigate("/api/calculator")}
+                    onClick={() => navigate("/go/calculator")}
                 >
                     계산기
                 </li>

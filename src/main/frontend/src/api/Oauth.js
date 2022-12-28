@@ -24,13 +24,13 @@ const Oauth = () => {
                 sessionStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
 
                 console.log('로그인에 성공하였습니다!');
-                navigate("/api/common/mypage");
+                navigate("/go/common/mypage");
 
             })
             .catch(error => {
                 alert("카카오 로그인 실패");
                 console.log(error);
-                navigate('/api/main');
+                navigate('/go/main');
             })
 
         //
