@@ -1,5 +1,5 @@
 const CLIENT_ID = "77cbf4dbfe4487f6bb02d3360642a389";
-// const REDIRECT_URI =  "http://localhost:8060/oauth/kakao";
+// const REDIRECT_URI = 'http://localhost:8060/oauth';
 const REDIRECT_URI = 'http://localhost:3000/oauth';
 
 

@@ -2,7 +2,6 @@ package com.example.nowpt.social;
 
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.utils.EntityUtil;
-import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
@@ -12,7 +11,6 @@ import com.google.gson.JsonElement;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,8 +25,6 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 @RequestMapping("/oauth")
 public class OAuthController {
-
-    @Autowired private ModelMapper mm;
     @Autowired private OAuthService oAuthService;
     @Autowired private MemberRepo memRepo;
     @Autowired private AuthService authService;
@@ -91,7 +87,7 @@ public class OAuthController {
             // 프로필 이미지 갱신
             String origin_image = mem.getProfileImage();
             if(!(origin_image.equals(profile_image))){
-                log.debug("가입된 유저의 프로필이 변경 되었습니다. \n 새로운 이미지로 변경 합니다.");
+                log.debug("가입된 유저의 프로필이 변경 되었습니다. 새로운 이미지로 변경 합니다.");
                 mem.setProfileImage(profile_image);
                 memRepo.save(mem);
             }
