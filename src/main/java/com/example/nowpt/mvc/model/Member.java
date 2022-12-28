@@ -81,6 +81,10 @@ public class Member extends Base implements UserDetails{
     @Column(name = "profile_image" , length = 255 )
     private String profileImage;
 
+    @Column(name = "identity_verification", length = 1)
+    @ColumnDefault("'N'")
+    private String identityVerification;
+
     //-------------------------------------------------------
     //SecurityConfig
     //-------------------------------------------------------
