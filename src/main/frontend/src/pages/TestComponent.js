@@ -14,11 +14,11 @@ const TestComponent = () => {
     useEffect(() => {
         fetchTest()
             .then(response => {
-                console.log("--jpa api--")
-                console.log(response.test2[0].role)
+                // console.log("--jpa api--")
+                // console.log(response.test2[0].role)
                 // console.log("Authority : "+ JSON.stringify(response.test2[0].authority));
                 // console.log("-- login Hst --");
-                console.log(response.test3);
+                // console.log(response.test3);
                 setTest(response.test);
                 setTest2(response.test2[0].role);
                 setLists(response.test3);
@@ -29,8 +29,8 @@ const TestComponent = () => {
 
         batisTest()
             .then(response => {
-                console.log("--mybatis api--")
-                console.log(response.selectAll);
+                // console.log("--mybatis api--")
+                // console.log(response.selectAll);
                 setSelectAll(response.selectAll);
             }).catch(error => {
             console.log("batis error" + error)

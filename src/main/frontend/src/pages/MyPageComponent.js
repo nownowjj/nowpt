@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {getMembInfo, updateMembAddr} from "../api/Api";
 import Input from "../component/Input";
 import Button from "../component/JoinButton";
-import {validateEmail} from "../services/emailValidate";
+import {validateEmail} from "../services/validate";
 
 const MyPageComponent = () => {
     // 해당 멤버 정보
@@ -16,7 +16,7 @@ const MyPageComponent = () => {
     useEffect(() => {
         getMembInfo()
             .then(response => {
-                console.log("myPage")
+                // console.log("myPage")
                 console.log(response);
                 setMembInfo(response);
             })
@@ -87,6 +87,17 @@ const MyPageComponent = () => {
             <div>membNm : {membInfo.membNm}</div>
             <div>frstRegistDt : {membInfo.frstRegistDt}</div>
             <div>profile_image : {membInfo.profileImage}</div>
+            <div>
+                본인인증 여부 :
+                {
+                    membInfo.identityVerification === 'N'
+                    ?
+                        <span>안함</span>
+                        :
+                        <span>함</span>
+                }
+
+            </div>
             <div style={leftIcon}></div>
         </div>
     )

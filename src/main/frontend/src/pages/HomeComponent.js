@@ -4,15 +4,8 @@ import mguImg from "../assets/mgu.jpg"
 
 const HomeComponent =(props)=>{
     const [message,setMessage] = useState("");
-    const [test,setTest] = useState("");
 
-    useEffect(()=> {
-        console.log("Home 4 !!")
-        console.log(props.oauth + "< Home props")
 
-        setTest(props.oauth);
-
-    },[props]);
 
     useEffect(()=>{
         homeTest()
