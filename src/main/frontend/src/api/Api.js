@@ -1,7 +1,6 @@
 export const API_BASE = "http://localhost:8060/api";
-// export const API_BASE = "192.168.10.215:8060/api";
 // export const API_BASE = "/api";
-export const ACCESS_TOKEN = 'accessToken';
+export const ACCESS_TOKEN = 'acces esToken';
 
 
 const request = (options) => {

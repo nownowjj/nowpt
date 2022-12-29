@@ -16,6 +16,7 @@ const MyPageComponent = () => {
     const [successEmail,setSuccessEmail] = useState(null);
 
     useEffect(() => {
+        console.log("aos")
         AOS.init();
     })
 
