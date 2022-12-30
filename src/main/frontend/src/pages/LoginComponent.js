@@ -76,14 +76,10 @@ function LoginComponent () {
             />
 
 
-            <a
-                href={KAKAO_AUTH_URL}
-            >
-                <div
-                    className="kakao_btn"
-                >
-                </div>
+            <a href={KAKAO_AUTH_URL}>
+                <div className="kakao_btn"></div>
             </a>
+
         </div>
     )
 }
