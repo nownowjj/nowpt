@@ -2,6 +2,11 @@ server:
   port: ${PORT}
 #prod
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  #    converters:
+  #      preferred-json-mapper: gson
   profiles:
     active: default
   datasource:
@@ -15,15 +20,15 @@ spring:
         format_sql: true
         use_sql_comments: true  # sql ??? ????? ?????.
     hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: update
     show-sql: true
 mybatis:
   type-aliases-package: com.example.nowpt.mvc.dto  # entity가 존재하는 경로작성.
   mapper-locations: mapper/**.xml        # XmlMapper.xml이 존재하는 경로작성.
-#  thymeleaf:
-#    cache: false
-#    prefix: classpath:/static/
-#    suffix: .html
+
 
 logging:
   level:
