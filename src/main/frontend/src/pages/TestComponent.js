@@ -84,6 +84,10 @@ const TestComponent = () => {
                     )
                 }
             </div>
+
+            <div style={{border:"1px solid #e8e8e8"}}>
+                <h2>공지사항 등록 :</h2>
+            </div>
         </div>
     )
 }
