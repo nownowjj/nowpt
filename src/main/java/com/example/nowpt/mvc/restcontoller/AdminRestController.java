@@ -38,6 +38,11 @@ public class AdminRestController {
                 .build();
     }
 
+    /**
+     *
+     * @param pageable
+     * @return 누구나 접근가능한 공지사항 조회 API
+     */
     @GetMapping("/notice/auth/selectNotice")
     public RVO<Page<Notice>> selectNotice(
             @PageableDefault(page = 0, size = 2) Pageable pageable
@@ -47,6 +52,22 @@ public class AdminRestController {
                 .msg("공지사항 조회")
                 .code(ApiCd.NORMAL)
                 .data(noticeService.selectNotice(pageable))
+                .build();
+    }
+
+    /**
+     *
+     * @param noticeSn
+     * @param noticeDto
+     * @return 공지사항 수정 API PUT -> Patch는 바꾸고 싶은 값만 변경 가능하다.
+     */
+    @PatchMapping("/notice/admin/{noticeSn}")
+    public RVO<Notice> patchNotice(@PathVariable Long noticeSn,@RequestBody NoticeDto noticeDto,@AuthenticationPrincipal Member member){
+        log.debug("Notice patch : {}",noticeDto);
+        return RVO.<Notice>builder()
+                .msg("공지사항 수정완료.")
+                .code(ApiCd.NORMAL)
+                .data(noticeService.patchNotice(noticeSn,noticeDto,member.getMemberSn()))
                 .build();
     }
 }

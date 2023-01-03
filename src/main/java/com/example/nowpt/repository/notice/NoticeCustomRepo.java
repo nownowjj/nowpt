@@ -13,4 +13,6 @@ public interface NoticeCustomRepo {
      * @return 공지사항 페이징 처리
      */
     Page<Notice> selectNoticePaging(Pageable pageable);
+
+
 }

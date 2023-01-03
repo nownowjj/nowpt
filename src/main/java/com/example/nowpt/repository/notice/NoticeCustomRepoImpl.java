@@ -17,16 +17,13 @@ import java.util.List;
 public class NoticeCustomRepoImpl implements NoticeCustomRepo {
 
     @Autowired private JPAQueryFactory qf;
-
     private QNotice qNotice = QNotice.notice;
-
     @Override
     public Page<Notice> selectNoticePaging(Pageable pageable){
 
         List<Notice> result =
                 qf
-                        .select(qNotice)
-                        .from(qNotice)
+                        .selectFrom(qNotice)
                         .orderBy(qNotice.frstRegistDt.desc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
@@ -44,4 +41,5 @@ public class NoticeCustomRepoImpl implements NoticeCustomRepo {
 
         return new PageImpl<>(result,pageable,count);
     }
+
 }

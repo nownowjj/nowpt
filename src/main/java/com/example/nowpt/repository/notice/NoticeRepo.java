@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NoticeRepo extends JpaRepository<Notice,Long> ,NoticeCustomRepo{
+    Notice findByNoticeSn(Long noticeSn);
 }

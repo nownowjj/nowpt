@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class NoticeService {
     @Autowired private NoticeRepo noticeRepo;
     @Autowired private ModelMapper modelMapper;
+
     /**
      * @param member
      * @param noticeDto
@@ -33,8 +34,38 @@ public class NoticeService {
     }
 
 
+    /**
+     *
+     * @param pageable
+     * @return 공지사항 조회
+     */
     public Page<Notice> selectNotice(Pageable pageable) {
 //        log.debug("pagingCheck : {}",noticeRepo.selectNoticePaging(pageable));
         return noticeRepo.selectNoticePaging(pageable);
+    }
+
+    /**
+     * @param noticeSn
+     * @param noticeDto
+     * @param memberSn
+     * @return 공지사항 수정
+     */
+    public Notice patchNotice(Long noticeSn, NoticeDto noticeDto, Long memberSn) {
+        // Sn으로 공지사항 조회
+        Notice notice = noticeRepo.findByNoticeSn(noticeSn);
+
+        // Sn 조회 오류시 Exception 발생
+        if(notice == null) throw new RuntimeException("수정에 실패하였습니다.");
+
+        // 새로운 데이터로 Set
+        if(noticeDto.getNoticeTitle() != null){
+            notice.setNoticeTitle(noticeDto.getNoticeTitle());
+        }
+        if(noticeDto.getNoticeContent() != null){
+            notice.setNoticeContent(noticeDto.getNoticeContent());
+        }
+
+        notice.setLastChangeMembSn(memberSn);
+        return noticeRepo.save(notice);
     }
 }
