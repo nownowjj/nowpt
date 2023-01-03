@@ -9,7 +9,7 @@ const NoticePagingComponent = () => {
     useEffect(()=>{
         getNotice()
             .then(response => {
-                console.log(response.data.content);
+                // console.log(response.data.content);
                 setNoticeList(response.data.content)
             }).catch(error =>{
             console.log(error)
