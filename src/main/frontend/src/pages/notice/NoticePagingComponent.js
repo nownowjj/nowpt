@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getNotice} from "../../api/NoticeApi";
 
-const NoticeComponent = () => {
+const NoticePagingComponent = () => {
 
     const [noticeList,setNoticeList] = useState([]);
 
@@ -16,11 +16,9 @@ const NoticeComponent = () => {
         });
     },[])
 
-
-
     return (
         <div>
-            <h2>공지사항</h2>
+            <h2>공지사항 리스트</h2>
             <table border={"1px solid black"}>
                 <thead>
                     <th>제목</th>
@@ -32,7 +30,8 @@ const NoticeComponent = () => {
                 </thead>
                 <tbody>
 
-                    {noticeList.map(list =>
+                    {noticeList && noticeList.map((list) => {
+                        return (
                         <tr key={list.noticeSn}>
 
                             <td>{list.noticeTitle}</td>
@@ -43,7 +42,8 @@ const NoticeComponent = () => {
                             <td>{list.lastChangeDt}</td>
 
                         </tr>
-                    )}
+                        );
+                    })}
 
                 </tbody>
             </table>
@@ -51,4 +51,4 @@ const NoticeComponent = () => {
     )
 }
 
-export default NoticeComponent ;
+export default NoticePagingComponent ;

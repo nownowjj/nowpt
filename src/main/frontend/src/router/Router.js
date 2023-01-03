@@ -7,6 +7,7 @@ import HomeComponent from "../pages/HomeComponent";
 import MyPageComponent from "../pages/MyPageComponent";
 import CalculatorComponent from "../pages/CalculatorComponent";
 import Oauth from "../api/Oauth";
+import NoticePage from "../pages/notice/NoticePage";
 
 
 const Router = () => {
@@ -35,6 +36,7 @@ const Router = () => {
                 <Route path="/go/login" element={<LoginComponent />} />
                 <Route path="/go/common/myPage" element={<MyPageComponent />} />
                 <Route path="/go/calculator" element={<CalculatorComponent />} />
+                <Route path="/go/notice" element={<NoticePage />} />
 
 
                 <Route path="/oauth" element={<Oauth />} />

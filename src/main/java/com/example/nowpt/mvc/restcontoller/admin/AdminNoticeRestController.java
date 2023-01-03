@@ -1,4 +1,4 @@
-package com.example.nowpt.mvc.restcontoller;
+package com.example.nowpt.mvc.restcontoller.admin;
 
 import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.rvo.RVO;
@@ -8,11 +8,9 @@ import com.example.nowpt.mvc.model.Notice;
 import com.example.nowpt.repository.notice.NoticeRepo;
 import com.example.nowpt.service.admin.NoticeService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/api")
-public class AdminRestController {
+public class AdminNoticeRestController {
     @Autowired private NoticeService noticeService;
     @Autowired private NoticeRepo noticeRepo;
 

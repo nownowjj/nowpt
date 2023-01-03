@@ -1,4 +1,4 @@
-package com.example.nowpt.mvc.restcontoller;
+package com.example.nowpt.mvc.restcontoller.admin;
 
 import com.example.nowpt.mvc.model.MbrPrinciple;
 import com.example.nowpt.mvc.model.Member;

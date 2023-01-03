@@ -1,4 +1,4 @@
-package com.example.nowpt.mvc.restcontoller;
+package com.example.nowpt.mvc.restcontoller.auth;
 
 import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.rvo.RVO;
@@ -6,7 +6,6 @@ import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
 import com.example.nowpt.mvc.mapper.MemberMapper;
-import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.service.AuthService;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 로그인, 회원가입 등과 같이 권한이 없어도 사용할 수 있는 api
@@ -28,7 +26,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
-public class ApiAuthRestController {
+public class AuthRestController {
 
     @Autowired
     private AuthService authService;

@@ -14,13 +14,9 @@ const TestComponent = () => {
     useEffect(() => {
         fetchTest()
             .then(response => {
-                // console.log("--jpa api--")
-                // console.log(response.test2[0].role)
-                // console.log("Authority : "+ JSON.stringify(response.test2[0].authority));
-                // console.log("-- login Hst --");
-                // console.log(response.test3);
+                console.log(response);
                 setTest(response.test);
-                setTest2(response.test2[0].role);
+                setTest2(response.test2[0].authority);
                 setLists(response.test3);
             }).catch(error => {
             alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")
@@ -29,8 +25,6 @@ const TestComponent = () => {
 
         batisTest()
             .then(response => {
-                // console.log("--mybatis api--")
-                // console.log(response.selectAll);
                 setSelectAll(response.selectAll);
             }).catch(error => {
             console.log("batis error" + error)
@@ -87,6 +81,7 @@ const TestComponent = () => {
 
             <div style={{border:"1px solid #e8e8e8"}}>
                 <h2>공지사항 등록 :</h2>
+
             </div>
         </div>
     )

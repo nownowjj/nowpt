@@ -1,9 +1,11 @@
 // export const API_BASE = "http://localhost:8060/api";
 export const API_BASE = "/api";
 export const ACCESS_TOKEN = 'accessToken';
+export const NOTICE = "/notice";
 
 
-const request = (options) => {
+
+export const request = (options) => {
     const headers = new Headers({
         'Content-Type' : 'application/json',
     })

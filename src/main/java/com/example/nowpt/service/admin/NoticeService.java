@@ -55,7 +55,9 @@ public class NoticeService {
         Notice notice = noticeRepo.findByNoticeSn(noticeSn);
 
         // Sn 조회 오류시 Exception 발생
-        if(notice == null) throw new RuntimeException("수정에 실패하였습니다.");
+        if(notice == null) {
+            throw new RuntimeException("수정에 실패하였습니다.");
+        }
 
         // 새로운 데이터로 Set
         if(noticeDto.getNoticeTitle() != null){
@@ -68,4 +70,13 @@ public class NoticeService {
         notice.setLastChangeMembSn(memberSn);
         return noticeRepo.save(notice);
     }
+
+//    public Notice deleteNotice(Long noticeSn) {
+//        Notice notice = noticeRepo.findByNoticeSn(noticeSn);
+//
+//        if(notice == null) throw new RuntimeException("공지사항 삭제에 실패하였습니다.");
+//
+//
+//        return noticeRepo.delete(notice);
+//    }
 }

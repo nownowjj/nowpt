@@ -1,4 +1,4 @@
-package com.example.nowpt.mvc.restcontoller;
+package com.example.nowpt.mvc.restcontoller.common;
 
 
 import com.example.nowpt.mvc.model.Member;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/api/common")
 @RestController
-public class ApiCommonRestController {
+public class CommonRestController {
 
     @Autowired private MemberRepo memRepo;
 

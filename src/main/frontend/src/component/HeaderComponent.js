@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import isAuth from "../services/isAuth";
 
 
-const HeaderComponent = (props) => {
+const HeaderComponent = () => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState("");
     const Admin = "ROLE_ADMIN";
@@ -58,7 +58,6 @@ const HeaderComponent = (props) => {
                     메인
                 </li>
 
-
                 <li
                     style={li}
                     onClick={() => navigate("/go/test/jpa")}
@@ -83,9 +82,9 @@ const HeaderComponent = (props) => {
                         ?
                         <li
                             style={li}
-
+                            onClick={() => navigate("/go/notice")}
                         >
-                            어드민만 보임
+                            공지사항 등록
                         </li>
                         :
                         null
