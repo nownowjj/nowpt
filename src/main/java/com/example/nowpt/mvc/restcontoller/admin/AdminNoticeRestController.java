@@ -46,7 +46,9 @@ public class AdminNoticeRestController {
      */
     @GetMapping("/notice/auth/selectNotice")
     public RVO<Page<Notice>> selectNotice(
-            @PageableDefault(page = 0, size = 2) Pageable pageable
+//            @PageableDefault(page = 0, size = 10)
+            Pageable pageable
+
     ){
 //        log.debug("Notice Select : {}" ,noticeService.selectNotice(pageable) );
         return RVO.<Page<Notice>>builder()

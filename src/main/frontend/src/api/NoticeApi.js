@@ -4,9 +4,12 @@ export const ADMIN = "/admin";
 
 
 //  추출
-export function getNotice(){
+export function getNotice(pageNumber,pageSize){
     return request({
-        url: API_BASE + NOTICE + "/auth/selectNotice",
+        url: API_BASE + NOTICE +
+            "/auth/selectNotice?" +
+            "page="+pageNumber+
+            "&size="+pageSize,
         method:'GET'
     })
 }
@@ -18,3 +21,4 @@ export function insertNotice(noticeDto) {
         body: JSON.stringify(noticeDto)
     });
 }
+
