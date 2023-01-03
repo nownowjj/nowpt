@@ -21,12 +21,14 @@ const NoticePagingComponent = () => {
             <h2>공지사항 리스트</h2>
             <table border={"1px solid black"}>
                 <thead>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>등록자</th>
-                    <th>수정자</th>
-                    <th>등록 시간</th>
-                    <th>수정 시간</th>
+                    <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>등록자</th>
+                        <th>수정자</th>
+                        <th>등록 시간</th>
+                        <th>수정 시간</th>
+                    </tr>
                 </thead>
                 <tbody>
 
