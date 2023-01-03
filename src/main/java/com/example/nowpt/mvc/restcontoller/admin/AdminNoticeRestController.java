@@ -5,8 +5,10 @@ import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.mvc.dto.NoticeDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notice;
+import com.example.nowpt.repository.notice.NoticeRepo;
 import com.example.nowpt.service.admin.NoticeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AdminRestController {
     @Autowired private NoticeService noticeService;
+    @Autowired private NoticeRepo noticeRepo;
 
     /**
      *
@@ -59,9 +62,9 @@ public class AdminRestController {
      *
      * @param noticeSn
      * @param noticeDto
-     * @return 공지사항 수정 API PUT -> Patch는 바꾸고 싶은 값만 변경 가능하다.
+     * @return 공지사항 수정 API PUT -> Patch는 바꾸고 싶은 값만 변경 가능하다. > (PUT으로 바꿈)
      */
-    @PatchMapping("/notice/admin/{noticeSn}")
+    @PutMapping("/notice/admin/{noticeSn}")
     public RVO<Notice> patchNotice(@PathVariable Long noticeSn,@RequestBody NoticeDto noticeDto,@AuthenticationPrincipal Member member){
         log.debug("Notice patch : {}",noticeDto);
         return RVO.<Notice>builder()
@@ -69,5 +72,22 @@ public class AdminRestController {
                 .code(ApiCd.NORMAL)
                 .data(noticeService.patchNotice(noticeSn,noticeDto,member.getMemberSn()))
                 .build();
+    }
+
+    /**
+     *
+     * @param noticeSn
+     * 공지사항 삭제 API
+     */
+    @DeleteMapping("/notice/admin/{noticeSn}")
+    public void deleteNotice (@PathVariable Long noticeSn) {
+        log.debug("Notice delete : {}", noticeSn);
+        Notice notice =  noticeRepo.findByNoticeSn(noticeSn);
+        if(notice == null){
+            throw new RuntimeException("공지사항 삭제에 실패하였습니다.");
+        }
+        else{
+            noticeRepo.delete(notice);
+        }
     }
 }
