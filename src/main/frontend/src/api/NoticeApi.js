@@ -22,3 +22,20 @@ export function insertNotice(noticeDto) {
     });
 }
 
+
+export function selectNoticeByNoticeSn(noticeSn) {
+    return request({
+        url: API_BASE + NOTICE + "/admin/"+noticeSn,
+        method: 'GET'
+        // body: JSON.stringify(noticeDto)
+    });
+}
+export function updateNotice(noticeSn,noticeDto) {
+    return request({
+        url: API_BASE + NOTICE + "/admin/"+noticeSn,
+        method: 'PUT',
+        body: JSON.stringify(noticeDto)
+    });
+}
+
+

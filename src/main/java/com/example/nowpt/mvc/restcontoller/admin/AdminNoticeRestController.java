@@ -90,4 +90,15 @@ public class AdminNoticeRestController {
             noticeRepo.delete(notice);
         }
     }
+
+    @GetMapping("/notice/admin/{noticeSn}")
+    public RVO<Notice> selectNoticeByNoticeSn(@PathVariable Long noticeSn){
+        log.debug("Notice selectBySn : {}" , noticeSn);
+        return RVO.<Notice>builder()
+                .msg("공지사항 상세 정보")
+                .code(ApiCd.NORMAL)
+                .data(noticeRepo.findByNoticeSn(noticeSn))
+                .build();
+    }
+
 }

@@ -36,6 +36,7 @@ const NoticePagingComponent = () => {
             <table border={"1px solid black"}>
                 <thead>
                     <tr>
+                        <th>공지사항 Sn</th>
                         <th>제목</th>
                         <th>내용</th>
                         <th>등록자</th>
@@ -49,6 +50,7 @@ const NoticePagingComponent = () => {
                     {noticeList && noticeList.map((list) => {
                         return (
                         <tr key={list.noticeSn}>
+                            <td>{list.noticeSn}</td>
                             <td>{list.noticeTitle}</td>
                             <td>{list.noticeContent}</td>
                             <td>{list.frstRegistMembSn}</td>
