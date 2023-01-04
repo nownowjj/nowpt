@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {getNotice} from "../../api/NoticeApi";
 import Button from "../../component/JoinButton";
 import {useNavigate} from "react-router";
+import dayjs from "dayjs";
 
 const NoticePagingComponent = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const NoticePagingComponent = () => {
     return (
         <div>
             <h2>공지사항 리스트</h2>
-            <table border={"1px solid black"}>
+            <table>
                 <thead>
                     <tr>
                         <th>공지사항 Sn</th>
@@ -43,6 +44,7 @@ const NoticePagingComponent = () => {
                         <th>수정자</th>
                         <th>등록 시간</th>
                         <th>수정 시간</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,13 +52,14 @@ const NoticePagingComponent = () => {
                     {noticeList && noticeList.map((list) => {
                         return (
                         <tr key={list.noticeSn}>
+
                             <td>{list.noticeSn}</td>
                             <td>{list.noticeTitle}</td>
                             <td>{list.noticeContent}</td>
                             <td>{list.frstRegistMembSn}</td>
                             <td>{list.lastChangeMembSn}</td>
-                            <td>{list.frstRegistDt}</td>
-                            <td>{list.lastChangeDt}</td>
+                            <td>{(dayjs(list.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</td>
+                            <td>{(dayjs(list.lastChangeDt).format('YYYY년MM월DD일 hh시mm분 A'))}</td>
                             <td><Button onClick={() => {noticeUpdate(list.noticeSn)}} value="수정"/></td>
                         </tr>
                         );
