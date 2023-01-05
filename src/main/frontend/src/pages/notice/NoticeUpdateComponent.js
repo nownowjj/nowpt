@@ -51,13 +51,24 @@ const NoticeUpdateComponent = () => {
 
     return (
         <div>
+            <label
+                htmlFor="newTitle"
+            >
+                제목 :
+            </label>
             <Input
                 type="text"
+                id="newTitle"
                 placeholder={"제목을 입력하세요"}
                 name="newTitle"
                 value={newTitle}
                 onChange={handleTitle}
             />
+            <br/>
+
+            <label>
+                내용 :
+            </label>
             <Input
                 type="text"
                 placeholder={"내용을 입력하세요"}

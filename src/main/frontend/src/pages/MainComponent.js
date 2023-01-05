@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {mainTest} from "../api/Api";
 import Button from "../component/JoinButton";
+import Kakaomap from "../services/kakaomap/Kakaomap";
 
 const MainComponent = () => {
     const [message,setMessage] = useState("");
-
+    console.log("메인!")
 
     useEffect(()=>{
         mainTest()
@@ -34,6 +35,8 @@ const MainComponent = () => {
                 value="버튼"
                 onClick={clickTest}
             />
+
+            <Kakaomap/>
 
         </div>
     )

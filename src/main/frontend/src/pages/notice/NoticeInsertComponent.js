@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Input from "../../component/Input";
 import Button from "../../component/JoinButton";
 import {insertNotice} from "../../api/NoticeApi";
+import {validateNotice} from "../../services/validate";
 
 const NoticeInsertComponent = () => {
 
@@ -20,6 +21,13 @@ const NoticeInsertComponent = () => {
             noticeTitle : noticeTitle,
             noticeContent : noticeContent
         }
+
+        if(!(validateNotice(noticeDto))){
+            return false;
+        }
+
+
+
         insertNotice(noticeDto)
             .then(response => {
                 alert(response.msg)

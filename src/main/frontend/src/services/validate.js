@@ -40,3 +40,23 @@ export function validateLogin(id,pw){
     }
     return true;
 }
+
+/**
+ * 
+ * @param noticeDto
+ * @returns {boolean}
+ */
+export function validateNotice(noticeDto){
+    console.log(noticeDto)
+    if((noticeDto.noticeTitle) === ""){
+        alert("제목을 입력하지 않았습니다.")
+        return false;
+    }
+
+    if((noticeDto.noticeContent) === ""){
+        alert("내용을 입력하지 않았습니다.")
+        return false;
+    }
+
+    return true;
+}
