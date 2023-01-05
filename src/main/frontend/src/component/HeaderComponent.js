@@ -108,6 +108,13 @@ const HeaderComponent = () => {
                     계산기
                 </li>
 
+                <li
+                    style={li}
+                    onClick={() => navigate("/go/meetingRoom")}
+                >
+                    예약
+                </li>
+
                 <p>
                     접속한 계정의 ROLE :
                     {

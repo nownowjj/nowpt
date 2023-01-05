@@ -9,6 +9,7 @@ import CalculatorComponent from "../pages/CalculatorComponent";
 import Oauth from "../api/Oauth";
 import NoticePage from "../pages/notice/NoticePage";
 import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
+import MeetingPage from "../pages/meetingRoom/MeetingPage";
 
 
 const Router = () => {
@@ -39,6 +40,7 @@ const Router = () => {
                 <Route path="/go/calculator" element={<CalculatorComponent />} />
                 <Route path="/go/notice" element={<NoticePage />} />
                 <Route path="/go/notice/:noticeSn" element={<NoticeUpdateComponent />} />
+                <Route path="/go/meetingRoom" element={<MeetingPage />} />
 
 
 
