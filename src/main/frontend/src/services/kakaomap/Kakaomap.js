@@ -1,26 +1,24 @@
 import React from "react";
-import { MapMarker, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
-import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
+import {Map, MapMarker} from "react-kakao-maps-sdk";
 import {markerdata} from "./markerdata";
 
-const Overlay = styled(Box)(() => ({
-    padding: "4px",
-    backgroundColor: "#ff6a32",
-    color: "white",
-    fontWeight: "bold",
-    "&::before": {
-        content: '" "',
-        display: "inline-block",
-        transform: "rotate(180deg)",
-        position: "absolute",
-        borderBottom: "10px solid #ff6a32",
-        borderLeft: "8px solid transparent",
-        borderRight: "8px solid transparent",
-        top: "28px",
-        left: "25px"
-    }
-}));
+// const Overlay = styled(Box)(() => ({
+//     padding: "4px",
+//     backgroundColor: "#ff6a32",
+//     color: "white",
+//     fontWeight: "bold",
+//     "&::before": {
+//         content: '" "',
+//         display: "inline-block",
+//         transform: "rotate(180deg)",
+//         position: "absolute",
+//         borderBottom: "10px solid #ff6a32",
+//         borderLeft: "8px solid transparent",
+//         borderRight: "8px solid transparent",
+//         top: "28px",
+//         left: "25px"
+//     }
+// }));
 
 const KakaoMap = () => {
 

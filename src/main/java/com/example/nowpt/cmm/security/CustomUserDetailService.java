@@ -21,7 +21,6 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-//		log.debug(username + "로그인창 입력한 username");
 		Member member = memRepo.findByMembId(username);
 //		Member member = memRepo.findByMembIdOrEmailAddr(username);
 
@@ -33,7 +32,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		authorities.add(new SimpleGrantedAuthority(member.getMembCls().getCodeValue()));
 		log.info(new SimpleGrantedAuthority(member.getMembCls().getCodeValue())+" 권한정보");
 		member.setAuthorities(authorities);
-		log.debug("Member auth : {}",member.getAuthorities());
+//		log.debug("Member auth : {}",member.getAuthorities());
 		return member;
 	}
 }

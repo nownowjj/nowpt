@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {batisTest, fetchTest} from "../api/Api";
+import {selectLoginStatistics} from "../api/AdminApi";
 
 
 const TestComponent = () => {
@@ -8,13 +9,14 @@ const TestComponent = () => {
     const [test2, setTest2] = useState("");
     const [lists, setLists] = useState([]);
     const [selectAll, setSelectAll] = useState([]);
+    const [loginList,setLoginList] = useState([]);
 
 
 
     useEffect(() => {
         fetchTest()
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 setTest(response.test);
                 setTest2(response.test2[0].authority);
                 setLists(response.test3);
@@ -28,6 +30,14 @@ const TestComponent = () => {
                 setSelectAll(response.selectAll);
             }).catch(error => {
             console.log("batis error" + error)
+        }, []);
+
+        selectLoginStatistics()
+            .then(response => {
+                setLoginList(response.data);
+                console.log(response.data);
+            }).catch(error => {
+            console.log("loginhst error" + error)
         }, []);
 
 
@@ -80,8 +90,35 @@ const TestComponent = () => {
             </div>
 
             <div style={{border:"1px solid #e8e8e8"}}>
-                <h2>공지사항 등록 :</h2>
+                <h2>로그인 이력 통계 : mybatis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>일자</th>
+                            <th>접속건수</th>
+                            <th>접속자수(동일 유저 중복제거)</th>
+                            <th>누적접속건수</th>
+                            <th>누적접속자수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
+                        {loginList && loginList.map((datas)=>{
+                            return(
+                                <tr key={datas.data_one}>
+                                    <td>{datas.data_one}</td>
+                                    <td>{datas.data_two}</td>
+                                    <td>{datas.data_three}</td>
+                                    <td>{datas.data_four}</td>
+                                    <td>{datas.data_five}</td>
+                                </tr>
+                            )
+                        })
+
+                        }
+
+                    </tbody>
+                </table>
             </div>
         </div>
     )

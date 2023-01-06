@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.nowpt.mvc.mapper.LoginHstMapper">
+    <select id="selectLoginStatistics" resultType="LoginHstDto">
+        SELECT
+            TO_CHAR(FRST_REGIST_DT, 'YYYY-MM-DD') AS data_one
+	        ,COUNT(*) AS data_two
+	        ,COUNT(DISTINCT MEMBER_SN)  AS data_three
+	        ,SUM(COUNT(*)) OVER (ORDER BY TO_CHAR(FRST_REGIST_DT,'YYYY-MM-DD')) AS data_four
+	        ,SUM(COUNT(x)) OVER (ORDER BY TO_CHAR(FRST_REGIST_DT,'YYYY-MM-DD')) AS data_five
+        FROM ( SELECT FRST_REGIST_DT, MEMBER_SN
+                , DECODE(
+            ROW_NUMBER() OVER(
+            PARTITION BY MEMBER_SN ORDER BY FRST_REGIST_DT)
+                , 1, 1) x
+            FROM TB_MEMB_LOGIN_HST TMLH
+            )
+        GROUP BY TO_CHAR(FRST_REGIST_DT, 'YYYY-MM-DD' )
+        ORDER BY TO_CHAR(FRST_REGIST_DT, 'YYYY-MM-DD') DESC
+    </select>
+</mapper>

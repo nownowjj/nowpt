@@ -1,5 +1,8 @@
 package com.example.nowpt.mvc.restcontoller.admin;
 
+import com.example.nowpt.cmm.code.ApiCd;
+import com.example.nowpt.cmm.rvo.RVO;
+import com.example.nowpt.mvc.dto.LoginHstDto;
 import com.example.nowpt.mvc.model.MbrPrinciple;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -49,5 +53,15 @@ public class ApiController {
         result.put("selectAll",mapperService.selectAllMember());
         return result;
     }
+
+    @GetMapping("/loginhst2")
+    public RVO<List<Map<String,String>>> selectLoginStatistics(){
+        return RVO.<List<Map<String,String>>>builder()
+                .msg("로그인 통계")
+                .code(ApiCd.NORMAL)
+                .data(mapperService.selectLoginStatistics())
+                .build();
+    }
+
 
 }
