@@ -16,5 +16,4 @@
             #{useStartTime} BETWEEN TR.USE_START_TIME AND TR.USE_END_TIME
             )
     </select>
-<!--    AND TO_TIMESTAMP(#{frstRegistDt}||'235959', 'yyyyMMddHH24MISS')-->
 </mapper>
