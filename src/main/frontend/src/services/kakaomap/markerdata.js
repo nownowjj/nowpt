@@ -1,5 +1,5 @@
 
-console.log("마커!")
+// console.log("마커!")
 export const markerdata = [
   {
     title: "콜드스퀘어",

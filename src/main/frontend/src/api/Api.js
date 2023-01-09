@@ -1,8 +1,12 @@
-// export const API_BASE = "http://localhost:8060/api";
-export const API_BASE = "http://192.168.10.215:8060/api";
+export const API_BASE = "http://localhost:8060/api";
+// export const API_BASE = "http://192.168.10.215:8060/api";
 // export const API_BASE = "/api";
 export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
+export const RESERVATION = "/reservation";
+export const COMMON = "/common";
+
+
 
 
 

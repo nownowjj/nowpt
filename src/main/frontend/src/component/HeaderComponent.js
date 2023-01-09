@@ -31,7 +31,7 @@ const HeaderComponent = () => {
     useEffect(() => {
         setAuth(isAuth());
         // isLogin();
-        console.log("권한체크");
+        // console.log("권한체크");
     },)
 
 

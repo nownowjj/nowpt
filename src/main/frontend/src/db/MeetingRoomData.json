@@ -1,0 +1,12 @@
+{
+  "meetingRoom": [
+    {
+      "id": 1,
+      "roomName": "대회의실"
+    },
+    {
+      "id": 2,
+      "roomName": "소회의실"
+    }
+  ]
+}
