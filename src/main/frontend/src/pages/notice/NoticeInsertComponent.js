@@ -3,9 +3,10 @@ import Input from "../../component/Input";
 import Button from "../../component/JoinButton";
 import {insertNotice} from "../../api/NoticeApi";
 import {validateNotice} from "../../services/validate";
+import {useNavigate} from "react-router-dom";
 
 const NoticeInsertComponent = () => {
-
+    const navigate = useNavigate();
     const [noticeTitle,setNoticeTitle] = useState("");
     const [noticeContent,setNoticeContent] = useState("");
 
@@ -32,6 +33,7 @@ const NoticeInsertComponent = () => {
             .then(response => {
                 alert(response.msg)
                 console.log(response)
+                window.location.replace("/go/notice")
             })
             .catch(error =>{
                 console.log(error)

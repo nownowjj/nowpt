@@ -7,9 +7,11 @@ import Button from "../../component/JoinButton";
 import roomData from "../../db/MeetingRoomData.json"
 import {insertReservation} from "../../api/ReservationApi";
 import Input from "../../component/Input";
+import {useNavigate} from "react-router-dom";
 
 const MeetingReservationComponent = () => {
     registerLocale("ko", ko); //한국어 설정
+    const navigate = useNavigate();
     const now = dayjs().toDate();
     const [startDay, setStartDay] = useState(new Date());
     const [startTime,setStartTime] = useState("");
@@ -88,7 +90,9 @@ const MeetingReservationComponent = () => {
                 .then(response=>{
                     console.log(response);
                     alert(response.msg)
+                    navigate("/go/meetingRoom");
                 }).catch(error=>{
+                    alert("예약 실패!!\n등록하신 시간이 존재하거나 잘못된 예약 입니다.");
                 console.log(error)
             })
 

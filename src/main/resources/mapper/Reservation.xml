@@ -7,7 +7,9 @@
             count(1) AS count
         FROM TB_RESERVATION TR
         WHERE
-            TR.USE_DAY = #{useDay}
+            TR.USE_DAY = #{useDay} AND
+            TR.MEETING_ROOM = #{meetingRoom} AND
+            TR.USE_YN = 'Y'
           AND(
             TR.USE_START_TIME BETWEEN #{useStartTime} AND #{useEndTime}
            OR
@@ -16,5 +18,4 @@
             #{useStartTime} BETWEEN TR.USE_START_TIME AND TR.USE_END_TIME
             )
     </select>
-<!--    AND TO_TIMESTAMP(#{frstRegistDt}||'235959', 'yyyyMMddHH24MISS')-->
 </mapper>

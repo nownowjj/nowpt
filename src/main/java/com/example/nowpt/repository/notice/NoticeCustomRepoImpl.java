@@ -20,7 +20,7 @@ public class NoticeCustomRepoImpl implements NoticeCustomRepo {
     private QNotice qNotice = QNotice.notice;
     @Override
     public Page<Notice> selectNoticePaging(Pageable pageable){
-
+        log.debug("noticePageable : {}" , pageable);
         List<Notice> result =
                 qf
                         .selectFrom(qNotice)
