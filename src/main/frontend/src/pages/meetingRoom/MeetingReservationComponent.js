@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DatePicker, {registerLocale} from "react-datepicker";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -9,7 +9,7 @@ import {insertReservation} from "../../api/ReservationApi";
 import Input from "../../component/Input";
 import {useNavigate} from "react-router-dom";
 
-const MeetingReservationComponent = () => {
+const MeetingReservationComponent = ({data,parentFunction}) => {
     registerLocale("ko", ko); //한국어 설정
     const navigate = useNavigate();
     const now = dayjs().toDate();
@@ -18,6 +18,9 @@ const MeetingReservationComponent = () => {
     const [endTime , setEndTime] = useState("");
     const [room , setRoom] = useState("대회의실");
     const [purpose , setPurpose] = useState("");
+
+    const [startBoolean,setStartBoolean] =useState(false)
+    const [endBoolean,setEndBoolean] =useState(false)
 
 
     const setStartDayEvent =(date) =>{
@@ -29,6 +32,7 @@ const MeetingReservationComponent = () => {
         if(!endTime){
             // console.log("종료시간 없음");
             setStartTime(date);
+            setStartBoolean(true);
             return true;
         }
         else if(endTime < date || date.getHours()+":"+date.getMinutes() === endTime.getHours()+":"+endTime.getMinutes()){
@@ -52,7 +56,8 @@ const MeetingReservationComponent = () => {
             alert("종료 시간이 잘못 되었습니다.")
             return false;
         }
-        setEndTime(date)
+        setEndTime(date);
+        setEndBoolean(true);
     }
 
     const reservationEvent =()=>{
@@ -60,7 +65,7 @@ const MeetingReservationComponent = () => {
             alert("검증 통과 실패");
             return false;
         }
-        alert("검증 통과 성공");
+        // alert("검증 통과 성공");
 
         let year = String(startDay.getFullYear());
         let month = String(startDay.getMonth()+1).padStart(2,"0");
@@ -89,8 +94,10 @@ const MeetingReservationComponent = () => {
             insertReservation(reservationDto)
                 .then(response=>{
                     console.log(response);
-                    alert(response.msg)
-                    navigate("/go/meetingRoom");
+                    alert(response.msg);
+
+                    // 등록 성공이 data = 0 , +1을 해줘서 data의 값을 증가시켜서 부모컴포턴트로 전달시킴
+                    parentFunction(data+1);
                 }).catch(error=>{
                     alert("예약 실패!!\n등록하신 시간이 존재하거나 잘못된 예약 입니다.");
                 console.log(error)
@@ -144,8 +151,13 @@ const MeetingReservationComponent = () => {
         setPurpose(value);
     }
 
+    useEffect(()=>{
+        console.log("부모에서 준 데이터 : "+data);
+    },[])
+
     return (
-        <div>
+        <Wrapper>
+            <div>
             <h2>예약 등록</h2>
 
 
@@ -175,7 +187,7 @@ const MeetingReservationComponent = () => {
                 showTimeSelectOnly
                 timeIntervals={15}
                 // timeCaption="Time"
-                dateFormat="aa hh:mm 시작"
+                dateFormat="aa HH:mm 시작"
                 placeholderText="시작 시간"
                 minTime={new Date(0, 0, 0, 9, 0)}
                 maxTime={new Date(0, 0, 0, 18, 0)}
@@ -193,7 +205,7 @@ const MeetingReservationComponent = () => {
                         showTimeSelectOnly
                         timeIntervals={15}
                         // timeCaption="Time"
-                        dateFormat="aa hh:mm 종료"
+                        dateFormat="aa HH:mm 종료"
                         placeholderText="종료 시간"
                         minTime={startTime}
                         maxTime={new Date(0, 0, 0, 18, 0)}
@@ -215,8 +227,40 @@ const MeetingReservationComponent = () => {
                 value="등록"
                 onClick={reservationEvent}
             />
-    
-        </div>
+
+            </div>
+
+            <div>
+                <div>선택한 : {room}</div>
+                <div>예약일 : {(dayjs(startDay).format('YYYY-MM-DD'))}</div>
+                <div>
+                    {
+                        !startBoolean
+                            ?
+                            <div>시작시간 선택하세요</div>
+                            : <div>시작시간 : {(dayjs(startTime).format('HH시mm분 A'))}</div>
+                    }
+                </div>
+
+                <div>
+                    {
+                        startBoolean && !endBoolean
+                        ? <div>종료시간 선택해라</div>
+                        : endBoolean ? <div>종료시간 : {(dayjs(endTime).format('HH시mm분 A'))}</div>: null
+                    }
+                </div>
+                {/*<div>*/}
+                {/*    {*/}
+                {/*        !endBoolean*/}
+                {/*            ?*/}
+                {/*            null*/}
+                {/*            :*/}
+                {/*            <div>종료시간 : {(dayjs(endTime).format('hh시mm분 A'))}</div>*/}
+                {/*    }*/}
+                {/*</div>*/}
+            </div>
+        </Wrapper>
+
     );
 };
 
@@ -234,5 +278,14 @@ const MyDatePicker = styled(DatePicker)`
     // margin
   };
 `
+
+const Wrapper = styled.div`
+    width:100%;
+    border:1px solid #e8e8e8;
+    display:flex;
+    align-itmes:center;
+    justity-content:center;
+`;
+
 
 export default MeetingReservationComponent;

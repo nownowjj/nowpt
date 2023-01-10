@@ -28,7 +28,8 @@ public class ReservationService {
      */
     public Reservation insertReservation(Member member, ReservationDto reservationDto) {
         // 해당 예약시간 존재여부
-        Result<?> data = reservationMapper.availabilityReservation(reservationDto.getUseDay(),reservationDto.getUseStartTime(),reservationDto.getUseEndTime(),reservationDto.getMeetingRoom());
+//        Result<?> data = reservationMapper.availabilityReservation(reservationDto.getUseDay(),reservationDto.getUseStartTime(),reservationDto.getUseEndTime(),reservationDto.getMeetingRoom());
+        Result<?> data = reservationMapper.availabilityReservation(reservationDto);
         log.debug("mapper data : {} , cnt : {}",data,data.getCount());
 
         int cnt = data.getCount();

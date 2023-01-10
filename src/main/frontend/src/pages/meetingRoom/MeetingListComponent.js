@@ -8,7 +8,7 @@ import {getReservation} from "../../api/ReservationApi";
 import dayjs from "dayjs";
 import Button from "../../component/JoinButton";
 
-const MeetingListComponent = () => {
+const MeetingListComponent = ({data}) => {
     // 일주일 리미트 셋
     // 검색 시작날짜인데 일자를 크게 두면 DB에 무리가 갈수 있으므로
     // 현재 날짜에서 일주일을 뺀 날짜로 startDate를 set해준다
@@ -32,6 +32,7 @@ const MeetingListComponent = () => {
     }
 
     useEffect(()=>{
+        console.log("페이지 컴포넌트 data : " ,data)
         getReservation()
             .then(response => {
                 console.log(response);
@@ -39,7 +40,7 @@ const MeetingListComponent = () => {
             }).catch(error =>{
             console.log(error)
         });
-    },[])
+    },[data])
 
     return (
         <div>
@@ -88,10 +89,10 @@ const MeetingListComponent = () => {
                             <td>{list.reservationSn}</td>
                             <td>{list.meetingRoom}</td>
                             <td>{list.useDay}</td>
-                            <td>{(dayjs(list.useStartTime).format('hh시mm분 A'))}</td>
-                            <td>{(dayjs(list.useEndTime).format('hh시mm분 A'))}</td>
-                            <td>{(dayjs(list.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</td>
-                            <td>{(dayjs(list.lastChangeDt).format('YYYY년MM월DD일 hh시mm분 A'))}</td>
+                            <td>{(dayjs(list.useStartTime).format('HH시mm분 A'))}</td>
+                            <td>{(dayjs(list.useEndTime).format('HH시mm분 A'))}</td>
+                            <td>{(dayjs(list.frstRegistDt).format('YYYY년MM월DD일 HH시mm분 A'))}</td>
+                            <td>{(dayjs(list.lastChangeDt).format('YYYY년MM월DD일 HH시mm분 A'))}</td>
                             <td>{list.memberSn.membNm}</td>
                             <td>{list.purpose}</td>
                             {/*<td><Button onClick={() => {noticeUpdate(list.noticeSn)}} value="수정"/></td>*/}

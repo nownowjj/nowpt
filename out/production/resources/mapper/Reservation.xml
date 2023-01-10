@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.nowpt.mvc.mapper.ReservationMapper">
-    <select id="availabilityReservation" resultType="Result">
+    <select id="availabilityReservation" parameterType="reservationDto" resultType="Result">
         SELECT
             count(1) AS count
         FROM TB_RESERVATION TR
         WHERE
-            TR.USE_DAY = #{useDay}
+            TR.USE_DAY = #{useDay} AND
+            TR.MEETING_ROOM = #{meetingRoom} AND
+            TR.USE_YN = 'Y'
           AND(
             TR.USE_START_TIME BETWEEN #{useStartTime} AND #{useEndTime}
            OR

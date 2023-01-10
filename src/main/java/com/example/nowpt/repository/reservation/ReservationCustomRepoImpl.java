@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -28,6 +29,8 @@ public class ReservationCustomRepoImpl implements ReservationCustomRepo {
         List<Reservation> result =
                 qf
                         .selectFrom(qReservation)
+                        .where(qReservation.useYn.eq("Y").and(qReservation.meetingRoom.eq("대회의실"))
+                                .or(qReservation.useDay.eq(LocalDate.parse("2023-01-10"))).and(qReservation.useDay.eq(LocalDate.parse("2023-01-12"))))
                         .orderBy(qReservation.useDay.asc(),qReservation.useStartTime.asc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
@@ -39,6 +42,14 @@ public class ReservationCustomRepoImpl implements ReservationCustomRepo {
                 qf
                         .select(qReservation.count())
                         .from(qReservation)
+                        .where(
+                                qReservation.useYn.eq("Y")
+                                        .and
+                                (qReservation.meetingRoom.eq("대회의실"))
+                                .or(
+                                        qReservation.useDay.eq(LocalDate.parse("2023-01-10"))).and(qReservation.useDay.eq(LocalDate.parse("2023-01-12"))
+                                    )
+                        )
                         .fetchCount();
 
         log.debug("reservationPaging count : {}",count);
@@ -47,4 +58,15 @@ public class ReservationCustomRepoImpl implements ReservationCustomRepo {
     }
 
 }
+
+//    SELECT
+//            USE_DAY ,
+//            USE_START_TIME ,
+//            USE_END_TIME ,
+//            MEETING_ROOM
+//    FROM TB_RESERVATION TR
+//WHERE (USE_DAY = :startDay or USE_DAY = :endDay)
+//    AND USE_YN = 'Y'
+//    AND meeting_room = :room
+//        ORDER BY USE_START_TIME ASC ;
 
