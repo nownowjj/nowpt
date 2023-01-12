@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservationCustomRepo {
-    Page<Reservation> selectReservationPaging(Pageable pageable);
+    Page<Reservation> selectReservationPaging(Pageable pageable,String startDay, String endDay, String room);
 
 }

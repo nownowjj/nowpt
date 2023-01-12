@@ -24,13 +24,14 @@ public class ReservationCustomRepoImpl implements ReservationCustomRepo {
     @Autowired private JPAQueryFactory qf;
     private QReservation qReservation = QReservation.reservation;
     @Override
-    public Page<Reservation> selectReservationPaging(Pageable pageable){
+    public Page<Reservation> selectReservationPaging(Pageable pageable,String startDay, String endDay, String room){
         log.debug("reservation pageable : {}" , pageable);
         List<Reservation> result =
                 qf
                         .selectFrom(qReservation)
-                        .where(qReservation.useYn.eq("Y").and(qReservation.meetingRoom.eq("대회의실"))
-                                .or(qReservation.useDay.eq(LocalDate.parse("2023-01-10"))).and(qReservation.useDay.eq(LocalDate.parse("2023-01-12"))))
+                        .where(
+                                qReservation.useDay.between(LocalDate.parse(startDay),LocalDate.parse(endDay)).and(qReservation.useYn.eq("Y")).and(qReservation.meetingRoom.eq(room))
+                        )
                         .orderBy(qReservation.useDay.asc(),qReservation.useStartTime.asc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
@@ -43,12 +44,7 @@ public class ReservationCustomRepoImpl implements ReservationCustomRepo {
                         .select(qReservation.count())
                         .from(qReservation)
                         .where(
-                                qReservation.useYn.eq("Y")
-                                        .and
-                                (qReservation.meetingRoom.eq("대회의실"))
-                                .or(
-                                        qReservation.useDay.eq(LocalDate.parse("2023-01-10"))).and(qReservation.useDay.eq(LocalDate.parse("2023-01-12"))
-                                    )
+                                qReservation.useDay.between(LocalDate.parse(startDay),LocalDate.parse(endDay)).and(qReservation.useYn.eq("Y")).and(qReservation.meetingRoom.eq(room))
                         )
                         .fetchCount();
 
