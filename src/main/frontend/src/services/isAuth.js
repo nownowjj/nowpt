@@ -7,9 +7,7 @@ const isAuth=()=>{
             let jwtData = jwt.split('.')[1];
             let decodedJwtJsonData = window.atob(jwtData);
             let decodedJwtData = JSON.parse(decodedJwtJsonData);
-            let Auth = decodedJwtData.roles;
-            // console.log(Auth)
-        return Auth;
+        return decodedJwtData.roles;
     }else{
         return null;
     }
