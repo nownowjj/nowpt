@@ -3,10 +3,8 @@ package com.example.nowpt.mvc.restcontoller.common;
 
 import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.rvo.RVO;
-import com.example.nowpt.mvc.dto.NoticeDto;
 import com.example.nowpt.mvc.dto.ReservationDto;
 import com.example.nowpt.mvc.model.Member;
-import com.example.nowpt.mvc.model.Notice;
 import com.example.nowpt.mvc.model.Reservation;
 import com.example.nowpt.repository.reservation.ReservationRepo;
 import com.example.nowpt.service.ReservationService;

@@ -38,6 +38,9 @@ allprojects {
 
 
 dependencies {
+    //AOP
+    implementation('org.springframework.boot:spring-boot-starter-aop');
+
     //utils
     implementation 'org.apache.commons:commons-collections4:4.4'
 
