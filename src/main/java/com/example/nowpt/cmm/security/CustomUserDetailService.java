@@ -30,7 +30,7 @@ public class CustomUserDetailService implements UserDetailsService{
 
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(member.getMembCls().getCodeValue()));
-		log.info(new SimpleGrantedAuthority(member.getMembCls().getCodeValue())+" 권한정보");
+//		log.info(new SimpleGrantedAuthority(member.getMembCls().getCodeValue())+" 권한정보");
 		member.setAuthorities(authorities);
 //		log.debug("Member auth : {}",member.getAuthorities());
 		return member;

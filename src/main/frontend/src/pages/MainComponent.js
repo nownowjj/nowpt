@@ -18,9 +18,7 @@ const MainComponent = () => {
         });
     })
 
-    const clickTest=(e)=>{
-        alert("dd")
-    }
+
 
 
 
@@ -31,10 +29,6 @@ const MainComponent = () => {
             Main 페이지
 
 
-            <Button
-                value="버튼"
-                onClick={clickTest}
-            />
 
             <Kakaomap/>
 

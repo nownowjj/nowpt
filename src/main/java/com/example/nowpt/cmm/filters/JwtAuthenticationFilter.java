@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 //		log.debug("[JwtAuthenticationFilter]{}, {}", request.getRequestURI(), request.getHeader("Authorization"));
 		
 		if(request.getRequestURI().startsWith("/api")) {
-			log.debug("jwt 인증 진행");
+//			log.debug("jwt 인증 진행");
 			// SecurityContext 에 Authentication 객체를 저장합니다.
 			SecurityContextHolder.getContext().setAuthentication(null);
 			request.setAttribute("isApi", true);
