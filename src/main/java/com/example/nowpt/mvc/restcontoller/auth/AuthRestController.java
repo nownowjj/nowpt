@@ -78,4 +78,7 @@ public class AuthRestController {
                 .data(authService.userJoin(joinDto))
                 .build();
     }
+
+
+
 }

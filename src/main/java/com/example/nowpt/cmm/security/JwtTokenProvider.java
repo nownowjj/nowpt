@@ -2,6 +2,7 @@ package com.example.nowpt.cmm.security;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Map;
 @Slf4j
 public class JwtTokenProvider {
 	// TODO: @Value
+//	@Value();
 	private final static String JWT_SECRET = "password";
 	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
 	

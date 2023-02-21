@@ -35,6 +35,11 @@ const HeaderComponent = () => {
     },)
 
 
+    function falseEvent() {
+        alert("사용불가")
+        return false;
+    }
+
     return (
         <div className="sider siderOn">
             <ul style={{border: "1px solid black", margin: "0px"}}>
@@ -103,7 +108,8 @@ const HeaderComponent = () => {
 
                 <li
                     style={li}
-                    onClick={() => navigate("/go/calculator")}
+                    onClick={falseEvent}
+                    // onClick={() => navigate("/go/calculator")}
                 >
                     계산기
                 </li>

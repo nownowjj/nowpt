@@ -27,7 +27,7 @@ public class SchedulerService {
     //@Scheduled(cron = "* * * * * *", zone = "Asia/Seoul")
 
     //메소드 위에 @Scheduled 어노테이션을 선언하면 스케줄에 등록되고 설정한 시간마다 실행됨.
-    @Scheduled(cron = "0/10 * * * * *")
+    @Scheduled(cron = "0  0/10  *  *  * *")
     public void testSchedule(){
         log.debug("[배치] 10초마다 실행");
         log.debug(mapperService.selectAllMember().toString());

@@ -26,6 +26,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
+//@EqualsAndHashCode(callSuper=false)
 //@DiscriminatorColumn(name = "DTYPE")
 public class Member extends Base implements UserDetails{
     private static final long serialVersionUID = 1L;

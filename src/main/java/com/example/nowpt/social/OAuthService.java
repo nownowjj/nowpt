@@ -30,7 +30,8 @@ public class OAuthService{
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=77cbf4dbfe4487f6bb02d3360642a389"); // TODO REST_API_KEY 입력
 //            sb.append("&redirect_uri=http://localhost:8060/oauth"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&redirect_uri=http://localhost:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
+//            sb.append("&redirect_uri=http://localhost:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&redirect_uri=http://192.168.10.215:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();

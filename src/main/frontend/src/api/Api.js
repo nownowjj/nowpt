@@ -1,5 +1,5 @@
-export const API_BASE = "http://localhost:8060/api";
-// export const API_BASE = "http://192.168.10.215:8060/api";
+// export const API_BASE = "http://localhost:8060/api";
+export const API_BASE = "http://192.168.10.215:8060/api";
 // export const API_BASE = "/api";
 export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
@@ -89,5 +89,13 @@ export function kakaoLogin(code) {
         url: API_BASE.replace("/api","") + "/oauth/kakao?code="+code,
         method: 'GET',
         // body: JSON.stringify(code)
+    });
+}
+
+// 네이버 무비 검색 API
+export function naverMovie(search) {
+    return request({
+        url: API_BASE + "/auth/movies/"+search,
+        method: 'GET'
     });
 }
