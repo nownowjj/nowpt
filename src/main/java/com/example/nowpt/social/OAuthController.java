@@ -94,7 +94,7 @@ public class OAuthController {
 
             // 이미 가입된 유저라 바로 로그인(토큰 발급) 시키면 됨.
             String token = authService.gettoken(mem.getMembId(),mem.getMembPw(),request.getRemoteAddr(),sns);
-            log.debug("token!! : {}" , (new JwtAuthenticationResponse(token)));
+            log.debug("token!! : {}" , (new JwtAuthenticationResponse(token)).getAccessToken());
             result.put("token",(new JwtAuthenticationResponse(token)));
 
         } else {
@@ -117,7 +117,7 @@ public class OAuthController {
             // 가입 완료 되었으면 jwt 발급 후 로그인 진행
             log.debug("회원가입 완료 되었고 JWT 토큰 발급 진행후 리턴");
             String token = authService.gettoken(newMem.getMembId(),newMem.getMembPw(),request.getRemoteAddr(),sns);
-            log.debug("token!! : {}" , (new JwtAuthenticationResponse(token)));
+            log.debug("token!! : {}" , (new JwtAuthenticationResponse(token)).getAccessToken());
             result.put("token",(new JwtAuthenticationResponse(token)));
 
         }

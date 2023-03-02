@@ -1,15 +1,20 @@
 package com.example.nowpt.mvc.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Slf4j
 public class SinglePageAppController {
+
+    @Value("${spring.profiles.active}") private  String profiles;
+
     @RequestMapping(value = {"/", "/api/**"})
     public String index() {
-        log.debug("SinglePageAppController ~~");
+
+        log.debug("SinglePageAppController 개발 환경 : {}",profiles);
         return "index.html";
     }
 }
