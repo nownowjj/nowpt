@@ -1,10 +1,12 @@
 package com.example.nowpt.mvc.chatGpt;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class ChatGptConfig {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer ";
-//    public static final String API_KEY = "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";
-    public static final String API_KEY = "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";
     public static final String MODEL = "text-davinci-003";
     public static final Integer MAX_TOKEN = 300;
     public static final Double TEMPERATURE = 0.0;
