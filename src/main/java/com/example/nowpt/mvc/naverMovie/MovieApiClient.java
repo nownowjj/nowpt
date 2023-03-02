@@ -18,7 +18,7 @@ public class MovieApiClient {
     @Value("${spring.naver.clientId}") private  String CLIENT_ID;
     @Value("${spring.naver.clientSecret}") private String CLIENT_SECRET;
 
-    private final String OpenNaverMovieUrl_getMovies = "https://openapi.naver.com/v1/search/movie.json?query={keyword}";
+    private final String OpenNaverMovieUrl_getMovies = "https://openapi.naver.com/v1/search/movie.json?query={keyword}&display=100";
 
     public MoviesResponseDto requestMovie(String keyword) {
         final HttpHeaders headers = new HttpHeaders(); // 헤더에 key들을 담아준다.

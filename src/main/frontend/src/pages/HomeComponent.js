@@ -7,7 +7,8 @@ const HomeComponent =(props)=>{
     const [message,setMessage] = useState("");
     const [searchParam,setSearchParam] = useState("");
 
-    const[searchResult,setSearchResult] = useState([]);
+    const[searchResult,setSearchResult] = useState(null);
+    const[searchCount,setSearchCount] = useState(null);
 
 
 
@@ -39,7 +40,7 @@ const HomeComponent =(props)=>{
         }
         naverMovie(searchParam)
             .then(response =>{
-                console.log(response.display)
+                setSearchCount(response.display)
                 setSearchResult(response.items)
                 // setSearchResult( response.items)
                 console.log(response.items)
@@ -86,11 +87,14 @@ const HomeComponent =(props)=>{
                 />
 
                 <Button value="검색" onClick={naverMovieFunction}></Button>
-
                 {
-                    searchResult == null
+                    searchCount === null?null:<p>총 : {searchCount}건</p>
+                }
+                <p></p>
+                {
+                    searchResult === null
                     ?
-                    null
+                        <p>you need search query</p>
                     :
                         <table>
                             <thead>
