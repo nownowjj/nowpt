@@ -34,9 +34,6 @@ public class AuthService {
         Member mem = new Member();
 
         // 일반 로그인일 경우
-        /**
-         * @Params (membId, pw , ip , Y )
-         */
         if (!(sns.equals("Y"))){
             // membId로 검증
              mem = memRepo.memberChkById(id);
@@ -48,9 +45,6 @@ public class AuthService {
 
         }
         // 소셜 로그인일 경우
-        /**
-         * @params (social_id , pw , ip, N)
-         */
         else{
             // 이메일로 검증
             mem = memRepo.memberChkById(id);
@@ -90,6 +84,7 @@ public class AuthService {
             newMem.setMembPw(pe.encode(newMem.getPassword()));
             newMem.setMembCls(eu.getMemberTyCmm(Cd.MEMBER_TY_USER));
             newMem.setMembSttusCd(eu.getMemberSttusCmm(Cd.MEMBER_STTUS_OK));
+            newMem.setSubscriptionMethod("EMAIL");
             return mmRepo.save(newMem);
         }
     }
