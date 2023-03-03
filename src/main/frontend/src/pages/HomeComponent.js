@@ -132,40 +132,6 @@ const HomeComponent =(props)=>{
                         </table>
 
                 }
-                {/*<table>*/}
-                {/*    <thead>*/}
-                {/*        <tr>*/}
-                {/*            <th>제목</th>*/}
-                {/*            <th>서브 제목</th>*/}
-                {/*            /!*<th>링크</th>*!/*/}
-                {/*            <th>이미지</th>*/}
-                {/*            <th>감독</th>*/}
-                {/*            <th>배우</th>*/}
-                {/*            <th>날짜</th>*/}
-                {/*            <th>평점</th>*/}
-                {/*        </tr>*/}
-                {/*    </thead>*/}
-
-                {/*    <tbody>*/}
-                {/*        {searchResult && searchResult.map((list,index) => {*/}
-                {/*        return (*/}
-                {/*            <tr*/}
-                {/*                key={index}*/}
-                {/*            >*/}
-
-                {/*                <td><a href={list.link}>{list.title}</a></td>*/}
-                {/*                <td>{list.subtitle}</td>*/}
-                {/*                /!*<td>{list.link}</td>*!/*/}
-                {/*                <td style={{backgroundImage: `url(${list.image})`,width:'100px'}}></td>*/}
-                {/*                <td>{list.director}</td>*/}
-                {/*                <td>{list.actor}</td>*/}
-                {/*                <td>{(dayjs(list.pubDate).format('YYYY년MM월DD일 hh시mm분 A'))}</td>*/}
-                {/*                <td>{list.userRating}</td>*/}
-                {/*            </tr>*/}
-                {/*        );*/}
-                {/*        })}*/}
-                {/*    </tbody>*/}
-                {/*</table>*/}
 
             </div>
         )

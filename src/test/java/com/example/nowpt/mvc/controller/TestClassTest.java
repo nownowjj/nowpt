@@ -5,30 +5,25 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class TestClassTest {
-
-
-     int i = 1;
-
-    public int add1(int x , int y){
-        return x+y;
-    }
+class TestClassTest {
 
 
     @Test
     public void start(){
-        System.out.println("add1 메소드 실행결과 : " + add1(3,5) );
-        System.out.println("============================================");
-        System.out.println("add2 메소드 실행결과 : " + add2(1,3) );
-        System.out.println("============================================");
-        System.out.println("start 메소드 위에 존재하는 i의 값 : " + i);
-        System.out.println("============================================");
-        System.out.println("start 메소드 아래에 존재하는 y의 값 : " + y);
-    }
+//        System.out.println(i);
 
-     int y = 2;
+        int i = 10;
+        int b;
 
-    public int add2 (int x , int y){
-        return x+y;
+        // i는 10인데 i++을 하였기 때문에 i=11이 되는거임 따라서  >> b=i++이니까 b=11이 됨
+        b = i++;
+        System.out.println("b >>> " +b);
+        System.out.println("i >>> " +i);
+
+        // 위에서 i를 11로 증가시켜 놨기 때문에 i=11임 하지만 ++i를 하기 때문에 11>12, i=12가 됨 따라서 >> b도 12가됨
+        b = ++i;
+        System.out.println("b >>> " +b);
+        System.out.println("i >>> " +i);
+
     }
 }
