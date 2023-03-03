@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,8 +21,8 @@ import java.util.Map;
 @Service
 @Slf4j
 public class OAuthNaverService {
-    private final static String NAVER_CLIENT_SECRET = "u05ejvR5OK";
-    private final static String NAVER_CLIENT_ID = "4cwWn7LL7M_zyYFJyzDy";
+    @Value("${naverLogin.clientId}") private String NAVER_CLIENT_ID ;
+    @Value("${naverLogin.clientSecret}") private String NAVER_CLIENT_SECRET;
 
     public String getAccessToken(@RequestParam String code, @RequestParam String state) throws JsonProcessingException {
         // HTTP Header 생성

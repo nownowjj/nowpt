@@ -2,6 +2,7 @@ package com.example.nowpt.social;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -10,6 +11,8 @@ import java.net.URL;
 
 @Service
 public class OAuthService{
+    @Value("${kakaoLogin.clientId}") private String KAKAO_CLIENT_ID ;
+    @Value("${kakaoLogin.redirectUri}") private String KAKAO_REDIRECT_URI ;
 
     public String getKakaoAccessToken (String code) {
         String access_Token = "";
@@ -28,10 +31,8 @@ public class OAuthService{
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=77cbf4dbfe4487f6bb02d3360642a389"); // TODO REST_API_KEY 입력
-//            sb.append("&redirect_uri=http://localhost:8060/oauth"); // TODO 인가코드 받은 redirect_uri 입력
-//            sb.append("&redirect_uri=http://localhost:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&redirect_uri=http://192.168.10.215:3000/oauth"); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&client_id="+KAKAO_CLIENT_ID); // TODO REST_API_KEY 입력
+            sb.append("&redirect_uri="+KAKAO_REDIRECT_URI); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();

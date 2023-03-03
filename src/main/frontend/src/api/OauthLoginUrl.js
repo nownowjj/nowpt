@@ -1,5 +1,5 @@
 const KAKAO_CLIENT_ID = "77cbf4dbfe4487f6bb02d3360642a389";
-const KAKAO_REDIRECT_URI = 'http://192.168.10.215:3000/oauth';
+const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauth';
 
 const NAVER_CLIENT_ID = "4cwWn7LL7M_zyYFJyzDy";
 const NAVER_REDIRECT_URI = 'http://localhost:3000/oauthNaver';
