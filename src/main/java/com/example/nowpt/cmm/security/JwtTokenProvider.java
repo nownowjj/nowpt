@@ -3,6 +3,7 @@ package com.example.nowpt.cmm.security;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -10,18 +11,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 public class JwtTokenProvider {
-	// TODO: @Value
-//	@Value();
-	private final static String JWT_SECRET = "password";
+
+	/**
+	 * static 변수에 대하여 @Value annotation 이 동작하지 않는다.
+	 * 이를 해결하기 위해서는 static 이 아닌 setter 메소드를 추가하여 static 변수에 직접적으로 값을 넣을 수 있도록 하면 된다.
+	 */
+	private static String JWT_SECRET;
+	@Value("${jwt.secret}")
+	public void setJwtSecret(String value){
+		JWT_SECRET = value;
+	}
+
 	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
-	
+
 	public static String generateToken(String id, String pw, String authority) {
 		Map<String, Object> claims = new HashMap<>();
 		log.debug("토큰 프로바이드");
 		log.debug("권한 : {}",authority);
 		log.debug("[토큰정보] : {}, : {} , : {}",authority,id,pw);
-
 
 		claims.put("membId", id);
 		claims.put("membPw", pw);
