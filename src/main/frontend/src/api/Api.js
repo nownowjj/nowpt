@@ -87,10 +87,20 @@ export function login(loginDto) {
 export function kakaoLogin(code) {
     return request({
         url: API_BASE.replace("/api","") + "/oauth/kakao?code="+code,
-        method: 'GET',
-        // body: JSON.stringify(code)
+        method: 'GET'
     });
 }
+
+// 네이버 로그인 api
+export function naverLogin(code,state) {
+    return request({
+        url: API_BASE.replace("/api","") + "/oauth/naver?code="+code+"&state="+state,
+        method: 'GET'
+    });
+}
+
+
+
 
 // 네이버 무비 검색 API
 export function naverMovie(search) {
