@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import org.w3c.dom.NodeList;
 @Slf4j
 @RequestMapping("/api/auth")
 public class WeaherApiController2 {
+    @Value("${weather.api-key}") private String KEY;
 
     @GetMapping("/weather2")
     public HashMap<String, String> main(String[] args) {
@@ -46,7 +48,7 @@ public class WeaherApiController2 {
     //=> 행정구역별 x,y 값은 참고문서(https://www.data.go.kr/data/15084084/openapi.do) 내려받아 확인
     // [out] v[0]=예보날짜(yyyyMMdd), v[1]=예보시간(HHmm), v[2]=날씨, v[3]=기온(℃), v[4]=습도(%)
     // 반환값 : 에러메시지, null == OK
-    public static String get(int x, int y, String[] v) {
+    public String get(int x, int y, String[] v) {
         HttpURLConnection con = null;
         String s = null; // 에러 메시지
 
@@ -55,7 +57,7 @@ public class WeaherApiController2 {
 
             URL url = new URL(
                     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
-                            + "?ServiceKey=C1dyxQ8J4rsqoxWObuS8zyvOOxuJB2iBmxSs9Q58iZed0ubWowzekp%2B%2FxQa194cEvlhLqqNCziGOyYHYEw9N9g%3D%3D" // 서비스키
+                            + "?ServiceKey=" + KEY // 서비스키
                             //	+ "&pageNo=1" // 페이지번호 Default: 1
                             + "&numOfRows=60" // 한 페이지 결과 수 (10개 카테고리값 * 6시간)
                             //	+ "&dataType=XML" // 요청자료형식(XML/JSON) Default: XML
