@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {mainTest} from "../api/Api";
-import Button from "../component/JoinButton";
 import Kakaomap from "../services/kakaomap/Kakaomap";
 
 const MainComponent = () => {

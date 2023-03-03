@@ -11,6 +11,7 @@ import NoticePage from "../pages/notice/NoticePage";
 import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
 import MeetingPage from "../pages/meetingRoom/MeetingPage";
 import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
+import OauthNaver from "../api/OauthNaver";
 
 
 const Router = () => {
@@ -49,6 +50,7 @@ const Router = () => {
 
 
                 <Route path="/oauth" element={<Oauth />} />
+                <Route path="/oauthNaver" element={<OauthNaver />} />
             </Routes>
 
         </BrowserRouter>

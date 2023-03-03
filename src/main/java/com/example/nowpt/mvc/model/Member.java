@@ -44,7 +44,7 @@ public class Member extends Base implements UserDetails{
     private CmmnCodeDetail membSttusCd;
 
     //회원ID
-    @Column(name = "memb_id", length = 12, nullable = false, unique = true)
+    @Column(name = "memb_id", length = 100, nullable = false, unique = true)
     private String membId;
 
     //회원PW
@@ -85,6 +85,9 @@ public class Member extends Base implements UserDetails{
     @Column(name = "identity_verification", length = 1)
     @ColumnDefault("'N'")
     private String identityVerification;
+
+    @Column(name = "subscription_method",length = 20)
+    private String subscriptionMethod;
 
     //-------------------------------------------------------
     //SecurityConfig

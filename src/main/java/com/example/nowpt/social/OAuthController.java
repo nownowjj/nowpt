@@ -11,7 +11,6 @@ import com.google.gson.JsonElement;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,10 @@ public class OAuthController {
 
     @Autowired private EntityUtil eu;
 
-    String sns = "Y";
+    private final static String sns = "Y";
+
+
+
     /**
      * 카카오 callback
      * [GET] /oauth/kakao/callback
@@ -98,7 +100,7 @@ public class OAuthController {
             result.put("token",(new JwtAuthenticationResponse(token)));
 
         } else {
-            // 미가입 유저 이므로 가입 시킨 후 , 로그인을 시킴
+            // 미가입 유저 이므로 가입 시킨 후 , 토큰 발급
             log.debug("가입 시켜야 할 유저 : {}", mem);
 
             // 카카오 정보로 유저 가입
@@ -111,6 +113,7 @@ public class OAuthController {
             newMem.setProfileImage(profile_image);
             newMem.setMembId(social_id);
             newMem.setMembNm(nickname);
+            newMem.setSubscriptionMethod("KAKAO");
             log.debug("newMem : {} " , newMem);
             memRepo.save(newMem);
 

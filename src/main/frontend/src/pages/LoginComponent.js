@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {useNavigate} from "react-router";
 import Button from "../component/JoinButton";
 import {ACCESS_TOKEN, login} from "../api/Api";
-import {KAKAO_AUTH_URL} from "../api/KaKaoUrl";
+import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
 import {validateLogin} from "../services/validate";
 
@@ -78,6 +78,9 @@ function LoginComponent () {
 
             <a href={KAKAO_AUTH_URL}>
                 <div className="kakao_btn"></div>
+            </a>
+            <a href={NAVER_AUTH_URL}>
+                <div className="naver_btn"></div>
             </a>
 
         </div>

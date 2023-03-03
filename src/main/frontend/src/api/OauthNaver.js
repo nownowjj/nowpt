@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
-import {ACCESS_TOKEN, kakaoLogin} from "./Api";
-import HomeComponent from "../pages/HomeComponent";
-import HeaderComponent from "../component/HeaderComponent";
+import {ACCESS_TOKEN, naverLogin} from "./Api";
 
-const Oauth = () => {
+const OauthNaver = () => {
     const navigate = useNavigate();
     const code = new URL(window.location.href).searchParams.get('code');
+    const state = new URL(window.location.href).searchParams.get('state');
+
 
     useEffect(() => {
         // (async () => {
         //     try {
         //         await
-        kakaoLogin(code)
+        naverLogin(code,state)
             .then(response => {
 
-                console.log("1 !!")
+                console.log("네이버 성공 !!")
                 console.log(response.token.accessToken);
                 sessionStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
 
@@ -24,7 +24,7 @@ const Oauth = () => {
 
             })
             .catch(error => {
-                alert("카카오 로그인 실패");
+                alert("네이버 로그인 실패");
                 console.log(error);
                 navigate('/go/main');
             })
@@ -37,4 +37,4 @@ const Oauth = () => {
     )
 }
 
-export default Oauth
+export default OauthNaver
