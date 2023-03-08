@@ -5,25 +5,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class TestClassTest {
+public class TestClassTest {
+
+    public static final String str1 = "Hello";
+    public static String str2 = "Hello";
 
 
     @Test
-    public void start(){
-//        System.out.println(i);
+    public static void main(String args[]) {
+        String str1 = "Hello 못바꿔 ㅠ";
+        // str1은 final로 선언되었기 때문에 값을 재할당 할 수 없음
+        System.out.println(str1);
 
-        int i = 10;
-        int b;
-
-        // i는 10인데 i++을 하였기 때문에 i=11이 되는거임 따라서  >> b=i++이니까 b=11이 됨
-        b = i++;
-        System.out.println("b >>> " +b);
-        System.out.println("i >>> " +i);
-
-        // 위에서 i를 11로 증가시켜 놨기 때문에 i=11임 하지만 ++i를 하기 때문에 11>12, i=12가 됨 따라서 >> b도 12가됨
-        b = ++i;
-        System.out.println("b >>> " +b);
-        System.out.println("i >>> " +i);
+        // str2는 값 재할당 가능
+        str2 = "Hello 바꿀꺼지롱";
+        System.out.println(str2);
 
     }
+
 }

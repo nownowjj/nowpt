@@ -88,4 +88,10 @@ public class AuthService {
             return mmRepo.save(newMem);
         }
     }
+
+    public Member findUserByEmailMethod(String userEmail) {
+        return memRepo.findByMembId(userEmail);
+    }
+
+
 }

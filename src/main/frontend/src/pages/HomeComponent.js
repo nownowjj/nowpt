@@ -24,15 +24,6 @@ const HomeComponent =(props)=>{
 
     },[]);
 
-
-
-    // async await promise result 추출
-    // async function test(){
-    //     let result = await homeTest();
-    //     console.log(result.message);
-    // }
-
-
     const naverMovieFunction =()=>{
         if(searchParam.length < 1 ){
             alert('검색어를 입력하세요.')
@@ -54,28 +45,12 @@ const HomeComponent =(props)=>{
     }
 
 
-    // const testBtn =()=>{
-    //     showAndroidToast('hello Android!');
-    // }
-
-    function callFromApp() {
-        var broswerInfo = navigator.userAgent;
-        if(broswerInfo.indexOf("Android")>-1) {
-            window.MyTestApp.AlertMsg("웹뷰에서 호출된 메시지입니다");
-        }
-    }
-
     return (
             <div>
                 api : {message}
                 <br/>
                 Home 페이지
                 <br/>
-                <Button
-                    value="ㄴㄴ"
-                    onClick={callFromApp}
-                />
-                {/*<img src={mguImg} alt="img"/>*/}
 
                 <br/>
 

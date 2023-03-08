@@ -29,7 +29,7 @@ const OauthNaver = () => {
                 navigate('/go/main');
             })
 
-    },[]);
+    });
 
     return (
         <div>

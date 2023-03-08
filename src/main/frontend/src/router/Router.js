@@ -12,6 +12,7 @@ import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
 import MeetingPage from "../pages/meetingRoom/MeetingPage";
 import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
 import OauthNaver from "../api/OauthNaver";
+import ChatModal from "../component/ChatModal";
 
 
 const Router = () => {
@@ -47,6 +48,7 @@ const Router = () => {
                 <Route path="/go/meetingRoom" element={<MeetingPage />} />
                 <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
 
+                <Route path="/go/chat" element={<ChatModal />} />
 
 
                 <Route path="/oauth" element={<Oauth />} />

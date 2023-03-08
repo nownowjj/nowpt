@@ -18,4 +18,7 @@ public interface MemberRepo extends JpaRepository<Member, Long>, MemberCustomRep
 
 //	Member findByMembEmailAddr(String emailAddr);
 
+
+	// email 조회 추가
+//	Member findUsersByEmail(String userEmail);
 }

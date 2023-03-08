@@ -95,6 +95,9 @@ dependencies {
 
     //RestTemplate
     implementation 'org.apache.httpcomponents:httpclient:4.5'
+
+    //webSocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.withType(JavaCompile) {
