@@ -108,10 +108,10 @@ const HeaderComponent = () => {
 
                 <li
                     style={li}
-                    onClick={falseEvent}
-                    // onClick={() => navigate("/go/calculator")}
+                    // onClick={falseEvent}
+                    onClick={() => navigate("/go/chat")}
                 >
-                    계산기
+                    채팅
                 </li>
 
                 <li

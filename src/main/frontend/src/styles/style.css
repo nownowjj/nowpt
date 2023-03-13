@@ -29,3 +29,11 @@ th,td{
 /*.react-datepicker__input-container {*/
 /*  width: auto !important;*/
 /*}*/
+
+#talk {
+  width: 100%;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 18px;
+  position: relative;
+}

@@ -8,7 +8,7 @@ import com.example.nowpt.mvc.dto.LoginDto;
 import com.example.nowpt.mvc.mapper.MemberMapper;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.mvc.service.MapperService;
-import com.example.nowpt.service.AuthService;
+import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class AuthRestController {
     @Autowired
     private MemberMapper memberMapper;
 
-    String sns = "N";
+    String  sns = "N";
 
 
     @GetMapping("/home")

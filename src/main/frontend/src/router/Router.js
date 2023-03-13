@@ -12,7 +12,8 @@ import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
 import MeetingPage from "../pages/meetingRoom/MeetingPage";
 import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
 import OauthNaver from "../api/OauthNaver";
-import ChatModal from "../component/ChatModal";
+import LoadingComponent from "../pages/LoadingComponent";
+import Chat from "../pages/socket/Chat";
 
 
 const Router = () => {
@@ -23,7 +24,6 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-
             <HeaderComponent/>
             <Routes>
                 {/*<Route path="/" element={<HomeComponent />} />*/}
@@ -48,11 +48,14 @@ const Router = () => {
                 <Route path="/go/meetingRoom" element={<MeetingPage />} />
                 <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
 
-                <Route path="/go/chat" element={<ChatModal />} />
+                <Route path="/go/chat" element={<Chat />} />
 
 
                 <Route path="/oauth" element={<Oauth />} />
                 <Route path="/oauthNaver" element={<OauthNaver />} />
+
+                <Route path="/loading" element={<LoadingComponent />} />
+
             </Routes>
 
         </BrowserRouter>

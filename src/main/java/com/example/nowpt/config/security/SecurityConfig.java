@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.accessDeniedHandler(cad)
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers( "/","/api/auth/**","/error","/oauth/**","/api/notice/auth/**","/chat/**","/ws/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
+					.antMatchers( "/","/api/auth/**","/error","/oauth/**","/api/notice/auth/**","/chat/**","/ws/**","/socket/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
 					.antMatchers("/api/test/**","/api/notice/admin/**").hasAuthority("ROLE_ADMIN")
 					.antMatchers("/api/common/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
 					.anyRequest().authenticated() // 위에서 따로 지정한 접근허용 리소스 설정 후 그 외 나머지 리소스들은 무조건 인증을 완료해야 접근 가능

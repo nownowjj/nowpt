@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {homeTest, naverMovie} from "../api/Api";
 import Button from "../component/JoinButton";
 import Input from "../component/Input";
+import Loading from "./LoadingComponent";
 
 const HomeComponent =(props)=>{
     const [message,setMessage] = useState("");
@@ -10,18 +11,18 @@ const HomeComponent =(props)=>{
     const[searchResult,setSearchResult] = useState(null);
     const[searchCount,setSearchCount] = useState(null);
 
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(()=>{
-
-
+        setLoading(true);
         homeTest()
             .then(response => {
-                setMessage(response.message)
+                setMessage(response.message);
+                setLoading(false)
             }).catch(error => {
             console.log(error)
         });
-
     },[]);
 
     const naverMovieFunction =()=>{
@@ -29,12 +30,15 @@ const HomeComponent =(props)=>{
             alert('검색어를 입력하세요.')
             return false;
         }
+
+        setLoading(true);
         naverMovie(searchParam)
             .then(response =>{
                 setSearchCount(response.display)
                 setSearchResult(response.items)
                 // setSearchResult( response.items)
                 console.log(response.items)
+                setLoading(false)
             }).catch(error =>{
             console.log(error)
         })
@@ -45,12 +49,31 @@ const HomeComponent =(props)=>{
     }
 
 
+
     return (
             <div>
+                {loading ? <Loading/> : null}
                 api : {message}
                 <br/>
                 Home 페이지
                 <br/>
+
+
+
+                {/*<ChatButton*/}
+                {/*    onClick={openChatModal}*/}
+                {/*    detail_id={detail_id}*/}
+                {/*    // is_chat={is_chat}*/}
+                {/*    // chat_list={chat_list}*/}
+                {/*    // is_me={is_me}*/}
+                {/*    // // user_info={user_info}*/}
+                {/*>*/}
+                {/*    <ChatStyle>*/}
+                {/*        <ChatIcon style={{ fontSize: 15,  margin: "0 10px" }}></ChatIcon>*/}
+                {/*    </ChatStyle>*/}
+                {/*    채팅하기*/}
+                {/*</ChatButton>*/}
+
 
                 <br/>
 
@@ -112,3 +135,21 @@ const HomeComponent =(props)=>{
         )
     }
 export default HomeComponent ;
+
+// const ChatButton=styled.button`
+//
+// padding: 8px 24px;
+// background-color:#6fa1f6;
+// border-radius:30px;
+// margin:8px;
+// border:1px solid #6fa1f6;
+// width:11vw;
+// font-size:15px;
+// color:#fff;
+// cursor: pointer;
+//
+// `;
+//
+// const ChatStyle=styled.div`
+// margin-bottom: 2px;
+// `;

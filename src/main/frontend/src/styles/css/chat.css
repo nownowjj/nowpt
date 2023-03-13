@@ -1,0 +1,24 @@
+#chat-wrap{
+    width: 500px;
+    background-color: #ededed;
+    margin: 50px auto;
+    padding: 20px 10px;
+    border-radius: 20px;
+    box-shadow: 41px 41px 82px #c9c9c9,
+    -41px -41px 82px #ffffff;
+}
+#chat-wrap input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#chat-wrap input::-ms-clear {
+    display: none;
+}
+
+#chat-wrap input[type='number']::-webkit-inner-spin-button,input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
