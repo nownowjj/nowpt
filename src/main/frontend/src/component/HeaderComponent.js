@@ -105,14 +105,18 @@ const HeaderComponent = () => {
                     내 정보
                 </li>
 
+                {
+                    auth != null
+                    ?
+                        <li
+                            style={li}
+                            // onClick={falseEvent}
+                            onClick={() => navigate("/go/chat")}
+                        >
+                            채팅
+                        </li>  :null
+                }
 
-                <li
-                    style={li}
-                    // onClick={falseEvent}
-                    onClick={() => navigate("/go/chat")}
-                >
-                    채팅
-                </li>
 
                 <li
                     style={li}

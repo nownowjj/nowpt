@@ -10,27 +10,28 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @ServerEndpoint("/socket/chatt")
 @Slf4j
 public class WebSocketChat {
 
-    private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>());
+
+
+    private static List<Session> sessionUsers = Collections.synchronizedList(new ArrayList<>());
+//    private static Set<Session> sessionUsers = Collections.synchronizedSet(new HashSet<Session>());
 //    private static Logger logger = (Logger) LoggerFactory.getLogger(WebSocketChat.class);
 
 
 
     @OnOpen
     public void onOpen(Session session) {
-        log.info("open session : {}, clients={}", session.toString(), clients);
+        log.info("open session : {}, sessionUsers={}", session.toString(), sessionUsers);
 
 
-        if(!clients.contains(session)) {
-            clients.add(session);
+        if(!sessionUsers.contains(session)) {
+            sessionUsers.add(session);
             log.info("session open : {}", session);
         }else{
             log.info("이미 연결된 session");
@@ -40,8 +41,12 @@ public class WebSocketChat {
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {
         log.info("receive message : {}", message);
+        log.info("size : {}", sessionUsers.size());
+        log.info("message는 :  {}",message);
 
-        for (Session s : clients) {
+        int size = sessionUsers.size();
+
+        for (Session s : sessionUsers) {
             log.info("send data : {}", message);
 
             s.getBasicRemote().sendText(message);
@@ -51,6 +56,6 @@ public class WebSocketChat {
     @OnClose
     public void onClose(Session session) {
         log.info("session close : {}", session);
-        clients.remove(session);
+        sessionUsers.remove(session);
     }
 }

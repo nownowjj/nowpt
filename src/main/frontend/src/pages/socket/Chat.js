@@ -2,9 +2,12 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import {createGlobalStyle} from 'styled-components';
 import reset from 'styled-reset';
 import "../../styles/scss/chat.css"
+import {getMembInfo} from "../../api/Api";
 
 
 const Chat = () => {
+    const [membInfo, setMembInfo] = useState([""]);
+
     const [msg, setMsg] = useState("");
     const [name, setName] = useState("");
     const [chatt, setChatt] = useState([]);
@@ -22,13 +25,27 @@ const Chat = () => {
     ));
 
     useEffect(() => {
+
         if(socketData !== undefined) {
             const tempData = chatt.concat(socketData);
             console.log(tempData);
             setChatt(tempData);
         }
+
+
     }, [socketData]);
 
+    useEffect(()=>{
+        getMembInfo()
+            .then(response => {
+                // console.log("myPage")
+                console.log('Response Object is: %O', response)
+                setMembInfo(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },[])
 
     const GlobalStyle = createGlobalStyle`  //css 초기화가 된 component
         ${reset}
@@ -51,8 +68,10 @@ const Chat = () => {
     const webSocketLogin = useCallback(() => {
         ws.current = new WebSocket("ws://192.168.10.215:8060/socket/chatt");
 
+
         ws.current.onmessage = (message) => {
             const dataSet = JSON.parse(message.data);
+
             setSocketData(dataSet);
         }
     });
@@ -108,11 +127,13 @@ const Chat = () => {
             <div id="chat-wrap">
                 <div id='chatt'>
                     <h1 id="title">WebSocket Chatting</h1>
+                    <h4 id="conState" style={{textAlign:"center"}}>{chkLog}</h4>
                     <br/>
                     <div id='talk'>
                         <div className='talk-shadow'></div>
                         {msgBox}
                     </div>
+                    <p>{membInfo.membNm}</p>
                     <input disabled={chkLog}
                            placeholder='이름을 입력하세요.'
                            type='text'
