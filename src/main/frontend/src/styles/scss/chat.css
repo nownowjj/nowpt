@@ -1,0 +1,95 @@
+@charset "UTF-8";
+#chat-wrap {
+  /* input 기본 스타일 초기화 */
+  /* IE10 이상에서 input box 에 추가된 지우기 버튼 제거 */
+  /* input type number 에서 화살표 제거 */
+}
+#chat-wrap {
+  width: 500px;
+  background-color: #ededed;
+  margin: 50px auto;
+  padding: 20px 10px;
+  border-radius: 20px;
+  box-shadow: 41px 41px 82px #c9c9c9, -41px -41px 82px #ffffff;
+}
+#chat-wrap input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+#chat-wrap input::-ms-clear {
+  display: none;
+}
+#chat-wrap input[type=number]::-webkit-inner-spin-button,
+#chat-wrap input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+#chat-wrap #chatt {
+  width: 100%;
+  margin: 0 auto;
+}
+#chat-wrap #chatt #title {
+  font-size: 30pt;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#chat-wrap #chatt #talk {
+  width: 100%;
+  height: 400px;
+  overflow-y: auto;
+  border-radius: 18px;
+  position: relative;
+}
+#chat-wrap #chatt #talk .talk-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#chat-wrap #chatt #talk div {
+  width: 60%;
+  display: block;
+  padding: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+#chat-wrap #chatt #talk div.me {
+  background-color: #ffc;
+  margin: 0px 0px 20px 40%;
+}
+#chat-wrap #chatt #talk div.other {
+  margin: 20px 0px 2px 0;
+}
+#chat-wrap #chatt #name {
+  display: block;
+  border: 1px solid #dcdcdc;
+  background-color: #EDEDED;
+  padding: 5px 2px;
+  margin-top: 20px;
+}
+#chat-wrap #chatt #sendZone {
+  margin-top: 10px;
+  display: flex;
+}
+#chat-wrap #chatt #sendZone > * {
+  vertical-align: top;
+}
+#chat-wrap #chatt #sendZone #msg {
+  width: 90%;
+  height: 70px;
+  display: block;
+  resize: none;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+#chat-wrap #chatt #sendZone #btnSend {
+  width: 10%;
+  height: 70px;
+  border: 1px solid #dcdcdc;
+}
+
+/*# sourceMappingURL=chat.css.map */

@@ -6,7 +6,7 @@ import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.repository.member.MemberRepo;
-import com.example.nowpt.service.AuthService;
+import com.example.nowpt.mvc.service.AuthService;
 import com.google.gson.JsonElement;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

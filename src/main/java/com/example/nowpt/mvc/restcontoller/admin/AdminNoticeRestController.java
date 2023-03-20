@@ -5,22 +5,22 @@ import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.mvc.dto.NoticeDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notice;
+import com.example.nowpt.mvc.service.admin.NoticeService;
 import com.example.nowpt.repository.notice.NoticeRepo;
-import com.example.nowpt.service.admin.NoticeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class AdminNoticeRestController {
-    @Autowired private NoticeService noticeService;
-    @Autowired private NoticeRepo noticeRepo;
+    private final NoticeService noticeService;
+    private final NoticeRepo noticeRepo;
 
     /**
      *

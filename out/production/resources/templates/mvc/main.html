@@ -1,90 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/defaultLayout}"
-      th:with="metaTitle='메인'">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <style>
-
-  </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-
 <body>
 
-<!-- content -->
-<th:block layout:fragment="content">
-  <div id="wrap">
-    <!--  popUp 창    -->
-      <div th:each="list , i : ${lists.data}">
-          <h2>jpa 출력 결과물 : [[${i.count}]]번째</h2>
-          <div>[[${list.membId}]] </div>
-          <div>[[${list.membNm}]]</div>
-      </div>
-
-
-    <h1>포맷전 : [[${now}]]</h1>
-    <h1>포맷후 : [[${strNowDate}]]</h1>
-  </div>
-
-  <script th:inline="javascript">
-    // js!!
-    $(document).ready(function(){
-      // console.log([[${lists}]]);
-    })
-
-
-
-
-    goToSchool();
-    arriveAtSchool_asis();
-    study();
-
-
-    // 일반적인 함수 실행시 학교 도착 펑션은 1초후 출력
-    function promise(){
-      console.log("=============")
-      console.log("goToSchool function 실행")
-      goToSchool();
-      console.log("arriveAtSchool_tobe promise function 실행")
-      arriveAtSchool_tobe().then(function(){
-        console.log("promise then > study function 실행")
-        study();
-      });
-    }
-
-
-
-    function goToSchool() {
-      console.log("1 : 학교에 갑니다.");
-    }
-
-    function arriveAtSchool_asis() {
-      setTimeout(function() {
-        console.log("2 : 학교에 도착했습니다.");
-      }, 1000);
-    }
-
-    function study() {
-      console.log("3 : 열심히 공부를 합니다.");
-    }
-
-    function arriveAtSchool_tobe() {
-      return new Promise(function(resolve){
-        setTimeout(function() {
-          console.log("2 : 학교에 도착했습니다.");
-          resolve();
-        }, 1000);
-      });
-    }
-  </script>
-
-
-
-</th:block>
-<!-- //content -->
-
-
-
+<p th:text="${hello}">message</p>
 
 </body>
 </html>
