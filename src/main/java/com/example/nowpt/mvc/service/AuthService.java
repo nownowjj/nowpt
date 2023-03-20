@@ -64,7 +64,7 @@ public class AuthService {
         mlg.setConnectIp(ip);
         mlg.setMemberSn(mem);
         memLoginHstRepo.save(mlg);
-        return JwtTokenProvider.generateToken(id, pw, mem.getMembCls().getCodeValue());
+        return JwtTokenProvider.generateToken(id, pw, mem.getMembCls().getCodeValue() ,mem.getEmailAddr());
     }
 
     public MemberMoney userJoin(JoinDto joinDto) {

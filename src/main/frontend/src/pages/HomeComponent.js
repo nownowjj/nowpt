@@ -3,6 +3,7 @@ import {homeTest, naverMovie} from "../api/Api";
 import Button from "../component/JoinButton";
 import Input from "../component/Input";
 import Loading from "./LoadingComponent";
+import HeaderComponent from "../component/HeaderComponent";
 
 const HomeComponent =(props)=>{
     const [message,setMessage] = useState("");
@@ -53,6 +54,7 @@ const HomeComponent =(props)=>{
     return (
             <div>
                 {loading ? <Loading/> : null}
+                {/*<HeaderComponent/>*/}
                 api : {message}
                 <br/>
                 Home 페이지
