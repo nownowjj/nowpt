@@ -5,3 +5,6 @@
 
 0320 17:37
 master > feature
+
+0320 17:43
+gradle 리액트 빌드 막음
