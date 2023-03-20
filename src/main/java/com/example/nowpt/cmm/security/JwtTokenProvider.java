@@ -1,5 +1,6 @@
 package com.example.nowpt.cmm.security;
 
+import com.example.nowpt.mvc.model.Member;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,14 +27,15 @@ public class JwtTokenProvider {
 
 	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
 
-	public static String generateToken(String id, String pw, String authority) {
+	public static String generateToken(String id, String pw, String authority , String email) {
 		Map<String, Object> claims = new HashMap<>();
-		log.debug("토큰 프로바이드");
+//		log.debug("토큰 프로바이드 {}");
 		log.debug("권한 : {}",authority);
 		log.debug("[토큰정보] : {}, : {} , : {}",authority,id,pw);
 
 		claims.put("membId", id);
 		claims.put("membPw", pw);
+		claims.put("membEmail", email);
 		claims.put("roles", authority);
 
 		return Jwts.builder()
