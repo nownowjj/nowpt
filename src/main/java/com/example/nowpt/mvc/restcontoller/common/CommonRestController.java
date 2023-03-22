@@ -29,11 +29,7 @@ public class CommonRestController {
 
     @PutMapping("/updateEmail/{email}")
     public String myPage(@AuthenticationPrincipal Member member,@PathVariable("email") String email){
-        // 해당 Sn 가져옴
-        Long membSn = member.getMemberSn();
-        log.debug("paramEmail : {}" , email);
-        // Sn으로 유저 정보 가져옴
-        Member mem = memRepo.findByMemberSn(membSn);
+        Member mem = memRepo.findByMemberSn(member.getMemberSn());
         if(mem != null){
             log.debug("mem : {}", mem);
             mem.setEmailAddr(email);
