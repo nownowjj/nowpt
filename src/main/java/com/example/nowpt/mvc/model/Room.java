@@ -1,6 +1,8 @@
 package com.example.nowpt.mvc.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -11,6 +13,8 @@ import javax.persistence.*;
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@Getter
+@Setter
 @SequenceGenerator(
         name="room_seq", //시퀀스 제너레이터 이름
         sequenceName="room_seq", //시퀀스 이름
@@ -39,7 +43,7 @@ public class Room extends Base {
     private String openYn;
 
     // 방 비밀번호
-    @Column(name = "room_pw",length = 100, nullable = false)
+    @Column(name = "room_pw",length = 100 )
     private String roomPw;
 
 }

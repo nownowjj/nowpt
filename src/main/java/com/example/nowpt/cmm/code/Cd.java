@@ -1,6 +1,13 @@
 package com.example.nowpt.cmm.code;
 /*공통코드 관련*/
 public interface Cd {
+	String POST_SUCCESS = "등록 성공";
+	String POST_FAIL = "등록 실패";
+
+	String PUT_SUCCESS = "수정 성공";
+	String PUT_FAIL = "수정 실패";
+
+
 	String ANNONYMOUSE_USER = "anonymousUser";
 	
 	String CODE_ID_MEMBER_TY = "MEMBER_TY_CODE";

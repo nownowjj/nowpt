@@ -23,7 +23,7 @@ public class RoomRequest extends Base {
     @Column(name = "room_request_sn")
     @GeneratedValue(
             strategy=GenerationType.SEQUENCE, //사용할 전략을 시퀀스로  선택
-            generator="room_request _seq" //식별자 생성기를 설정해놓은  notice_seq 으로 설정
+            generator="room_request_seq" //식별자 생성기를 설정해놓은  notice_seq 으로 설정
     )
     private Long roomRequestSn;
 
