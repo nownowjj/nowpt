@@ -9,6 +9,8 @@ const HeaderComponent = () => {
     const [auth, setAuth] = useState("");
     const Admin = "ROLE_ADMIN";
 
+
+
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
             window.sessionStorage.removeItem("accessToken");
@@ -30,8 +32,6 @@ const HeaderComponent = () => {
 
     useEffect(() => {
         setAuth(isAuth());
-        // isLogin();
-        // console.log("권한체크");
     },)
 
 

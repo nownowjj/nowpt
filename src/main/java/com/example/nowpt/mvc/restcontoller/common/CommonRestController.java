@@ -1,6 +1,7 @@
 package com.example.nowpt.mvc.restcontoller.common;
 
 
+import com.example.nowpt.mvc.model.MbrPrinciple;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.repository.member.MemberRepo;
 import com.google.gson.Gson;
@@ -27,7 +28,7 @@ public class CommonRestController {
     }
 
     @PutMapping("/updateEmail/{email}")
-    public String myPage( @AuthenticationPrincipal Member member,@PathVariable("email") String email){
+    public String myPage(@AuthenticationPrincipal Member member,@PathVariable("email") String email){
         // 해당 Sn 가져옴
         Long membSn = member.getMemberSn();
         log.debug("paramEmail : {}" , email);
