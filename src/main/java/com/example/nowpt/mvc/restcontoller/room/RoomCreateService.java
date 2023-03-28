@@ -26,7 +26,6 @@ public class RoomCreateService {
 
     // 방 생성전에 생성 횟수 확인
     public int selectCountsRoom(Long memberSn) {
-        int count  = roomRepo.countByFrstRegistMembSn(memberSn);
-        return count;
+        return roomRepo.countByFrstRegistMembSn(memberSn);
     }
 }

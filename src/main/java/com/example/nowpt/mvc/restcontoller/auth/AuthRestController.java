@@ -67,6 +67,7 @@ public class AuthRestController {
 
     @PostMapping("/userJoin")
     public RVO<MemberMoney> userJoin(@RequestBody JoinDto joinDto){
+        log.debug("joinDto : {}" , joinDto);
         return RVO.<MemberMoney>builder()
                 .msg("사용자 가입 되었습니다.")
                 .code(ApiCd.NORMAL)
@@ -74,6 +75,10 @@ public class AuthRestController {
                 .build();
     }
 
-
+    // 닉네임 중복체크
+//    @GetMapping("/nicknameCheck/{nickname}")
+//    public ResponseEntity<Boolean> checkNickName(@PathVariable String nickname){
+//        return ResponseEntity.ok(authService.checkNickName(nickname));
+//    }
 
 }

@@ -94,4 +94,7 @@ public class AuthService {
     }
 
 
+//    public boolean checkNickName(String nickname) {
+//        return memRepo.existsByNickName(nickname);
+//    }
 }

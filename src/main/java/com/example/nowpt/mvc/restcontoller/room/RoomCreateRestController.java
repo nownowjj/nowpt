@@ -9,17 +9,11 @@ import com.example.nowpt.mvc.model.RequestStatus;
 import com.example.nowpt.mvc.model.Room;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -37,13 +31,14 @@ public class RoomCreateRestController {
         // 방 생성 전에  생성 횟수 확인
         int result = roomCreateService.selectCountsRoom(member.getMemberSn());
 
-        if(result > 0 ){
+        // 방은 3회까지만 생성 가능
+        if(result >= 3){
             return RVO.<Room>builder()
-                    .msg(Cd.POST_FAIL + result + RequestStatus.REFUSE)
+                    .msg(Cd.POST_FAIL + "3회 이상 방을 생성하였습니다.")
                     .code(ApiCd.DEFAULT_ERR)
                     .data(null)
                     .build();
-        }else {
+        }else{
             return RVO.<Room>builder()
                     .msg(Cd.POST_SUCCESS)
                     .code(ApiCd.NORMAL)

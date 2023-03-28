@@ -2,17 +2,22 @@ import {useNavigate} from "react-router";
 import {li} from "../styles/style";
 import {useEffect, useState} from "react";
 import isAuth from "../services/isAuth";
+import {useDispatch, useSelector} from "react-redux";
+import {logout2} from "../actions/authActions";
 
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState("");
     const Admin = "ROLE_ADMIN";
+    const dispatch = useDispatch();
 
 
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
+            dispatch(logout2());
             window.sessionStorage.removeItem("accessToken");
             navigate("/go/login");
         } else {
@@ -48,7 +53,6 @@ const HeaderComponent = () => {
                         navigate("/")
                     }
                     }
-                    // className="Fli on cmli"
                 >
                     홈
                 </li>
