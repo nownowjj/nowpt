@@ -8,7 +8,7 @@ const KakaoMap = () => {
     console.log("맵!")
     return (
         <Map center={{ lat: 37.365264512305174, lng: 127.10676860117488 }} style={{ width: "600px", height: "600px" }} level={10}>
-            {markerdata.map((position,index) =>
+            {markerdata.map((position,index : position.index) =>
                 <>
                     <MapMarker
                         key={index}

@@ -7,7 +7,8 @@ import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
 import {validateLogin} from "../services/validate";
 import {useDispatch} from "react-redux";
-import {login2} from "../actions/authActions";
+import {login2} from "../redux/actions/authActions";
+import {login3} from "../redux/slice/userSlice";
 
 function LoginComponent () {
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function LoginComponent () {
                 // 로그인 액션 발생
                 // 로그인 처리
                 // 로그인 액션 발생
-                dispatch(login2(response.accessToken));
+                dispatch(login3(response.accessToken));
 
                 console.log(response)
                 console.log('로그인에 성공하였습니다!');

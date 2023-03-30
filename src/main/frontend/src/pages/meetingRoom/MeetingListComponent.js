@@ -5,12 +5,11 @@ import "react-datepicker/dist/react-datepicker.css"
 import {getReservation} from "../../api/ReservationApi";
 import dayjs from "dayjs";
 import 'dayjs/locale/ko';
-// import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from "date-fns/locale/ko";
 import roomData from "../../db/MeetingRoomData.json";
-import isId from "../../services/isId";
 import Button from "../../component/JoinButton";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const MeetingListComponent = ({data}) => {
     const navigate = useNavigate();
@@ -29,10 +28,11 @@ const MeetingListComponent = ({data}) => {
 
     // 예약 리스트
     const [reservationList,setReservationList] = useState([]);
-
     const [room , setRoom] = useState("대회의실");
 
-    const [id] = useState(isId())
+
+    const id = (useSelector((state) => state.auth.user)).membId;
+    console.log(id)
 
     const setStartDateEvent=(date)=>{
         setStartDate(date);

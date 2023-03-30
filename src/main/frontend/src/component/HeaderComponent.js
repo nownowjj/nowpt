@@ -3,7 +3,7 @@ import {li} from "../styles/style";
 import {useEffect, useState} from "react";
 import isAuth from "../services/isAuth";
 import {useDispatch, useSelector} from "react-redux";
-import {logout2} from "../actions/authActions";
+import {logout2} from "../redux/actions/authActions";
 
 
 const HeaderComponent = () => {
@@ -13,7 +13,7 @@ const HeaderComponent = () => {
     const dispatch = useDispatch();
 
 
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {

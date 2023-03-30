@@ -61,6 +61,7 @@ public class AuthRestController {
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
+        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
