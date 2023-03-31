@@ -14,19 +14,35 @@ import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent"
 import OauthNaver from "../api/OauthNaver";
 import LoadingComponent from "../pages/LoadingComponent";
 import Chat from "../pages/socket/Chat";
+import {useSelector} from "react-redux";
+import PrivateRoute from "./PrivateRoute";
 
 
 const Router = () => {
+    let isLogin = useSelector((state) => state.user.value.isLoggedIn);
+
+    console.log(isLogin)
     return (
 
         <BrowserRouter>
             <HeaderComponent />
+
+
             <Routes>
                 <Route path="/" element={<HomeComponent />} />
                 <Route path="/go/main" element={<MainComponent />} />
+
+                <Route
+                    path="/go/common/myPage"
+                    element={
+                    <PrivateRoute
+                        component={MyPageComponent}
+                    />
+                    }
+                />
+                {/*<PrivateRoute path="/go/main" element={<MainComponent />}   isAuthenticated={isLogin} />*/}
                 <Route path="/go/test/jpa" element={<TestComponent />} />
                 <Route path="/go/login" element={<LoginComponent />} />
-                <Route path="/go/common/myPage" element={<MyPageComponent />} />
                 <Route path="/go/calculator" element={<CalculatorComponent />} />
 
                 <Route path="/go/notice" element={<NoticePage />} />
@@ -36,6 +52,7 @@ const Router = () => {
                 <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
 
                 <Route path="/go/chat" element={<Chat />} />
+
 
 
                 <Route path="/oauth" element={<Oauth />} />

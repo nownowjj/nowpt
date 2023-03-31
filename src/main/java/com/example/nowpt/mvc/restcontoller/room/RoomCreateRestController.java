@@ -29,10 +29,10 @@ public class RoomCreateRestController {
         log.debug("방 생성!");
 
         // 방 생성 전에  생성 횟수 확인
-        int result = roomCreateService.selectCountsRoom(member.getMemberSn());
+        int count = roomCreateService.selectCountsRoom(member.getMemberSn());
 
         // 방은 3회까지만 생성 가능
-        if(result >= 3){
+        if(count >= 3){
             return RVO.<Room>builder()
                     .msg(Cd.POST_FAIL + "3회 이상 방을 생성하였습니다.")
                     .code(ApiCd.DEFAULT_ERR)

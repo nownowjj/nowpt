@@ -2,6 +2,7 @@ package com.example.nowpt.mvc.schedule;
 
 
 import com.example.nowpt.mvc.service.MapperService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,10 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class SchedulerService {
 
-    @Autowired
-    private MapperService mapperService;
+
+    private final MapperService mapperService;
 
     //fixedDelay	이전 작업이 종료된 후 설정 시간만큼 기다린 후에 시작한다. (밀리세컨드) @Scheduled(fixedDelay = 1000)
 
@@ -32,5 +34,11 @@ public class SchedulerService {
         log.debug("[배치] 10초마다 실행");
         log.debug(mapperService.selectAllMember().toString());
     }
+
+//    @Scheduled(cron = "0  0/1  *  *  * *")
+//    public void testNotice(){
+//        log.debug("[배치 노티스] ");
+//        mapperService.noticeN();
+//    }
 
 }

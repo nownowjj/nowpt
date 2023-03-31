@@ -7,7 +7,6 @@ import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
 import {validateLogin} from "../services/validate";
 import {useDispatch} from "react-redux";
-import {login2} from "../redux/actions/authActions";
 import {login3} from "../redux/slice/userSlice";
 
 function LoginComponent () {
@@ -52,7 +51,7 @@ function LoginComponent () {
 
                 console.log(response)
                 console.log('로그인에 성공하였습니다!');
-                navigate("/go/common/mypage");
+                navigate("/go/main");
             }).catch(error => {
             alert('아이디나 비밀번호를 확인해주세요.');
         });

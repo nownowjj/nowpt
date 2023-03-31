@@ -30,8 +30,7 @@ const MeetingListComponent = ({data}) => {
     const [reservationList,setReservationList] = useState([]);
     const [room , setRoom] = useState("대회의실");
 
-
-    const id = (useSelector((state) => state.auth.user)).membId;
+    const id = useSelector((state) => state.user.value.user).membId;
     console.log(id)
 
     const setStartDateEvent=(date)=>{

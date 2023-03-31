@@ -3,7 +3,7 @@ import {li} from "../styles/style";
 import {useEffect, useState} from "react";
 import isAuth from "../services/isAuth";
 import {useDispatch, useSelector} from "react-redux";
-import {logout2} from "../redux/actions/authActions";
+import {logout3} from "../redux/slice/userSlice";
 
 
 const HeaderComponent = () => {
@@ -17,7 +17,7 @@ const HeaderComponent = () => {
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
-            dispatch(logout2());
+            dispatch(logout3());
             window.sessionStorage.removeItem("accessToken");
             navigate("/go/login");
         } else {
@@ -101,10 +101,7 @@ const HeaderComponent = () => {
 
                 <li
                     style={li}
-                    onClick={() => {
-                        goMyPage();
-                    }
-                    }
+                    onClick={() => navigate("/go/common/myPage")}
                 >
                     내 정보
                 </li>

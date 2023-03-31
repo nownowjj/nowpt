@@ -30,4 +30,7 @@ public class MapperService {
         return loginHstMapper.selectLoginStatistics();
     }
 
+//    public void noticeN(){
+//        memberMapper.allNoticeN();
+//    }
 }
