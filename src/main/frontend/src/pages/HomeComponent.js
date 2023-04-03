@@ -4,6 +4,7 @@ import Button from "../component/JoinButton";
 import Input from "../component/Input";
 import Loading from "./LoadingComponent";
 import HeaderComponent from "../component/HeaderComponent";
+import TestPage from "./TestPage";
 
 const HomeComponent =(props)=>{
     const [message,setMessage] = useState("");
@@ -42,6 +43,7 @@ const HomeComponent =(props)=>{
                 setLoading(false)
             }).catch(error =>{
             console.log(error)
+            setLoading(false)
         })
     }
 
@@ -58,25 +60,6 @@ const HomeComponent =(props)=>{
                 api : {message}
                 <br/>
                 Home 페이지
-                <br/>
-
-
-
-                {/*<ChatButton*/}
-                {/*    onClick={openChatModal}*/}
-                {/*    detail_id={detail_id}*/}
-                {/*    // is_chat={is_chat}*/}
-                {/*    // chat_list={chat_list}*/}
-                {/*    // is_me={is_me}*/}
-                {/*    // // user_info={user_info}*/}
-                {/*>*/}
-                {/*    <ChatStyle>*/}
-                {/*        <ChatIcon style={{ fontSize: 15,  margin: "0 10px" }}></ChatIcon>*/}
-                {/*    </ChatStyle>*/}
-                {/*    채팅하기*/}
-                {/*</ChatButton>*/}
-
-
                 <br/>
 
                 네이버 영화검색 API
@@ -133,6 +116,7 @@ const HomeComponent =(props)=>{
 
                 }
 
+                <div>dd</div>
             </div>
         )
     }

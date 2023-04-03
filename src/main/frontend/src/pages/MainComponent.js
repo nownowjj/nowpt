@@ -20,8 +20,6 @@ const MainComponent = () => {
     useEffect(()=>{
         mainTest()
             .then(response => {
-                // console.log(response);
-                // console.log("api/main")
                     setMessage(response.message)
             }).catch(error =>{
             console.log(error)

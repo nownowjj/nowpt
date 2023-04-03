@@ -39,8 +39,6 @@ const MeetingUpdateComponent = () => {
                 console.log("useDay " + response.data.useDay);
                 console.log("useStartTime " + response.data.useStartTime);
                 console.log("useEndTime " + response.data.useEndTime);
-
-
             }).catch(error =>{
                 console.log(error)
         })

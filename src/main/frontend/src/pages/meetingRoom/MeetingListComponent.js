@@ -9,7 +9,7 @@ import ko from "date-fns/locale/ko";
 import roomData from "../../db/MeetingRoomData.json";
 import Button from "../../component/JoinButton";
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import IsId from "../../services/authService/IsId";
 
 const MeetingListComponent = ({data}) => {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const MeetingListComponent = ({data}) => {
     const [reservationList,setReservationList] = useState([]);
     const [room , setRoom] = useState("대회의실");
 
-    const id = useSelector((state) => state.user.value.user).membId;
+    const id = IsId();
     console.log(id)
 
     const setStartDateEvent=(date)=>{

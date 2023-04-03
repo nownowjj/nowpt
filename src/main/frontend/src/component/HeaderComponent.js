@@ -1,44 +1,27 @@
 import {useNavigate} from "react-router";
 import {li} from "../styles/style";
-import {useEffect, useState} from "react";
-import isAuth from "../services/isAuth";
+import Role from "../services/authService/Role";
 import {useDispatch, useSelector} from "react-redux";
-import {logout3} from "../redux/slice/userSlice";
+import {logoutAction} from "../redux/slice/userSlice";
 
 
 const HeaderComponent = () => {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState("");
     const Admin = "ROLE_ADMIN";
     const dispatch = useDispatch();
 
-
+    const role = Role();
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
     const logout = () => {
         if (window.confirm("정말 로그아웃을 하시겠습니까?")) {
-            dispatch(logout3());
+            dispatch(logoutAction());
             window.sessionStorage.removeItem("accessToken");
             navigate("/go/login");
         } else {
             return false;
         }
     }
-
-    const goMyPage = () => {
-        if (auth == null) {
-            alert("로그인을 해주세요");
-            return false;
-        }
-        navigate("/go/common/myPage")
-    }
-
-
-
-    useEffect(() => {
-        setAuth(isAuth());
-    },)
-
 
     function falseEvent() {
         alert("사용불가")
@@ -87,7 +70,7 @@ const HeaderComponent = () => {
                 </li>
 
                 {
-                    auth === Admin
+                    role === Admin
                         ?
                         <li
                             style={li}
@@ -107,7 +90,7 @@ const HeaderComponent = () => {
                 </li>
 
                 {
-                    auth != null
+                    role != null
                     ?
                         <li
                             style={li}
@@ -129,9 +112,9 @@ const HeaderComponent = () => {
                 <p>
                     접속한 계정의 ROLE :
                     {
-                        auth != null
+                        role != null
                             ?
-                            auth
+                            role
                             :
                             "비로그인"
                     }
