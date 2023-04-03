@@ -3,6 +3,7 @@ import {mainTest} from "../api/Api";
 import Kakaomap from "../services/kakaomap/Kakaomap";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../redux/slice/countSlice";
+import isId from "../services/authService/IsId";
 
 const MainComponent = () => {
     const dispatch = useDispatch();
@@ -12,10 +13,8 @@ const MainComponent = () => {
 
     const count = useSelector(state => state.count.value.count);
     const isLoggedIn = useSelector((state) => state.user.value.isLoggedIn);
-    const user = useSelector((state) => state.user.value.user);
-
-    console.log(isLoggedIn);
-    console.log(user);
+    // const user = useSelector((state) => state.user.value.user);
+    const id = isId();
 
     useEffect(()=>{
         mainTest()
@@ -50,7 +49,7 @@ const MainComponent = () => {
                     <div>
                         로그인 상태
                         <br/>
-                        {user.membId}
+                        {id}
                     </div>
                 :
                     <div>비로그인 상태</div>
