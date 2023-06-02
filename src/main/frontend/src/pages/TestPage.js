@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import ConfirmComponent from "../component/ConfirmComponent";
+import {test10, test11, test12, test13, test8, test9} from "../services/testScript";
+import Button from "../component/JoinButton";
 
 
 const TestPage = () => {
@@ -208,11 +210,33 @@ const TestPage = () => {
     // 테스트 5 ----------------------------------------------------
 
     // 테스트 6 ----------------------------------------------------
-    const test6 = ()=>{
+    // const [eventDays,setEventDays] = useState([]);
 
+    const baseDate = new Date('2022/06/19');
+
+    const test6 = ()=>{
+        Promise.resolve()
+            .then(() => {throw new Error("Oh no!");})
+            .then(() => {
+                    console.log("Not called.");
+                },
+                (error) => {
+                    console.error(`onRejected function called: ${error.message}`);
+                },
+            );
     }
 
     // 테스트 6 ----------------------------------------------------
+
+    // 테스트 7 ----------------------------------------------------
+    const test7 = ()=> {
+        Promise.reject()
+            .then(() => 99, () => 42,) // onRejected returns 42 which is wrapped in a fulfilled Promise
+            .then((solution) => console.log(`Resolved with ${solution}`)); // Fulfilled with 42
+    }
+    // 테스트 7 ----------------------------------------------------
+
+
 
 
     return (
@@ -253,9 +277,46 @@ const TestPage = () => {
             </div>
 
             <div onClick={test6}>
-                테스트6
+                테스트6 promise then error
                 <hr/>
             </div>
+
+            <div onClick={test7}>
+                테스트7 promise
+                <hr/>
+            </div>
+
+            <div onClick={test8}>
+                테스트8 promise
+                <hr/>
+            </div>
+
+            <div onClick={test9}>
+                테스트9 ECMA
+                <hr/>
+            </div>
+
+            <div onClick={test10}>
+                테스트10 버블정렬
+                <hr/>
+            </div>
+
+            <div onClick={test11}>
+                테스트11 DOM
+                <hr/>
+            </div>
+
+            <div onClick={test12}>
+                테스트12 forEach
+                <hr/>
+            </div>
+
+            <div onClick={test13}>
+                테스트13 JavaScript
+                <hr/>
+            </div>
+
+
 
         </div>
     );

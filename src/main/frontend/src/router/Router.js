@@ -11,10 +11,10 @@ import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
 import MeetingPage from "../pages/meetingRoom/MeetingPage";
 import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
 import LoadingComponent from "../pages/LoadingComponent";
-import Chat from "../pages/socket/Chat";
 import {useSelector} from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import TestPage from "../pages/TestPage";
+import Chat from "../chat/Chat";
 
 
 const Router = () => {
@@ -49,7 +49,7 @@ const Router = () => {
                 <Route path="/go/meetingRoom" element={<MeetingPage />} />
                 <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
 
-                <Route path="/go/chat" element={<Chat />} />
+                {/*<Route path="/chat" element={<Chat />} />*/}
 
 
                 {/* 카카오 , 네이버 소셜 로그인 redirect path*/}

@@ -14,10 +14,13 @@ export const countSlice = createSlice({
         },
         decrement: (state) => {
             state.value.count =state.value.count -1 ;
+        },
+        resetCount:(state)=>{
+            state.value.count = initialStateValue.count;
         }
     },
 });
 
-export const { increment, decrement } = countSlice.actions;
+export const { increment, decrement , resetCount } = countSlice.actions;
 
 export default countSlice.reducer;

@@ -35,10 +35,15 @@ public class SchedulerService {
         log.debug(mapperService.selectAllMember().toString());
     }
 
+
+
 //    @Scheduled(cron = "0  0/1  *  *  * *")
 //    public void testNotice(){
 //        log.debug("[배치 노티스] ");
 //        mapperService.noticeN();
 //    }
+
+
+
 
 }
