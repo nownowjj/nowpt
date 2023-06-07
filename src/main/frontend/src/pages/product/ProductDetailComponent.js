@@ -24,7 +24,7 @@ const ProductDetailComponent = () => {
 
                 <ProductImageWrap>
                     <ProductImage src=
-                                      {product.productImage != null ? product.productImage : mgu } alt={'상품 이미지'}>
+                          {product.productImage != null ? product.productImage : mgu } alt={'상품 이미지'}>
                     </ProductImage>
                 </ProductImageWrap>
 
