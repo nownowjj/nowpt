@@ -121,7 +121,8 @@ const MyPageComponent = () => {
                 : 
                 <div data-aos="fade-left" style={left2Icon}></div>
             }
-            
+
+
         </div>
     )
 }

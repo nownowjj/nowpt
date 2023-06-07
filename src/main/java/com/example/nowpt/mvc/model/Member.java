@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -76,8 +77,8 @@ public class Member extends Base implements UserDetails{
     private String detailAddr;
 
     //최종로그인일시
-    @Column(name = "last_login_dtm", length = 14)
-    private String lastLoginDtm;
+    @Column(name = "last_login_dt")
+    private LocalDateTime lastLoginDt;
 
     @Column(name = "profile_image" , length = 255 )
     private String profileImage;

@@ -4,8 +4,14 @@ public interface Cd {
 	String POST_SUCCESS = "등록 성공";
 	String POST_FAIL = "등록 실패";
 
+	String DELETE_SUCCESS = "삭제 성공";
+	String DELETE_FAIL = "삭제 실패";
+
 	String PUT_SUCCESS = "수정 성공";
 	String PUT_FAIL = "수정 실패";
+
+	String SELECT_SUCCESS = "조회 성공";
+	String SELECT_FAIL = "조회 실패";
 
 
 	String ANNONYMOUSE_USER = "anonymousUser";

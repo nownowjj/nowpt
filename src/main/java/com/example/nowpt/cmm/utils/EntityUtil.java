@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class EntityUtil {
-@Autowired private CmmnCodeDetailRepo ccdRepo;
+@Autowired private static CmmnCodeDetailRepo ccdRepo;
 	
 	public CmmnCodeDetail getMemberTyCmm(String codeValue) {
 		log.debug("getMemberTyCmm {} " ,codeValue);

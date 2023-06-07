@@ -20,19 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
-@AllArgsConstructor
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/oauth")
 public class OAuthController {
-    @Autowired private OAuthService oAuthService;
-    @Autowired private MemberRepo memRepo;
-    @Autowired private AuthService authService;
-
-    @Autowired private PasswordEncoder pe;
-
-    @Autowired private EntityUtil eu;
-
+    private final OAuthService oAuthService;
+    private final MemberRepo memRepo;
+    private final AuthService authService;
+    private final PasswordEncoder pe;
+    private final EntityUtil eu;
     private final static String sns = "Y";
 
 

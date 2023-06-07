@@ -10,12 +10,16 @@ import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.repository.member.MemberRepo;
 import com.example.nowpt.repository.member_login_hst.MemberLoginHstRepo;
 import com.example.nowpt.repository.member_money.MemberMoneyRepo;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -59,6 +63,9 @@ public class AuthService {
         if(! Cd.MEMBER_STTUS_OK.equals(mem.getMembSttusCd().getCodeValue())) {
             throw new RuntimeException("유저 상태가 정상이 아닙니다.");
         }
+
+        mem.setLastLoginDt(LocalDateTime.now());
+        memRepo.save(mem);
 
         MemberLoginHst mlg = new MemberLoginHst();
         mlg.setConnectIp(ip);

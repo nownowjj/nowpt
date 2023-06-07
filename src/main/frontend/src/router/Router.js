@@ -14,12 +14,15 @@ import LoadingComponent from "../pages/LoadingComponent";
 import {useSelector} from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import TestPage from "../pages/TestPage";
-import Chat from "../chat/Chat";
+import ProductPage from "../pages/product/ProductPage";
+import ProductDetailComponent from "../pages/product/ProductDetailComponent";
 
 
 const Router = () => {
     let isLogin = useSelector((state) => state.user.value.isLoggedIn);
-
+    // let product = useSelector((state) => state.product.value);
+    //
+    // console.log(useSelector((state) => state.product.value));
     console.log(isLogin)
     return (
 
@@ -48,6 +51,10 @@ const Router = () => {
 
                 <Route path="/go/meetingRoom" element={<MeetingPage />} />
                 <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
+
+                <Route path="/go/product" element={<ProductPage />} />
+                <Route path="/go/product/:productSn" element={<ProductDetailComponent />} />
+
 
                 {/*<Route path="/chat" element={<Chat />} />*/}
 

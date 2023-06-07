@@ -30,11 +30,12 @@ export function selectNoticeByNoticeSn(noticeSn) {
         // body: JSON.stringify(noticeDto)
     });
 }
-export function updateNotice(noticeSn,noticeDto) {
+export function updateNotice(noticeSn,param) {
+// export function updateNotice(noticeSn,noticeDto) {
     return request({
         url: API_BASE + NOTICE + "/admin/"+noticeSn,
         method: 'PUT',
-        body: JSON.stringify(noticeDto)
+        body: JSON.stringify(param)
     });
 }
 

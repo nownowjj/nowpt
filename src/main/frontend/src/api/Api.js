@@ -3,6 +3,7 @@ export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
 export const RESERVATION = "/reservation";
 export const COMMON = "/common";
+export const PRODUCT = "/product";
 
 
 
