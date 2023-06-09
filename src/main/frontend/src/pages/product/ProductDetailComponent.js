@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ProductComponent from "../../component/ProductComponent";
+import ProductComponent from "./ProductComponent";
 import {selectAllProduct} from "../../api/ProductApi";
 import {useParams} from "react-router-dom";
 import mgu from "../../assets/mgu.jpg";

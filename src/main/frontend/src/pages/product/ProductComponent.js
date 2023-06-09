@@ -2,9 +2,10 @@ import React from 'react';
 import {useNavigate} from "react-router";
 import dayjs from "dayjs";
 import styled from "styled-components";
-import mgu from "../assets/mgu.jpg";
+import mgu from "../../assets/mgu.jpg";
 import {useDispatch} from "react-redux";
-import {productAction} from "../redux/slice/productSlice";
+import {productAction} from "../../redux/slice/productSlice";
+import ProductLikeComponent from "./ProductLikeComponent";
 
 const ProductComponent = (product) => {
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ const ProductComponent = (product) => {
                         <div>{product.data.productPrice}</div>
                         <div>{product.data.productDiscountRate}</div>
                         <div>{(dayjs(product.data.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</div>
-                        {/*<td><Button onClick={() => {noticeUpdate(list.noticeSn)}} value="수정"/></td>*/}
+
+                        <ProductLikeComponent active={product.data.active} productSn={product.data.productSn}/>
                         <hr/>
                     </div>
         </div>

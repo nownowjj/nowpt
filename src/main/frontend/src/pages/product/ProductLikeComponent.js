@@ -1,47 +1,47 @@
-import React from 'react';
-import dayjs from "dayjs";
+import React, {useState} from 'react';
 import styled from "styled-components";
-import mgu from "../assets/mgu.jpg";
-import {productAction} from "../redux/slice/productSlice";
+import heart from "../../assets/heart.png";
+import heart_active from "../../assets/heart-active.png";
+import {cancleLike, insertLike, likeEvent} from "../../api/ProductApi";
+import {useSelector} from "react-redux";
 
-const ProductLikeComponent = (productSn) => {
-    console.log(productSn);
-// 필요 => 상품Sn = prop , 유저Sn = redux
+const ProductLikeComponent = (data) => {
+
+    const [active,setActive] = useState(data.active);
+    const productLikeDto ={
+        "productSn" : data.productSn,
+        "memberEmail"  : useSelector((state) => state.user.value.user.membEmail)
+    }
+
+
+    const likeFunction =()=> {
+        console.log(data);
+        setActive(!active);
+        likeEvent(productLikeDto)
+            .then(response =>{
+                console.log(response);
+            }).catch(error =>{
+                console.log(error);
+            })
+    }
+    let img = active ? heart_active : heart ;
 
     // { background: url("/assets/web/images/ico/btn-lent-heart@3x.png") left center no-repeat; background-size: 24px; padding-left: 32px; margin-right: 12px; }
 // .active { background: url("/assets/web/images/ico/btn-lent-heart-active@3x.png") left center no-repeat; background-size: 24px; }
     return (
-        <div>
-            <div >
-                <div>{product.data.productSn}</div>
-
-                <ProductImageWrap>
-                    <ProductImage src=
-                                      {product.data.productImage != null ? product.data.productImage : mgu } alt={'상품 이미지'}
-                                  onClick={()=> {
-                                      dispatch(productAction(product));
-                                      navigate('/go/product/'+ product.data.productSn)
-                                  }}
-                    >
-                    </ProductImage>
-                </ProductImageWrap>
-
-
-                <div>{(dayjs(product.data.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</div>
-                {/*<td><Button onClick={() => {noticeUpdate(list.noticeSn)}} value="수정"/></td>*/}
-                <hr/>
-            </div>
-        </div>
+            <LikeImage onClick={likeFunction} style={{backgroundImage : `url(${img})`}}/>
     );
 };
 
 export default ProductLikeComponent;
 
-const ProductImage = styled.img`
-    width : 100%;
-    height: 100%;
+const LikeImage = styled.div`
+    width : 48px;
+    background:center no-repeat;
+    background-size: 24px; 
+    height: 51px;
 `
-const ProductImageWrap = styled.div`
-    width :150px;
-    height:150px;
-`
+// const LikeImage = styled.div`
+//     width :150px;
+//     height:150px;
+// `

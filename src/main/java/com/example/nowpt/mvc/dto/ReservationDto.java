@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReservationDto {
     // 회의실 명
     private String meetingRoom;

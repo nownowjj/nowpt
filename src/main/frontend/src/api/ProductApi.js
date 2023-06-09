@@ -12,3 +12,12 @@ export function selectAllProduct() {
     });
 }
 
+export function likeEvent(productLikeDto) {
+    return request({
+        url: API_BASE + "/auth/product/likeEvent",
+        method: 'POST',
+        body: JSON.stringify(productLikeDto)
+    });
+}
+
+
