@@ -1,19 +1,15 @@
 import React from 'react';
-import {useNavigate} from "react-router";
 import dayjs from "dayjs";
 import styled from "styled-components";
 import mgu from "../assets/mgu.jpg";
-import {useDispatch} from "react-redux";
 import {productAction} from "../redux/slice/productSlice";
 
-const ProductComponent = (product) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    console.log(product.data);
+const ProductLikeComponent = (productSn) => {
+    console.log(productSn);
+// 필요 => 상품Sn = prop , 유저Sn = redux
 
-
-
-
+    // { background: url("/assets/web/images/ico/btn-lent-heart@3x.png") left center no-repeat; background-size: 24px; padding-left: 32px; margin-right: 12px; }
+// .active { background: url("/assets/web/images/ico/btn-lent-heart-active@3x.png") left center no-repeat; background-size: 24px; }
     return (
         <div>
             <div >
@@ -30,10 +26,7 @@ const ProductComponent = (product) => {
                     </ProductImage>
                 </ProductImageWrap>
 
-                <div>{product.data.productNm}</div>
-                <div>{product.data.productIntroduce}</div>
-                <div>{product.data.productPrice}</div>
-                <div>{product.data.productDiscountRate}</div>
+
                 <div>{(dayjs(product.data.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</div>
                 {/*<td><Button onClick={() => {noticeUpdate(list.noticeSn)}} value="수정"/></td>*/}
                 <hr/>
@@ -42,7 +35,7 @@ const ProductComponent = (product) => {
     );
 };
 
-export default ProductComponent;
+export default ProductLikeComponent;
 
 const ProductImage = styled.img`
     width : 100%;

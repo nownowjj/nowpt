@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ProductComponent from "../../component/ProductComponent";
 import {selectAllProduct} from "../../api/ProductApi";
+import ProductLikeComponent from "./ProductLikeComponent";
 
 
 const ProductPage = () => {
@@ -20,6 +21,7 @@ const ProductPage = () => {
     return (
         <div>
             {productList.map((product) => (<div key={product.productSn}> <ProductComponent data={product} /> </div> ) ) }
+            {productList.map((product) => (<div key={product.productSn}> <ProductLikeComponent data={product.productSn} /> </div> ) ) }
         </div>
     );
 };

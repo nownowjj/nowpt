@@ -15,7 +15,7 @@ import java.util.List;
 public class InitClass {
     private final ProductRepo productRepo;
 
-    @PostConstruct
+//    @PostConstruct
     public void initProduct(){
         log.debug("INIT 실행");
         List<Product> productCheck = productRepo.findProductByProductNm("INIT_상품");
