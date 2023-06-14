@@ -9,7 +9,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class ProductLikeDto {
     @NonNull
-    private int productSn;
+    private long productSn;
 
     @NonNull
     private String memberEmail;

@@ -28,7 +28,7 @@ public class ProductLike extends BaseTime {
     private Long productLikeSn;
 
     @NotNull
-    @Column(name = "member_sn")
+    @Column(name = "memb_sn")
     private long memberSn;
 
     @NotNull
