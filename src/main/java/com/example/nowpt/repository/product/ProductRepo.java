@@ -9,7 +9,4 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product , Long> , ProductCustomRepo {
     List<Product> findProductByProductNm(String productNm);
-
-//    Product findProductBy(Product product);
-
 }
