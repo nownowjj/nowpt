@@ -3,9 +3,11 @@ package com.example.nowpt.mvc.restcontoller.product;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.repository.product.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,25 +23,13 @@ public class ProductRestController {
     int success = 1;
 
     @GetMapping("/api/auth/product")
-    public ResponseDto<?> selectProduct(){
-        log.debug(logFix+"조회");
-        if(productRepo.findAll().size() > 0) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findAll());
+    public ResponseDto<?> selectProduct(@AuthenticationPrincipal Member member){
+        log.debug("sn : {}",member.getMemberSn());
+//        log.debug(logFix+"조회 : {}" , productRepo.findProductList(member));
+        if( productRepo.findAll().size() > 0 ) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(member));
+//        if( productRepo.findProductList(member) != null) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(member));
         else return ResponseUtil.ERROR(Cd.SELECT_FAIL, null);
     }
-
-//    @DeleteMapping("/api/auth/product")
-//    public ResponseDto<?> deleteProduct(){
-//        log.debug(logFix+"삭제");
-//        Product product = new Product();
-//        product.setProductSn(1L);
-//
-//        Product product1 = productRepo.findProductBy(product);
-//        log.debug(logFix+"삭제 : {}" , product1);
-//
-//
-//        if(p) return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, success);
-//        else return ResponseUtil.ERROR(Cd.DELETE_FAIL , null);
-//    }
 
     @PostMapping("/api/auth/product")
     public ResponseDto<?> insertProduct(){
