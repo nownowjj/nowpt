@@ -10,7 +10,6 @@ import ProductLikeComponent from "./ProductLikeComponent";
 const ProductComponent = (product) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(product.data);
 
 
 
@@ -37,7 +36,7 @@ const ProductComponent = (product) => {
                         <div>{product.data.productDiscountRate}</div>
                         <div>{(dayjs(product.data.frstRegistDt).format('YYYY년MM월DD일 hh시mm분 A'))}</div>
 
-                        <ProductLikeComponent active={product.data.active} productSn={product.data.productSn}/>
+                        <ProductLikeComponent likeCount={product.data.likeCount} active={product.data.active} productSn={product.data.productSn}/>
                         <hr/>
                     </div>
         </div>

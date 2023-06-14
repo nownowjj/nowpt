@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ProductComponent from "./ProductComponent";
 import {selectAllProduct} from "../../api/ProductApi";
-import ProductLikeComponent from "./ProductLikeComponent";
 
 
 const ProductPage = () => {
@@ -11,7 +10,7 @@ const ProductPage = () => {
     useEffect(()=>{
         selectAllProduct()
             .then(response => {
-                console.log(response);
+                console.log('상품 페이지 : %o',response);
                 setProductList(response.data)
             }).catch(error =>{
             console.log(error)
