@@ -1,4 +1,4 @@
-package com.example.nowpt.repository.product;
+package com.example.nowpt.repository.product.like;
 
 import org.springframework.stereotype.Repository;
 
