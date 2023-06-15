@@ -1,8 +1,6 @@
 package com.example.nowpt.repository.product;
 
 import com.example.nowpt.mvc.dto.ProductDto;
-import com.example.nowpt.mvc.model.Member;
-import com.example.nowpt.mvc.model.Product;
 import com.example.nowpt.mvc.model.QProduct;
 import com.example.nowpt.mvc.model.QProductLike;
 import com.querydsl.core.types.ExpressionUtils;
@@ -26,9 +24,8 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ProductDto> findProductList(Member member) {
-        log.debug("ㅇㅁㄴ : {}" , member);
-//        if (memberSn == null) memberSn = Long.valueOf(0);
+    public List<ProductDto> findProductList(Long memberSn) {
+        log.debug("조회 Sn : {}" , memberSn);
 
         QProduct qProduct = QProduct.product;
         QProductLike qProductLike = QProductLike.productLike;
@@ -61,7 +58,7 @@ public class ProductCustomRepoImpl implements ProductCustomRepo {
                 ))
                 .from(qProduct)
                 .leftJoin(qProductLike)
-                .on(qProduct.productSn.eq(qProductLike.productSn).and(qProductLike.useYn.eq("Y").and(qProductLike.memberSn.eq(member.getMemberSn()))))
+                .on(qProduct.productSn.eq(qProductLike.productSn).and(qProductLike.useYn.eq("Y").and(qProductLike.memberSn.eq(memberSn))))
                  .orderBy(qProduct.frstRegistDt.desc())
                 .fetch();
 

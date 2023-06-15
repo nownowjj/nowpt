@@ -10,8 +10,7 @@ export const productSlice = createSlice({
     reducers: {
         productAction: (state, action) => {
             console.log("==productAction==");
-            console.log( action.payload.data);
-            state.value.product =action.payload.data;
+            state.value.product =action.payload;
         },
         resetProduct:(state)=>{
             state.product = initialStateValue.product;

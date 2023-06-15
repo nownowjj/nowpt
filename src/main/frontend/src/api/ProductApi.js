@@ -4,11 +4,12 @@ export const AUTH = "/admin";
 
 
 //  추출
-export function selectAllProduct() {
+export function selectAllProduct(userEtt) {
+    // console.log(userEtt);
     return request({
         url: API_BASE + "/auth/product",
-        method: 'GET'
-        // body: JSON.stringify(noticeDto)
+        method: 'POST',
+        body: JSON.stringify(userEtt)
     });
 }
 
