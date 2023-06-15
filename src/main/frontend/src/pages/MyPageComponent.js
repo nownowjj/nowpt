@@ -7,8 +7,10 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import CountUp from "react-countup";
 import mgu from "../assets/mgu.jpg"
+import {useNavigate} from "react-router-dom";
 
 const MyPageComponent = () => {
+    const navigate = useNavigate();
     // 해당 멤버 정보
     const [membInfo, setMembInfo] = useState([""]);
     // 업데이트할 메일
@@ -29,6 +31,7 @@ const MyPageComponent = () => {
                 setMembInfo(response);
             })
             .catch(error => {
+                if(error.code === '4444')navigate("/go/login");
                 console.log(error);
             })
     }, []);

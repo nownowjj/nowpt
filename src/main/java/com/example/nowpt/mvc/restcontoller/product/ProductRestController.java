@@ -38,7 +38,7 @@ public class ProductRestController {
             sn =  memberRepo.findByEmailAddr(userEttDto.getMembEmail()).getMemberSn();
         }
 
-        if( productRepo.findProductList(sn) != null) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(sn));
+        if( productRepo.findProductList(sn ,false) != null) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(sn ,false));
         else return ResponseUtil.ERROR(Cd.SELECT_FAIL, null);
     }
 

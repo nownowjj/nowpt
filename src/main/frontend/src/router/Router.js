@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import TestPage from "../pages/TestPage";
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailComponent from "../pages/product/ProductDetailComponent";
+import ProductLikePage from "../pages/product/ProductLikePage";
 
 
 const Router = () => {
@@ -54,6 +55,7 @@ const Router = () => {
 
                 <Route path="/go/product" element={<ProductPage />} />
                 <Route path="/go/product/:productSn" element={<ProductDetailComponent />} />
+                <Route path="/go/productLike" element={<ProductLikePage />} />
 
 
                 {/*<Route path="/chat" element={<Chat />} />*/}

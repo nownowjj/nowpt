@@ -2,11 +2,13 @@ import React from 'react';
 import {useSelector} from "react-redux";
 
 const UserEtt = () => {
-    let userEtt = {"exp":"" , "iat" : "", "membEmail":"",  "membId":"" , "membPw":"" , "roles":"" , "profileImage":""};
+    let userEtt = {"exp":"" , "iat" : "", "membEmail":"",  "membId":"" , "membPw":"" , "roles":"" , "profileImage":"" , "isLogin": false};
     const user = useSelector((state) => state.user.value.user);
+    const isLogin = useSelector((state) => state.user.value.isLoggedIn);
     if (user != null) {
         userEtt = {
-            ...user
+            ...user ,
+            "isLogin":isLogin
         };
     }
     return userEtt;

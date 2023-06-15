@@ -21,4 +21,11 @@ export function likeEvent(productLikeDto) {
     });
 }
 
+export function selectProductLikeList() {
+    return request({
+        url: API_BASE + "/auth/product/likeEvent",
+        method: 'GET'
+    });
+}
+
 

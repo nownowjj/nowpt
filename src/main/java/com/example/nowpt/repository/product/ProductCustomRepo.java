@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface ProductCustomRepo {
-    List<ProductDto> findProductList(Long memberSn);
+    List<ProductDto> findProductList(Long memberSn , boolean myProduct);
 
 }

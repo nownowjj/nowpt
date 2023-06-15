@@ -1,13 +1,12 @@
 package com.example.nowpt.mvc.restcontoller.common;
 
 
-import com.example.nowpt.mvc.model.MbrPrinciple;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.repository.member.MemberRepo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/api/common")
 @RestController
+@RequiredArgsConstructor
 public class CommonRestController {
 
-    @Autowired private MemberRepo memRepo;
+     private final MemberRepo memRepo;
 
     @GetMapping("/getMembInfo")
     public Member getMembInfo(@AuthenticationPrincipal Member member){

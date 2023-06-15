@@ -10,45 +10,48 @@ import {productAction} from "../../redux/slice/productSlice";
 import dayjs from "dayjs";
 import {useNavigate} from "react-router";
 
-const ProductComponent = (data) => {
+const ProductComponent = ({data,likeCancleFn}) => {
     console.log(data);
-    const [product] = useState(data.data)
+    // ProductPage , ProductLikePage에서 "data"로 담은 상품 리스트
+    const [product] = useState(data)
+    // 좋아요 여부
     const [active,setActive] = useState(product.active);
+    // 좋아요 개수
     const [count,setCount] = useState(product.likeCount);
 
     const dispatch = useDispatch();
-    const isLogin = useSelector((state) => state.user.value.isLoggedIn);
     const navigate = useNavigate();
     let userEtt = UserEtt();
 
+    // default memberEmail = "" , 로그인을 했으면 email을 넘겨서 좋아요 여부를 가져옴
     const productLikeDto ={
         "productSn" : product.productSn,
         "memberEmail"  : userEtt.membEmail
     }
 
-
+    // 좋아요 등록,취소
     const likeFunction =()=> {
-        if(!isLogin) return false;
-
-        console.log(`상태 ${active}를 ${!active}로 `);
+        // 비로그인시 return
+        if(!userEtt.isLogin) return false;
+        // 좋아요 이미지 변경
         setActive(!active);
-
         // 좋아요 카운트 증가
         active === true ? setCount(count - 1) : setCount(count + 1);
 
         likeEvent(productLikeDto)
             .then(response =>{
-                console.log(response);
+                console.log('좋아요 등록 및 취소 %O' , response.data);
+                // ProductLikePage에서 넘겨준 function 좋아요 페이지에서만 지원 => 좋아요 취소시 리렌더링
+                if (likeCancleFn) {
+                    likeCancleFn();
+                }
             }).catch(error =>{
                 console.log(error);
             })
     }
-    let img = active ? heart_active : heart ;
 
-    // { background: url("/assets/web/images/ico/btn-lent-heart@3x.png") left center no-repeat; background-size: 24px; padding-left: 32px; margin-right: 12px; }
-// .active { background: url("/assets/web/images/ico/btn-lent-heart-active@3x.png") left center no-repeat; background-size: 24px; }
     return (
-        <div>
+        <>
             <div>{product.productSn}</div>
 
             <ProductImageWrap>
@@ -70,10 +73,10 @@ const ProductComponent = (data) => {
             <div>할인 적용 가격 :  {product.productPrice - (product.productPrice  *(product.productDiscountRate/100))}원</div>
 
 
-            <LikeImage onClick={likeFunction} style={{backgroundImage : `url(${img})`}}/>
+            <LikeImage onClick={likeFunction} style={{backgroundImage : `url(${active ? heart_active : heart})`}}/>
             <span>{count}</span>
             <hr/>
-        </div>
+        </>
     );
 };
 

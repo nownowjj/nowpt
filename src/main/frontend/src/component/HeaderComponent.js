@@ -90,20 +90,12 @@ const HeaderComponent = () => {
                     >
                         내 정보
                     </li>
-
-                    {
-                        role != null
-                            ?
-                            <li
-                                style={li}
-                                // onClick={falseEvent}
-                                onClick={() => navigate("/go/chat")}
-                            >
-                                채팅
-                            </li> : null
-                    }
-
-
+                    <li
+                        style={li}
+                        onClick={() => navigate("/go/product")}
+                    >
+                        상품
+                    </li>
                     <li
                         style={li}
                         onClick={() => navigate("/go/meetingRoom")}
