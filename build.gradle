@@ -26,7 +26,7 @@ apply plugin: 'com.github.node-gradle.node'
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 description = 'nowpt'
-sourceCompatibility = '11'
+sourceCompatibility = "11"
 
 
 allprojects {
@@ -203,3 +203,4 @@ compileQuerydsl.doFirst {
 //querydsl 추가 끝
 
 
+targetCompatibility = JavaVersion.VERSION_11

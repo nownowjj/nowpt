@@ -1,5 +1,8 @@
 package com.example.nowpt.mvc.dto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
@@ -7,14 +10,18 @@ public class JwtAuthenticationResponse {
     private String role ;
 
     public JwtAuthenticationResponse(String accessToken) {
+        log.debug("JwtAuthenticationResponse");
         this.accessToken = accessToken;
+        this.role = role;
     }
 
     public String getAccessToken() {
+        log.debug("getAccessToken");
         return accessToken;
     }
 
     public void setAccessToken(String accessToken) {
+        log.debug("setAccessToken");
         this.accessToken = accessToken;
     }
 
@@ -23,6 +30,7 @@ public class JwtAuthenticationResponse {
     }
 
     public void setTokenType(String tokenType) {
+        log.debug("setTokenType");
         this.tokenType = tokenType;
     }
 
@@ -30,5 +38,8 @@ public class JwtAuthenticationResponse {
         return role;
     }
 
-    public void setRole(String roles){this.role=roles;}
+    public void setRole(String roles){
+        log.debug("setRole");
+        this.role=roles;
+    }
 }

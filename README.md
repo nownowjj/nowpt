@@ -23,7 +23,7 @@ view가 spa이기 때문에 새로고침, error발생시 index.html로 바라보
 - </br>
 - email login(아직 이메일 인증까지는 구현하지 않음)
 - </br>
-FE : isAuth.js에서 sessionStorage에 jwt의 유무를 판별하여 로그인 정보를 필요시 하는 component에서 사용.
+FE : role.js에서 sessionStorage에 jwt의 유무를 판별하여 로그인 정보를 필요시 하는 component에서 사용.
 </br>
 social or email 둘다 로그인시 JWT를 발급시켜 response해줌.(FE에서는 현재 session에 jwt 저장 차후 Cookie 처리 하든지 추후 고민할 문제)
 </br>

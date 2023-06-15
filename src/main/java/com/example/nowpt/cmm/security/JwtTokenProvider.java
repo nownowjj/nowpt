@@ -27,16 +27,17 @@ public class JwtTokenProvider {
 
 	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
 
-	public static String generateToken(String id, String pw, String authority , String email) {
+	public static String generateToken(String id, String pw, String authority , String email , String profileImage) {
 		Map<String, Object> claims = new HashMap<>();
 //		log.debug("토큰 프로바이드 {}");
 		log.debug("권한 : {}",authority);
-		log.debug("[토큰정보] : {}, : {} , : {}",authority,id,pw);
+		log.debug("[토큰정보] : {}, : {} , : {} , : {}",authority,id,pw , profileImage);
 
 		claims.put("membId", id);
 		claims.put("membPw", pw);
 		claims.put("membEmail", email);
 		claims.put("roles", authority);
+		claims.put("profileImage", profileImage);
 
 		return Jwts.builder()
 				.setClaims(claims)

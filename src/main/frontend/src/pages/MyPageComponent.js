@@ -6,6 +6,7 @@ import {validateEmail} from "../services/validate";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import CountUp from "react-countup";
+import mgu from "../assets/mgu.jpg"
 
 const MyPageComponent = () => {
     // 해당 멤버 정보
@@ -35,6 +36,7 @@ const MyPageComponent = () => {
     const mb = {marginBottom:"200px"}
 
     const leftIcon = { backgroundImage: "url("+ membInfo.profileImage +")" , width:"300px",height:"300px",backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover",borderRadius:"50%"};
+    const left2Icon = { backgroundImage: "url("+ mgu +")" , width:"300px",height:"300px",backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundSize: "cover",borderRadius:"50%"};
 
     const changeEmail=(value)=>{
         // console.log(value);
@@ -117,9 +119,10 @@ const MyPageComponent = () => {
                 ?
                 <div data-aos="fade-left" style={leftIcon}></div>
                 : 
-                <div>프로필이 존재하지 않음</div>
+                <div data-aos="fade-left" style={left2Icon}></div>
             }
-            
+
+
         </div>
     )
 }

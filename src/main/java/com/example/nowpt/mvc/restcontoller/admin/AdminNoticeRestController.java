@@ -2,6 +2,7 @@ package com.example.nowpt.mvc.restcontoller.admin;
 
 import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.rvo.RVO;
+import com.example.nowpt.cmm.utils.CommonParamMap;
 import com.example.nowpt.mvc.dto.NoticeDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notice;
@@ -65,7 +66,8 @@ public class AdminNoticeRestController {
      * @return 공지사항 수정 API PUT -> Patch는 바꾸고 싶은 값만 변경 가능하다. > (PUT으로 바꿈)
      */
     @PutMapping("/notice/admin/{noticeSn}")
-    public RVO<Notice> patchNotice(@PathVariable Long noticeSn,@RequestBody NoticeDto noticeDto,@AuthenticationPrincipal Member member){
+    public RVO<Notice> patchNotice(CommonParamMap paramMap, @PathVariable Long noticeSn, @RequestBody NoticeDto noticeDto, @AuthenticationPrincipal Member member){
+        log.debug("Notice CommonParamMap : {}" , paramMap);
         log.debug("Notice patch : {}",noticeDto);
         return RVO.<Notice>builder()
                 .msg("공지사항 수정완료.")

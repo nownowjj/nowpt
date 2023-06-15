@@ -5,14 +5,13 @@ import com.example.nowpt.cmm.utils.EntityUtil;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
-import com.example.nowpt.repository.member.MemberRepo;
 import com.example.nowpt.mvc.service.AuthService;
+import com.example.nowpt.repository.member.MemberRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,23 +23,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@AllArgsConstructor
+//@AllArgsConstructor
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/oauth")
 public class OAuthNaverController {
-    @Autowired
-    private OAuthNaverService oAuthNaverService;
-    @Autowired
-    private MemberRepo memRepo;
-    @Autowired
-    private AuthService authService;
-
-    @Autowired
-    private PasswordEncoder pe;
-
-    @Autowired
-    private EntityUtil eu;
+    private final OAuthNaverService oAuthNaverService;
+    private final MemberRepo memRepo;
+    private final AuthService authService;
+    private final PasswordEncoder pe;
+    private final EntityUtil eu;
 
     private final static String sns = "Y";
 

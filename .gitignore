@@ -16,11 +16,17 @@ target/
 ### IntelliJ IDEA ###
 application.yml
 
-
+*.bin
+*.lock
+.class
+*.class
 .idea
 *.iws
 *.iml
 *.ipr
+
+# Eclipse Core
+.project
 
 ### NetBeans ###
 /nbproject/private/

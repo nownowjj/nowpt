@@ -28,7 +28,10 @@ const NoticeUpdateComponent = () => {
             noticeTitle : newTitle,
             noticeContent : newContent
         }
-        updateNotice(noticeSn,noticeDto)
+
+        let param = {"noticeSn" : noticeSn , "noticeTitle":newTitle , "noticeContent":newContent}
+        console.log(param);
+        updateNotice(noticeSn,param)
             .then(response => {
                 alert(response.msg)
                 console.log(response)

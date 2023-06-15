@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
-@AllArgsConstructor
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/oauth")
 public class OAuthController {
-    @Autowired private OAuthService oAuthService;
-    @Autowired private MemberRepo memRepo;
-    @Autowired private AuthService authService;
-
-    @Autowired private PasswordEncoder pe;
-
-    @Autowired private EntityUtil eu;
-
+    private final OAuthService oAuthService;
+    private final MemberRepo memRepo;
+    private final AuthService authService;
+    private final PasswordEncoder pe;
+    private final EntityUtil eu;
     private final static String sns = "Y";
 
 

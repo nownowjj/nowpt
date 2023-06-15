@@ -89,7 +89,7 @@ const MeetingReservationComponent = ({data,parentFunction}) => {
             useEndTime : dataEnd
         }
 
-        if(window.confirm("회의실 : " + room  + "\n" +  "등록일 : " + dataDay+"\n" + "시작시간 : " + dataStart+"\n" + "종료시간 : "+ dataEnd+"\n" + "사용목적 : "+ purpose+"\n" +"회의실 예약을 진행합니다.")){
+        if(window.confirm("회의실 예약을 진행합니다.")){
 
             insertReservation(reservationDto)
                 .then(response=>{

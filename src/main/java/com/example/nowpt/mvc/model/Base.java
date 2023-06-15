@@ -1,5 +1,7 @@
 package com.example.nowpt.mvc.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -10,8 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
-@Setter
-@Getter
+@Data
+@EqualsAndHashCode(callSuper=false)
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Base extends BaseTime {

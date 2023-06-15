@@ -39,10 +39,9 @@ public class AuthRestController {
 
     String  sns = "N";
 
-
     @GetMapping("/home")
-    public HashMap home(){
-        HashMap result = new HashMap();
+    public HashMap<String, String> home(){
+        HashMap<String, String> result = new HashMap<>();
         result.put("message","home입니다");
 
         log.debug("restCheck : {}" ,result);
@@ -50,8 +49,8 @@ public class AuthRestController {
         return result;
     }
     @GetMapping("/main")
-    public HashMap api(){
-        HashMap result = new HashMap();
+    public HashMap<String, String> api(){
+        HashMap<String, String> result = new HashMap<String, String>();
         result.put("message","안녕하세요");
         log.debug("restCheck : {}" ,result);
 
@@ -62,16 +61,14 @@ public class AuthRestController {
     public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
-//        log.debug("token Check!! : {} " ,token);
-//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getAccessToken()) + " AccessToken check");
-//        log.info(ResponseEntity.ok(new JwtAuthenticationResponse(token).getTokenType()) + " Type check");
-        log.debug(ResponseEntity.ok(new JwtAuthenticationResponse(token).getRole()) + " Role check");
+        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
 
     @PostMapping("/userJoin")
     public RVO<MemberMoney> userJoin(@RequestBody JoinDto joinDto){
+        log.debug("joinDto : {}" , joinDto);
         return RVO.<MemberMoney>builder()
                 .msg("사용자 가입 되었습니다.")
                 .code(ApiCd.NORMAL)
@@ -79,6 +76,10 @@ public class AuthRestController {
                 .build();
     }
 
-
+    // 닉네임 중복체크
+//    @GetMapping("/nicknameCheck/{nickname}")
+//    public ResponseEntity<Boolean> checkNickName(@PathVariable String nickname){
+//        return ResponseEntity.ok(authService.checkNickName(nickname));
+//    }
 
 }

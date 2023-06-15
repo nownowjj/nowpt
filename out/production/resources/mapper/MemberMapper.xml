@@ -7,4 +7,8 @@
                 *
                 FROM TB_MEMBER TM
         </select>
+
+<!--        <update id="allNoticeN">-->
+<!--                update TB_NOTICE set USE_YN = 'Y' where USE_YN = 'N'-->
+<!--        </update>-->
 </mapper>

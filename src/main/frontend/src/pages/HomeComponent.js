@@ -3,9 +3,13 @@ import {homeTest, naverMovie} from "../api/Api";
 import Button from "../component/JoinButton";
 import Input from "../component/Input";
 import Loading from "./LoadingComponent";
-import HeaderComponent from "../component/HeaderComponent";
+import {useDispatch, useSelector} from "react-redux";
+import {increment, resetCount} from "../redux/slice/countSlice";
+import {useNavigate} from "react-router";
 
 const HomeComponent =(props)=>{
+    const dispatch = useDispatch();
+
     const [message,setMessage] = useState("");
     const [searchParam,setSearchParam] = useState("");
 
@@ -14,6 +18,8 @@ const HomeComponent =(props)=>{
 
     const [loading, setLoading] = useState(false);
 
+    const count = useSelector(state => state.count.value.count);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         setLoading(true);
@@ -25,6 +31,15 @@ const HomeComponent =(props)=>{
             console.log(error)
         });
     },[]);
+
+    const goTest = ()=>{
+        dispatch(increment());
+        if (count + 1 === 5 ){
+            dispatch(resetCount)
+            navigate("/test");
+        }
+        console.log(count + 1);
+    }
 
     const naverMovieFunction =()=>{
         if(searchParam.length < 1 ){
@@ -42,6 +57,7 @@ const HomeComponent =(props)=>{
                 setLoading(false)
             }).catch(error =>{
             console.log(error)
+            setLoading(false)
         })
     }
 
@@ -60,25 +76,6 @@ const HomeComponent =(props)=>{
                 Home 페이지
                 <br/>
 
-
-
-                {/*<ChatButton*/}
-                {/*    onClick={openChatModal}*/}
-                {/*    detail_id={detail_id}*/}
-                {/*    // is_chat={is_chat}*/}
-                {/*    // chat_list={chat_list}*/}
-                {/*    // is_me={is_me}*/}
-                {/*    // // user_info={user_info}*/}
-                {/*>*/}
-                {/*    <ChatStyle>*/}
-                {/*        <ChatIcon style={{ fontSize: 15,  margin: "0 10px" }}></ChatIcon>*/}
-                {/*    </ChatStyle>*/}
-                {/*    채팅하기*/}
-                {/*</ChatButton>*/}
-
-
-                <br/>
-
                 네이버 영화검색 API
 
                 <Input
@@ -87,6 +84,8 @@ const HomeComponent =(props)=>{
                 />
 
                 <Button value="검색" onClick={naverMovieFunction}></Button>
+                <Button value="히든" onClick={goTest}></Button>
+                <p>Count : {count}</p>
                 {
                     searchCount === null?null:<p>총 : {searchCount}건</p>
                 }
@@ -133,6 +132,7 @@ const HomeComponent =(props)=>{
 
                 }
 
+                <div>dd</div>
             </div>
         )
     }

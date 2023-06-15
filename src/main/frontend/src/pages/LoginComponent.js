@@ -6,9 +6,11 @@ import {ACCESS_TOKEN, login} from "../api/Api";
 import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
 import {validateLogin} from "../services/validate";
+import {useDispatch} from "react-redux";
+import {loginAction} from "../redux/slice/userSlice";
 
 function LoginComponent () {
-
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
@@ -38,11 +40,13 @@ function LoginComponent () {
 
         login(loginDto)
             .then(response => {
-                // login api request가 success면 response 객체에 accessToken이 담겨온다 그걸 session이든 local이든 set해서 사용하쟈.
                 sessionStorage.setItem(ACCESS_TOKEN, response.accessToken);
+
+                dispatch(loginAction(response.accessToken));
+
                 console.log(response)
                 console.log('로그인에 성공하였습니다!');
-                navigate("/go/common/mypage");
+                navigate("/go/main");
             }).catch(error => {
             alert('아이디나 비밀번호를 확인해주세요.');
         });

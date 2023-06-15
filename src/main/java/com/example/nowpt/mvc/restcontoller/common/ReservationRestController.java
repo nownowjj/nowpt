@@ -25,9 +25,6 @@ public class ReservationRestController {
 
     @PostMapping("/insertReservation")
     public RVO<Reservation> insertReservation(@AuthenticationPrincipal Member member, @RequestBody ReservationDto reservationDto){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-//        LocalDateTime stDateTime = LocalDateTime.parse(start, formatter);
-//        LocalDateTime endDateTime = LocalDateTime.parse(end, formatter);
 
         log.debug("reservationDto : {}", reservationDto);
         return RVO.<Reservation>builder()

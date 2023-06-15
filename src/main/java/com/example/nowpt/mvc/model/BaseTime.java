@@ -14,8 +14,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 //@MappedSuperclass 어노테이션을 사용함으로써 JPA Entity 클래스들이 BaseTime class를 상속할 경우 BaseTime class의 필드인 createdDate, modifiedDate를 인식하도록 합니다.
 @MappedSuperclass
 @Data
