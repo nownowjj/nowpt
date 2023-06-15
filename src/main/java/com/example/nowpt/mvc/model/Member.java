@@ -90,6 +90,9 @@ public class Member extends Base implements UserDetails{
     @Column(name = "subscription_method",length = 20)
     private String subscriptionMethod;
 
+    @Column(name = "memb_ncm" , length = 30 , unique = true) // 23.06.15 닉네임 추가
+    private String membNcm;
+
     //-------------------------------------------------------
     //SecurityConfig
     //-------------------------------------------------------
