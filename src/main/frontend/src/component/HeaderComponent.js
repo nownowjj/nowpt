@@ -3,6 +3,7 @@ import {li} from "../styles/style";
 import Role from "../services/authService/Role";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutAction} from "../redux/slice/userSlice";
+import ProfileComponent from "./ProfileComponent";
 
 
 const HeaderComponent = () => {
@@ -29,102 +30,102 @@ const HeaderComponent = () => {
     }
 
     return (
-        <div className="sider siderOn">
-            <ul style={{border: "1px solid black", margin: "0px"}}>
-                <li style={li}
-                    onClick={() => {
-                        navigate("/")
+            <div className="sider siderOn">
+                <ProfileComponent/>
+                <ul style={{border: "1px solid black", margin: "0px"}}>
+                    <li style={li}
+                        onClick={() => {
+                            navigate("/")
+                        }
+                        }
+                    >
+                        홈
+                    </li>
+                    <li
+                        style={li}
+                        onClick={() => {
+                            navigate("/go/main")
+                        }
+                        }
+                        // className="Fli on cmli"
+                    >
+                        메인
+                    </li>
+
+                    <li
+                        style={li}
+                        onClick={() => navigate("/go/test/jpa")}
+                    >
+                        어드민 기능 테스트
+                    </li>
+                    <li
+                        style={li}
+                        onClick={() => navigate("/go/login")}
+                    >
+                        로그인
+                    </li>
+                    <li
+                        style={li}
+                        onClick={() => logout()}
+                    >
+                        로그아웃
+                    </li>
+
+                    {
+                        role === Admin
+                            ?
+                            <li
+                                style={li}
+                                onClick={() => navigate("/go/notice")}
+                            >
+                                공지사항 등록
+                            </li>
+                            :
+                            null
                     }
-                    }
-                >
-                    홈
-                </li>
-                <li
-                    style={li}
-                    onClick={() => {
-                        navigate("/go/main")
-                    }
-                    }
-                    // className="Fli on cmli"
-                >
-                    메인
-                </li>
 
-                <li
-                    style={li}
-                    onClick={() => navigate("/go/test/jpa")}
-                >
-                    어드민 기능 테스트
-                </li>
-                <li
-                    style={li}
-                    onClick={() => navigate("/go/login")}
-                >
-                    로그인
-                </li>
-                <li
-                    style={li}
-                    onClick={() => logout()}
-                >
-                    로그아웃
-                </li>
+                    <li
+                        style={li}
+                        onClick={() => navigate("/go/common/myPage")}
+                    >
+                        내 정보
+                    </li>
 
-                {
-                    role === Admin
-                        ?
-                        <li
-                            style={li}
-                            onClick={() => navigate("/go/notice")}
-                        >
-                            공지사항 등록
-                        </li>
-                        :
-                        null
-                }
-
-                <li
-                    style={li}
-                    onClick={() => navigate("/go/common/myPage")}
-                >
-                    내 정보
-                </li>
-
-                {
-                    role != null
-                    ?
-                        <li
-                            style={li}
-                            // onClick={falseEvent}
-                            onClick={() => navigate("/go/chat")}
-                        >
-                            채팅
-                        </li>  :null
-                }
-
-
-                <li
-                    style={li}
-                    onClick={() => navigate("/go/meetingRoom")}
-                >
-                    예약
-                </li>
-
-                <p>
-                    접속한 계정의 ROLE :
                     {
                         role != null
                             ?
-                            role
-                            :
-                            "비로그인"
+                            <li
+                                style={li}
+                                // onClick={falseEvent}
+                                onClick={() => navigate("/go/chat")}
+                            >
+                                채팅
+                            </li> : null
                     }
-                </p>
 
 
-            </ul>
-        </div>
+                    <li
+                        style={li}
+                        onClick={() => navigate("/go/meetingRoom")}
+                    >
+                        예약
+                    </li>
 
-    )
+                    <p>
+                        접속한 계정의 ROLE :
+                        {
+                            role != null
+                                ?
+                                role
+                                :
+                                "비로그인"
+                        }
+                    </p>
+
+
+                </ul>
+            </div>
+    );
 }
 
 export default HeaderComponent
