@@ -10,14 +10,20 @@ import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 	private final JPAQueryFactory queryFactory;
 	QMemberLoginHst qMemberLoginHst = QMemberLoginHst.memberLoginHst;
@@ -39,24 +45,25 @@ public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 				  .fetch();
 	}
 
-	// 로그인 이력 테이블의 로그인 일시는 timestamp 이므로 일자별로 집계를 해야 해서 date format을 함
-	StringTemplate formattedDate2 = Expressions.stringTemplate(
-			"TO_CHAR(TRUNC({0}), 'yyyy-mm-dd')",
-			qMemberLoginHst.frstRegistDt
-	);
-
-	// 일자별 누적 로그인 횟수를 집계 하려면 원 쿼리에서 추출된 format 된 일자를 subQ 테이블 where 조건에 넣는다 따라서 subQ 테이블이 필요함
-	SubQueryExpression<Long> subqueryExpression = JPAExpressions
-			.select(subQMemberLoginHst.frstRegistDt.count())
-			.from(subQMemberLoginHst)
-			.where(Expressions.stringTemplate("TO_CHAR(TRUNC({0}),'yyyy-mm-dd')", subQMemberLoginHst.frstRegistDt)
-							.loe(formattedDate2)
-			);
-
 	// 로그인 이력 집계 조회
 	@Override
-	public List<LoginHstDto> selectLoginStatistics() {
-		List<LoginHstDto> results = queryFactory
+	public Page<LoginHstDto> selectLoginStatistics(Pageable pageable) {
+		// 로그인 이력 테이블의 로그인 일시는 timestamp 이므로 일자별로 집계를 해야 해서 date format을 함
+		StringTemplate formattedDate2 = Expressions.stringTemplate(
+				"TO_CHAR(TRUNC({0}), 'yyyy-mm-dd')",
+				qMemberLoginHst.frstRegistDt
+		);
+
+		// 일자별 누적 로그인 횟수를 집계 하려면 원 쿼리에서 추출된 format 된 일자를 subQ 테이블 where 조건에 넣는다 따라서 subQ 테이블이 필요함
+		SubQueryExpression<Long> subqueryExpression = JPAExpressions
+				.select(subQMemberLoginHst.frstRegistDt.count())
+				.from(subQMemberLoginHst)
+				.where(Expressions.stringTemplate("TO_CHAR(TRUNC({0}),'yyyy-mm-dd')", subQMemberLoginHst.frstRegistDt)
+						.loe(formattedDate2)
+				);
+
+
+		JPAQuery<LoginHstDto> query = queryFactory
 				.select(Projections.constructor(LoginHstDto.class,
 						formattedDate2.as("data_one"),
 						qMemberLoginHst.frstRegistDt.count().as("data_two"),
@@ -68,8 +75,15 @@ public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 				))
 				.from(qMemberLoginHst)
 				.groupBy(formattedDate2)
-				.orderBy(formattedDate2.desc())
+				.orderBy(formattedDate2.desc());
+
+		long totalCount = query.fetchCount();
+		List<LoginHstDto> results = query
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
 				.fetch();
-		return results;
+
+		log.debug("결과 results.size : {}  , 요청 paging : {}  " , totalCount , pageable);
+		return new PageImpl<>(results , pageable ,totalCount);
 	}
 }

@@ -34,8 +34,8 @@ const TestComponent = () => {
 
         selectLoginStatistics()
             .then(response => {
-                setLoginList(response.data);
                 console.log(response.data);
+                setLoginList(response.data.content);
             }).catch(error => {
             console.log("loginhst error" + error)
         }, []);

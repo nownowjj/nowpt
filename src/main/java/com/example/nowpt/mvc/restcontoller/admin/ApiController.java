@@ -10,13 +10,15 @@ import com.example.nowpt.mvc.service.TestService;
 import com.example.nowpt.mvc.service.admin.LoginHstService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -48,10 +50,14 @@ public class ApiController {
     }
 
     @GetMapping("/loginhst2")
-    public ResponseDto<?> selectLoginStatistics(){
+    public ResponseDto<?> selectLoginStatistics(
+            @PageableDefault(size = 10 , page = 0)
+            Pageable pageable
+    ){
         log.debug("좋아요 리스트 진입 성공");
-        List<LoginHstDto> result = loginHstService.selectLoginStatistics();
 
+
+        Page<LoginHstDto> result = loginHstService.selectLoginStatistics(pageable);
         if (!result.isEmpty())return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
         else return ResponseUtil.FAILURE(Cd.SELECT_FAIL, null);
     }
