@@ -1,7 +1,7 @@
 package com.example.nowpt.cmm.security;
 
 import com.example.nowpt.mvc.model.Member;
-import com.example.nowpt.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

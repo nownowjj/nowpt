@@ -7,10 +7,9 @@ import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberLoginHst;
 import com.example.nowpt.mvc.model.MemberMoney;
-import com.example.nowpt.repository.member.MemberRepo;
-import com.example.nowpt.repository.member_login_hst.MemberLoginHstRepo;
-import com.example.nowpt.repository.member_money.MemberMoneyRepo;
-import lombok.Data;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member_login_hst.MemberLoginHstRepo;
+import com.example.nowpt.mvc.repository.member_money.MemberMoneyRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 @Transactional

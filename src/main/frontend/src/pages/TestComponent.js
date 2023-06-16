@@ -55,7 +55,7 @@ const TestComponent = () => {
             Test 페이지
             <br/>
             <div style={{border: "1px solid black"}}>
-                <h2>로그인 기록 : JPA</h2>
+               {/* <h2>로그인 기록 : JPA</h2>
                 {
                     lists.map((lists) =>
                         <div key={lists.loginSn}>
@@ -75,18 +75,18 @@ const TestComponent = () => {
 
                         </div>
                     )
-                }
+                }*/}
 
             </div>
             <div style={{border:"1px solid black"}}>
-                <h2>모든 유저 : mybatis</h2>
+{/*                <h2>모든 유저 : mybatis</h2>
                 {
                     selectAll.map((lists)=>
                         <div key={lists.memb_sn}>
                             <span>Sn : {lists.memb_sn} ,Nm : {lists.memb_nm} , Id : {lists.memb_id} ,Email : {lists.email_addr}</span>
                         </div>
                     )
-                }
+                }*/}
             </div>
 
             <div style={{border:"1px solid #e8e8e8"}}>

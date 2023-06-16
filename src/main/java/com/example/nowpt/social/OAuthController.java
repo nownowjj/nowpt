@@ -5,14 +5,11 @@ import com.example.nowpt.cmm.utils.EntityUtil;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
-import com.example.nowpt.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import com.example.nowpt.mvc.service.AuthService;
 import com.google.gson.JsonElement;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

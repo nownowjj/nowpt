@@ -1,10 +1,6 @@
-마스터 브랜치에서 작성
-또함\adsasdsaddasdas
-마스터에서 쓴거야 15시59분에
-한번더~
+23.06.15
+JPA에서 DDL과 insert, delete, update에 해당하는 쿼리에는 select 쿼리가 아니라는 나타낼 수 있는 @Modifying 어노테이션을 선언해줘야 사용할 수 있다는 것이였다.
 
-0320 17:37
-master > feature
-
-0320 17:43
-gradle 리액트 빌드 막음
+@Transactional을 사용할 때 습관적으로 조회 로직에 대해서는 readOnly 옵션을 붙여줘야한다고 인지하고 사용하고 있었다.
+가독성
+@Transactional(readOnly=true)옵션을 설정함으로서 개발자가 명시적으로 읽기전용 메서드임을 알 수 있다는 장점이 존재한다.

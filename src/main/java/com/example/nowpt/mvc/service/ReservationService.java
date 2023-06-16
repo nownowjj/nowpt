@@ -1,12 +1,11 @@
 package com.example.nowpt.mvc.service;
 
-import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.mvc.dto.ReservationDto;
 import com.example.nowpt.mvc.dto.Result;
 import com.example.nowpt.mvc.mapper.ReservationMapper;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Reservation;
-import com.example.nowpt.repository.reservation.ReservationRepo;
+import com.example.nowpt.mvc.repository.reservation.ReservationRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

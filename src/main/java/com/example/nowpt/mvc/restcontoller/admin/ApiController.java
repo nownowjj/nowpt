@@ -22,13 +22,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/test")
 public class ApiController {
+    private final TestService testService;
+    private final MapperService mapperService;
 
-    @Autowired private TestService testService;
-
-    @Autowired private MapperService mapperService;
-
-//    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-//    @Secured("ROLE_ADMIN")
     @GetMapping("/jpa")
     public HashMap api2(@AuthenticationPrincipal MemberMoney member){
 

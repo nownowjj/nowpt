@@ -8,7 +8,7 @@ import com.example.nowpt.mvc.dto.ProductLikeDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.ProductLike;
 import com.example.nowpt.mvc.service.product.ProductLikeService;
-import com.example.nowpt.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -3,8 +3,8 @@ package com.example.nowpt.mvc.service.product;
 import com.example.nowpt.mvc.dto.ProductDto;
 import com.example.nowpt.mvc.dto.ProductLikeDto;
 import com.example.nowpt.mvc.model.ProductLike;
-import com.example.nowpt.repository.product.ProductRepo;
-import com.example.nowpt.repository.product.like.ProductLikeRepo;
+import com.example.nowpt.mvc.repository.product.ProductRepo;
+import com.example.nowpt.mvc.repository.product.like.ProductLikeRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

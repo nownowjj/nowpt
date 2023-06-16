@@ -2,7 +2,7 @@ package com.example.nowpt.mvc.restcontoller.common;
 
 
 import com.example.nowpt.mvc.model.Member;
-import com.example.nowpt.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
