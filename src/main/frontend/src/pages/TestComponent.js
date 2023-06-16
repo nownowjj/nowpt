@@ -14,23 +14,23 @@ const TestComponent = () => {
 
 
     useEffect(() => {
-        fetchTest()
-            .then(response => {
-                // console.log(response);
-                setTest(response.test);
-                setTest2(response.test2[0].authority);
-                setLists(response.test3);
-            }).catch(error => {
-            alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")
-            console.log(error);
-        }, []);
-
-        batisTest()
-            .then(response => {
-                setSelectAll(response.selectAll);
-            }).catch(error => {
-            console.log("batis error" + error)
-        }, []);
+        // fetchTest()
+        //     .then(response => {
+        //         // console.log(response);
+        //         setTest(response.test);
+        //         setTest2(response.test2[0].authority);
+        //         setLists(response.test3);
+        //     }).catch(error => {
+        //     alert("관리자만 사용할수 있는 기능입니다. \n 관리자 로그인을 해주세요.")
+        //     console.log(error);
+        // }, []);
+        //
+        // batisTest()
+        //     .then(response => {
+        //         setSelectAll(response.selectAll);
+        //     }).catch(error => {
+        //     console.log("batis error" + error)
+        // }, []);
 
         selectLoginStatistics()
             .then(response => {
