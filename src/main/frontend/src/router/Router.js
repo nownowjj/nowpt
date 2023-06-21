@@ -17,6 +17,7 @@ import TestPage from "../pages/TestPage";
 import ProductPage from "../pages/product/ProductPage";
 import ProductDetailComponent from "../pages/product/ProductDetailComponent";
 import ProductLikePage from "../pages/product/ProductLikePage";
+import ScrollComponent from "../pages/Scroll/ScrollComponent";
 
 
 const Router = () => {
@@ -28,7 +29,7 @@ const Router = () => {
     return (
 
         <BrowserRouter>
-            <HeaderComponent />
+            {/*<HeaderComponent />*/}
 
 
             <Routes>
@@ -58,7 +59,6 @@ const Router = () => {
                 <Route path="/go/productLike" element={<ProductLikePage />} />
 
 
-                {/*<Route path="/chat" element={<Chat />} />*/}
 
 
                 {/* 카카오 , 네이버 소셜 로그인 redirect path*/}
@@ -66,6 +66,10 @@ const Router = () => {
                 {/* api 요청시 loading UI*/}
                 <Route path="/loading" element={<LoadingComponent />} />
 
+
+
+
+                <Route path="/scroll" element={<ScrollComponent />} />
             </Routes>
 
         </BrowserRouter>

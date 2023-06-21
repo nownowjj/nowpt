@@ -10,7 +10,6 @@ import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +62,7 @@ public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 				);
 
 
-		JPAQuery<LoginHstDto> query = queryFactory
+		List<LoginHstDto> content = queryFactory
 				.select(Projections.constructor(LoginHstDto.class,
 						formattedDate2.as("data_one"),
 						qMemberLoginHst.frstRegistDt.count().as("data_two"),
@@ -75,15 +74,12 @@ public class MemberLoginHstCustomRepoImpl implements MemberLoginHstCustomRepo{
 				))
 				.from(qMemberLoginHst)
 				.groupBy(formattedDate2)
-				.orderBy(formattedDate2.desc());
-
-		long totalCount = query.fetchCount();
-		List<LoginHstDto> results = query
+				.orderBy(formattedDate2.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
 				.fetch();
 
-		log.debug("결과 results.size : {}  , 요청 paging : {}  " , totalCount , pageable);
-		return new PageImpl<>(results , pageable ,totalCount);
+		log.debug("결과 results.size : {}  , 요청 paging : {}  " , content.size() , pageable);
+		return new PageImpl<>(content , pageable ,content.size());
 	}
 }

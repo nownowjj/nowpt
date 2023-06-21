@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -51,10 +52,10 @@ public class ApiController {
 
     @GetMapping("/loginhst2")
     public ResponseDto<?> selectLoginStatistics(
-            @PageableDefault(size = 10 , page = 0)
             Pageable pageable
     ){
         log.debug("좋아요 리스트 진입 성공");
+        log.debug("page@@ : {}",pageable);
 
 
         Page<LoginHstDto> result = loginHstService.selectLoginStatistics(pageable);

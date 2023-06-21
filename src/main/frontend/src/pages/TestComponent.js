@@ -50,8 +50,6 @@ const TestComponent = () => {
             <br/>
             로그인한 유저의 Authorities : {test2}
             <br/>
-            로그인 성공시 api 요청
-            <br/>
             Test 페이지
             <br/>
             <div style={{border: "1px solid black"}}>

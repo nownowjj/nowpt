@@ -38,7 +38,7 @@ public class Notice extends Base {
     private String noticeTitle;
 
     // 공지사항 내용
-    @Column(name = "notice_content",length = 200 , nullable = false)
+    @Column(name = "notice_content",length = 2000 , nullable = false)
     private String noticeContent;
 
 

@@ -25,7 +25,7 @@ public class JwtTokenProvider {
 		JWT_SECRET = value;
 	}
 
-	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
+	private final static int JWT_EXPIRATION_MS = 100000 * 60 * 60;
 
 	public static String generateToken(String id, String pw, String authority , String email , String profileImage) {
 		Map<String, Object> claims = new HashMap<>();
