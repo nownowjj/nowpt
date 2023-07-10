@@ -18,6 +18,9 @@ import ProductPage from "../pages/product/ProductPage";
 import ProductDetailComponent from "../pages/product/ProductDetailComponent";
 import ProductLikePage from "../pages/product/ProductLikePage";
 import ScrollComponent from "../pages/Scroll/ScrollComponent";
+import SearchPage from "../pages/product/searchPage";
+import ChartMain from "../pages/chart/ChartMain";
+import Calendar from "../pages/calendar/CalendarComponent";
 
 
 const Router = () => {
@@ -67,9 +70,14 @@ const Router = () => {
                 <Route path="/loading" element={<LoadingComponent />} />
 
 
+                <Route path="/calendar" element={<Calendar />} />
+
 
 
                 <Route path="/scroll" element={<ScrollComponent />} />
+
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/chart" element={<ChartMain />} />
             </Routes>
 
         </BrowserRouter>

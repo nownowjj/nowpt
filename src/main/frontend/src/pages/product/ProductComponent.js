@@ -4,7 +4,7 @@ import heart from "../../assets/heart.png";
 import heart_active from "../../assets/heart-active.png";
 import {likeEvent} from "../../api/ProductApi";
 import UserEtt from "../../services/UserEtt";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import mgu from "../../assets/mgu.jpg";
 import {productAction} from "../../redux/slice/productSlice";
 import dayjs from "dayjs";

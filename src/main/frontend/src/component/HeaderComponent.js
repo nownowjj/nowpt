@@ -54,7 +54,7 @@ const HeaderComponent = () => {
 
                     <li
                         style={li}
-                        onClick={() => navigate("/go/test/jpa")}
+                        onClick={() => navigate("/scroll")}
                     >
                         어드민 기능 테스트
                     </li>

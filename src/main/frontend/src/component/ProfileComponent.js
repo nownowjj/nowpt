@@ -6,7 +6,8 @@ import loginTrueButNoProfile from "../assets/ggwak.png";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
-const ProfileComponent = () => {
+
+const ProfileComponent = (data) => {
     const navigate = useNavigate();
     let userEtt = UserEtt();
     let isLogin = useSelector((state) => state.user.value.isLoggedIn);
@@ -22,7 +23,7 @@ const ProfileComponent = () => {
     // onClick={() => navigate("/go/common/myPage")}
 
     return (
-        <ProfileImageWrap onClick={() => navigate("/go/common/myPage")}>
+        <ProfileImageWrap size={data.size}  onClick={() => navigate("/go/common/myPage")}>
             <ProfileImage src={imageSrc}/>
             {isLogin ? ' ' : 'no'}
         </ProfileImageWrap>
@@ -41,7 +42,7 @@ const ProfileImage = styled.img`
 `
 
 const ProfileImageWrap = styled.div`
-    width : 60px;
-    height: 60px;
+    width : ${({size}) => (size ? `${size}px` : `100px` )} ;
+    height: ${({size}) => (size ? `${size}px` : `100px` )} ;
     border-radius:50%;
 `

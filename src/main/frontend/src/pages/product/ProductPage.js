@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 const ProductPage = () => {
     const navigate = useNavigate();
     const [productList,setProductList] = useState([]);
+    const [searchText , setSearchText] = useState("");
 
     let userEtt = UserEtt();
     // console.log(userEtt);
@@ -26,9 +27,17 @@ const ProductPage = () => {
         navigate("/go/productLike");
     }
 
+    const searchTextFn = (e) =>{
+        setSearchText(e.target.value);
+    }
+
+    // ----------------------
+
+    
 
     return (
         <div>
+            <input onChange={searchTextFn} type="text"/>
             <div onClick={()=> LikeProductFn()}>찜한 상품 보러가기</div> <hr/>
             {productList.map((product) => (<div key={product.productSn}> <ProductComponent data={product}/> </div> ) ) }
         </div>

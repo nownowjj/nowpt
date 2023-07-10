@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import {store} from "./redux/store/store";
 import {persistStore} from "redux-persist";
 import {PersistGate} from "redux-persist/integration/react";
+import "./index.css"; // index css 추가
 
 
 // const store = createStore(rootReducer);
