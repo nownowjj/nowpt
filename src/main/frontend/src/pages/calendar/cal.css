@@ -50,7 +50,10 @@
 
 .react-calendar__navigation {
     display: flex;
-    border-bottom: 1px solid #e8e8e8;
+    position: absolute;
+    top: 14px;
+    right: 0;
+    /*border-bottom: 1px solid #e8e8e8;*/
     /*border-bottom: 1px solid #a0a096;*/
     /*margin-bottom: 1em;*/
 }
@@ -175,57 +178,13 @@ background: #ffffa9;
 }
 
 
-
-
-.dotWrap{
-    display: flex;
-    bottom: 2px;
-    position: absolute;
-}
-.dot {
-    height: 8px;
-    width: 8px;
-    background-color: #f87171;
-    border-radius: 50%;
-    display: flex;
-    margin-left: 1px;
-}
-.dot2 {
-    height: 8px;
-    width: 8px;
-    background-color: #f87171;
-    border-radius: 50%;
-    display: flex;
-    margin-left: 1px;
-}
-
 .headerBanner{padding: 0 6px; font-size: 16px;}
 .header{
     display: flex;
     padding: 0 6px;
     margin-bottom: 10px;
 }
-.bottom{
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 50px;
-    width: 100%;
-    background-color: #e8e8e8;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-.bottom > div {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-}
 
 /* 년 이동 버튼 */
 .react-calendar__navigation__label{font-size: 20px;}
@@ -236,3 +195,10 @@ background: #ffffa9;
 
 
 .swiper-button-next , .swiper-button-prev{display: none !important;}
+.active {
+    background-color: skyblue;
+}
+
+.on {
+    background-color: blue;
+}

@@ -20,7 +20,9 @@ import ProductLikePage from "../pages/product/ProductLikePage";
 import ScrollComponent from "../pages/Scroll/ScrollComponent";
 import SearchPage from "../pages/product/searchPage";
 import ChartMain from "../pages/chart/ChartMain";
-import Calendar from "../pages/calendar/CalendarComponent";
+import Calendar from "../pages/calendar/CalendarPage";
+import CalendarMyPage from "../pages/calendar/CalendarMyPage";
+import CalendarRecordNewOrFix from "../pages/calendar/calendarRecordNewOrFix";
 
 
 const Router = () => {
@@ -71,6 +73,8 @@ const Router = () => {
 
 
                 <Route path="/calendar" element={<Calendar />} />
+                <Route path="/calendarMyPage" element={<CalendarMyPage />} />
+                <Route path="/calendarRecordNewOrFix" element={<CalendarRecordNewOrFix />} />
 
 
 

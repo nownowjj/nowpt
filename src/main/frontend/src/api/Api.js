@@ -4,6 +4,7 @@ export const NOTICE = "/notice";
 export const RESERVATION = "/reservation";
 export const COMMON = "/common";
 export const PRODUCT = "/product";
+export const CALENDAR = "/calendar";
 
 
 
@@ -36,7 +37,7 @@ export const request = (options) => {
 export function getMembInfo(){
     return request({
         url:API_BASE+"/common/getMembInfo",
-        method:'GET'
+        method:'GET',
     })
 }
 //

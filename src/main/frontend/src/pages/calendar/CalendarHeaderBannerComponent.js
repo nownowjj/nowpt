@@ -4,8 +4,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-// import SwiperCore, { Autoplay } from 'swiper';
-// SwiperCore.use([Autoplay]);
 const CalendarHeaderBannerComponent = () => {
 
     return (
@@ -22,13 +20,13 @@ const CalendarHeaderBannerComponent = () => {
                 }}
             >
                 <SwiperSlide>
-                    <div>www</div>
+                    <div>캘린더 앱</div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div>zzz</div>
+                    <div>열심히 기록합시다</div>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div>ddd</div>
+                    <div>가보자구~</div>
                 </SwiperSlide>
             </Swiper>
         </CalendarHeaderBannerWrap>

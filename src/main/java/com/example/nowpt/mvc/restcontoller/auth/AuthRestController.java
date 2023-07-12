@@ -28,14 +28,9 @@ import java.util.HashMap;
 @RequestMapping("/api/auth")
 public class AuthRestController {
 
-    @Autowired
-    private AuthService authService;
-
-    @Autowired
-    private MapperService mapperService;
-
-    @Autowired
-    private MemberMapper memberMapper;
+    private final AuthService authService;
+    private final MapperService mapperService;
+    private final MemberMapper memberMapper;
 
     String  sns = "N";
 
