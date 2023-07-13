@@ -2,23 +2,30 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {deleteRecord, getMyDetailCalendar} from "../../api/CalendarApi";
 import {useNavigate} from "react-router-dom";
+import CalendarDetailContentWrap from "./component/CalendarDetailContentWrap";
+import LoadingComponent from "../LoadingComponent";
+import ggwak from "../../assets/ggwak-removebg-preview.png"
 
 const CalendarDetailComponent = (data) => {
     const navigate = useNavigate();
     const [detail,setDetail] = useState([]);
-    const recordDate = data.detailDay;
+    let recordDate = data.detailDay;
+    console.log("상세 진입 : ",data);
+    const [deleteCount, setDeleteCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+
 
     let param = {};
     param.recordDate = data.detailDay;
     useEffect(()=>{
         getMyDetailCalendar(param)
             .then(response => {
-                console.log(response);
                 setDetail(response.data)
+                setIsLoading(false);
             }).catch(error => {
                 console.log(error);
         })
-    },[])
+    },[deleteCount])
 
 
     let deleteParam = {};
@@ -26,10 +33,10 @@ const CalendarDetailComponent = (data) => {
         deleteParam.calendarSn = calendarSn;
         deleteRecord(deleteParam)
             .then(response =>{
-                console.log(response);
-            }).catch(error =>{
-                console.log(error);
-        })
+                if(response.data) {
+                    setDeleteCount(prevCount => prevCount + 1);
+                }
+            }).catch(error =>{navigate("/go/login");})
     }
 
     return (
@@ -37,32 +44,35 @@ const CalendarDetailComponent = (data) => {
             {/* 상단 */}
             <CalendarDetailDim onClick={data.noDetail}/>
             {/* 상단 */}
+
             {/* 하단*/}
             <CalendarDetail>
-                <div>
-                    {detail && detail.map((data)=>{
-                        return(
-                            <div key={data.calendarSn}>
-                                <div>{data.title}</div>
-                                <div>{data.content}</div>
-                                <div>{data.frstRegistDt}</div>
-                                <div>{data.lastChangeDt}</div>
-                                <button onClick={()=> navigate('/calendarRecordNewOrFix',{state : {"recordDate" : recordDate ,  "sn" : data.calendarSn , "content": data.content , "title":data.title } })}>수정</button>
-                                <button onClick={()=> removeRecord(data.calendarSn)}>삭제</button>
-                                <hr/>
-                            </div>
-                        )
-                    })
-
-                    }
-                </div>
-
-                <CalendarRecordAdd onClick={()=> navigate('/calendarRecordNewOrFix',{state : {"recordDate" : recordDate} })}>+</CalendarRecordAdd>
+                {isLoading ? (
+                    <LoadingComponent/>
+                ) :
+                detail && detail.length > 0 ? (
+                    detail.map((data) => (
+                        <CalendarDetailContentWrap
+                            key={data.calendarSn}
+                            data={data}
+                            navigate={navigate}
+                            recordDate={recordDate}
+                            removeRecord={removeRecord}
+                        />
+                    ))
+                ) : (
+                    <CalendarDetailNo>
+                        <img src={ggwak}/>
+                    </CalendarDetailNo>
+                )}
+              <CalendarRecordAdd onClick={()=> navigate('/calendarRecordNewOrFix',{state : {"recordDate" : recordDate} })}>+</CalendarRecordAdd>
             </CalendarDetail>
             {/* 하단*/}
         </CalendarDetailWrap>
     );
 };
+
+
 
 const CalendarDetailWrap = styled.div`
     position:absolute;
@@ -70,7 +80,8 @@ const CalendarDetailWrap = styled.div`
     left:0;
     width:100%;
     height:100%;
-    box-sizing
+    // box-sizing
+    z-index:100;
 `
 const CalendarDetailDim = styled.div`
     background:#e8e8e8;
@@ -86,8 +97,17 @@ const CalendarDetail = styled.div`
     background:white;
 `
 
+const CalendarDetailNo = styled.div`
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+`
+
 const CalendarRecordAdd = styled.div`
-    position:absolute;
+    position:fixed;
     bottom: 20px;
     right: 20px;
     width: 50px;

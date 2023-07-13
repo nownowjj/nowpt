@@ -24,16 +24,17 @@ public class CalenderRestController {
     private final CalenderService calenderService;
     private final CalendarRepo calendarRepo;
 
-    @PostMapping("/api/auth/calendar")
+    @PostMapping("/api/calendar")
     public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member , @RequestBody CalenderDto calenderDto){
         log.debug("기록 일자 리스트 조회 : {}"  ,calenderDto);
+
         calenderDto.setMemberSn(member.getMemberSn());
         List<String> calenderList = calenderService.selectRecordDate(calenderDto);
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calenderList);
     }
 
-    @PostMapping("/api/auth/calendar/insert")
+    @PostMapping("/api/calendar/insert")
     public Calendar createRecord(@AuthenticationPrincipal Member member,@RequestBody Calendar calendar){
         calendar.setMemberSn(member.getMemberSn());
 
@@ -41,7 +42,6 @@ public class CalenderRestController {
 
         if(calendar.getCalendarSn() != null){
             Calendar updateCalendar = calendarRepo.findById(calendar.getCalendarSn()).orElse(null);
-            assert updateCalendar != null;
             updateCalendar.setTitle(calendar.getTitle());
             updateCalendar.setContent(calendar.getContent());
             updateCalendar.setLastChangeDt(LocalDateTime.now());
@@ -50,9 +50,11 @@ public class CalenderRestController {
         }else return calendarRepo.save(calendar);
     }
 
-    @GetMapping("/api/auth/calendar")
+    @GetMapping("/api/calendar")
     public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalenderDto calenderDto){
-        log.debug("기록 일자 리스트 조회 : {}"  ,recordDate);
+        log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
+//        log.debug("emm : {}",member);
+//        if(member == null) return ResponseUtil.FAILURE(Cd.ANNONYMOUSE_USER, "로그인 필요");
         calenderDto.setMemberSn(member.getMemberSn());
         calenderDto.setRecordDate(recordDate);
         List<CalenderDto> calenderList = calenderService.selectDetailRecord(calenderDto);
@@ -61,11 +63,12 @@ public class CalenderRestController {
     }
 
 
-    @PutMapping("/api/auth/calendar")
+    @PutMapping("/api/calendar")
     public ResponseDto<?> deleteRecord(@AuthenticationPrincipal Member member ,@RequestParam Long calendarSn){
         log.debug("일정 삭제 : {}"  ,calendarSn);
         Calendar calendar = calenderService.findByCalendarSn(calendarSn);
-        return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calenderService.deleteRecord(calendar));
+        if(calendar != null)return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calenderService.deleteRecord(calendar));
+        else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
     }
 //    @PostMapping("/api/auth/calendar/insert")
 //    public ResponseDto<?> createRecord(@RequestBody CalenderDto calenderDto){

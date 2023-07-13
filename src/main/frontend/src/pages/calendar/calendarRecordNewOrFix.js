@@ -8,6 +8,7 @@ const CalendarRecordNewOrFix = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     console.log(state);
+    const isFix = !!state.sn;
     const initialTitle = state.sn ? state.title : "";       // Title ,Content가 존재한다면 input value를 지정해놓는다.
     const initialContent = state.sn ? state.content : "";
     const {recordDate} = state;
@@ -26,6 +27,7 @@ const CalendarRecordNewOrFix = () => {
         insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
             .then(response =>{
                 console.log(response);
+                navigate('/calendar',{state : {"recordDate": response.recordDate , "isNewOrFix":true}})
             }).catch(error =>{
                 console.log(error);
         })
@@ -45,7 +47,7 @@ const CalendarRecordNewOrFix = () => {
                     <input type="text" onChange={changeTitle} value={titleValue} />
                     <div>Content</div>
                     <input type="text" onChange={changeContent} value={contentValue}/>
-                    <RecordButton onClick={newRecordEvent}>Record</RecordButton>
+                    <RecordButton onClick={newRecordEvent}>{isFix ? '수정' : '등록'}</RecordButton>
                 </CalendarRecordAddArea>
 
             </CalendarRecordNewOrFixWrap>

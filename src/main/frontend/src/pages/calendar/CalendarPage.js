@@ -27,8 +27,8 @@ const CalendarPage = () => {
         param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
         getMyCalendar(param)
             .then(response =>{setMark(response.data)})
-            .catch(error =>{console.log(error);})
-    },[month])
+            .catch(error =>{if(error.code === '4444') navigate("/go/login")})
+    },[month,detail])
 
 
     const onClickDay =(value)=> setDetail(moment(value).format('YYYYMMDD'));   // 일자 click event
