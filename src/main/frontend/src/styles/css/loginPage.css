@@ -1,0 +1,23 @@
+.social_a{width:100%;}
+.kakao_btn{
+  background-image: url("../../assets/kakao_login_medium_wide.png");
+  background-repeat: no-repeat;
+  background-size : cover;
+  color: transparent;
+  width: 100%;
+  height: 45px;
+}
+
+.naver_btn{
+  background-image: url("../../assets/naverLoginImg.png");
+  background-repeat: no-repeat;
+  background-size: 312px 45px;
+  width: 100%;
+  height: 45px;
+  background-position: center;
+}
+.emailTextBox{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

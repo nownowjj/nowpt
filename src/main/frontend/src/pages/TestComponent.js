@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {batisTest, fetchTest} from "../api/Api";
 import {selectLoginStatistics} from "../api/AdminApi";
+import ApiErrorHandle from "../services/ApiErrorHandle";
+import {useNavigate} from "react-router-dom";
 
 
 const TestComponent = () => {
 
+    const navigate = useNavigate();
     const [test, setTest] = useState([]);
     const [test2, setTest2] = useState("");
     const [lists, setLists] = useState([]);
@@ -39,7 +42,7 @@ const TestComponent = () => {
                 console.log(response.data);
                 setLoginList(response.data.content);
             }).catch(error => {
-            console.log("loginhst error" + error)
+            ApiErrorHandle(navigate,error)
         }, []);
 
 

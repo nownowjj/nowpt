@@ -30,5 +30,7 @@ public interface Cd {
 	
 	String MEMBER_STTUS_OK = "01";
 
+	String LOGIN_SUCCESS = "로그인 성공";
+	String LOGIN_FAIL = "로그인 실패";
 
 }

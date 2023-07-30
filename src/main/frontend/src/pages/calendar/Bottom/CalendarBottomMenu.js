@@ -1,8 +1,9 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-import {MdAddchart, MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
+import {MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
 import styled from "styled-components";
-import CalendarBottomSpan from "./CalendarBottomSpan";
+import {route} from "../../../services/remocon";
+import {TiStarFullOutline} from "react-icons/ti";
 
 const CalendarBottomMenu = () => {
     const iconStyle = {width:"50%",height:"50%"};
@@ -12,23 +13,18 @@ const CalendarBottomMenu = () => {
         <CalendarBottom>
             <StyledLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={"/"} >
                 <MdArticle style={iconStyle}/>
-                <CalendarBottomSpan value ="메모"/>
             </StyledLink>
-            <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}  to={"/"} >
-                <MdAddchart style={iconStyle}/>
-                <CalendarBottomSpan value ="기록"/>
+            <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}  to={route.calendarImport} >
+                <TiStarFullOutline style={iconStyle}/>
             </StyledLink>
-            <StyledLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={"/calendar"}>
+            <StyledLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>
-                <CalendarBottomSpan value ="캘린더"/>
             </StyledLink>
-            <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}   to={"/calendarMyPage"} >
+            <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
-                <CalendarBottomSpan value ="내정보"/>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}  to={"/"}>
                 <MdErrorOutline style={iconStyle}/>
-                <CalendarBottomSpan value ="반가워"/>
             </StyledLink>
         </CalendarBottom>
     );
@@ -36,7 +32,7 @@ const CalendarBottomMenu = () => {
 
 const CalendarBottom = styled.div`
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     height: 50px;
@@ -46,6 +42,7 @@ const CalendarBottom = styled.div`
     align-items: center;
     justify-content: space-between;
     background: #d1eeff;
+    z-index:10;
 `
 const StyledLink = styled(NavLink)`
     flex-grow: 1;
@@ -56,9 +53,6 @@ const StyledLink = styled(NavLink)`
     text-decoration: none;
     color: black;
     flex-direction: column;
-    // &:hover{
-    //     background-color : skyblue;
-    // }
 `;
 
 

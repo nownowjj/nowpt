@@ -2,11 +2,14 @@ package com.example.nowpt.mvc.service.calender;
 
 import com.example.nowpt.mvc.common.CommonUtils;
 import com.example.nowpt.mvc.dto.CalenderDto;
+import com.example.nowpt.mvc.dto.CalenderSmDto;
 import com.example.nowpt.mvc.dto.ProductLikeDto;
 import com.example.nowpt.mvc.model.Calendar;
 import com.example.nowpt.mvc.model.ProductLike;
 import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,8 +52,25 @@ public class CalenderService {
         return calenderRepo.save(calendar);
     }
 
+    // 기록 즐겨찾기 등
+    public Calendar importRecord(Calendar calendar,boolean importYn) {
+        calendar.setImportYn(importYn);
+        return calenderRepo.save(calendar);
+    }
+
     // 일정 조회
     public Calendar findByCalendarSn(Long calendarSn){
         return calenderRepo.findByCalendarSn(calendarSn);
     }
+
+    // 중요 일정 조회
+    public Page<CalenderDto> findImportRecordByMembSn(Long memberSn , Pageable pageable){
+        return calenderRepo.findImportRecordByMembSn(memberSn, pageable);
+    }
+
+    // 기록 통계 년,월별 기록 건 수
+    public List<CalenderSmDto> selectMyRecordSm(Long membSn){
+        return calenderRepo.selectMyRecordSm(membSn);
+    }
+
 }

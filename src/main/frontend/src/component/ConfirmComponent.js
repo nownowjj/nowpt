@@ -1,85 +1,103 @@
 import React from 'react';
 import styled from "styled-components";
-import {useNavigate} from "react-router";
+import {FiAlertCircle} from "react-icons/fi";
 
-const ConfirmComponent = ({confirmText, successText, resolveFunction, rejectFunction}) => {
-    console.log(`ConfirmComponent`);
-    const navigate = useNavigate();
-
-
+/**
+ *
+ * @param data : {okCallBack,message,onClose}
+ * @returns {ConfirmComponent}
+ */
+const ConfirmComponent = ({ message, okCallBack, onClose }) => {
     return (
-        <Confirm>
-            <ConfirmTextArea>
-                {confirmText.split("\n").map((confirmText) => (
-                    <>
-                        {confirmText}
-                        <br/>
-                    </>
-                ))}
-            </ConfirmTextArea>
-
-            <ConfirmYesOrNot>
-                <ConfirmYesOrNotText style={{borderRight:"1px solid black"}} onClick={() => (navigate(resolveFunction))}>
-                    {successText}
-                </ConfirmYesOrNotText>
-                <ConfirmYesOrNotText onClick={() => rejectFunction(false)}>
-                    취소
-                </ConfirmYesOrNotText>
-            </ConfirmYesOrNot>
-        </Confirm>
+        <ConfirmWrap>
+            <ConfirmBox>
+                <ConfirmTextTop>
+                    <StyledIcon/>
+                    <ConfirmMessage dangerouslySetInnerHTML={{ __html: message }}></ConfirmMessage>
+                </ConfirmTextTop>
+                <ConfirmButtonBottom>
+                    <ConfirmButton  onClick={()=> onClose()}>취소</ConfirmButton>
+                    <ConfirmButton backGround="#ff8b39" onClick={()=> okCallBack()}>확인</ConfirmButton>
+                </ConfirmButtonBottom>
+            </ConfirmBox>
+        </ConfirmWrap>
     );
 };
+const ConfirmButton =styled.div`
+    padding:5px 30px;
+    border:1px solid ;
+    color:white;
+    border:none;
+    font-weight:bold;
+    font-size:16px;
+    background : ${({backGround}) => (backGround ? `${backGround}` : `#e8e8e8` )} ;
+`
 
-export default ConfirmComponent;
-
-const Confirm = styled.div`
-    border : 1px solid #e8e8e8;
-    width : 500px;
-    height : 400px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    background : #eeeeee;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-}
-`;
-const ConfirmTextArea = styled.div`
-    border:1px solid black;
+const ConfirmButtonBottom= styled.div`
     width:100%;
-    height : 60%;
-    text-align : center;
-    color : blue;
+    height:20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+    
+`
+const ConfirmMessage= styled.div`
+    width: 100%;
+    text-align: center;
+    height: 60%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #473f3f;
     display: flex;
     align-items: center;
     justify-content: center;
-}`;
-
-const ConfirmYesOrNot = styled.div`
-   border:1px solid gray;
+`
+const StyledIcon = styled(FiAlertCircle)`
     width:100%;
-    height : 40%;
+    height:55%;
+    font-size:18px;
+    color:#ff8b39;
+    text-align:center;
+`
+
+const ConfirmTextTop = styled.div`
+    width:100%;
+    height:80%;
     display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-}`;
-const ConfirmYesOrNotText = styled.div`
-   color:red;
-   width:50%;
-   height:100%;
-   text-align:center;
-   display:flex;
-   align-items:center;
-   justify-content:center;
-    &:hover{  
-    background-color : skyblue;
-    color : blue
-  };
-   
-}`;
+    flex-direction:column;
+    align-item:center;
+    padding:10px;
+`
+
+const ConfirmBox = styled.div`
+    padding: 10px 5px;
+    border-radius: 10px;
+    border: 2px solid #e8e8e8;
+    width: 80%;
+    height: 250px;
+    position:fixed;
+    background:white;
+    opacity:1 !important;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    
+`
+
+const ConfirmWrap = styled.div`
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+    background-color: rgba( 255, 255, 255, 0.5 );
+    position: fixed;
+    top:0;
+    left:0;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    z-index:999;
+`
+export default ConfirmComponent;

@@ -6,9 +6,12 @@ import Loading from "./LoadingComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {increment, resetCount} from "../redux/slice/countSlice";
 import {useNavigate} from "react-router";
+import {methodObj, route} from "../services/remocon";
+import ApiErrorHandle from "../services/ApiErrorHandle";
 
 const HomeComponent =(props)=>{
     const dispatch = useDispatch();
+
 
     const [message,setMessage] = useState("");
     const [searchParam,setSearchParam] = useState("");
@@ -28,7 +31,7 @@ const HomeComponent =(props)=>{
                 setMessage(response.message);
                 setLoading(false)
             }).catch(error => {
-            console.log(error)
+            ApiErrorHandle(navigate,error)
         });
     },[]);
 
@@ -66,9 +69,28 @@ const HomeComponent =(props)=>{
     }
 
 
+    const key = Object.keys(route)
+    console.log(key);
+
+    const values = Object.values(route)
+    console.log(values);
+
+    const entries = Object.entries(route)
+    console.log(entries);
 
     return (
             <div>
+                <div onClick={()=> navigate(route['calendar'],{state:{"data":"state임"}})}>CLICK ME !!</div>
+
+                {key && key.map((list,index)=>{
+                    return(
+                        <div key={index}  onClick={()=> navigate(values[index])} >{list} {values[index]}</div>
+                    )
+                })}
+
+
+
+
                 {loading ? <Loading/> : null}
                 {/*<HeaderComponent/>*/}
                 api : {message}

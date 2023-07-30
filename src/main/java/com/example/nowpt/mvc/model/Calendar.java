@@ -43,4 +43,11 @@ public class Calendar extends BaseTime {
     @Column(name = "content" , length = 2000)
     private String content;
 
+    @Column(name = "import_yn", columnDefinition = "NUMBER(1,0) DEFAULT 0")
+    private boolean importYn;
+
+//    @NotNull
+//    @Builder.Default
+//    @ColumnDefault("false")
+//    private Boolean columnName = false;
 }

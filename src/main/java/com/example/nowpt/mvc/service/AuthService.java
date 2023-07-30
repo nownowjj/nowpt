@@ -39,10 +39,11 @@ public class AuthService {
         if (!(sns.equals("Y"))){
             // membId로 검증
              mem = memRepo.memberChkById(id);
+             if(mem == null) return "fail";
 
              // 일반 로그인은 비밀번호 체크가 필요함
             if(! pe.matches(pw, mem.getPassword())) {
-                throw new RuntimeException("비밀번호가 틀립니다.");
+                return "peNot";
             }
 
         }

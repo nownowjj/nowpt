@@ -4,9 +4,12 @@ import Kakaomap from "../services/kakaomap/Kakaomap";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../redux/slice/countSlice";
 import isId from "../services/authService/IsId";
+import ApiErrorHandle from "../services/ApiErrorHandle";
+import {useNavigate} from "react-router-dom";
 
 const MainComponent = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
     const [message,setMessage] = useState("");
@@ -21,7 +24,7 @@ const MainComponent = () => {
             .then(response => {
                     setMessage(response.message)
             }).catch(error =>{
-            console.log(error)
+            ApiErrorHandle(navigate,error)
         });
     },[])
 

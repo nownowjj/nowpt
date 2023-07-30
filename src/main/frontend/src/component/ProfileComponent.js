@@ -5,8 +5,14 @@ import loginFalse from "../assets/mgu.jpg";
 import loginTrueButNoProfile from "../assets/ggwak.png";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
+import {route} from "../services/remocon";
 
 
+/**
+ * 
+ * @param data {naviUse , size}
+ * @returns 프로필 이미지
+ */
 const ProfileComponent = (data) => {
     const navigate = useNavigate();
     let userEtt = UserEtt();
@@ -23,7 +29,10 @@ const ProfileComponent = (data) => {
     // onClick={() => navigate("/go/common/myPage")}
 
     return (
-        <ProfileImageWrap size={data.size}  onClick={() => navigate("/go/common/myPage")}>
+        <ProfileImageWrap size={data.size}  onClick={() => data.naviUse && navigate(route.myPage)}
+            style={{
+                ...data.style
+            }}>
             <ProfileImage src={imageSrc}/>
             {isLogin ? ' ' : 'no'}
         </ProfileImageWrap>
@@ -38,7 +47,6 @@ const ProfileImage = styled.img`
     border-radius:50%;
     object-fit: cover;
     box-sizing: border-box;
-      border:1px solid black;
 `
 
 const ProfileImageWrap = styled.div`

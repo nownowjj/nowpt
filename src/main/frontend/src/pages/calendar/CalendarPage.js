@@ -2,18 +2,18 @@ import React, {useEffect, useState} from 'react'
 import CalendarLib from 'react-calendar'
 import './cal.css' // css import
 import moment from 'moment';
-import CalendarDotsContent from "./CalendarDotsContent";
+import CalendarDotsContent from "./Detail/CalendarDotsContent";
 import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./CalendarHeaderBannerComponent";
-import CalendarDetailComponent from "./CalendarDetailComponent";
-import CalendarBottomMenu from "./CalendarBottomMenu";
+import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
 import {getMyCalendar} from "../../api/CalendarApi";
 import CalendarWrap from "./component/CalendarWrapComponent";
 import {useNavigate} from "react-router-dom";
+import {route} from "../../services/remocon";
+import ApiErrorHandle from "../../services/ApiErrorHandle";
 
 const CalendarPage = () => {
     const [value, onChange] = useState(new Date());
-    const [detail,setDetail] = useState("");
     const [mark , setMark] = useState([]);
     const [month , setMonth] = useState("");
     const navigate = useNavigate();
@@ -27,17 +27,12 @@ const CalendarPage = () => {
         param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
         getMyCalendar(param)
             .then(response =>{setMark(response.data)})
-            .catch(error =>{if(error.code === '4444') navigate("/go/login")})
-    },[month,detail])
+            .catch(error =>{ApiErrorHandle(navigate,error)})
+    },[month])
 
-
-    const onClickDay =(value)=> setDetail(moment(value).format('YYYYMMDD'));   // 일자 click event
-    const toggleDetail =()=> setDetail();                                             // detail toggle
-    // const onViewChange =(e)=> console.log(e);
-    // const onClickMonth =(e)=> console.log(e);
-
-
-
+    const onClickDay =(value)=> {
+        navigate(route.calendarDayDetail,{state:{"detailDay": moment(value).format('YYYYMMDD')}})
+    }
 
     return (
         <CalendarWrap>
@@ -47,8 +42,7 @@ const CalendarPage = () => {
 
             {/*헤더*/}
             <div className="header">
-                <ProfileComponent size={45}/>
-                <div></div>
+                <ProfileComponent naviUse={true} size={45}/>
             </div>
             {/*헤더*/}
 
@@ -73,15 +67,10 @@ const CalendarPage = () => {
             {/*바텀*/}
 
 
-            {detail && <CalendarDetailComponent detailDay ={moment(value).format('YYYYMMDD')} noDetail={toggleDetail}/> }
+            {/*{detail && <CalendarDetailComponent detailDay ={moment(value).format('YYYYMMDD')} noDetail={toggleDetail}/> }*/}
 
         </CalendarWrap>
     );
 };
-
-// const CalendarWrap = styled.div`
-//     width:100%;
-//     height:100%;
-// `
 
 export default CalendarPage;

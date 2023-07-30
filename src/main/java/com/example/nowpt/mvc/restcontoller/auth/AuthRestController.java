@@ -1,7 +1,10 @@
 package com.example.nowpt.mvc.restcontoller.auth;
 
 import com.example.nowpt.cmm.code.ApiCd;
+import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.RVO;
+import com.example.nowpt.cmm.rvo.ResponseDto;
+import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
@@ -52,12 +55,22 @@ public class AuthRestController {
         return result;
     }
 
+//    @PostMapping("/userLogin")
+//    public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
+//        log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
+//        String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
+////        if(token.equals("fail"))
+//        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
+//        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+//    }
+
     @PostMapping("/userLogin")
-    public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
+    public ResponseDto<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
-        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        if(token.equals("fail"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notF");
+        if(token.equals("peNot"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notP");
+        return ResponseUtil.SUCCESS(Cd.LOGIN_SUCCESS, new JwtAuthenticationResponse(token));
     }
 
 

@@ -34,11 +34,38 @@ export function deleteRecord(param){
     console.log(fullUrl);
     return request({
         url: fullUrl ,
+        method:'DELETE',
+        body:JSON.stringify(param)
+    })
+}
+
+export function getMyInfoAndRecord(){
+    return request({
+        url: API_BASE  + '/auth/calendar/myRecord' ,
+        method:'GET'
+    })
+}
+
+export function importRecord(param){
+    const url = API_BASE + CALENDAR;
+    const queryParams = new URLSearchParams(param).toString();
+    const fullUrl = url + "?" + queryParams;
+    console.log(fullUrl);
+    return request({
+        url: fullUrl ,
         method:'PUT',
         body:JSON.stringify(param)
     })
 }
 
+export function selectImportRecordPaging(pageNumber) {
+    console.log(pageNumber);
+    return request({
+        url: API_BASE + CALENDAR +"/import?page="+pageNumber+
+            "&size="+10,
+        method: 'GET'
+    });
+}
 
 
 

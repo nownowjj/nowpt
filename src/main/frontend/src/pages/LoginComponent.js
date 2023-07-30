@@ -5,11 +5,17 @@ import Button from "../component/JoinButton";
 import {ACCESS_TOKEN, login} from "../api/Api";
 import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
+import '../styles/css/loginPage.css'
 import {validateLogin} from "../services/validate";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
+import {useLocation} from "react-router-dom";
+import ApiErrorHandle from "../services/ApiErrorHandle";
 
 function LoginComponent () {
+    const {state} = useLocation();
+    console.log(state);
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -40,66 +46,114 @@ function LoginComponent () {
 
         login(loginDto)
             .then(response => {
-                sessionStorage.setItem(ACCESS_TOKEN, response.accessToken);
-
-                dispatch(loginAction(response.accessToken));
-
-                console.log(response)
-                console.log('로그인에 성공하였습니다!');
-                navigate("/go/main");
+                if(response.status === 'FAILURE'){
+                    if(response.data === 'notF'){
+                        alert('존재하지 않는 계정.');
+                    }else if(response.data === 'notP'){
+                        alert('비밀번호 오류.');
+                    }
+                }else if(response.status === 'SUCCESS'){
+                    console.log(response);
+                    sessionStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+                    dispatch(loginAction(response.data.accessToken));
+                    navigate("/calendar");
+                }
             }).catch(error => {
-            alert('아이디나 비밀번호를 확인해주세요.');
+                 ApiErrorHandle(navigate,error)
         });
     }
 
 
 
     return (
-        <div>
-            <h3>로그인 페이지</h3>
-            <Input
-                id="id"
-                style={{flexGrow: 1}}
-                placeholder={"ID를 입력해 주세요 "}
-                name="membId"
-                value={userInfo.membId}
-                onChange={handleChange}
-            />
-            <Input
-                type="password"
-                style={{ flexGrow: 1 }}
-                placeholder="PASSWORD를 입력해 주세요 "
-                name="membPw"
-                value={userInfo.membPw}
-                onChange={handleChange}
-            />
-            <Button
-                style={{ flexGrow: 1 }}
-                onClick={originLogin}
-                value="로그인"
-            />
+        <LoginWrap>
+            <LoginWrapTop>로그인</LoginWrapTop>
+            <LoginEmailBox>
+                <Input
+                    id="id"
+                    style={{flexGrow: 1}}
+                    placeholder={"ID를 입력해 주세요 "}
+                    name="membId"
+                    value={userInfo.membId}
+                    onChange={handleChange}
+                />
+                <Input
+                    type="password"
+                    style={{ flexGrow: 1 }}
+                    placeholder="PASSWORD를 입력해 주세요 "
+                    name="membPw"
+                    value={userInfo.membPw}
+                    onChange={handleChange}
+                />
+                <Button
+                    style={{ flexGrow: 1 ,width:"100%"}}
+                    onClick={originLogin}
+                    value="로그인"
+                />
+                <div className="emailTextBox">
+                    <span>아이디 찾기</span>
+                    <span>비밀번호 찾기</span>
+                    <span>회원가입</span>
+                </div>
+            </LoginEmailBox>
 
-
-            <a href={KAKAO_AUTH_URL}>
-                <div className="kakao_btn"></div>
-            </a>
-            <a href={NAVER_AUTH_URL}>
-                <div className="naver_btn"></div>
-            </a>
-
-        </div>
+            <LoginWrapBox>
+                <a className="social_a" href={KAKAO_AUTH_URL}>
+                    <div className="kakao_btn"></div>
+                </a>
+                <a className="social_a" href={NAVER_AUTH_URL}>
+                    <div className="naver_btn"></div>
+                </a>
+            </LoginWrapBox>
+        </LoginWrap>
     )
 }
+const LoginWrapTop = styled.div`
+    text-align:center;
+    background:skyblue;
+    width:100%;
+    height:50px;
+    margin-bottom:50px;
+    line-height:50px;
+    color:white;
+    font-weight:400;
+    font-size:18px;
+`
+
+const LoginEmailBox = styled.div`
+    display:flex;
+    flex-direction: column;
+    width:80%;
+`
+
+const LoginWrapBox = styled.div`
+    display:flex;
+    flex-direction: column;
+    width:80%;
+`
+
+const LoginWrap = styled.div`
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    // justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+`
 
 const Input = styled.input`
-border-radius: 4px;
-border: 2px solid #e8e8e8;
-padding: 10px;
-font-size: 1rem;
-margin: 15px;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 5px;
 
 &:focus {
-    border: 2px solid #d32f2f;
+    background:#e8e8e8;
     outline: none;
 }
 ::placeholder {
@@ -109,7 +163,6 @@ margin: 15px;
 ::-webkit-outer-spin-button,
 ::-webkit-inner-spin-button {
 -webkit-appearance: none;
-margin: 0;
 }
 `;
 

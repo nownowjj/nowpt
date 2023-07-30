@@ -19,4 +19,5 @@ public class CalenderDto {
     private LocalDateTime frstRegistDt;
     private LocalDateTime lastChangeDt;
     private String useYn;
+    private boolean importYn;
 }

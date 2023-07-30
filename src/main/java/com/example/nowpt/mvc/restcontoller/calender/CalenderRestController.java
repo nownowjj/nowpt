@@ -4,6 +4,7 @@ import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.CalenderDto;
+import com.example.nowpt.mvc.dto.CalenderSmDto;
 import com.example.nowpt.mvc.model.Calendar;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.ProductLike;
@@ -11,11 +12,13 @@ import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
 import com.example.nowpt.mvc.service.calender.CalenderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -63,19 +66,44 @@ public class CalenderRestController {
     }
 
 
-    @PutMapping("/api/calendar")
+    @DeleteMapping("/api/calendar")
     public ResponseDto<?> deleteRecord(@AuthenticationPrincipal Member member ,@RequestParam Long calendarSn){
         log.debug("일정 삭제 : {}"  ,calendarSn);
         Calendar calendar = calenderService.findByCalendarSn(calendarSn);
         if(calendar != null)return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calenderService.deleteRecord(calendar));
         else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
     }
-//    @PostMapping("/api/auth/calendar/insert")
-//    public ResponseDto<?> createRecord(@RequestBody CalenderDto calenderDto){
-//        log.debug("calendar : {}" , calenderDto);
-//        log.debug("기록 일자 등록");
-//
-//        return calendarRepo.save(calenderDto);
-//    }
+
+    @GetMapping("/api/auth/calendar/myRecord")
+    public ResponseDto<?> selectMyRecordSm(@AuthenticationPrincipal Member member){
+        Map<String,List<?>> result = new HashMap<>();
+
+        List<Member> members = Arrays.asList(member);
+        List<CalenderSmDto> myRecordSmList = calenderService.selectMyRecordSm(member.getMemberSn());
+
+
+        result.put("myRecordSmList",myRecordSmList);
+        result.put("member",members);
+
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
+    }
+
+
+    @PutMapping("/api/calendar")
+    public ResponseDto<?> importRecord(@RequestParam Long calendarSn ,@RequestParam boolean importYn){
+        log.debug("일정 즐겨찾기 : {} , {}"  ,calendarSn , (importYn ? "등록" : "취소"));
+        Calendar calendar = calenderService.findByCalendarSn(calendarSn);
+        if(calendar != null)return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calenderService.importRecord(calendar,importYn));
+        else return ResponseUtil.FAILURE(Cd.PUT_FAIL, null);
+    }
+
+    @GetMapping("/api/calendar/import")
+    public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable){
+        Page<CalenderDto> calendar = calenderService.findImportRecordByMembSn(member.getMemberSn(),pageable);
+        if(calendar != null)return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendar);
+        else return ResponseUtil.FAILURE(Cd.SELECT_FAIL, null);
+    }
+
 
 }

@@ -10,6 +10,7 @@ import roomData from "../../db/MeetingRoomData.json";
 import Button from "../../component/JoinButton";
 import {useNavigate} from "react-router-dom";
 import IsId from "../../services/authService/IsId";
+import ApiErrorHandle from "../../services/ApiErrorHandle";
 
 const MeetingListComponent = ({data}) => {
     const navigate = useNavigate();
@@ -72,7 +73,7 @@ const MeetingListComponent = ({data}) => {
                 console.log(response);
                 setReservationList(response.content);
             }).catch(error =>{
-            console.log(error)
+            ApiErrorHandle(navigate,error)
         });
     },[data])
 

@@ -1,10 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import HeaderComponent from "../component/HeaderComponent";
 import MainComponent from "../pages/MainComponent";
 import TestComponent from "../pages/TestComponent";
 import LoginComponent from "../pages/LoginComponent";
 import HomeComponent from "../pages/HomeComponent";
-import MyPageComponent from "../pages/MyPageComponent";
+import MyPageComponent from "../pages/calendar/Mypage/MyPageComponent";
 import Oauth from "../api/Oauth";
 import NoticePage from "../pages/notice/NoticePage";
 import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
@@ -21,8 +20,9 @@ import ScrollComponent from "../pages/Scroll/ScrollComponent";
 import SearchPage from "../pages/product/searchPage";
 import ChartMain from "../pages/chart/ChartMain";
 import Calendar from "../pages/calendar/CalendarPage";
-import CalendarMyPage from "../pages/calendar/CalendarMyPage";
 import CalendarRecordNewOrFix from "../pages/calendar/calendarRecordNewOrFix";
+import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
+import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
 
 
 const Router = () => {
@@ -72,10 +72,26 @@ const Router = () => {
                 <Route path="/loading" element={<LoadingComponent />} />
 
 
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/calendarMyPage" element={<CalendarMyPage />} />
+                <Route
+                    path="/calendar"
+                        element={
+                            <PrivateRoute
+                                component={Calendar}
+                            />
+                        }
+                />
                 <Route path="/calendarRecordNewOrFix" element={<CalendarRecordNewOrFix />} />
+                <Route path="/calendarImport" element={<CalendarImportPage />} />
+                <Route path="/calendarDayDetail" element={<CalendarDayDetailPage />} />
 
+                {/*<Route*/}
+                {/*    path="/go/common/myPage"*/}
+                {/*    element={*/}
+                {/*        <PrivateRoute*/}
+                {/*            component={MyPageComponent}*/}
+                {/*        />*/}
+                {/*    }*/}
+                {/*/>*/}
 
 
                 <Route path="/scroll" element={<ScrollComponent />} />
