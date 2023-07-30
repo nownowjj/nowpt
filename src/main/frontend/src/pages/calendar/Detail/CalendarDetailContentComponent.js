@@ -8,7 +8,7 @@ import {importRecord} from "../../../api/CalendarApi";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {isNotLogin, route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
-import ConfirmComponent from "../../../component/ConfirmComponent"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import ConfirmComponent from "../component/ConfirmComponent"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**

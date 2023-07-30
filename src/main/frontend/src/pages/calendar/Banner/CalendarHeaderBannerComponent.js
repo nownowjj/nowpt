@@ -4,17 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 const CalendarHeaderBannerComponent = () => {
 
     return (
         <CalendarHeaderBannerWrap>
             <Swiper
-                spaceBetween={10} //SwiperSlide 사이에 간격을 의미합니다.
-                slidesPerView={1} //한 번에 보여지는 slide 개수를 나타낸다.
+                spaceBetween={10}
+                slidesPerView={1}
                 navigation
                 loop={true}
-                autoplay={{ delay: 3000 }}
-                effect={"fade"}
+                autoplay={{ delay: 100 }}
+                effect={'fade'}
                 pagination={{
                     clickable: true,
                 }}

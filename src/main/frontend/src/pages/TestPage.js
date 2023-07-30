@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ConfirmComponent from "../component/ConfirmComponent";
+import ConfirmComponent from "./calendar/component/ConfirmComponent";
 import {test10, test11, test12, test13, test8, test9} from "../services/testScript";
 import Button from "../component/JoinButton";
 

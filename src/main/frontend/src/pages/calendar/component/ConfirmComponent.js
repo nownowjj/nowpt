@@ -24,6 +24,7 @@ const ConfirmComponent = ({ message, okCallBack, onClose }) => {
     );
 };
 const ConfirmButton =styled.div`
+    display:block;
     padding:5px 30px;
     border:1px solid ;
     color:white;
@@ -73,7 +74,7 @@ const ConfirmTextTop = styled.div`
 const ConfirmBox = styled.div`
     padding: 10px 5px;
     border-radius: 10px;
-    border: 2px solid #e8e8e8;
+    border: 2px solid #ff8b39;
     width: 80%;
     height: 250px;
     position:fixed;

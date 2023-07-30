@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import CalendarWrap from "../component/CalendarWrapComponent";
-import TopGnbComponent from "../component/TopGnbComponent";
+import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import LoadingComponent from "../../LoadingComponent";
-import CalendarDetailContentComponent from "../component/CalendarDetailContentComponent";
+import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
 import {useNavigate} from "react-router-dom";
 import {useInView} from "react-intersection-observer";
 import styled from "styled-components";

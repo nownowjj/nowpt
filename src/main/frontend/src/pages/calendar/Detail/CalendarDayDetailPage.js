@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import TopGnbComponent from "../component/TopGnbComponent";
+import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import LoadingComponent from "../../LoadingComponent";
-import CalendarDetailContentComponent from "../component/CalendarDetailContentComponent";
+import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import moment from "moment/moment";

@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
-import CalendarWrap from "./component/CalendarWrapComponent";
+import CalendarWrap from "../component/CalendarWrapComponent";
 import styled from "styled-components";
-import {insertRecord} from "../../api/CalendarApi";
+import {insertRecord} from "../../../api/CalendarApi";
 import {useLocation, useNavigate} from 'react-router-dom'
 import moment from "moment";
+import validateRecordInsertOrUpdate from "../../../services/validate";
+import ApiErrorHandle from "../../../services/ApiErrorHandle";
+import ConfirmComponent from "../component/ConfirmComponent";
+import AlertComponent from "../component/AlertComponent";
 
-const CalendarRecordNewOrFix = () => {
+const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     const isFix = !!state.sn;
@@ -16,27 +20,40 @@ const CalendarRecordNewOrFix = () => {
     const [contentValue , setContentValue] = useState(initialContent);
 
 
-    console.log(recordDate);
+    // Alert 여부
+    const [showAlert , setShowAlert] = useState(false);
+    const [messageCall, setMessageCall] = useState('');
+
+    // validate 발생시 alert 발생
+    const alertFunction =(message)=>{
+        setMessageCall(message);
+        setShowAlert(true);
+    }
+
     let param = {};
         param.recordDate = recordDate;
         param.calendarSn = state.sn && state.sn ;
 
-
     const newRecordEvent=()=>{
         param.title   = titleValue;
         param.content = contentValue;
+
+
+        const validationResult = validateRecordInsertOrUpdate(param);
+        if (validationResult !== true) {
+            alertFunction(validationResult);
+            return;
+        }
 
         insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
             .then(response =>{
                 console.log(response);
                 navigate('/calendar',{state : {"recordDate": response.recordDate , "isNewOrFix":true}})
             }).catch(error =>{
-                console.log(error);
+                ApiErrorHandle(navigate,error);
         })
     }
 
-    const recordInput ={
-    };
 
     const changeTitle=(e)=>setTitleValue(e.target.value);
     const changeContent=(e)=>setContentValue( (e.target.value).replaceAll("<br>", "\r\n") );
@@ -53,11 +70,23 @@ const CalendarRecordNewOrFix = () => {
 
                 {/* record Wrap*/}
                 <CalendarRecordAddArea>
-                    <RecordTitleInput spellcheck="false" type="text" onChange={changeTitle} value={titleValue} placeholder='제목입력'/>
-                    <RecordContentInput  spellcheck="false" type="text" style={recordInput} onChange={changeContent} value={contentValue} placeholder='내용입력'/>
+                    <RecordTitleInput spellcheck="false" type="text" onChange={changeTitle} value={titleValue} maxLength={100} placeholder='제목입력'/>
+                    <RecordContentInput  spellcheck="false" type="text"  onChange={changeContent} maxLength={2000} value={contentValue} placeholder='내용입력'/>
                     <RecordButton onClick={newRecordEvent}>{isFix ? '수정' : '등록'}</RecordButton>
                 </CalendarRecordAddArea>
 
+
+                {/* 삭제전 Confirm */}
+                {showAlert &&(
+                    <AlertComponent
+                        message= {messageCall}
+                        okCallBack={() => {
+                            setShowAlert(false);
+                        }}
+                        onClose={()=> setShowAlert(false)}
+                    />
+                )}
+                {/* 삭제전 Confirm */}
             </CalendarRecordNewOrFixWrap>
         </CalendarWrap>
     );
@@ -118,4 +147,4 @@ const RecordButton = styled.button`
     bottom: 27px;
     right: 27px;
 `
-export default CalendarRecordNewOrFix;
+export default CalendarRecordNewOrFixPage;

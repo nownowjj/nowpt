@@ -3,7 +3,7 @@ import MainComponent from "../pages/MainComponent";
 import TestComponent from "../pages/TestComponent";
 import LoginComponent from "../pages/LoginComponent";
 import HomeComponent from "../pages/HomeComponent";
-import MyPageComponent from "../pages/calendar/Mypage/MyPageComponent";
+import CalendarMyPage from "../pages/calendar/Mypage/CalendarMyPage";
 import Oauth from "../api/Oauth";
 import NoticePage from "../pages/notice/NoticePage";
 import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
@@ -20,7 +20,7 @@ import ScrollComponent from "../pages/Scroll/ScrollComponent";
 import SearchPage from "../pages/product/searchPage";
 import ChartMain from "../pages/chart/ChartMain";
 import Calendar from "../pages/calendar/CalendarPage";
-import CalendarRecordNewOrFix from "../pages/calendar/calendarRecordNewOrFix";
+import CalendarRecordNewOrFixPage from "../pages/calendar/Detail/CalendarRecordNewOrFixPage";
 import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
 import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
 
@@ -46,7 +46,7 @@ const Router = () => {
                     path="/go/common/myPage"
                     element={
                     <PrivateRoute
-                        component={MyPageComponent}
+                        component={CalendarMyPage}
                     />
                     }
                 />
@@ -80,7 +80,7 @@ const Router = () => {
                             />
                         }
                 />
-                <Route path="/calendarRecordNewOrFix" element={<CalendarRecordNewOrFix />} />
+                <Route path="/calendarRecordNewOrFix" element={<CalendarRecordNewOrFixPage />} />
                 <Route path="/calendarImport" element={<CalendarImportPage />} />
                 <Route path="/calendarDayDetail" element={<CalendarDayDetailPage />} />
 
@@ -88,7 +88,7 @@ const Router = () => {
                 {/*    path="/go/common/myPage"*/}
                 {/*    element={*/}
                 {/*        <PrivateRoute*/}
-                {/*            component={MyPageComponent}*/}
+                {/*            component={CalendarMyPage}*/}
                 {/*        />*/}
                 {/*    }*/}
                 {/*/>*/}

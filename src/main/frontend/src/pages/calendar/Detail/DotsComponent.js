@@ -2,7 +2,7 @@ import React from 'react';
 import moment from "moment";
 import styled from "styled-components";
 
-const CalendarDotsContent = (data) => {  // data {date...  mark...}
+const DotsComponent = (data) => {  // data {date...  mark...}
     const styles = {
         dot1: {backgroundColor: 'red'},
         dot2: {backgroundColor: 'blue'},
@@ -52,4 +52,4 @@ const DotWrap = styled.div`
 `
 
 
-export default CalendarDotsContent;
+export default DotsComponent;

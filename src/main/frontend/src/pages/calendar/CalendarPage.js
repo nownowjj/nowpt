@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import CalendarLib from 'react-calendar'
 import './cal.css' // css import
 import moment from 'moment';
-import CalendarDotsContent from "./Detail/CalendarDotsContent";
+import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
-import CalendarHeaderBannerComponent from "./CalendarHeaderBannerComponent";
+import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
 import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
 import {getMyCalendar} from "../../api/CalendarApi";
 import CalendarWrap from "./component/CalendarWrapComponent";
@@ -52,7 +52,7 @@ const CalendarPage = () => {
                 onClickDay={onClickDay}
                 formatDay={(locale, date) => moment(date).format('DD')}
                 value={value} // 일자
-                tileContent={({date}) => <CalendarDotsContent date ={date} mark={mark} />} // 일자 하단에 이벤트 dot
+                tileContent={({date}) => <DotsComponent date ={date} mark={mark} />} // 일자 하단에 이벤트 dot
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                 // onViewChange={onViewChange}
@@ -61,6 +61,9 @@ const CalendarPage = () => {
                 // maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
             />
             {/* 캘린더 */}
+
+
+            {/*<div>이번달에 {mark.length}번 기록했어요!!</div>*/}
 
             {/*바텀*/}
             <CalendarBottomMenu/>

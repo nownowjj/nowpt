@@ -52,11 +52,34 @@ export function validateNotice(noticeDto){
         alert("제목을 입력하지 않았습니다.")
         return false;
     }
-
     if((noticeDto.noticeContent) === ""){
         alert("내용을 입력하지 않았습니다.")
         return false;
     }
+    return true;
+}
+
+const validateRecordInsertOrUpdate =(param)=>{
+    const { title, content } = param;
+    if (title.length > 100) {
+        return '제목이 너무 길어요';
+    }
+    if (content.length > 2000) {
+        return '내용이 너무 길어요'
+    }
+    if(!title.length){
+        return '제목을 입력해 주세요'
+    }
+    if(!content.length){
+        return '내용을 입력해 주세요'
+    }
+    if(title.length <= 1){
+        return '제목이 너무 짧아요'
+    }
+    if(content.length <= 3){
+        return '내용이 너무 짧아요'
+    }
 
     return true;
 }
+export default validateRecordInsertOrUpdate;
