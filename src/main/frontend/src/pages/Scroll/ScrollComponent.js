@@ -4,8 +4,10 @@ import {useInView} from "react-intersection-observer";
 import Item from "./Item";
 import styled from "styled-components";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
+import {useNavigate} from "react-router-dom";
 
 const ScrollComponent = () => {
+    const navigate = useNavigate();
     const [ref, inView] = useInView();
     const [loginList,setLoginList] = useState([]);
     const[pageNumber,setPageNumber] = useState(0);

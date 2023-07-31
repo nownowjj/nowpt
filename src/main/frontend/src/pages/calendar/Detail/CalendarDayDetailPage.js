@@ -24,14 +24,15 @@ const CalendarDayDetailPage = () => {
         getMyDetailCalendar(param)
             .then(response => {
                 setDetail(response.data)
-            }).then(()=>{
-                setIsLoading(false);
+                console.log(response.data);
             })
             .catch(error => {
                 console.log('dd');
                 console.log(error);
                 ApiErrorHandle(navigate,error)
-            })
+            }).finally(()=>{
+            setIsLoading(false);
+        })
     },[])
 
     let deleteParam = {};
@@ -53,6 +54,12 @@ const CalendarDayDetailPage = () => {
             })
     }
 
+    const importEvent =(calendarSn , newImportYn)=>{
+        const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); //
+        detail[recordIndex].importYn = newImportYn;
+        console.log(detail);
+    }
+
 
     return (
         <CalendarDetailWrap>
@@ -70,6 +77,7 @@ const CalendarDayDetailPage = () => {
                                 navigate={navigate}
                                 recordDate={detailDay}
                                 removeRecord={removeRecord}
+                                importEvent={importEvent}
                             />
                         ))}
                             <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>

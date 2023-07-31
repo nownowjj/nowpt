@@ -38,19 +38,32 @@ public class CalenderRestController {
     }
 
     @PostMapping("/api/calendar/insert")
-    public Calendar createRecord(@AuthenticationPrincipal Member member,@RequestBody Calendar calendar){
-        calendar.setMemberSn(member.getMemberSn());
+    public ResponseDto<?> createRecord(@AuthenticationPrincipal Member member,@RequestBody CalenderDto calenderDto){
+        log.debug("등록 및 수정 : {}",calenderDto);
 
-        log.debug("calendar : {}" , calendar);
-
-        if(calendar.getCalendarSn() != null){
-            Calendar updateCalendar = calendarRepo.findById(calendar.getCalendarSn()).orElse(null);
-            updateCalendar.setTitle(calendar.getTitle());
-            updateCalendar.setContent(calendar.getContent());
+        if(calenderDto.getCalendarSn() != null){
+            log.debug("수정 요청 : {}" , calenderDto.getCalendarSn());
+            Calendar updateCalendar = calendarRepo.findById(calenderDto.getCalendarSn()).orElse(null);
+            updateCalendar.setTitle(calenderDto.getTitle());
+            updateCalendar.setContent(calenderDto.getContent());
             updateCalendar.setLastChangeDt(LocalDateTime.now());
+            updateCalendar.setImportYn(calenderDto.getImportYn());
 
-            return calendarRepo.save(updateCalendar);
-        }else return calendarRepo.save(calendar);
+            calendarRepo.save(updateCalendar);
+
+            return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, updateCalendar);
+        }else {
+            log.debug("등록 요청 : {}" , calenderDto.getCalendarSn());
+            Calendar newCalendar = new Calendar();
+            newCalendar.setMemberSn(member.getMemberSn());
+            newCalendar.setTitle(calenderDto.getTitle());
+            newCalendar.setContent(calenderDto.getContent());
+            newCalendar.setImportYn(calenderDto.getImportYn());
+            newCalendar.setRecordDate(calenderDto.getRecordDate());
+            calendarRepo.save(newCalendar);
+            log.debug("new !! : {}",newCalendar);
+            return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, newCalendar);
+        }
     }
 
     @GetMapping("/api/calendar")
@@ -74,7 +87,7 @@ public class CalenderRestController {
         else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
     }
 
-    @GetMapping("/api/auth/calendar/myRecord")
+    @GetMapping("/api/calendar/myRecord")
     public ResponseDto<?> selectMyRecordSm(@AuthenticationPrincipal Member member){
         Map<String,List<?>> result = new HashMap<>();
 

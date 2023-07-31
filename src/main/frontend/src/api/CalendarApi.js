@@ -41,7 +41,7 @@ export function deleteRecord(param){
 
 export function getMyInfoAndRecord(){
     return request({
-        url: API_BASE  + '/auth/calendar/myRecord' ,
+        url: API_BASE  + '/calendar/myRecord' ,
         method:'GET'
     })
 }

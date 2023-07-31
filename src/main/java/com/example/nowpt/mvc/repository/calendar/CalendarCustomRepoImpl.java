@@ -69,7 +69,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.recordDate.count().as("monthCount")
                 ))
                 .from(qCalendar)
-                .where(qCalendar.memberSn.eq(membSn))
+                .where(qCalendar.memberSn.eq(membSn).and(qCalendar.useYn.eq("Y")))
                 .groupBy(qCalendar.recordDate.substring(0, 4), qCalendar.recordDate.substring(4, 6))
                 .orderBy(qCalendar.recordDate.substring(0, 4).asc(), qCalendar.recordDate.substring(4, 6).asc())
                 .fetch();
@@ -84,7 +84,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                 .select(qSubCalendar.count())
                 .from(qSubCalendar)
                 .where(qSubCalendar.memberSn.eq(memberSn)
-                        .and(qSubCalendar.importYn.eq(true)))
+                        .and(qSubCalendar.importYn.eq(true)).and(qSubCalendar.useYn.eq("Y")))
                 .fetchOne();
 
 

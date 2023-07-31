@@ -1,18 +1,18 @@
 import React from 'react';
 import {TiStarFullOutline, TiStarOutline} from "react-icons/ti";
 
-const DetailStarSubComponent = ({ initialYn, importantRecord }) => {
+const DetailStarSubComponent = ({ initialYn, importantRecord ,style }) => {
     return (
         <>
             {initialYn ? (
                 <TiStarFullOutline
                     onClick={() => importantRecord(false)}
-                    style={{ color: 'black',fontSize:"19px" }}
+                    style={style}
                 />
             ) : (
                 <TiStarOutline
                     onClick={() => importantRecord(true)}
-                    style={{ color: 'black',fontSize:"19px" }}
+                    style={style}
                 />
             )}
         </>

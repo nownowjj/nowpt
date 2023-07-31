@@ -72,6 +72,12 @@ const CalendarImportPage = () => {
                 ApiErrorHandle(navigate,error)
         })
     }
+
+    const importEvent =(calendarSn , newImportYn)=>{
+        const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); //
+        importRecordList[recordIndex].importYn = newImportYn;
+    }
+
     return (
         <>
             {/* 상단 gnb */}
@@ -91,6 +97,7 @@ const CalendarImportPage = () => {
                                 navigate={navigate}
                                 importPage={true}
                                 removeRecord={removeRecord}
+                                importEvent={importEvent}
                             />
                         ))
 

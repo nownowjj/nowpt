@@ -59,8 +59,10 @@ export function validateNotice(noticeDto){
     return true;
 }
 
-const validateRecordInsertOrUpdate =(param)=>{
+const validateRecordInsertOrUpdate =(param , fixParam)=>{
     const { title, content } = param;
+    const { titleValue , contentValue } = fixParam;
+
     if (title.length > 100) {
         return '제목이 너무 길어요';
     }
@@ -78,6 +80,9 @@ const validateRecordInsertOrUpdate =(param)=>{
     }
     if(content.length <= 3){
         return '내용이 너무 짧아요'
+    }
+    if(title === titleValue && content === contentValue){
+        return '바뀐게 없다'
     }
 
     return true;

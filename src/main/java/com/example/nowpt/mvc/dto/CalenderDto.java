@@ -13,11 +13,21 @@ import java.time.LocalDateTime;
 public class CalenderDto {
     private String recordDate;
     private long memberSn;
-    private long calendarSn;
+    private Long calendarSn;
     private String title;
     private String content;
     private LocalDateTime frstRegistDt;
     private LocalDateTime lastChangeDt;
     private String useYn;
     private boolean importYn;
+
+    // importYn 필드의 접근자 메서드 정의
+    public boolean getImportYn() {
+        return importYn;
+    }
+
+    // importYn 필드의 설정자 메서드 정의
+    public void setImportYn(boolean importYn) {
+        this.importYn = importYn;
+    }
 }

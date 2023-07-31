@@ -17,8 +17,9 @@ dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
  * @param navigate
  * @param removeRecord
  * @param importPage 여부로 일반적인 디테일 페이지인지 , 중요 페이지에서 진입한건지 구분
+ * @param importEvent
  */
-const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPage }) => {
+const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPage ,importEvent }) => {
     const [initialYn, setInitialYn] = useState(data.importYn);
     // 즐겨찾기를 등록 할 떄에는 바로 등록
     // 취소시에는 동의를 받고 취소 시킴. confirm 사용
@@ -48,6 +49,7 @@ const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPag
         importRecord(param)
             .then(response=>{
                 setInitialYn(response.data.importYn);
+                importEvent(data.calendarSn,param.importYn)
             })
             .catch(error=>{
                 console.log(error);
@@ -81,6 +83,7 @@ const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPag
                 <DetailStarSubComponent
                     initialYn={initialYn} // 하위 컴포넌트로 상태 전달
                     importantRecord={importantRecord}
+                    style={{color:"black",fontSize:"19px"}}
                 />
                 <PiWrenchFill style={{marginRight : "2px"}}
                     onClick={() =>
@@ -90,6 +93,7 @@ const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPag
                                 "sn": data.calendarSn,
                                 "content": data.content,
                                 "title": data.title,
+                                "importYn": data.importYn,
                             },
                         })
                     }
