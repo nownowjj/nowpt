@@ -202,3 +202,17 @@ background: #ffffa9;
 .on {
     background-color: blue;
 }
+
+/* CalendarHeaderBanner.css */
+
+.slick-fade .slick-slide {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slick-fade .slick-active {
+    opacity: 1;
+}
+.slick-arrow{
+    display:none !important;
+}
