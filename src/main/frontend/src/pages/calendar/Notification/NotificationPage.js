@@ -1,29 +1,28 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {deleteAllNotification, getMyNotification, updateNotification} from "../../../api/NotificationApi";
+import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import LoadingComponent from "../../LoadingComponent";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
-import {useNavigate} from "react-router-dom";
-import {useInView} from "react-intersection-observer";
+import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import styled from "styled-components";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
-import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
+import {useInView} from "react-intersection-observer";
+import NotificationComponent from "./NotificationComponent";
 
-const CalendarImportPage = () => {
+const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [ref, inView] = useInView();
     const[pageNumber,setPageNumber] = useState(0);
     const[last,setLast] = useState(false);
-    const [importRecordList,setImportRecordList] = useState([]);
 
+    const [notificationList , setNotificationList] = useState([]);
 
-    useEffect(() => {
-        selectImportRecordPaging(pageNumber)
-            .then(response => {
-                console.log(pageNumber + " response %O :" , response.data);
-
+    useEffect(()=>{
+        getMyNotification(pageNumber)
+            .then((response)=>{
                 if(!last) {
                     //첫번쨰 페이지이자 마지막 페이지 일 경우
                     if (response.data.first && response.data.last) {
@@ -34,52 +33,60 @@ const CalendarImportPage = () => {
                     if(response.data.last) setLast(true);
                     return response.data.content;
                 }
-        }).then(data =>{
-            setImportRecordList((itemLists) => itemLists.concat(data));
-        }).catch(error => {
-            ApiErrorHandle(navigate,error);
-        }).finally(()=>{
-            setIsLoading(false)
-        });
-    }, [pageNumber]);
-
+            }).then(data =>{
+            setNotificationList((itemLists) => itemLists.concat(data));
+            }).catch((error)=>{
+                ApiErrorHandle(navigate,error)
+            }).finally(()=>{
+                setIsLoading(false)
+            });
+    },[pageNumber])
 
     useEffect(()=>{
-        if(importRecordList.length !== 0 && inView) {
+        if(notificationList.length !== 0 && inView) {
             console.log('첫 로딩 이후 무한 스크롤');
             if (last) return;
             setPageNumber(pageNumber + 1)
         }
     },[inView]);
 
-    let deleteParam = {};
-    // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn)=>{
-        const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
-        deleteRecord(deleteParam)
-            .then(response =>{
-                if(response.data) {
-                    if (recordIndex !== -1) { // 삭제 요청이 성공 되었고 해당 요소의 index를 찾음
-                        const updatedDetail = [...importRecordList]; // 새롭게
-                        updatedDetail.splice(recordIndex, 1); //새로 복사한 객체에서 삭제한 index를 제거함
-                        setImportRecordList(updatedDetail);
-                    }
-                }
-            }).catch(error =>{
+
+    const deleteAllNotiFn=()=>{
+        deleteAllNotification()
+            .then(response=>{
+                console.log(response);
+                setNotificationList([]);
+            }).catch(error=>{
                 ApiErrorHandle(navigate,error)
         })
     }
 
-    const importEvent =(calendarSn , newImportYn)=>{
-        const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); //
-        importRecordList[recordIndex].importYn = newImportYn;
+    let updateParam = {};
+    const updateNotiFn=(notificationSn)=>{
+        console.log("updateNotiFn");
+        console.log(notificationSn);
+        const recordIndex = notificationList.findIndex((data) => data.notificationSn === notificationSn); // 삭제 요청이 들어온 객체의 index를 찾음
+        updateParam.notificationSn = notificationSn; // 요청 파라미터에 Sn 저장
+        updateNotification(updateParam)
+            .then(response=>{
+                console.log(response);
+                if(response.message === "DESUCCESS") {
+                    if (recordIndex !== -1) { // 삭제 요청이 성공 되었고 해당 요소의 index를 찾음
+                       console.log(recordIndex);
+                        const updatedNoti = [...notificationList]; // 새롭게
+                        updatedNoti.splice(recordIndex, 1);
+                        setNotificationList(updatedNoti);
+                    }
+                }
+            }).catch(error=>{
+            ApiErrorHandle(navigate,error)
+        })
     }
 
     return (
         <>
             {/* 상단 gnb */}
-            <TopGnbComponent page={'중요한 일정'}/>
+            <TopGnbComponent page={'알림'}/>
             {/* 상단 gnb */}
 
             {/* 반복 출력시킬 element 영역 */}
@@ -87,15 +94,13 @@ const CalendarImportPage = () => {
                 {isLoading ? (
                         <LoadingComponent/>
                     ) :
-                    importRecordList && importRecordList.length > 0 ? (
-                        importRecordList.map((data) => (
-                            <CalendarDetailContentComponent
-                                key={data.calendarSn}
+                    notificationList && notificationList.length > 0 ? (
+                        notificationList.map((data) => (
+                            <NotificationComponent
+                                key={data.notificationSn}
                                 data={data}
-                                navigate={navigate}
-                                importPage={true}
-                                removeRecord={()=> removeRecord}
-                                importEvent={()=> importEvent}
+                                updateNoti={updateNotiFn}
+                                deleteAllNoti={deleteAllNotiFn}
                             />
                         ))
 
@@ -112,7 +117,7 @@ const CalendarImportPage = () => {
 
 
             {/* 하단 메뉴 */}
-            <CalendarBottomMenu/>
+            {/*<CalendarBottomMenu/>*/}
             {/* 하단 메뉴 */}
         </>
     );
@@ -131,6 +136,7 @@ const CalendarDetailNo = styled.div`
     background-position: center;
     position:relative;
 `
+
 const ImportWrap =styled.div`
     height: fit-content;
     padding-top: 50px;
@@ -143,4 +149,5 @@ const ObserverArea = styled.div`
     border-bottom:1px solid #e8e8e8;
 `
 
-export default CalendarImportPage;
+
+export default NotificationPage;

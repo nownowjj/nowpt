@@ -51,8 +51,8 @@
 .react-calendar__navigation {
     display: flex;
     position: absolute;
-    top: 14px;
-    right: 0;
+    top: 9px;
+    left: 45px;
     /*border-bottom: 1px solid #e8e8e8;*/
     /*border-bottom: 1px solid #a0a096;*/
     /*margin-bottom: 1em;*/
@@ -183,6 +183,10 @@ background: #ffffa9;
     display: flex;
     padding: 0 6px;
     margin-bottom: 10px;
+    /*justify-content: center;*/
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
 }
 
 
@@ -215,4 +219,29 @@ background: #ffffa9;
 }
 .slick-arrow{
     display:none !important;
+}
+
+/* 벨 */
+/* 예시 CSS 파일 */
+.vibrating-bell-icon {
+    position: relative;
+    animation: vibrate 0.2s infinite;
+}
+
+@keyframes vibrate {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-0.5px);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(0.5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }

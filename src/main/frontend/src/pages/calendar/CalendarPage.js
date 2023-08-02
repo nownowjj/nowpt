@@ -11,6 +11,7 @@ import CalendarWrap from "./component/CalendarWrapComponent";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
+import NotificationBell from "./TopGnb/NotificationBell";
 
 const CalendarPage = () => {
     const [value, onChange] = useState(new Date());
@@ -26,7 +27,7 @@ const CalendarPage = () => {
     useEffect(()=>{
         param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
         getMyCalendar(param)
-            .then(response =>{setMark(response.data)})
+            .then(response =>{console.log(response.data); setMark(response.data)})
             .catch(error =>{ApiErrorHandle(navigate,error)})
     },[month])
 
@@ -43,6 +44,7 @@ const CalendarPage = () => {
             {/*헤더*/}
             <div className="header">
                 <ProfileComponent naviUse={true} size={45}/>
+                <NotificationBell/>
             </div>
             {/*헤더*/}
 
@@ -69,8 +71,6 @@ const CalendarPage = () => {
             <CalendarBottomMenu/>
             {/*바텀*/}
 
-
-            {/*{detail && <CalendarDetailComponent detailDay ={moment(value).format('YYYYMMDD')} noDetail={toggleDetail}/> }*/}
 
         </CalendarWrap>
     );

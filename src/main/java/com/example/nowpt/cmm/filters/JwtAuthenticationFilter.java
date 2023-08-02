@@ -28,10 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			throws ServletException, IOException {
 
 		// 헤더에서 JWT 를 받아옵니다.
-		log.debug("[요청 url]{}",request.getRequestURI());
-//		log.debug("[요청 header]{}",request.getHeader("accessToken"));
-//		log.debug("[JwtAuthenticationFilter]{}, {}", request.getRequestURI(), request.getHeader("Authorization"));
-		
+		log.debug("[요청 url , method] : {} : {} ",request.getRequestURI() , request.getMethod());
+
 		if(request.getRequestURI().startsWith("/api")) {
 //			log.debug("jwt 인증 진행");
 			// SecurityContext 에 Authentication 객체를 저장합니다.

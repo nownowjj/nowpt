@@ -23,6 +23,7 @@ import Calendar from "../pages/calendar/CalendarPage";
 import CalendarRecordNewOrFixPage from "../pages/calendar/Detail/CalendarRecordNewOrFixPage";
 import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
 import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
+import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 
 
 const Router = () => {
@@ -84,14 +85,10 @@ const Router = () => {
                 <Route path="/calendarImport" element={<CalendarImportPage />} />
                 <Route path="/calendarDayDetail" element={<CalendarDayDetailPage />} />
 
-                {/*<Route*/}
-                {/*    path="/go/common/myPage"*/}
-                {/*    element={*/}
-                {/*        <PrivateRoute*/}
-                {/*            component={CalendarMyPage}*/}
-                {/*        />*/}
-                {/*    }*/}
-                {/*/>*/}
+
+
+
+                <Route path="/notification" element={<NotificationPage />} />
 
 
                 <Route path="/scroll" element={<ScrollComponent />} />

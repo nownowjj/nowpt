@@ -57,7 +57,6 @@ const CalendarDayDetailPage = () => {
     const importEvent =(calendarSn , newImportYn)=>{
         const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); //
         detail[recordIndex].importYn = newImportYn;
-        console.log(detail);
     }
 
 
@@ -90,10 +89,6 @@ const CalendarDayDetailPage = () => {
                 )}
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
-
-
-
-            {/*<CalendarBottomMenu/>*/}
         </CalendarDetailWrap>
     );
 };

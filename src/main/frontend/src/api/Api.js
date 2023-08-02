@@ -5,6 +5,7 @@ export const RESERVATION = "/reservation";
 export const COMMON = "/common";
 export const PRODUCT = "/product";
 export const CALENDAR = "/calendar";
+export const NOTIFICATION = "/notification";
 
 
 

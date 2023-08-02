@@ -1,6 +1,8 @@
 package com.example.nowpt.mvc.openApi.chatGpt;
 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,38 +14,27 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j
 public class ChatGptService {
-    @Value("${chatgpt.api-key}") private  String GPT_KEY;
+    private final RestTemplate restTemplate;
+    private final ChatGptConfig chatGPTConfig;
 
-    private static RestTemplate restTemplate = new RestTemplate();
-
-    public HttpEntity<ChatGptRequestDto> buildHttpEntity(ChatGptRequestDto requestDto) {
-        log.debug("key : {}",GPT_KEY);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
-        headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + GPT_KEY);
-        return new HttpEntity<>(requestDto, headers);
+    @Autowired
+    public ChatGptService(RestTemplate restTemplate, ChatGptConfig chatGPTConfig) {
+        this.restTemplate = restTemplate;
+        this.chatGPTConfig = chatGPTConfig;
     }
 
-    public ChatGptResponseDto getResponse(HttpEntity<ChatGptRequestDto> chatGptRequestDtoHttpEntity) {
-        ResponseEntity<ChatGptResponseDto> responseEntity = restTemplate.postForEntity(
-                ChatGptConfig.URL,
-                chatGptRequestDtoHttpEntity,
-                ChatGptResponseDto.class);
+    public String getChatGPTResponse(ChatGptRequestDto requestDto) {
+        String url = chatGPTConfig.getApiEndpoint() + "/v1/chat/completions";
+        HttpHeaders headers = chatGPTConfig.getHeaders();
 
-        return responseEntity.getBody();
-    }
+        // Convert the requestDto to JSON string
+        String requestBody = new Gson().toJson(requestDto);
 
-    public ChatGptResponseDto askQuestion(QuestionRequestDto requestDto) {
-        return this.getResponse(
-                this.buildHttpEntity(
-                        new ChatGptRequestDto(
-                                ChatGptConfig.MODEL,
-                                requestDto.getQuestion(),
-                                ChatGptConfig.MAX_TOKEN,
-                                ChatGptConfig.TEMPERATURE,
-                                ChatGptConfig.TOP_P
-                        )
-                )
-        );
+        HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+
+        // Send a POST request to the ChatGPT API
+        String response = restTemplate.postForObject(url, request, String.class);
+
+        return response;
     }
 }

@@ -30,6 +30,7 @@ public class CalenderRestController {
     @PostMapping("/api/calendar")
     public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member , @RequestBody CalenderDto calenderDto){
         log.debug("기록 일자 리스트 조회 : {}"  ,calenderDto);
+        log.debug("기록 일자 리스트 조회 member : {}"  ,member);
 
         calenderDto.setMemberSn(member.getMemberSn());
         List<String> calenderList = calenderService.selectRecordDate(calenderDto);

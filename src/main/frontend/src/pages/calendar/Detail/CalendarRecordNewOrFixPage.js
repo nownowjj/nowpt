@@ -12,7 +12,6 @@ import DetailStarSubComponent from "./DetailStarSubComponent";
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
-    console.log(state);
     const isFix = !!state.sn;   // 해당 페이지 접근은 (수정,신규등록) 두가지의 경로가 있음 그걸 sn의 유무로 판별한다. sn이 존재하면 true 없으면 false
 
     const initialTitle = isFix ? state.title : "";       // Title ,Content가 존재한다면 input value를 지정해놓는다.
@@ -40,6 +39,7 @@ const CalendarRecordNewOrFixPage = () => {
 
     /**
      * @param closeCallBack,message
+     * @param message
      * @guide "확인" 버튼의 onClick callback을 넣어준다 단순히 노티만 할거면 closeCallBack을 null로 주고 추가 callback이 필요 하다면  callback Funciton을 넘겨준다
      * @return <AlertComponent>
      */

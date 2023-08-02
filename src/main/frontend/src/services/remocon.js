@@ -15,6 +15,7 @@ const route = {
     calendarImport : '/calendarImport',
     scroll : '/scroll',
     calendarRecordNewOrFix : '/calendarRecordNewOrFix',
+    notification : '/notification',
 }
 
 const isNotLogin = err => {
