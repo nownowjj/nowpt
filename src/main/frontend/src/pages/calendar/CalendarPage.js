@@ -57,6 +57,7 @@ const CalendarPage = () => {
                 tileContent={({date}) => <DotsComponent date ={date} mark={mark} />} // 일자 하단에 이벤트 dot
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
+                calendarType={"US"}
                 // onViewChange={onViewChange}
                 // onClickMonth={onClickMonth}
                 // minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
