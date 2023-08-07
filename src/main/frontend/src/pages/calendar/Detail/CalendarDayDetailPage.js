@@ -117,6 +117,7 @@ const CalendarDetailNo = styled.div`
     position:relative;
 `
 const DetailNoBalloon = styled.div`
+    z-index:100;
     position: fixed;
     background: skyblue;
     color: #fff;

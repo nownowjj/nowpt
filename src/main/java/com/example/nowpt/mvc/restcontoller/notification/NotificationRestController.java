@@ -3,7 +3,6 @@ package com.example.nowpt.mvc.restcontoller.notification;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
-import com.example.nowpt.mvc.dto.CalenderDto;
 import com.example.nowpt.mvc.dto.NotificationDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notification;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.security.Principal;
 
 @RestController
 @Slf4j
@@ -38,7 +37,8 @@ public class NotificationRestController {
     }
 
     @GetMapping("")
-    public ResponseDto<?> selectNotification(@AuthenticationPrincipal Member member, Pageable pageable ,@RequestParam boolean countMode){
+    public ResponseDto<?> selectNotification(@AuthenticationPrincipal Member member, Pageable pageable , @RequestParam boolean countMode , Principal principal){
+        log.debug("principal : {}",principal);
         log.debug("알림 조회 :{}, {} ,{}"  ,member.getMemberSn() ,pageable , countMode);
 
         if(countMode){
