@@ -54,7 +54,7 @@ const NotificationComponent = ({data,updateNoti,deleteAllNoti}) => {
 
 const DetailContentWrap = styled.div`
     width:100%;
-    height:120px;
+    // height:120px;
     padding:10px;
     border-bottom:1px solid #e8e8e8;
 `

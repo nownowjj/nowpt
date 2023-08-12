@@ -25,7 +25,7 @@ const CalendarHeaderBannerComponent = () => {
     );
 };
 const BannerItem = styled.div`
-    padding:0px 2px;
+    padding: 3px 6px;
     font-size:14px;
     font-weight:bold;
 `

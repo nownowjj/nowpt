@@ -11,7 +11,7 @@ import CalendarWrap from "./component/CalendarWrapComponent";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
-import NotificationBell from "./TopGnb/NotificationBell";
+import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
 
 const CalendarPage = () => {
     const [value, onChange] = useState(new Date());
@@ -44,7 +44,7 @@ const CalendarPage = () => {
             {/*헤더*/}
             <div className="header">
                 <ProfileComponent naviUse={true} size={45}/>
-                <NotificationBell/>
+                <FriendAndNotificationArea/>
             </div>
             {/*헤더*/}
 

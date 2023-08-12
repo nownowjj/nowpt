@@ -7,7 +7,7 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../../services/remocon";
 
-const NotificationBell = () => {
+const FriendAndNotificationArea = () => {
     const navigate = useNavigate();
     const [isActiveBell , setIsActiveBell] = useState(false);
 
@@ -23,7 +23,7 @@ const NotificationBell = () => {
 
     return (
         <AnimatedBellWrap redDots={isActiveBell}>
-            <StyledBsPeopleFill/>
+            <StyledBsPeopleFill onClick={()=> navigate(route.friend)}/>
             {isActiveBell
             ?
                 <LuBellRing onClick={()=> navigate(route.notification)} className="vibrating-bell-icon" />
@@ -65,4 +65,4 @@ const AnimatedBellWrap = styled.div`
     
 `
 
-export default NotificationBell;
+export default FriendAndNotificationArea;

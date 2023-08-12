@@ -7,7 +7,7 @@ import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import moment from "moment/moment";
-import {isNotLogin, route} from "../../../services/remocon";
+import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 
 const CalendarDayDetailPage = () => {

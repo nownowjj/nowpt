@@ -51,11 +51,9 @@
 .react-calendar__navigation {
     display: flex;
     position: absolute;
-    top: 9px;
+    top: 13px;
     left: 45px;
-    /*border-bottom: 1px solid #e8e8e8;*/
-    /*border-bottom: 1px solid #a0a096;*/
-    /*margin-bottom: 1em;*/
+    align-items: baseline;
 }
 
 .react-calendar__navigation button {
@@ -191,7 +189,7 @@ background: #ffffa9;
 
 
 /* 년 이동 버튼 */
-.react-calendar__navigation__label{font-size: 20px;}
+.react-calendar__navigation__label{font-size: 18px;}
 .react-calendar__navigation__prev-button{font-size: 20px;}
 .react-calendar__navigation__next-button{font-size: 20px;}
 .react-calendar__navigation__prev2-button{display: none}

@@ -54,7 +54,8 @@ const CalendarImportPage = () => {
 
     let deleteParam = {};
     // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn)=>{
+    const removeRecord =(calendarSn)=> {
+        console.log(calendarSn+'??');
         const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
         deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
         deleteRecord(deleteParam)
@@ -94,8 +95,8 @@ const CalendarImportPage = () => {
                                 data={data}
                                 navigate={navigate}
                                 importPage={true}
-                                removeRecord={()=> removeRecord}
-                                importEvent={()=> importEvent}
+                                removeRecord={removeRecord}
+                                importEvent={importEvent}
                             />
                         ))
 

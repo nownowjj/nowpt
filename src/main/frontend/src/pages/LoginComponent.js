@@ -66,57 +66,74 @@ function LoginComponent () {
 
 
     return (
-        <LoginWrap>
-            <LoginWrapTop>로그인</LoginWrapTop>
-            <LoginEmailBox>
-                <Input
-                    id="id"
-                    style={{flexGrow: 1}}
-                    placeholder={"ID를 입력해 주세요 "}
-                    name="membId"
-                    value={userInfo.membId}
-                    onChange={handleChange}
-                />
-                <Input
-                    type="password"
-                    style={{ flexGrow: 1 }}
-                    placeholder="PASSWORD를 입력해 주세요 "
-                    name="membPw"
-                    value={userInfo.membPw}
-                    onChange={handleChange}
-                />
-                <Button
-                    style={{ flexGrow: 1 ,width:"100%"}}
-                    onClick={originLogin}
-                    value="로그인"
-                />
-                <div className="emailTextBox">
-                    <span>아이디 찾기</span>
-                    <span>비밀번호 찾기</span>
-                    <span>회원가입</span>
-                </div>
-            </LoginEmailBox>
+        <Wrap>
+            <LoginWrap>
+                <LoginWrapTop>로그인</LoginWrapTop>
+                <LoginEmailBox>
+                    <Input
+                        id="id"
+                        style={{flexGrow: 1}}
+                        placeholder={"ID를 입력해 주세요 "}
+                        name="membId"
+                        value={userInfo.membId}
+                        onChange={handleChange}
+                    />
+                    <Input
+                        type="password"
+                        style={{ flexGrow: 1 }}
+                        placeholder="PASSWORD를 입력해 주세요 "
+                        name="membPw"
+                        value={userInfo.membPw}
+                        onChange={handleChange}
+                    />
+                    <Button
+                        style={{width:"100%",height:"45px",marginTop:"15px",color:"white",backgroundColor:"skyblue"}}
+                        onClick={originLogin}
+                        value="로그인"
+                    />
+                    <div className="emailTextBox">
+                        <span>아이디 찾기</span>
+                        <span>비밀번호 찾기</span>
+                        <span>회원가입</span>
+                    </div>
+                </LoginEmailBox>
 
-            <LoginWrapBox>
-                <a className="social_a" href={KAKAO_AUTH_URL}>
-                    <div className="kakao_btn"></div>
-                </a>
-                <a className="social_a" href={NAVER_AUTH_URL}>
-                    <div className="naver_btn"></div>
-                </a>
-            </LoginWrapBox>
-        </LoginWrap>
+                <LoginWrapBox>
+                    <a className="social_a kakao_btn" href={KAKAO_AUTH_URL}>
+                        <svg width="30" height="45" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             className="login-button__item__logo">
+                            <path
+                                  d="M15 7C10.029 7 6 10.129 6 13.989C6 16.389 7.559 18.505 9.932 19.764L8.933 23.431C8.845 23.754 9.213 24.013 9.497 23.826L13.874 20.921C14.243 20.958 14.618 20.978 15 20.978C19.971 20.978 24 17.849 24 13.989C24 10.129 19.971 7 15 7Z"
+                                  fill="black"></path>
+                        </svg>
+                        <span>카카오 로그인</span>
+                    </a>
+                    <a className="social_a naver_btn" href={NAVER_AUTH_URL}>
+                        <span className="nLogo">n</span>
+                        <span>네이버 로그인</span>
+                    </a>
+                </LoginWrapBox>
+            </LoginWrap>
+        </Wrap>
     )
 }
+const Wrap =styled.div`
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    background: #e8e8e8;
+`
 const LoginWrapTop = styled.div`
     text-align:center;
     background:skyblue;
     width:100%;
     height:50px;
-    margin-bottom:50px;
+    margin-bottom:40px;
     line-height:50px;
     color:white;
-    font-weight:400;
+    font-weight:500;
     font-size:18px;
 `
 
@@ -124,6 +141,7 @@ const LoginEmailBox = styled.div`
     display:flex;
     flex-direction: column;
     width:80%;
+    margin-top: 50px;
 `
 
 const LoginWrapBox = styled.div`
@@ -132,14 +150,23 @@ const LoginWrapBox = styled.div`
     width:80%;
 `
 
-const LoginWrap = styled.div`
-    width:100%;
+const LoginWrap = styled.div`   
+    width:500px;
     height:100%;
     display:flex;
     align-items:center;
-    // justify-content: center;
     flex-direction: column;
     justify-content: flex-start;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    background: white;
+    
+      @media (max-width: 768px) {
+        border:none;
+        width:100%;
+      };
+    
+    
 `
 
 const Input = styled.input`
@@ -166,20 +193,5 @@ const Input = styled.input`
 }
 `;
 
-const KaKaoBtn = styled.div`
-border-radius: 4px;
-border: 2px solid yellow;
-background-color:yellow;
-padding: 10px;
-font-size: 1rem;
-margin: 15px;
-
-
-::-webkit-outer-spin-button,
-::-webkit-inner-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-`;
 
 export default LoginComponent

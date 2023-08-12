@@ -38,5 +38,6 @@ public class Friend  extends BaseTime{
 
     // 요청상태 WAIT,ACCEPT,REFUSE default = WAIT
     @Enumerated(EnumType.STRING)
+    @Column(name = "request_status")
     private RequestStatus requestStatus = RequestStatus.WAIT;
 }

@@ -1,23 +1,44 @@
-.social_a{width:100%;}
-.kakao_btn{
-  background-image: url("../../assets/kakao_login_medium_wide.png");
-  background-repeat: no-repeat;
-  background-size : cover;
-  color: transparent;
+.social_a{
+  font-size: 15px;
+  box-sizing: border-box;
   width: 100%;
   height: 45px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.naver_btn{
-  background-image: url("../../assets/naverLoginImg.png");
-  background-repeat: no-repeat;
-  background-size: 312px 45px;
-  width: 100%;
-  height: 45px;
-  background-position: center;
+.kakao_btn{
+  background-color: #fee500;
 }
+.naver_btn{
+  background-color: #03c75a;
+  margin-top: 10px;
+  color:white;
+}
+.naver_btn .nLogo{
+  color: white;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-size: 21px;
+  width: 30px;
+  padding-bottom: 2px;
+}
+
 .emailTextBox{
   display: flex;
   align-items: center;
   justify-content: space-around;
+  color: #7b7b7b;
+  font-weight: 400;
+  font-size: 14px;
+  height: 40px;
+}
+.emailTextBox span{
+  height: 100%;
+  line-height: 40px;
 }

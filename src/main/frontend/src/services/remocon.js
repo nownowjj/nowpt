@@ -16,6 +16,7 @@ const route = {
     scroll : '/scroll',
     calendarRecordNewOrFix : '/calendarRecordNewOrFix',
     notification : '/notification',
+    friend : '/friend'
 }
 
 const isNotLogin = err => {

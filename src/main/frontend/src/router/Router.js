@@ -24,6 +24,7 @@ import CalendarRecordNewOrFixPage from "../pages/calendar/Detail/CalendarRecordN
 import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
 import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
+import FriendPage from "../pages/calendar/friend/FriendPage";
 
 
 const Router = () => {
@@ -89,6 +90,7 @@ const Router = () => {
 
 
                 <Route path="/notification" element={<NotificationPage />} />
+                <Route path="/friend" element={<FriendPage />} />
 
 
                 <Route path="/scroll" element={<ScrollComponent />} />
