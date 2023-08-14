@@ -6,7 +6,7 @@ import Loading from "./LoadingComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {increment, resetCount} from "../redux/slice/countSlice";
 import {useNavigate} from "react-router";
-import {methodObj, route} from "../services/remocon";
+import {route} from "../services/remocon";
 import ApiErrorHandle from "../services/ApiErrorHandle";
 
 const HomeComponent =(props)=>{
@@ -38,7 +38,7 @@ const HomeComponent =(props)=>{
     const goTest = ()=>{
         dispatch(increment());
         if (count + 1 === 5 ){
-            dispatch(resetCount)
+            dispatch(resetCount())
             navigate("/test");
         }
         console.log(count + 1);

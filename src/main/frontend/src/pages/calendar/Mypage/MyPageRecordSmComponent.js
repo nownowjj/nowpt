@@ -19,6 +19,7 @@ const MyPageRecordSmComponent = ({recordList}) => {
         yearGrouped[year].data.push({ month, monthCount });
     })
 
+
     const [visibility, setVisibility] = useState({});
     // toggle event
     const handleToggle = (itemId) => {
@@ -27,6 +28,7 @@ const MyPageRecordSmComponent = ({recordList}) => {
             [itemId]: !prevVisibility[itemId],
         }));
     };
+    // console.log(visibility);
 
     return (
         <MyRecordSmComponentWrap>
@@ -46,7 +48,7 @@ const MyPageRecordSmComponent = ({recordList}) => {
                         <MyRecordSmListWrap style={{ display: visibility[index] ? 'block' : 'none' }}>
                             {item.data.map((monthData) => (
                                 <MyRecordSmList key={monthData.month}>
-                                    <div>{monthData.month}월</div>
+                                    <div>{Number(monthData.month)}월</div>
                                     <div>{monthData.monthCount}건</div>
                                 </MyRecordSmList>
                             ))}

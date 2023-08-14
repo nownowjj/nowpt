@@ -27,7 +27,6 @@ const CalendarDayDetailPage = () => {
                 console.log(response.data);
             })
             .catch(error => {
-                console.log('dd');
                 console.log(error);
                 ApiErrorHandle(navigate,error)
             }).finally(()=>{

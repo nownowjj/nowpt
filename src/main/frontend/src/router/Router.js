@@ -46,12 +46,10 @@ const Router = () => {
 
                 <Route
                     path="/go/common/myPage"
-                    element={
-                    <PrivateRoute
-                        component={CalendarMyPage}
-                    />
-                    }
+                    element={<PrivateRoute component={CalendarMyPage}/>}
                 />
+
+
                 <Route path="/go/test/jpa" element={<TestComponent />} />
                 <Route path="/go/login" element={<LoginComponent />} />
 
@@ -76,21 +74,31 @@ const Router = () => {
 
                 <Route
                     path="/calendar"
-                        element={
-                            <PrivateRoute
-                                component={Calendar}
-                            />
-                        }
+                    element={<PrivateRoute component={Calendar}/>}
                 />
-                <Route path="/calendarRecordNewOrFix" element={<CalendarRecordNewOrFixPage />} />
-                <Route path="/calendarImport" element={<CalendarImportPage />} />
-                <Route path="/calendarDayDetail" element={<CalendarDayDetailPage />} />
 
+                <Route
+                    path="/calendarRecordNewOrFix"
+                    element={<PrivateRoute component={CalendarRecordNewOrFixPage}/>}
+                />
+                <Route
+                    path="/calendarImport"
+                    element={<PrivateRoute component={CalendarImportPage}/>}
+                />
+                <Route
+                    path="/calendarDayDetail"
+                    element={<PrivateRoute component={CalendarDayDetailPage}/>}
+                />
 
+                <Route
+                    path="/notification"
+                    element={<PrivateRoute component={NotificationPage}/>}
+                />
 
-
-                <Route path="/notification" element={<NotificationPage />} />
-                <Route path="/friend" element={<FriendPage />} />
+                <Route
+                    path="/friend"
+                    element={<PrivateRoute component={FriendPage}/>}
+                />
 
 
                 <Route path="/scroll" element={<ScrollComponent />} />

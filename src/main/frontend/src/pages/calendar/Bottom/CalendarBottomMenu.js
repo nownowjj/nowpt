@@ -4,6 +4,8 @@ import {MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react
 import styled from "styled-components";
 import {route} from "../../../services/remocon";
 import {TiStarFullOutline} from "react-icons/ti";
+import {BiBookmarks, BiSolidBookmarks} from "react-icons/bi";
+import {BsFillBookmarksFill} from "react-icons/bs";
 
 const CalendarBottomMenu = () => {
     const iconStyle = {width:"50%",height:"50%"};
@@ -15,7 +17,9 @@ const CalendarBottomMenu = () => {
                 <MdArticle style={iconStyle}/>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : undefined}  to={route.calendarImport} >
-                <TiStarFullOutline style={iconStyle}/>
+                {/*<TiStarFullOutline style={iconStyle}/>*/}
+                {/*<BiBookmarks style={iconStyle}/>*/}
+                <BiSolidBookmarks style={iconStyle}/>
             </StyledLink>
             <StyledLink  className={({ isActive }) => isActive ? 'active' : undefined}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>

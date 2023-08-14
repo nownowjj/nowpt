@@ -39,9 +39,9 @@ const FriendPage = () => {
             <TopGnbComponent page={'친구'}/>
 
             <FriendWrap>
-                    <FriendApplyWaitComponent data={waitList}/>
+                    <FriendApplyWaitComponent division={"wait"} data={waitList}/>
 
-                    <FriendRecommendComponent data={recommendList}/>
+                    <FriendRecommendComponent division={"recommend"}  data={recommendList}/>
             </FriendWrap>
             {/* 상단 gnb */}
         </>

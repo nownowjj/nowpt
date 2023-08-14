@@ -5,15 +5,9 @@ import ConfirmComponent from "../component/ConfirmComponent";
 
 const FriendComponent = ({data , leftText ,rightText ,leftCallBack , rightCallBack , paramKey}) => {
     const profileSrc = data.friendProfile ? data.friendProfile :loginTrueButNoProfile;
-    console.log(paramKey);
 
-    const leftEvent =()=>{
-        leftCallBack(paramKey)
-    }
-
-    const rightEvent =()=>{
-        rightCallBack(paramKey)
-    }
+    const leftEvent =()=> leftCallBack(paramKey)
+    const rightEvent =()=>rightCallBack(paramKey)
 
     // Alert 여부
     const [showConfirm , setShowConfirm] = useState(false);

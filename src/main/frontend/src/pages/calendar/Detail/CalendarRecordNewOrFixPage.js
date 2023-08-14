@@ -101,7 +101,7 @@ const CalendarRecordNewOrFixPage = () => {
                     <DetailStarSubComponent
                         initialYn={importYn} // 하위 컴포넌트로 상태 전달
                         importantRecord={importantRecordEvent}
-                        style={{color:"skyblue",fontSize:"40px",position:"absolute",bottom:"27px",right:"136px",border:"2px solid skyblue",borderRadius:"5px",width:"60px",height:"35px"}}
+                        style={{color:"skyblue",fontSize:"20px",position:"absolute",bottom:"27px",right:"136px",border:"2px solid skyblue",borderRadius:"5px",width:"40px",height:"35px",padding:"2px"}}
                     />
                     <RecordButton onClick={newRecordEvent}>{isFix ? '수정' : '등록'}</RecordButton>
                 </CalendarRecordAddArea>

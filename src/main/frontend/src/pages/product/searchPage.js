@@ -2,6 +2,19 @@ import React, {useEffect, useState} from 'react';
 import trainData from './trainData.json';
 
 const SearchPage = () => {
+
+    let data2 = trainData.DATA;
+    let result2= [];
+
+    for(let item of data2){
+        let {line_num , station_nm} = item;
+        console.log(line_num);
+        result2.push({line_num,station_nm})
+    }
+    console.log(result2);
+
+
+
     const [keyWord , setKeyWord] = useState('');
     const [data , setData] = useState([]);
 
