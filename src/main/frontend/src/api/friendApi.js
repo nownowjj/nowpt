@@ -8,6 +8,14 @@ export function getMyApplyWaitFriend(){
     });
 }
 
+export function getRequestWaitFriend(){
+    const url = API_BASE +"/auth" + FRIEND +"/requestWait";
+    return request({
+        url: url,
+        method: 'GET'
+    });
+}
+
 export function getRecommendFriend(){
     const url = API_BASE +"/auth" + FRIEND;
     return request({
@@ -30,5 +38,11 @@ export function updateRequestFriend(param){
         body:JSON.stringify(param)
     })
 }
-//
+export function getMyFriend(){
+    const url = API_BASE +"/auth" + FRIEND + "/myFriend";
+    return request({
+        url: url,
+        method: 'GET'
+    });
+}
 

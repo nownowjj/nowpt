@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";
+import CalendarDetailNo from "../component/CalendarDetailNo";
 
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -123,19 +124,7 @@ const NotificationPage = () => {
     );
 };
 
-const CalendarDetailNo = styled.div`
-    width:100%;
-    height:600px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:white;
-    background-image: url(${ggwak});
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position:relative;
-`
+
 
 const ImportWrap =styled.div`
     height: fit-content;

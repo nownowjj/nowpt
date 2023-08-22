@@ -25,9 +25,18 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
 
 
     @Override
-    public List<Friend> selectMyFriend(Long memberSn) {
+    public List<FriendDto> selectMyFriend(Long memberSn) {
         return queryFactory
-                .selectFrom(qFriend)
+                .select(Projections.fields(FriendDto.class,
+                    qFriend.friendSn.as("friendSn"),
+                        qFriend.friendMemberSn.as("friendMemberSn"),
+                        qMember.membNm.as("friendNm"),
+                        qFriend.frstRegistDt.as("frstRegistDt"),
+                        qMember.profileImage.as("friendProfile")
+                ))
+                .from(qFriend)
+                .leftJoin(qMember)
+                .on(qFriend.friendMemberSn.eq(qMember.memberSn))
                 .where(qFriend.memberSn.eq(memberSn).and(qFriend.requestStatus.eq(RequestStatus.ACCEPT)))
                 .fetch();
     }
@@ -56,14 +65,6 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
 
     @Override
     public List<FriendDto> selectFriendList(Long memberSn) {
-        BooleanExpression notInSubquery = qMember.memberSn.notIn(
-                JPAExpressions
-                        .select(qFriend.friendMemberSn)
-                        .from(qFriend)
-                        .where(qFriend.memberSn.eq(memberSn)
-                                .and(qFriend.requestStatus.ne(RequestStatus.REFUSE)))
-        );
-
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                         qMember.memberSn.as("friendMemberSn"),
@@ -83,4 +84,26 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                         )
                 .fetch();
     }
+
+    @Override
+    public List<FriendDto> selectMyRequestWaitFriendList(Long memberSn) {
+        return queryFactory
+                .select(Projections.fields(FriendDto.class,
+                        qFriend.friendSn.as("friendSn"),
+                        qFriend.friendMemberSn.as("friendMemberSn"),
+                        qMember.membNm.as("friendNm"),
+                        qFriend.frstRegistDt.as("frstRegistDt"),
+                        qMember.profileImage.as("friendProfile")
+                ))
+                .from(qFriend)
+                .leftJoin(qMember)
+                .on(qFriend.friendMemberSn.eq(qMember.memberSn))
+                .where(
+                        qFriend.memberSn.eq(memberSn)
+                                .and(qFriend.requestStatus.eq(RequestStatus.WAIT))
+                )
+                .orderBy(qFriend.frstRegistDt.desc())
+                .fetch();
+    }
+
 }

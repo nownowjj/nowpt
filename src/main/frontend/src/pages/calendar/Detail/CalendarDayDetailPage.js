@@ -9,6 +9,7 @@ import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
+import CalendarDetailNo from "../component/CalendarDetailNo";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -96,25 +97,14 @@ const CalendarDetail = styled.div`
     height:fit-content;
     background:white;
     padding-top:50px;
+    
 `
 const CalendarDetailWrap = styled.div`
     position:relative;
     width:100%;
     height:100%;
 `
-const CalendarDetailNo = styled.div`
-    width:100%;
-    height:600px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:white;
-    background-image: url(${ggwak});
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position:relative;
-`
+
 const DetailNoBalloon = styled.div`
     z-index:100;
     position: fixed;

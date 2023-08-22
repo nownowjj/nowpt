@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import FriendComponent from "./FriendComponent";
 import FriendTitleComponent from "./FriendTitleComponent";
@@ -6,9 +6,10 @@ import {updateRequestFriend} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useNavigate} from "react-router-dom";
 import AlertComponent from "../component/AlertComponent";
+import ggwak from "../../../assets/ggwak-removebg-preview.png";
 
 const FriendApplyWaitComponent = ({data}) => {
-
+console.log(data.length);
     const navigate = useNavigate();
 
     /**
@@ -67,28 +68,31 @@ const FriendApplyWaitComponent = ({data}) => {
     }
     return (
         <>
-            {
-                data && data.length > 0
-                    &&
-                    <FriendWaitWrap>
-                        <FriendTitleComponent
-                            title="친구 요청"
-                            size={data.length}
-                        />
+            <FriendWaitWrap>
+                <FriendTitleComponent
+                    title="받은 요청"
+                    size={data.length}
+                    color='red'
+                />
+                {
+                    data.length > 0
+                        ?
+                            data.map((applyList) => (
+                                <FriendComponent
+                                    key={applyList.friendSn}
+                                    paramKey = {applyList.friendSn}
+                                    data={applyList}
+                                    leftText="요청 수락"
+                                    rightText="거절하기"
+                                    leftCallBack={applyCallBack}
+                                    rightCallBack={rejectCallBack}
+                                />
+                            ))
+                        :
+                          null
+                }
+            </FriendWaitWrap>
 
-                        {data.map((applyList) => (
-                            <FriendComponent
-                                key={applyList.friendSn}
-                                paramKey = {applyList.friendSn}
-                                data={applyList}
-                                leftCallBack={applyCallBack}
-                                rightCallBack={rejectCallBack}
-                            />
-                        ))}
-
-                    </FriendWaitWrap>
-
-            }
 
             {/* AlertComponent */}
             {showAlert &&(

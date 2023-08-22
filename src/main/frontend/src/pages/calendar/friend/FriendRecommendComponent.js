@@ -4,6 +4,7 @@ import FriendComponent from "./FriendComponent";
 import {requestFriend} from "../../../api/friendApi";
 import styled from "styled-components";
 import {MdSearch, MdSearchOff} from "react-icons/md";
+import moment from "moment";
 
 const FriendRecommendComponent = ({data,division}) => {
     let param={};
@@ -49,10 +50,10 @@ const FriendRecommendComponent = ({data,division}) => {
             <RecommendHeader>
                 <FriendTitleComponent
                     title="친구 추천"
-                    search={true}
                 />
                 {
-                        searchCancel?
+                        searchCancel
+                            ?
                             <StyledSearch onClick={()=>  setSearchCancel(prevState => !prevState)}/>
                             :
                             <SearchWrap>
@@ -69,21 +70,27 @@ const FriendRecommendComponent = ({data,division}) => {
             {/* 추천 헤더 */}
 
             {/* 추천 리스트 */}
-            {!searchCancel ?
-                // 검색 모드
+            {
+                !searchCancel
+                    ?
                 <>
-                { searchTerm && searchTerm.length >0 && filteredData.map(item => (
+                {   // 검색 모드
+                    searchTerm && searchTerm.length >0 &&
+                    filteredData.length > 0 ?
+                    filteredData.map(item => (
                     <FriendComponent
                         key={item.friendMemberSn}
                         data={item}
                         paramKey={item.friendMemberSn}
-                        leftText='친구 추가'
-                        rightText='삭제'
+                        leftText='친구 요청'
+                        rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
                         leftCallBack={addCallBack}
-                        division={division}
                         // rightCallBack={removeCallBack}
                     />
-                ))}
+                ))
+                    :
+                    !searchTerm? '검색어를 입력해 주세요' : '검색 결과가 없습니다'
+                }
                 </>
                 // 검색 모드
             :
@@ -93,10 +100,9 @@ const FriendRecommendComponent = ({data,division}) => {
                         key={recommendList.friendMemberSn}
                         data={recommendList}
                         paramKey={recommendList.friendMemberSn}
-                        leftText='친구 추가'
-                        rightText='삭제'
+                        leftText='친구 요청'
+                        rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
                         leftCallBack={addCallBack}
-                        division={division}
                         // rightCallBack={removeCallBack}
                     />
                 ))
@@ -108,17 +114,18 @@ const FriendRecommendComponent = ({data,division}) => {
     );
 };
 const SearchWrap = styled.div`
-    border:1px solid #e8e8e8;
+    border:2px solid #e8e8e8;
     border-radius:10px;
     margin-top:10px;
     display:flex;
     padding-left: 10px;
+    margin-right: 15px;
 `
 
 const SearchInput = styled.input`
     outline:none;
     border:none;
-    border-right:1px solid #e8e8e8;
+    border-right:2px solid #e8e8e8;
 `
 
 const RecommendHeader = styled.div`

@@ -9,6 +9,7 @@ import styled from "styled-components";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
+import CalendarDetailNo from "../component/CalendarDetailNo";
 
 const CalendarImportPage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -119,19 +120,6 @@ const CalendarImportPage = () => {
     );
 };
 
-const CalendarDetailNo = styled.div`
-    width:100%;
-    height:600px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:white;
-    background-image: url(${ggwak});
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    position:relative;
-`
 const ImportWrap =styled.div`
     height: fit-content;
     padding-top: 50px;
@@ -139,7 +127,7 @@ const ImportWrap =styled.div`
     width:100%;
 `
 
-const ObserverArea = styled.div`
+const ObserverArea = styled.p`
     width:1px;
     border-bottom:1px solid #e8e8e8;
 `

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import CalendarWrap from "../component/CalendarWrapComponent";
 import styled from "styled-components";
 import {insertRecord} from "../../../api/CalendarApi";
 import {useLocation, useNavigate} from 'react-router-dom'
@@ -122,6 +121,11 @@ const CalendarRecordNewOrFixPage = () => {
         </CalendarWrap>
     );
 };
+const CalendarWrap = styled.div`
+    width:100%;
+    height:100%;
+`
+
 const RecordTitleInput = styled.input`
     width:100%;
     border:none;

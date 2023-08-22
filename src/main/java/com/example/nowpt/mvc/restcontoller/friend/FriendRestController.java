@@ -81,16 +81,27 @@ public class FriendRestController {
       return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
     }
 
+    // 본인이 친구 신청을 한 목록
+    @GetMapping("/api/auth/friend/requestWait")
+    public ResponseDto<?> selectMyRequestWaitFriendList(@AuthenticationPrincipal Member member){
+        log.debug("내가 신청 한 친구 조회 : {}",member.getMemberSn());
+        List<FriendDto> result = friendRepo.selectMyRequestWaitFriendList(member.getMemberSn());
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
+    }
+
+
     // 내 친구 조회
     @GetMapping("/api/auth/friend/myFriend")
     public ResponseDto<?> selectMyFriendList(@AuthenticationPrincipal Member member){
         log.debug("내 친구  조회 ");
 
-        List<Friend> result = friendRepo.selectMyFriend(member.getMemberSn());
+        List<FriendDto> result = friendRepo.selectMyFriend(member.getMemberSn());
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,    result);
     }
 
+    // 친구 목록 조회
     @GetMapping("/api/auth/friend")
     public ResponseDto<?> selectFriendList(@AuthenticationPrincipal Member member){
         log.debug("친구 목록 조회 ");

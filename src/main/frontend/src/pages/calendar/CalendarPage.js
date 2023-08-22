@@ -7,11 +7,11 @@ import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
 import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
 import {getMyCalendar} from "../../api/CalendarApi";
-import CalendarWrap from "./component/CalendarWrapComponent";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
 import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
+import styled from "styled-components";
 
 const CalendarPage = () => {
     const [value, onChange] = useState(new Date());
@@ -77,4 +77,9 @@ const CalendarPage = () => {
     );
 };
 
+
+const CalendarWrap = styled.div`
+    width:100%;
+    height:100%;
+`
 export default CalendarPage;

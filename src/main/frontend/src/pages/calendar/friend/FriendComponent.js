@@ -14,11 +14,26 @@ const FriendComponent = ({data , leftText ,rightText ,leftCallBack , rightCallBa
     const [okCallBackFn, setOkCallBackFn] = useState(null);
     const [messageCall, setMessageCall] = useState('');
 
+    const rightConfirmMsgMap ={
+        '친구삭제' : `${data.friendNm}님 친구삭제`,
+        '요청 취소'    : `${data.friendNm}님에게 보낸 친구 요청을<br/> 취소 하시겠습니까?`,
+        '거절하기'    : `${data.friendNm}님이 보낸 친구 요청을<br/> 거절 하시겠습니까?`
+    }
+
+    const confirmCallFunction =()=>{
+        if(!rightCallBack) return false;
+        console.log(rightText);
+        console.log(rightConfirmMsgMap[rightText]);
+        confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )
+    }
+
     const confirmFunction =(okCallBack , message)=>{
         setOkCallBackFn(() => okCallBack);
         setMessageCall(message);
         setShowConfirm(true);
     }
+
+
 
     return (
         <FriendComponentWrap>
@@ -30,10 +45,9 @@ const FriendComponent = ({data , leftText ,rightText ,leftCallBack , rightCallBa
             <FriendComponentRight>
                 <FriendName>{data.friendNm}</FriendName>
                 <FriendButtonWrap>
-                    {/*<FriendButton style={{color:"white",background:"skyblue"}}  onClick={()=> confirmFunction(leftEvent ,`${data.friendNm}님의 친구 요청을<br/> 수락 하시겠습니까?` )}>{leftText ? leftText : '수락'}</FriendButton>*/}
                     <FriendButton style={{color:"white",background:"skyblue"}} onClick={()=> leftEvent()}>{leftText ? leftText : '수락'}</FriendButton>
-                    <FriendButton style={{color:"black",background:"#e8e8e8"}} onClick={()=> confirmFunction(rightEvent ,`${data.friendNm}님의 친구 요청을<br/> 거절 하시겠습니까?` )}>{rightText ? rightText: '거절' }</FriendButton>
-                    {/*<FriendButton style={{color:"black",background:"#e8e8e8"}} onClick={()=> rightEvent()}>{rightText ? rightText: '거절' }</FriendButton>*/}
+                    <FriendButton style={{color:"white",background:"#ff8b39",fontWeight:500}} onClick={()=> confirmCallFunction()} >{rightText}</FriendButton>
+                    {/*<FriendButton style={{color:"black",background:"#e8e8e8"}} onClick={()=> confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )} >{rightText}</FriendButton>*/}
                 </FriendButtonWrap>
             </FriendComponentRight>
 
@@ -94,7 +108,7 @@ const FriendComponentRight = styled.div`
     display:flex;
     flex-direction:column;
     justify-content: center;
-    padding-left:10px;
+    padding:15px;
 `
 
 export default FriendComponent;

@@ -21,14 +21,13 @@ const TopGnbWrap = styled.div`
     left:0;
     width:100%;
     height:50px;
-    border-bottom:1px solid #e8e8e8;
     z-index:100;
     align-items: center;
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
     background: white;
-
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 `
 
 const GnbBackBtn = styled.button`

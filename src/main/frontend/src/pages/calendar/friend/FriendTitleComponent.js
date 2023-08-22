@@ -1,22 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
-import {CgSearch} from "react-icons/cg";
-import {MdSearch, MdSearchOff} from "react-icons/md";
 
 /**
  *
  * @param title   공통
  * @param size   친구 요청에서만 사용
- * @param search 친구추천에서만 사용
- * @param mode   친구추천에서만 사용
+ * @param color  문구 색상
  */
-const FriendTitleComponent = ({title , size}) => {
+const FriendTitleComponent = ({title , size , color}) => {
     return (
         <FriendTitleComponentWrap>
             <span>
                 {title}
                 {
-                    size && <span style={{color:"red"}}> {size}</span>
+                    size && <span style={{color:color}}> {size}</span>
                 }
             </span>
         </FriendTitleComponentWrap>
