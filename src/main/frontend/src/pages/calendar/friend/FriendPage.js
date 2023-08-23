@@ -12,6 +12,7 @@ import MyFriendComponent from "./MyFriendComponent";
 import FriendRequestWaitComponent from "./FriendRequestWaitComponent";
 import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import CalendarDetailNo from "../component/CalendarDetailNo";
+import {useDispatch, useSelector} from "react-redux";
 
 const FriendPage = () => {
     const navigate = useNavigate();
@@ -20,7 +21,13 @@ const FriendPage = () => {
     const [recommendList,setRecommendList] = useState([]);
     const [myFriendList , setMyFriendList] = useState([]);
 
-    // 내 친구 리스트
+    const dispatch = useDispatch();
+    // const firstCount =
+    const firstCount = useSelector(state => state.friend.firstCount);
+    console.log(firstCount);
+
+
+    // 내가 보낸 요청 대기중인 리스트
     useEffect(()=>{
         getRequestWaitFriend()
             .then(response=>{
@@ -30,7 +37,7 @@ const FriendPage = () => {
             .catch(error=>{
                 ApiErrorHandle(navigate,error)
             })
-    },[])
+    },[firstCount])
 
 
     // 내 친구 리스트
@@ -57,13 +64,15 @@ const FriendPage = () => {
 
     // 추천 친구 리스트
     useEffect(()=>{
+        console.log('추천 친구');
         getRecommendFriend()
             .then((response)=>{
+                console.log(response.data);
                 setRecommendList(response.data);
             }).catch((error)=>{
             ApiErrorHandle(navigate,error)
         })
-    },[])
+    },[firstCount])
 
     const [activeIndex , setActiveIndex] = useState(0);
     const activeFn =(index)=>{

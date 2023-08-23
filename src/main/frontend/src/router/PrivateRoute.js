@@ -6,14 +6,10 @@ import {useSelector} from "react-redux";
 
 const PrivateRoute = (props) => {
     const isLogin = useSelector((state) => state.user.value.isLoggedIn);
-    // if(!isLogin){alert("로그인이 필요합니다.");}
     let { component: Component} = props
     
-    console.log('진입',props);
     return isLogin ?
-        <Component/>
-        :
-        <Navigate to="/go/login"/>
+        <Component/> : <Navigate to="/go/login"/>
 };
 
 export default PrivateRoute;

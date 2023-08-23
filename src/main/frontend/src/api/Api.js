@@ -18,8 +18,8 @@ export const request = (options) => {
         'Content-Type' : 'application/json',
     })
 
-    if(sessionStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorization', 'Bearer ' + sessionStorage.getItem(ACCESS_TOKEN))
+    if(localStorage.getItem(ACCESS_TOKEN)) {
+        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     }
 
     const defaults = {headers: headers};

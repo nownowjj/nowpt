@@ -39,6 +39,9 @@ public class FriendRestController {
         log.debug("본인 sn : {} , 친구 sn : {} "  ,member.getMemberSn() , friendDto.getFriendMemberSn());
         friendDto.setMemberSn(member.getMemberSn());
 
+
+
+
         friendService.insertFriend(friendDto);
         Notification notification =  notificationService.newNotification( member.getMembNm(),friendDto.getFriendMemberSn());
 
@@ -55,18 +58,18 @@ public class FriendRestController {
         Friend friend = friendRepo.findByFriendSn(friendDto.getFriendSn());
         if(acceptYn){
             log.debug("수락임");
-            friend.setRequestStatus(RequestStatus.ACCEPT);
+            friend.setRequestStatus("ACCEPT");
             friendRepo.save(friend);
 
             Friend newFriend = new Friend();
             newFriend.setMemberSn(friend.getFriendMemberSn());
             newFriend.setFriendMemberSn(friend.getMemberSn());
-            newFriend.setRequestStatus(RequestStatus.ACCEPT);
+            newFriend.setRequestStatus("ACCEPT");
             friendRepo.save(newFriend);
 
         }else{
             log.debug("거절임");
-            friend.setRequestStatus(RequestStatus.REFUSE);
+            friend.setRequestStatus("REFUSE");
             friendRepo.save(friend);
         }
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, resultMsg);
@@ -103,10 +106,10 @@ public class FriendRestController {
 
     // 친구 목록 조회
     @GetMapping("/api/auth/friend")
-    public ResponseDto<?> selectFriendList(@AuthenticationPrincipal Member member){
+    public ResponseDto<?> selectRecommendFriendList(@AuthenticationPrincipal Member member){
         log.debug("친구 목록 조회 ");
 
-        List<FriendDto> result = friendRepo.selectFriendList(member.getMemberSn());
+        List<FriendDto> result = friendRepo.selectRecommendFriendList(member.getMemberSn());
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,    result);
     }

@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {ACCESS_TOKEN} from "../../api/Api";
 
 const initialStateValue= {
     isLoggedIn: false,
@@ -15,9 +16,10 @@ export const userSlice = createSlice({
             let decodedJwtJsonData = window.atob(jwtData);
             state.value.user = JSON.parse(decodedJwtJsonData) ;
             state.value.isLoggedIn = true
-
+            // localStorage.setItem(ACCESS_TOKEN, action.payload);
         },
         logoutAction: (state) => {
+            localStorage.removeItem(ACCESS_TOKEN)
             state.value.user = null;
             state.value.isLoggedIn = false
         }

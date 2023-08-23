@@ -15,6 +15,7 @@ public class FriendService {
         Friend newFriend = new Friend();
         newFriend.setMemberSn(friendDto.getMemberSn());
         newFriend.setFriendMemberSn(friendDto.getFriendMemberSn());
+        newFriend.setRequestStatus("WAIT");
         friendRepo.save(newFriend);
     }
 

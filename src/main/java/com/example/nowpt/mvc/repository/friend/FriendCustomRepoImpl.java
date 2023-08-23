@@ -32,12 +32,13 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                         qFriend.friendMemberSn.as("friendMemberSn"),
                         qMember.membNm.as("friendNm"),
                         qFriend.frstRegistDt.as("frstRegistDt"),
-                        qMember.profileImage.as("friendProfile")
+                        qMember.profileImage.as("friendProfile"),
+                        qFriend.requestStatus.as("requestStatus")
                 ))
                 .from(qFriend)
                 .leftJoin(qMember)
                 .on(qFriend.friendMemberSn.eq(qMember.memberSn))
-                .where(qFriend.memberSn.eq(memberSn).and(qFriend.requestStatus.eq(RequestStatus.ACCEPT)))
+                .where(qFriend.memberSn.eq(memberSn).and(qFriend.requestStatus.eq("ACCEPT")))
                 .fetch();
     }
 
@@ -49,14 +50,15 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                         qFriend.friendMemberSn.as("friendMemberSn"),
                         qMember.membNm.as("friendNm"),
                         qFriend.frstRegistDt.as("frstRegistDt"),
-                        qMember.profileImage.as("friendProfile")
+                        qMember.profileImage.as("friendProfile"),
+                        qFriend.requestStatus.as("requestStatus")
                 ))
                 .from(qFriend)
                 .leftJoin(qMember)
                 .on(qFriend.memberSn.eq(qMember.memberSn))
                 .where(
                         qFriend.friendMemberSn.eq(memberSn)
-                                .and(qFriend.requestStatus.eq(RequestStatus.WAIT))
+                                .and(qFriend.requestStatus.eq("WAIT"))
                 )
                 .orderBy(qFriend.frstRegistDt.desc())
                 .fetch();
@@ -64,24 +66,23 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
 
 
     @Override
-    public List<FriendDto> selectFriendList(Long memberSn) {
+    public List<FriendDto> selectRecommendFriendList(Long memberSn) {
+        log.debug("tqqw");
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                         qMember.memberSn.as("friendMemberSn"),
                         qMember.membNm.as("friendNm"),
                         qMember.frstRegistDt.as("frstRegistDt"),
                         qMember.profileImage.as("friendProfile"),
-                        qFriend.requestStatus.stringValue().as("requestStatus")
+                        qFriend.requestStatus.as("requestStatus")
                         ))
                 .from(qMember)
                 .leftJoin(qFriend)
-                .on(qMember.memberSn.eq(qFriend.memberSn).and(qFriend.friendMemberSn.eq(memberSn).and(qFriend.useYn.eq("Y"))))
+                .on(qMember.memberSn.eq(qFriend.friendMemberSn).and(qFriend.memberSn.eq(memberSn)))
                 .where(
-                        qMember.memberSn.ne(memberSn)
-                            .and(qMember.useYn.eq("Y")
-                                .and(qFriend.requestStatus.ne(RequestStatus.WAIT).or(qFriend.requestStatus.isNull()))
-                                )
-                        )
+                        qMember.useYn.eq("Y").and(qMember.memberSn.ne(memberSn)).and
+                        ((qFriend.requestStatus.eq("REFUSE")).or(qFriend.requestStatus.isNull()))
+                )
                 .fetch();
     }
 
@@ -93,14 +94,15 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                         qFriend.friendMemberSn.as("friendMemberSn"),
                         qMember.membNm.as("friendNm"),
                         qFriend.frstRegistDt.as("frstRegistDt"),
-                        qMember.profileImage.as("friendProfile")
+                        qMember.profileImage.as("friendProfile"),
+                        qFriend.requestStatus.as("requestStatus")
                 ))
                 .from(qFriend)
                 .leftJoin(qMember)
                 .on(qFriend.friendMemberSn.eq(qMember.memberSn))
                 .where(
                         qFriend.memberSn.eq(memberSn)
-                                .and(qFriend.requestStatus.eq(RequestStatus.WAIT))
+                                .and(qFriend.requestStatus.eq("WAIT"))
                 )
                 .orderBy(qFriend.frstRegistDt.desc())
                 .fetch();

@@ -2,6 +2,7 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import userReducer from '../slice/userSlice'
 import countReducer from '../slice/countSlice'
 import productReducer from '../slice/productSlice'
+import friendReducer from '../slice/friendSlice'
 import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
 
@@ -9,7 +10,8 @@ import {persistReducer} from "redux-persist";
 const reducers = combineReducers({
     user:userReducer,
     count:countReducer,
-    product:productReducer
+    product:productReducer,
+    friend:friendReducer
 })
 
 const persistConfig = {
@@ -29,11 +31,3 @@ export const store = configureStore({
     // 기본 값이 true지만 배포할때 코드를 숨기기 위해서 false로 변환하기 쉽게 설정에 넣어놨다.
     devTools: true,
 })
-
-
-// export default configureStore({
-//     reducer:{
-//         user: userReducer,
-//         count:countReducer
-//     }
-// })

@@ -3,35 +3,35 @@ import {NavLink} from "react-router-dom";
 import {MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
 import styled from "styled-components";
 import {route} from "../../../services/remocon";
-import {BiSolidBookmarks} from "react-icons/bi";
+import {BiBookmarks, BiSolidBookmarks} from "react-icons/bi";
 
 const CalendarBottomMenu = () => {
     const iconStyle = {width:"50%",height:"50%"};
 
 
     return (
-        <CalendarBottom>
+        <CalendarBottom className='menuBottom'>
             <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={"/"} >
                 <MdArticle style={iconStyle}/>
-                <span>아무개</span>
+                {/*<span>아무개</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive && 'active'}  to={route.calendarImport} >
                 {/*<TiStarFullOutline style={iconStyle}/>*/}
-                {/*<BiBookmarks style={iconStyle}/>*/}
-                <BiSolidBookmarks style={iconStyle}/>
-                <span>중요</span>
+                <BiBookmarks style={iconStyle}/>
+                {/*<BiSolidBookmarks style={iconStyle}/>*/}
+                {/*<span>중요</span>*/}
             </StyledLink>
             <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>
-                <span>캘린더</span>
+                {/*<span>캘린더</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) =>isActive && 'active'}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
-                <span>프로필</span>
+                {/*<span>프로필</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) =>isActive && 'active'}  to={"/"}>
                 <MdErrorOutline style={iconStyle}/>
-                <span>공지사항</span>
+                {/*<span>공지사항</span>*/}
             </StyledLink>
         </CalendarBottom>
     );
@@ -53,7 +53,8 @@ const CalendarBottom = styled.div`
     // border-top: 1px solid #e8e8e8;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.5);
+    // box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.08);
 `
 const StyledLink = styled(NavLink)`
     flex-grow: 1;

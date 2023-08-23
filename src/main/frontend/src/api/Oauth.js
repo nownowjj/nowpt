@@ -18,7 +18,7 @@ const Oauth = () => {
             kakaoLogin(code)
                 .then(response => {
                     dispatch(loginAction(response.token.accessToken));
-                    sessionStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
                     console.log('카카오 소셜 로그인에 성공하였습니다!');
                     navigate("/calendar");
                 })
@@ -31,7 +31,7 @@ const Oauth = () => {
             naverLogin(code,state)
                 .then(response => {
                     dispatch(loginAction(response.token.accessToken));
-                    sessionStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
                     console.log('네이버 소셜 로그인에 성공하였습니다!');
                     navigate("/calendar");
                 })

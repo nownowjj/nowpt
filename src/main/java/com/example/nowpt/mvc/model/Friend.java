@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -36,8 +37,12 @@ public class Friend  extends BaseTime{
     @Column(name = "friend_memb_sn")
     private Long friendMemberSn;
 
-    // 요청상태 WAIT,ACCEPT,REFUSE default = WAIT
-    @Enumerated(EnumType.STRING)
-    @Column(name = "request_status")
-    private RequestStatus requestStatus = RequestStatus.WAIT;
+//    // 요청상태 WAIT,ACCEPT,REFUSE default = WAIT
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "request_status")
+//    private RequestStatus requestStatus = RequestStatus.WAIT;
+
+    @Column(name = "request_status", length = 20)
+    @ColumnDefault("'WAIT'")
+    private String requestStatus;
 }

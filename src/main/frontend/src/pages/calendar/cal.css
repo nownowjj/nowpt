@@ -11,8 +11,9 @@
     line-height: 1.125em;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px 3px 5px rgba(0,0,0,0.5);
+    /*box-shadow: 0px 3px 5px rgba(0,0,0,0.5);*/
     padding: 0 5px;
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .react-calendar__viewContainer
@@ -222,7 +223,9 @@ background: #ffffa9;
     /*font-size: 14px !important;*/
 }
 .active > svg{
+
     font-size:16px !important;
+    scale: 1.2;
 }
 
 .on {

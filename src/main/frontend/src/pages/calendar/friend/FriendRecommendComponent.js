@@ -5,8 +5,13 @@ import {requestFriend} from "../../../api/friendApi";
 import styled from "styled-components";
 import {MdSearch, MdSearchOff} from "react-icons/md";
 import moment from "moment";
+import {useDispatch} from "react-redux";
+import {firstEvent} from "../../../redux/slice/friendSlice";
 
-const FriendRecommendComponent = ({data,division}) => {
+const FriendRecommendComponent = ({data}) => {
+    const dispatch = useDispatch();
+
+
     let param={};
 
     const addCallBack=(key)=>{
@@ -16,6 +21,8 @@ const FriendRecommendComponent = ({data,division}) => {
         requestFriend(param)
             .then((response)=>{
                 console.log(response);
+                // 친구 요청에 성공 했으면 보낸요청 , 친구추천 리스트를 리렌더링 시켜야함
+                dispatch(firstEvent());
             }).catch((error)=>{
                 console.log(error);
         })
