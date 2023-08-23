@@ -10,9 +10,8 @@ import FriendTopNaviComponent from "./FriendTopNaviComponent";
 import './friend.css';
 import MyFriendComponent from "./MyFriendComponent";
 import FriendRequestWaitComponent from "./FriendRequestWaitComponent";
-import ggwak from "../../../assets/ggwak-removebg-preview.png";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 const FriendPage = () => {
     const navigate = useNavigate();
@@ -21,8 +20,6 @@ const FriendPage = () => {
     const [recommendList,setRecommendList] = useState([]);
     const [myFriendList , setMyFriendList] = useState([]);
 
-    const dispatch = useDispatch();
-    // const firstCount =
     const firstCount = useSelector(state => state.friend.firstCount);
     console.log(firstCount);
 
@@ -75,9 +72,7 @@ const FriendPage = () => {
     },[firstCount])
 
     const [activeIndex , setActiveIndex] = useState(0);
-    const activeFn =(index)=>{
-        setActiveIndex(index)
-    }
+    const activeFn =index=> setActiveIndex(index);
 
 
 
@@ -100,8 +95,8 @@ const FriendPage = () => {
                                     waitList.length > 0 || requestWaitList.length > 0
                                     ?
                                         <>
-                                            <FriendApplyWaitComponent data={waitList}/>
-                                            <FriendRequestWaitComponent data={requestWaitList}/>
+                                            {waitList.length > 0 && <FriendApplyWaitComponent data={waitList}/>}
+                                            {requestWaitList.length > 0 &&<FriendRequestWaitComponent data={requestWaitList}/>}
                                         </>
                                     :
                                     <CalendarDetailNo/>

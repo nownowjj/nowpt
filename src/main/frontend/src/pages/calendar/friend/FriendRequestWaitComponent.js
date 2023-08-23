@@ -30,16 +30,14 @@ const FriendRequestWaitComponent = ({data}) => {
         console.log("성공!");
     }
 
-    const applyCallBack =(key)=>{
-        param.friendSn = key;
-        param.acceptYn = true;
-        console.log("FriendApplyWaitComponent 친구 수락 ",key);
-        updateFunction(param,true);
+    // 수락 대기중 Alert 띄워준다
+    const applyCallBack =()=>{
+        alertFunction(setShowAlert(false),'수락 대기중 입니다.')
     }
 
+    // 내가 보낸 친구 요청을 취소한다 TODO
     const rejectCallBack =(key)=>{
         param.friendSn = key;
-        param.acceptYn = false;
         console.log("FriendApplyWaitComponent 친구 거절 ",key);
         updateFunction(param);
     }
@@ -98,7 +96,7 @@ const FriendRequestWaitComponent = ({data}) => {
 const FriendWaitWrap = styled.div`
     width:100%;
     // height:80px;
-    border-bottom:1px solid #e8e8e8;
+    //border-bottom:1px solid #e8e8e8;
 `
 
 export default FriendRequestWaitComponent;

@@ -6,6 +6,7 @@ import {FiAlertCircle} from "react-icons/fi";
  *
  * @param data : {okCallBack,message,onClose}
  * @returns {ConfirmComponent}
+ * @Memo 확인 callback -> callback 실행 , 취소 -> setShowConfirm(false)
  */
 const ConfirmComponent = ({ message, okCallBack, onClose }) => {
     return (
