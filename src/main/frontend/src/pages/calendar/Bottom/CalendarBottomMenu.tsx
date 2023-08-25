@@ -43,10 +43,8 @@ const CalendarBottom = styled.div`
     justify-content: space-between;
     background: white;
     z-index:10;
-    // border-top: 1px solid #e8e8e8;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    // box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.5);
     box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.08);
 `
 const StyledLink = styled(NavLink)`
@@ -56,8 +54,7 @@ const StyledLink = styled(NavLink)`
     justify-content: center;
     height: 100%;
     text-decoration: none;
-    // color:#dbdbdb;
-        color: #00000052;
+    color: #00000052;
     flex-direction: column;
     font-size:12px;
     flex:1;

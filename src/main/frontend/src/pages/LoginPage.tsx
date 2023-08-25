@@ -9,23 +9,25 @@ import '../styles/css/loginPage.css'
 import {validateLogin} from "../services/validate";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
-import {useLocation} from "react-router-dom";
 import ApiErrorHandle from "../services/ApiErrorHandle";
 
-function LoginComponent () {
-    const {state} = useLocation();
-    console.log(state);
+interface UserInfo {
+    membId: string;
+    membPw: string;
+}
+
+const LoginPage = () => {
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState({
-        membId: "",
-        membPw: "",
-    })
+    const [userInfo, setUserInfo] = useState<UserInfo>({
+        membId: '',
+        membPw: '',
+    });
 
     // id, pw input handle event
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserInfo({
             ...userInfo,
             [e.target.name]: e.target.value,
@@ -35,7 +37,7 @@ function LoginComponent () {
     // 로그인 버튼 요청
     const originLogin = () => {
         // 입력한 login 정보
-        let loginDto = {
+        let loginDto:UserInfo = {
             membId: userInfo.membId,
             membPw: userInfo.membPw,
         }
@@ -54,7 +56,7 @@ function LoginComponent () {
                     }
                 }else if(response.status === 'SUCCESS'){
                     console.log(response);
-                    sessionStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
                     dispatch(loginAction(response.data.accessToken));
                     navigate("/calendar");
                 }
@@ -135,6 +137,7 @@ const LoginWrapTop = styled.div`
     color:white;
     font-weight:500;
     font-size:18px;
+    box-shadow: 0 2px 4px 0 #e8e8e8;
 `
 
 const LoginEmailBox = styled.div`
@@ -194,4 +197,4 @@ const Input = styled.input`
 `;
 
 
-export default LoginComponent
+export default LoginPage

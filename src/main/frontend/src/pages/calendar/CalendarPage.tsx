@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import CalendarLib from 'react-calendar'
-import './cal.css' // css import
+import '../../styles/calendarCss/cal.css' // css import
 import moment from 'moment';
 import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
@@ -14,20 +14,20 @@ import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
 import styled from "styled-components";
 
 const CalendarPage = () => {
-    const [value, onChange] = useState(new Date());
+    const [value, onChange] = useState<Date>(new Date());
     const [mark , setMark] = useState([]);
     const [month , setMonth] = useState("");
     const navigate = useNavigate();
 
 
     // 월이 변경 될 경우
-    const handleMonthChange = (date) => setMonth(moment(date.activeStartDate).format('YYYYMM'));
+    const handleMonthChange = (date:string) => setMonth(moment(date.activeStartDate).format('YYYYMM'));
 
     let param = {};
     useEffect(()=>{
         param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
         getMyCalendar(param)
-            .then(response =>{console.log(response.data); setMark(response.data)})
+            .then(response =>{setMark(response.data)})
             .catch(error =>{ApiErrorHandle(navigate,error)})
     },[month])
 

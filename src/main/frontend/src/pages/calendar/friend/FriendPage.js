@@ -7,7 +7,7 @@ import {getMyApplyWaitFriend, getMyFriend, getRecommendFriend, getRequestWaitFri
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import FriendRecommendComponent from "./FriendRecommendComponent";
 import FriendTopNaviComponent from "./FriendTopNaviComponent";
-import './friend.css';
+import '../../../styles/calendarCss/friend.css';
 import MyFriendComponent from "./MyFriendComponent";
 import FriendRequestWaitComponent from "./FriendRequestWaitComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";

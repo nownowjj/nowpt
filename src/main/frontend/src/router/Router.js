@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainComponent from "../pages/MainComponent";
 import TestComponent from "../pages/TestComponent";
-import LoginComponent from "../pages/LoginComponent";
+import LoginComponent from "../pages/LoginPage";
 import HomeComponent from "../pages/HomeComponent";
 import CalendarMyPage from "../pages/calendar/Mypage/CalendarMyPage";
 import Oauth from "../api/Oauth";

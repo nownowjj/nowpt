@@ -67,6 +67,7 @@ public class AuthRestController {
     @PostMapping("/userLogin")
     public ResponseDto<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
+        log.debug("[LoginDto]{},{}",loginDto.getMembId(),loginDto.getMembPw());
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
         if(token.equals("fail"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notF");
         if(token.equals("peNot"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notP");
