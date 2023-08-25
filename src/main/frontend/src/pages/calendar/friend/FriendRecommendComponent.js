@@ -7,6 +7,7 @@ import {MdSearch, MdSearchOff} from "react-icons/md";
 import moment from "moment";
 import {useDispatch} from "react-redux";
 import {firstEvent} from "../../../redux/slice/friendSlice";
+import AlertComponent from "../component/AlertComponent";
 
 const FriendRecommendComponent = ({data}) => {
     const dispatch = useDispatch();
@@ -14,16 +15,28 @@ const FriendRecommendComponent = ({data}) => {
 
     let param={};
 
+
+    // Alert 여부
+    const [showAlert , setShowAlert] = useState(false);
+    const [messageCall, setMessageCall] = useState('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
+    const alertFunction =(closeCallBack,message)=>{
+        setCloseCallBackFn(() => closeCallBack)
+        setMessageCall(message);
+        setShowAlert(true);
+    }
+
     const addCallBack=(key)=>{
         param.friendMemberSn = key;
-        console.log(param);
         console.log("FriendApplyWaitComponent 친구 요청 ",key);
         requestFriend(param)
             .then((response)=>{
                 console.log(response);
                 // 친구 요청에 성공 했으면 보낸요청 , 친구추천 리스트를 리렌더링 시켜야함
+                alertFunction(setShowAlert(false),'요청 성공!')
                 dispatch(firstEvent());
             }).catch((error)=>{
+                alertFunction(setShowAlert(false),'요청 실패!')
                 console.log(error);
         })
     }
@@ -117,6 +130,18 @@ const FriendRecommendComponent = ({data}) => {
             }
             {/* 추천 리스트 */}
 
+
+            {/* AlertComponent */}
+            {showAlert &&(
+                <AlertComponent
+                    message= {messageCall}
+                    onClose={()=> {
+                        closeCallBackFn && closeCallBackFn();
+                        setShowAlert(false);
+                    }}
+                />
+            )}
+            {/* AlertComponent */}
         </>
     );
 };

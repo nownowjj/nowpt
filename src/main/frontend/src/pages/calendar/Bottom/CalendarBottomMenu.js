@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import {MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
 import styled from "styled-components";
 import {route} from "../../../services/remocon";
-import {BiBookmarks, BiSolidBookmarks} from "react-icons/bi";
+import {BiBookmarks} from "react-icons/bi";
 
 const CalendarBottomMenu = () => {
     const iconStyle = {width:"50%",height:"50%"};
@@ -13,25 +13,18 @@ const CalendarBottomMenu = () => {
         <CalendarBottom className='menuBottom'>
             <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={"/"} >
                 <MdArticle style={iconStyle}/>
-                {/*<span>아무개</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive && 'active'}  to={route.calendarImport} >
-                {/*<TiStarFullOutline style={iconStyle}/>*/}
                 <BiBookmarks style={iconStyle}/>
-                {/*<BiSolidBookmarks style={iconStyle}/>*/}
-                {/*<span>중요</span>*/}
             </StyledLink>
             <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>
-                {/*<span>캘린더</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) =>isActive && 'active'}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
-                {/*<span>프로필</span>*/}
             </StyledLink>
             <StyledLink className={({ isActive }) =>isActive && 'active'}  to={"/"}>
                 <MdErrorOutline style={iconStyle}/>
-                {/*<span>공지사항</span>*/}
             </StyledLink>
         </CalendarBottom>
     );
