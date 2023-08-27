@@ -8,20 +8,19 @@ import LoadingComponent from "../pages/LoadingComponent";
 const Oauth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const code = new URL(window.location.href).searchParams.get('code');
-    const state = new URL(window.location.href).searchParams.get('state');
-    
-    console.log("state = " + state);
+    const code:string | null = new URL(window.location.href).searchParams.get('code');
+    const state:string | null = new URL(window.location.href).searchParams.get('state');
 
-    const performSocialLogin = (loginFunction, successMessage) => {
+
+    const performSocialLogin = (loginFunction:Function, successMessage:string) => {
         loginFunction(code, state)
-            .then(response => {
+            .then((response:any) => {
                 dispatch(loginAction(response.token.accessToken));
                 localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
                 console.log(successMessage);
                 navigate("/calendar");
             })
-            .catch(error => {
+            .catch((error:any) => {
                 alert("로그인 실패");
                 console.log(error);
                 navigate('/go/login');
@@ -36,13 +35,17 @@ const Oauth = () => {
         performSocialLogin(naverLogin, '네이버 소셜 로그인에 성공하였습니다!');
     };
 
-    const loginMap = useRef({
-        "KAKAO": () => kakaoFn(),
-        "NAVER": () => naverFn()
-    });
+    interface LoginMap {
+        [key: string]: () => void;
+    }
+
+    const loginMap: LoginMap = {
+        KAKAO: kakaoFn,
+        NAVER: naverFn,
+    };
 
     useEffect(() => {
-        loginMap.current[state]();
+        if (state) {loginMap[state]();}
     }, [state]);
 
 

@@ -11,11 +11,8 @@ import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
 import ApiErrorHandle from "../services/ApiErrorHandle";
 import AlertComponent from "./calendar/component/AlertComponent";
+import {UserLoginInfo} from "../model/model";
 
-interface UserInfo {
-    membId: string;
-    membPw: string;
-}
 
 const LoginPage = () => {
     // Alert 여부
@@ -30,7 +27,7 @@ const LoginPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState<UserInfo>({
+    const [userInfo, setUserInfo] = useState<UserLoginInfo>({
         membId: "",
         membPw: "",
     });
@@ -46,7 +43,7 @@ const LoginPage = () => {
     // 로그인 버튼 요청
     const originLogin = () => {
         // 입력한 login 정보
-        let loginDto:UserInfo = {
+        let loginDto:UserLoginInfo = {
             membId: userInfo.membId,
             membPw: userInfo.membPw,
         }

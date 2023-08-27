@@ -6,17 +6,25 @@ import loginTrueButNoProfile from "../assets/ggwak.png";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {route} from "../services/remocon";
+import { RootState } from '../redux/store/store'; // 이 부분을 import 해야 합니다
 
+export interface ProfileComponentProps {
+    naviUse: boolean;
+    size: number;
+    style?: React.CSSProperties;
+}
 
 /**
  * 
  * @param data {naviUse , size}
  * @returns 프로필 이미지
  */
-const ProfileComponent = (data) => {
+const ProfileComponent: React.FC<ProfileComponentProps> = (data) => {
     const navigate = useNavigate();
     let userEtt = UserEtt();
-    let isLogin = useSelector((state) => state.user.value.isLoggedIn);
+
+    // RootState 타입으로 useSelector에 타입을 지정합니다
+    let isLogin = useSelector((state: RootState) => state.user.value.isLoggedIn);
     // 비로그인시 맹구 이미지
     let imageSrc = loginFalse;
 
@@ -34,7 +42,7 @@ const ProfileComponent = (data) => {
                 ...data.style
             }}>
             <ProfileImage src={imageSrc}/>
-            {isLogin ? ' ' : 'no'}
+            {/*{isLogin ? ' ' : 'no'}*/}
         </ProfileImageWrap>
     );
 };
@@ -49,7 +57,7 @@ const ProfileImage = styled.img`
     box-sizing: border-box;
 `
 
-const ProfileImageWrap = styled.div`
+const ProfileImageWrap = styled.div<{size:number}>`
     width : ${({size}) => (size ? `${size}px` : `100px` )} ;
     height: ${({size}) => (size ? `${size}px` : `100px` )} ;
     border-radius:50%;

@@ -1,4 +1,5 @@
 import {API_BASE, FRIEND, request} from "./Api";
+import {FriendMemberSn, FriendUpdateParam} from "../model/FriendApiModel";
 
 export function getMyApplyWaitFriend(){
     const url = API_BASE +"/auth" + FRIEND +"/apply";
@@ -24,7 +25,8 @@ export function getRecommendFriend(){
     });
 }
 
-export function updateRequestFriend(param){
+// {friendSn:number , acceptYn:boolean}
+export function updateRequestFriend(param:FriendUpdateParam){
     return request({
         url: API_BASE + "/auth"+ FRIEND +"/apply" ,
         method:'PUT',
@@ -40,7 +42,6 @@ export function getMyFriend(){
 }
 
 /**
- * @param friendMemberSn (요청을 받는 사람의 Sn)
  * @title 친구 요청을 보낸다
  * @order
  * 1. 친구추천 목록에서 친구 요청을 보낸다.
@@ -49,8 +50,10 @@ export function getMyFriend(){
  * 4. 관계가 이미 존재 한다면 분기처리를 해야한다.
  * 5. WAIT -> 내가 요청을 보내기 전에 대상자가 이미 본인에게 친구 요청을 보낸 것이다. 요청을 보내지 않고 [받은 요청 , 친구추천] 목록 리렌더링 return[Alert:받은 목록을 확인해 주세요!]
  * 6. 해당 케이스 외에는 예외가 없다고 판단됨
+ * @param param:FriendMemberSn
  */
-export function requestFriend(param){
+// {friendMemberSn:number}
+export function requestFriend(param:FriendMemberSn){
     return request({
         url: API_BASE + "/auth"+ FRIEND +"/apply" ,
         method:'POST',
@@ -64,13 +67,13 @@ export function requestFriend(param){
  * @order
  * 1. 
  */
-export function cancelFriendRequestApi(param){
-    return request({
-        url: API_BASE + "/auth"+ FRIEND +"/apply" ,
-        method:'PUT',
-        body:JSON.stringify(param)
-    })
-}
+// export function cancelFriendRequestApi(param){
+//     return request({
+//         url: API_BASE + "/auth"+ FRIEND +"/apply" ,
+//         method:'PUT',
+//         body:JSON.stringify(param)
+//     })
+// }
 
 
 

@@ -1,7 +1,20 @@
 import {API_BASE, CALENDAR, request} from "./Api";
+// import { URLSearchParams } from "url"
+import {CalendarSnParam, ImportParam, NewRecordParam, RecordDate} from "../model/CalendarApiModel";
 
-//  추출
-export function getMyCalendar(param){
+export function commonSearchParam(param: Record<string, any>){
+    const queryParams = new URLSearchParams();
+    for (const key in param) {
+        if (param.hasOwnProperty(key)) {
+            queryParams.append(key, param[key]);
+        }
+    }
+    return queryParams.toString();
+}
+
+
+// {recordDate:string}
+export function getMyCalendar(param:RecordDate){
     return request({
         url: API_BASE  + CALENDAR ,
         method:'POST',
@@ -9,17 +22,19 @@ export function getMyCalendar(param){
     })
 }
 
-export function getMyDetailCalendar(param){
+// {recordDate:string}
+export function getMyDetailCalendar(param:RecordDate){
     const url = API_BASE + CALENDAR;
-    const queryParams = new URLSearchParams(param).toString();
-    const fullUrl = url + "?" + queryParams;
+    // const queryParams = new URLSearchParams(param).toString();
+    const fullUrl = url + "?" + commonSearchParam(param);
     return request({
         url: fullUrl ,
         method:'GET'
     })
 }
 
-export function insertRecord(param){
+//  {recordDate:string ,calendarSn:number|null,title:string, content:string ,importYn:string}
+export function insertRecord(param:NewRecordParam){
     return request({
         url: API_BASE  + CALENDAR  + '/insert',
         method:'POST',
@@ -27,17 +42,17 @@ export function insertRecord(param){
     })
 }
 
-export function deleteRecord(param){
+//  {calendarSn:number}
+export function deleteRecord(param:CalendarSnParam){
     const url = API_BASE + CALENDAR;
-    const queryParams = new URLSearchParams(param).toString();
-    const fullUrl = url + "?" + queryParams;
-    console.log(fullUrl);
+    const fullUrl = url + "?" + commonSearchParam(param);
     return request({
         url: fullUrl ,
         method:'DELETE',
         body:JSON.stringify(param)
     })
 }
+
 
 export function getMyInfoAndRecord(){
     return request({
@@ -46,10 +61,10 @@ export function getMyInfoAndRecord(){
     })
 }
 
-export function importRecord(param){
+//   param :{calendarSn:number  , importYn:boolean}
+export function importRecord(param:ImportParam){
     const url = API_BASE + CALENDAR;
-    const queryParams = new URLSearchParams(param).toString();
-    const fullUrl = url + "?" + queryParams;
+    const fullUrl = url + "?" + commonSearchParam(param);
     console.log(fullUrl);
     return request({
         url: fullUrl ,
@@ -58,7 +73,8 @@ export function importRecord(param){
     })
 }
 
-export function selectImportRecordPaging(pageNumber) {
+//  pageNumber :number
+export function selectImportRecordPaging(pageNumber:number) {
     console.log(pageNumber);
     return request({
         url: API_BASE + CALENDAR +"/import?page="+pageNumber+

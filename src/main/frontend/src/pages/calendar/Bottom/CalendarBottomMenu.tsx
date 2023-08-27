@@ -11,19 +11,19 @@ const CalendarBottomMenu = () => {
 
     return (
         <CalendarBottom className='menuBottom'>
-            <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={"/"} >
+            <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={"/"} >
                 <MdArticle style={iconStyle}/>
             </StyledLink>
-            <StyledLink className={({ isActive }) => isActive && 'active'}  to={route.calendarImport} >
+            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendarImport} >
                 <BiBookmarks style={iconStyle}/>
             </StyledLink>
-            <StyledLink  className={({ isActive }) =>isActive && 'active'}  to={route.calendar}>
+            <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>
             </StyledLink>
-            <StyledLink className={({ isActive }) =>isActive && 'active'}   to={route.myPage} >
+            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
             </StyledLink>
-            <StyledLink className={({ isActive }) =>isActive && 'active'}  to={"/"}>
+            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={"/"}>
                 <MdErrorOutline style={iconStyle}/>
             </StyledLink>
         </CalendarBottom>

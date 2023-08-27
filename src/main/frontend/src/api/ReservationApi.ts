@@ -1,6 +1,10 @@
 import {API_BASE, COMMON, request, RESERVATION} from "./Api";
 
-export function insertReservation(reservationDto){
+interface ReservationDto{
+
+}
+
+export function insertReservation(reservationDto:ReservationDto){
     return request({
         url: API_BASE +COMMON+ RESERVATION + "/insertReservation",
         method: 'POST',
@@ -8,7 +12,8 @@ export function insertReservation(reservationDto){
     })
 }
 
-export function getReservation(paramStart,paramEnd,room){
+
+export function getReservation(paramStart:string,paramEnd:string,room:string){
     return request({
         url: API_BASE + COMMON +RESERVATION +
             "/selectPagingReservation?startDay=" + paramStart +
@@ -18,7 +23,7 @@ export function getReservation(paramStart,paramEnd,room){
     })
 }
 
-export function selectReservationByReservationSn(reservationSn) {
+export function selectReservationByReservationSn(reservationSn:number) {
     return request({
         url: API_BASE +COMMON+ RESERVATION +"/"+ reservationSn,
         method: 'GET'

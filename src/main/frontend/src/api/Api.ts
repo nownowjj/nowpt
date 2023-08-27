@@ -1,4 +1,6 @@
 // export const API_BASE = "http://192.168.10.215:8060/api";
+import {UserLoginInfo} from "../model/model";
+
 export const API_BASE = "http://localhost:8060/api";
 export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
@@ -13,7 +15,7 @@ export const FRIEND = "/friend";
 
 
 
-export const request = (options) => {
+export const request = (options:any):Promise<object> => {
     const headers = new Headers({
         'Content-Type' : 'application/json',
     })
@@ -69,7 +71,7 @@ export function batisTest() {
         method: 'GET'
     });
 }
-export function updateMembAddr(email) {
+export function updateMembAddr(email:string) {
     console.log("param : " + email)
     return request({
         url: API_BASE + "/common/updateEmail/" + email,
@@ -78,7 +80,7 @@ export function updateMembAddr(email) {
 }
 
 // 로그인시 사용할 api
-export function login(loginDto) {
+export function login(loginDto:UserLoginInfo) {
     return request({
         url: API_BASE + "/auth/userLogin",
         method: 'POST',
@@ -87,7 +89,7 @@ export function login(loginDto) {
 }
 
 // 카카오 로그인 api
-export function kakaoLogin(code) {
+export function kakaoLogin(code:string) {
     return request({
         url: API_BASE.replace("/api","") + "/oauth/kakao?code="+code,
         method: 'GET'
@@ -95,7 +97,7 @@ export function kakaoLogin(code) {
 }
 
 // 네이버 로그인 api
-export function naverLogin(code,state) {
+export function naverLogin(code:string,state:string) {
     return request({
         url: API_BASE.replace("/api","") + "/oauth/naver?code="+code+"&state="+state,
         method: 'GET'
@@ -106,7 +108,7 @@ export function naverLogin(code,state) {
 
 
 // 네이버 무비 검색 API
-export function naverMovie(search) {
+export function naverMovie(search:string) {
     return request({
         url: API_BASE + "/auth/movies/"+search,
         method: 'GET'
