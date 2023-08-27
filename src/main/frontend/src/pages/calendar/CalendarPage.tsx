@@ -23,15 +23,17 @@ const CalendarPage = () => {
     // 월이 변경 될 경우
     const handleMonthChange = (date:string) => setMonth(moment(date.activeStartDate).format('YYYYMM'));
 
-    let param = {};
+    let param = {
+        recordDate: String
+    };
     useEffect(()=>{
         param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
         getMyCalendar(param)
             .then(response =>{setMark(response.data)})
-            .catch(error =>{ApiErrorHandle(navigate,error)})
+            .catch(error =>{ApiErrorHandle(error)})
     },[month])
 
-    const onClickDay =(value)=> {
+    const onClickDay =(value:string)=> {
         navigate(route.calendarDayDetail,{state:{"detailDay": moment(value).format('YYYYMMDD')}})
     }
 
@@ -49,7 +51,7 @@ const CalendarPage = () => {
             {/*헤더*/}
 
             {/* 캘린더 */}
-            <CalendarLib  // class  = "react-calendar"
+            <CalendarLib
                 onChange={onChange}
                 onClickDay={onClickDay}
                 formatDay={(locale, date) => moment(date).format('DD')}
@@ -58,15 +60,10 @@ const CalendarPage = () => {
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                 calendarType={"US"}
-                // onViewChange={onViewChange}
-                // onClickMonth={onClickMonth}
-                // minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-                // maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
             />
             {/* 캘린더 */}
 
 
-            {/*<div>이번달에 {mark.length}번 기록했어요!!</div>*/}
 
             {/*바텀*/}
             <CalendarBottomMenu/>

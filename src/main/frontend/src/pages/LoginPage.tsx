@@ -10,6 +10,7 @@ import {validateLogin} from "../services/validate";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
 import ApiErrorHandle from "../services/ApiErrorHandle";
+import AlertComponent from "./calendar/component/AlertComponent";
 
 interface UserInfo {
     membId: string;
@@ -17,13 +18,21 @@ interface UserInfo {
 }
 
 const LoginPage = () => {
+    // Alert 여부
+    const [showAlert , setShowAlert] = useState(false);
+    const [messageCall, setMessageCall] = useState('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
+    const alertFunction =(closeCallBack,message)=>{
+        setCloseCallBackFn(() => closeCallBack)
+        setMessageCall(message);
+        setShowAlert(true);
+    }
 
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState<UserInfo>({
-        membId: '',
-        membPw: '',
+        membId: "",
+        membPw: "",
     });
 
     // id, pw input handle event
@@ -42,8 +51,10 @@ const LoginPage = () => {
             membPw: userInfo.membPw,
         }
         // ID ,PW 유효성 검사
-        if(!(validateLogin(loginDto.membId , loginDto.membPw))){
-            return false;
+        const validateResult = validateLogin(loginDto.membId , loginDto.membPw);
+        if (validateResult !== true) {
+            alertFunction(null , validateResult);
+            return;
         }
 
         login(loginDto)
@@ -61,7 +72,7 @@ const LoginPage = () => {
                     navigate("/calendar");
                 }
             }).catch(error => {
-                 ApiErrorHandle(navigate,error)
+                 ApiErrorHandle(error)
         });
     }
 
@@ -72,24 +83,31 @@ const LoginPage = () => {
             <LoginWrap>
                 <LoginWrapTop>로그인</LoginWrapTop>
                 <LoginEmailBox>
-                    <Input
-                        id="id"
-                        style={{flexGrow: 1}}
-                        placeholder={"ID를 입력해 주세요 "}
-                        name="membId"
-                        value={userInfo.membId}
-                        onChange={handleChange}
-                    />
-                    <Input
-                        type="password"
-                        style={{ flexGrow: 1 }}
-                        placeholder="PASSWORD를 입력해 주세요 "
-                        name="membPw"
-                        value={userInfo.membPw}
-                        onChange={handleChange}
-                    />
+                    <InputGroup>
+                        <Input
+                            id="id"
+                            style={{flexGrow: 1}}
+                            placeholder={""}
+                            name="membId"
+                            value={userInfo.membId}
+                            onChange={handleChange}
+                            required={true}
+                        />
+                        <Label>ID</Label>
+                    </InputGroup>
+                    <InputGroup>
+                        <Input
+                            type="password"
+                            style={{ flexGrow: 1 }}
+                            name="membPw"
+                            value={userInfo.membPw}
+                            onChange={handleChange}
+                            required={true}
+                        />
+                        <Label>PW</Label>
+                    </InputGroup>
                     <Button
-                        style={{width:"100%",height:"45px",marginTop:"15px",color:"white",backgroundColor:"skyblue"}}
+                        style={{width:"100%",height:"45px",color:"white",backgroundColor:"skyblue"}}
                         onClick={originLogin}
                         value="로그인"
                     />
@@ -116,7 +134,21 @@ const LoginPage = () => {
                     </a>
                 </LoginWrapBox>
             </LoginWrap>
+
+
+            {/* AlertComponent */}
+            {showAlert &&(
+                <AlertComponent
+                    message= {messageCall}
+                    onClose={()=> {
+                        closeCallBackFn && closeCallBackFn();
+                        setShowAlert(false);
+                    }}
+                />
+            )}
+            {/* AlertComponent */}
         </Wrap>
+
     )
 }
 const Wrap =styled.div`
@@ -168,31 +200,44 @@ const LoginWrap = styled.div`
         border:none;
         width:100%;
       };
-    
-    
 `
-
+const InputGroup = styled.div`
+    position:relative;
+`
+const Label = styled.label`
+    position:absolute;
+    left:15px;
+    color:#e8e8e8;
+    pointer-events:none;
+    transform:translateY(10px);
+    transition:150ms cubic-bezier(0.4,0,0.2,1);
+`
 const Input = styled.input`
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 10px;
     width: 100%;
     font-size: 1rem;
     outline: none;
-    border: none;
-    border-bottom: 1px solid #e8e8e8;
-    margin-bottom: 5px;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 12px;
+    transition:border 150ms cubic-bezier(0.4,0,0.2,1);
 
-&:focus {
-    background:#e8e8e8;
-    outline: none;
-}
-::placeholder {
-    font-size: 0.8rem;
-}
-
-::-webkit-outer-spin-button,
-::-webkit-inner-spin-button {
--webkit-appearance: none;
+    &:focus , &:valid {
+        outline: none;
+        border:1.5px solid #1a73e8;
+    }
+    
+    &:focus~label , &:valid~label{
+        transform:translateY(-50%) scale(0.8);
+        background-color:white;
+        color:#2196f3;
+        padding:3px;
+    }
+ 
+    
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 `;
 
