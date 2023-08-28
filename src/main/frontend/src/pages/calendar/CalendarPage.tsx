@@ -12,33 +12,41 @@ import {route} from "../../services/remocon";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
 import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
 import styled from "styled-components";
+import {RecordDate} from "../../model/CalendarApiModel";
+import {Value} from "react-calendar/src/shared/types";
+import {OnArgs} from "react-calendar/dist/cjs/shared/types";
+
 
 const CalendarPage = () => {
-    const [value, onChange] = useState<Date>(new Date());
-    const [mark , setMark] = useState([]);
+
+    const [value, onChange] = useState<Value>(new Date());  //라이브러리 내장 Type 사용
+    const [mark , setMark] = useState<string[]>([]);
     const [month , setMonth] = useState("");
     const navigate = useNavigate();
 
-
-    // 월이 변경 될 경우
-    const handleMonthChange = (date:any) => {
-        console.log(date);
-        setMonth(moment(date.activeStartDate).format('YYYYMM'));
-        // setMonth(moment(date).format('YYYYMM'));
-
-    }
-
-    let param = {};
     useEffect(()=>{
-        param.recordDate = month ? month : moment(value).format('YYYYMM');  // 페이지 로드 시점 param : value  월 변경 이벤트 발생하면 param : month
+        const param: RecordDate = { recordDate: month ? month : moment(value as Date).format('YYYYMM')};
+        // const param: RecordDate = { recordDate: month ? month : moment(dateValue).format('YYYYMM')};
         getMyCalendar(param)
-            .then(response =>{setMark(response.data)})
+            .then(response =>{
+                setMark(response.data as string[])
+            })
             .catch(error =>{ApiErrorHandle(error)})
     },[month])
 
-    const onClickDay =(value:string)=> {
-        navigate(route.calendarDayDetail,{state:{"detailDay": moment(value).format('YYYYMMDD')}})
+    const onClickDay =(date:Date)=> {
+        const formattedDate = moment(date).format('YYYYMMDD');
+        // navigate(route.calendarDayDetail,{state:{"detailDay": moment(value).format('YYYYMMDD')}});
+        navigate(route.calendarDayDetail, { state: { detailDay: formattedDate } });
     }
+
+    // 월이 변경 될 경우
+    // const handleMonthChange = (date: { activeStartDate: Date }) => {
+    const handleMonthChange = ({ activeStartDate }: OnArgs) => {
+        const formattedDate = moment(activeStartDate).format('YYYYMM');
+        setMonth(formattedDate);
+    }
+
 
     return (
         <CalendarWrap>
@@ -59,7 +67,7 @@ const CalendarPage = () => {
                 onClickDay={onClickDay}
                 formatDay={(locale, date) => moment(date).format('DD')}
                 value={value} // 일자
-                tileContent={({date:Date}) => <DotsComponent date ={date} mark={mark} />} // 일자 하단에 이벤트 dot
+                tileContent={({ date }) => <DotsComponent date={date} mark={mark} />} // 일자 하단에 이벤트 dot
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                 calendarType={"US"}

@@ -1,5 +1,6 @@
-import {API_BASE, FRIEND, request} from "./Api";
+import {API_BASE, ApiResponse, FRIEND, request} from "./Api";
 import {FriendMemberSn, FriendUpdateParam} from "../model/FriendApiModel";
+import {friendDto} from "../pages/calendar/friend/FriendPage";
 
 export function getMyApplyWaitFriend(){
     const url = API_BASE +"/auth" + FRIEND +"/apply";
@@ -9,8 +10,16 @@ export function getMyApplyWaitFriend(){
     });
 }
 
-export function getRequestWaitFriend(){
-    const url = API_BASE +"/auth" + FRIEND +"/requestWait";
+// export function getRequestWaitFriend(){
+//     const url = API_BASE +"/auth" + FRIEND +"/requestWait";
+//     return request({
+//         url: url,
+//         method: 'GET'
+//     });
+// }
+
+export function getRequestWaitFriend(): Promise<ApiResponse<friendDto[]>> {
+    const url = API_BASE + "/auth" + FRIEND + "/requestWait";
     return request({
         url: url,
         method: 'GET'
@@ -28,9 +37,9 @@ export function getRecommendFriend(){
 // {friendSn:number , acceptYn:boolean}
 export function updateRequestFriend(param:FriendUpdateParam){
     return request({
-        url: API_BASE + "/auth"+ FRIEND +"/apply" ,
-        method:'PUT',
-        body:JSON.stringify(param)
+        url: API_BASE + "/auth" + FRIEND + "/apply",
+        method: 'PUT',
+        body: JSON.stringify(param)
     })
 }
 export function getMyFriend(){
@@ -55,9 +64,9 @@ export function getMyFriend(){
 // {friendMemberSn:number}
 export function requestFriend(param:FriendMemberSn){
     return request({
-        url: API_BASE + "/auth"+ FRIEND +"/apply" ,
-        method:'POST',
-        body:JSON.stringify(param)
+        url: API_BASE + "/auth" + FRIEND + "/apply",
+        method: 'POST',
+        body: JSON.stringify(param)
     })
 }
 

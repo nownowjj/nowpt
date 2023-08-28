@@ -1,5 +1,5 @@
 export interface CalendarSnParam {
-    calendarSn: number|null;
+    calendarSn?: number;
 }
 
 export interface ImportParam extends CalendarSnParam{

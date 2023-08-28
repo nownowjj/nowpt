@@ -8,7 +8,18 @@ import {FiAlertCircle} from "react-icons/fi";
  * @returns {ConfirmComponent}
  * @Memo 확인 callback -> callback 실행 , 취소 -> setShowConfirm(false)
  */
-const ConfirmComponent = ({ message, okCallBack, onClose }) => {
+
+interface ConfirmComponentProps{
+    message:string;
+    okCallBack:()=> void;
+    onClose:()=>void;
+}
+
+interface ConfirmButtonProps {
+    backGround?: string; // Define the prop type here
+}
+
+const ConfirmComponent:React.FC<ConfirmComponentProps> = ({ message, okCallBack, onClose }) => {
     return (
         <ConfirmWrap>
             <ConfirmBox>
@@ -24,7 +35,7 @@ const ConfirmComponent = ({ message, okCallBack, onClose }) => {
         </ConfirmWrap>
     );
 };
-const ConfirmButton =styled.div`
+const ConfirmButton =styled.div<ConfirmButtonProps>`
     display:block;
     padding:5px 30px;
     border:1px solid ;

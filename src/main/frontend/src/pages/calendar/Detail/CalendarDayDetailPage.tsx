@@ -9,34 +9,46 @@ import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
+import {CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
 
+export interface CalenderDto{
+    recordDate:string;
+    memberSn:number;
+    calendarSn:number;
+    title:string;
+    content:string;
+    frstRegistDt:Date;
+    lastChangeDt:Date;
+    useYn:string;
+    importYn:boolean;
+}
+interface DetailNoBalloonProps{
+    leftSize:string;
+}
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     const [isLoading, setIsLoading] = useState(true);
-    const [detail,setDetail] = useState([]);
+    const [detail,setDetail] = useState<CalenderDto[]>([]);
     const {detailDay} = state;
 
     useEffect(()=>{
-        let param ={"recordDate":detailDay}
+        const param: RecordDate = {"recordDate":detailDay}
         getMyDetailCalendar(param)
             .then(response => {
                 setDetail(response.data)
-                console.log(response.data);
             })
             .catch(error => {
-                console.log(error);
                 ApiErrorHandle(error)
             }).finally(()=>{
                 setIsLoading(false);
             })
     },[detailDay])
 
-    let deleteParam = {};
     // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn)=>{
+    const removeRecord =(calendarSn:number) :void =>{
+        const deleteParam:CalendarSnParam={calendarSn:calendarSn};
         const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
         deleteRecord(deleteParam)
             .then(response =>{
                 if(response.data) {
@@ -51,7 +63,7 @@ const CalendarDayDetailPage = () => {
             })
     }
 
-    const importEvent =(calendarSn , newImportYn)=>{
+    const importEvent =(calendarSn:number , newImportYn:boolean)=>{
         const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); //
         detail[recordIndex].importYn = newImportYn;
     }
@@ -70,9 +82,8 @@ const CalendarDayDetailPage = () => {
                             <CalendarDetailContentComponent
                                 key={data.calendarSn}
                                 data={data}
-                                navigate={navigate}
-                                recordDate={detailDay}
                                 removeRecord={removeRecord}
+                                importPage={false}
                                 importEvent={importEvent}
                             />
                         ))}
@@ -102,7 +113,7 @@ const CalendarDetailWrap = styled.div`
     height:100%;
 `
 
-const DetailNoBalloon = styled.div`
+const DetailNoBalloon = styled.div<DetailNoBalloonProps>`
     z-index:100;
     position: fixed;
     background: skyblue;
@@ -116,7 +127,6 @@ const DetailNoBalloon = styled.div`
   
   &::after {
     transform: translate(-1px,3px);
-    // left: 77%;
     left : ${({leftSize}) => (leftSize ? `${leftSize}` : `72%` )} ;
     border: solid transparent;
     content: " ";

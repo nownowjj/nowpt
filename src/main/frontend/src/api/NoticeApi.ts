@@ -9,9 +9,9 @@ export function getNotice(pageNumber:number,pageSize:number){
     return request({
         url: API_BASE + NOTICE +
             "/auth/selectNotice?" +
-            "page="+pageNumber+
-            "&size="+pageSize,
-        method:'GET'
+            "page=" + pageNumber +
+            "&size=" + pageSize,
+        method: 'GET'
     })
 }
 
@@ -26,13 +26,13 @@ export function insertNotice(noticeDto:NoticeNew) {
 
 export function selectNoticeByNoticeSn(noticeSn:NoticeSn) {
     return request({
-        url: API_BASE + NOTICE + "/admin/"+noticeSn,
+        url: API_BASE + NOTICE + "/admin/" + noticeSn,
         method: 'GET'
     });
 }
 export function updateNotice(noticeSn:NoticeSn,param:NoticeNew) {
     return request({
-        url: API_BASE + NOTICE + "/admin/"+noticeSn,
+        url: API_BASE + NOTICE + "/admin/" + noticeSn,
         method: 'PUT',
         body: JSON.stringify(param)
     });

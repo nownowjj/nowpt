@@ -7,7 +7,12 @@ import {FiAlertCircle} from "react-icons/fi";
  * @param data : {message,onClose}
  * @returns {AlertComponent}
  */
-const AlertComponent = ({ message , onClose }) => {
+
+interface AlertComponentProps {
+    message: string; // Replace 'string' with the actual type of 'message'
+    onClose: () => void; // Replace '() => void' with the actual type of 'onClose'
+}
+const AlertComponent: React.FC<AlertComponentProps> = ({ message , onClose }) => {
     return (
         <AlertWrap>
             <AlertBox>
@@ -30,7 +35,6 @@ const AlertButton =styled.div`
     border:none;
     font-weight:bold;
     font-size:16px;
-    // background : ${({backGround}) => (backGround ? `${backGround}` : `#e8e8e8` )} ;
     background:skyblue;
 `
 

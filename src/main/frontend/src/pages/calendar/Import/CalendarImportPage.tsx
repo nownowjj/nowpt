@@ -93,9 +93,9 @@ const CalendarImportPage = () => {
                             <CalendarDetailContentComponent
                                 key={data.calendarSn}
                                 data={data}
-                                navigate={navigate}
-                                importPage={true}
+                                // navigate={navigate}
                                 removeRecord={removeRecord}
+                                importPage={true}
                                 importEvent={importEvent}
                             />
                         ))

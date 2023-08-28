@@ -13,15 +13,25 @@ import FriendRequestWaitComponent from "./FriendRequestWaitComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {useSelector} from "react-redux";
 
+export interface friendDto {
+    friendSn:number;
+    friendNm:string;
+    friendMemberSn:number;
+    frstRegistDt:Date;
+    memberSn:number;
+    friendProfile:string;
+    requestStatus:string;
+    acceptYn:boolean;
+}
+
 const FriendPage = () => {
     const navigate = useNavigate();
-    const [waitList,setWaitList] = useState([]);
-    const [requestWaitList,setRequestWaitList] = useState([]);
-    const [recommendList,setRecommendList] = useState([]);
-    const [myFriendList , setMyFriendList] = useState([]);
+    const [waitList,setWaitList] = useState<friendDto[]>([]);
+    const [recommendList,setRecommendList] = useState<friendDto[]>([]);
+    const [myFriendList , setMyFriendList] = useState<friendDto[]>([]);
+    const [requestWaitList,setRequestWaitList] = useState<friendDto[]>([]);
 
     const firstCount = useSelector(state => state.friend.firstCount);
-    console.log(firstCount);
 
 
     // 내가 보낸 요청 대기중인 리스트

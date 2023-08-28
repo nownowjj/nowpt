@@ -12,10 +12,21 @@ export const NOTIFICATION = "/notification";
 export const FRIEND = "/friend";
 
 
+export interface ApiResponse<T> {
+    status: string;
+    message: string;
+    data: T;
+}
 
+export interface ApiRequest {
+    url:string;
+    method:string;
+    body?:string;
+}
 
+//TODO response type interface 필요
 
-export const request = (options:any):Promise<object> => {
+export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
     const headers = new Headers({
         'Content-Type' : 'application/json',
     })
@@ -39,12 +50,12 @@ export const request = (options:any):Promise<object> => {
 };
 
 //  추출
-export function getMembInfo(){
-    return request({
-        url:API_BASE+"/common/getMembInfo",
-        method:'GET',
-    })
-}
+// export function getMembInfo():Promise<ApiResponse>{
+//     return request({
+//         url: API_BASE + "/common/getMembInfo",
+//         method: 'GET',
+//     })
+// }
 //
 export function homeTest() {
     return request({
@@ -91,7 +102,7 @@ export function login(loginDto:UserLoginInfo) {
 // 카카오 로그인 api
 export function kakaoLogin(code:string) {
     return request({
-        url: API_BASE.replace("/api","") + "/oauth/kakao?code="+code,
+        url: API_BASE.replace("/api", "") + "/oauth/kakao?code=" + code,
         method: 'GET'
     });
 }
@@ -99,7 +110,7 @@ export function kakaoLogin(code:string) {
 // 네이버 로그인 api
 export function naverLogin(code:string,state:string) {
     return request({
-        url: API_BASE.replace("/api","") + "/oauth/naver?code="+code+"&state="+state,
+        url: API_BASE.replace("/api", "") + "/oauth/naver?code=" + code + "&state=" + state,
         method: 'GET'
     });
 }
@@ -110,7 +121,7 @@ export function naverLogin(code:string,state:string) {
 // 네이버 무비 검색 API
 export function naverMovie(search:string) {
     return request({
-        url: API_BASE + "/auth/movies/"+search,
+        url: API_BASE + "/auth/movies/" + search,
         method: 'GET'
     });
 }

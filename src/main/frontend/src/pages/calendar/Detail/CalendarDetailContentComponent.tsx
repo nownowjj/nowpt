@@ -8,7 +8,9 @@ import {importRecord} from "../../../api/CalendarApi";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
-import ConfirmComponent from "../component/ConfirmComponent"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import ConfirmComponent from "../component/ConfirmComponent";
+import {CalenderDto} from "./CalendarDayDetailPage";
+import {useNavigate} from "react-router-dom"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
@@ -19,19 +21,28 @@ dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
  * @param importPage 여부로 일반적인 디테일 페이지인지 , 중요 페이지에서 진입한건지 구분
  * @param importEvent
  */
-const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPage ,importEvent }) => {
-    const [initialYn, setInitialYn] = useState(data.importYn);
+
+interface CalendarDetailContentComponentProps{
+    data: CalenderDto;
+    removeRecord: (calendarSn: number) => void; // Update the prop type here
+    importPage: boolean;
+    importEvent: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed
+}
+const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent }) => {
+    console.log(data.recordDate);
+    const navigate = useNavigate();
+    const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
     // 즐겨찾기를 등록 할 떄에는 바로 등록
     // 취소시에는 동의를 받고 취소 시킴. confirm 사용
     const [isProcessing, setIsProcessing] = useState(false); // 상태 추가: 요청 처리 중 여부
 
 
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [okCallBackFn, setOkCallBackFn] = useState(null);
-    const [messageCall, setMessageCall] = useState('');
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
 
-    const confirmFunction =(okCallBack , message)=>{
+    const confirmFunction = (okCallBack: () => void,  message:string)=>{
         setOkCallBackFn(() => okCallBack);
         setMessageCall(message);
         setShowAlert(true);
@@ -61,7 +72,6 @@ const CalendarDetailContentComponent = ({ data, navigate, removeRecord,importPag
     );
 
     const handleDelete = () => {
-        console.log(data.calendarSn);
         removeRecord(data.calendarSn);
     };
 

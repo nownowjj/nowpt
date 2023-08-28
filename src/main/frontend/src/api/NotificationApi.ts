@@ -14,16 +14,16 @@ export function getMyNotification(pageNumber:number, countMode=false){
 
 export function deleteAllNotification(){
     return request({
-        url: API_BASE + NOTIFICATION ,
-        method:'DELETE'
+        url: API_BASE + NOTIFICATION,
+        method: 'DELETE'
     })
 }
 
 export function updateNotification(param:NotificationSn){
     return request({
-        url: API_BASE + NOTIFICATION ,
-        method:'PUT',
-        body:JSON.stringify(param)
+        url: API_BASE + NOTIFICATION,
+        method: 'PUT',
+        body: JSON.stringify(param)
     })
 }
 
