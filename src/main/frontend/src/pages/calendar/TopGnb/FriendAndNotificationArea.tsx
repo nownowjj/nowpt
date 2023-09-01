@@ -7,12 +7,16 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../../services/remocon";
 
+interface AnimatedBellWrapInterface {
+    redDots:boolean;
+}
+
 const FriendAndNotificationArea = () => {
     const navigate = useNavigate();
-    const [isActiveBell , setIsActiveBell] = useState(false);
+    const [isActiveBell , setIsActiveBell] = useState<boolean>(false);
 
     useEffect(()=>{
-        getMyNotification(null,true)
+        getMyNotification(0,true)
             .then((result)=>{
                 if(result.data !== 0 ) setIsActiveBell(true);
             })
@@ -40,7 +44,7 @@ const StyledBsPeopleFill = styled(BsPeopleFill)`
     font-size: 30px;
 `
 
-const AnimatedBellWrap = styled.div`
+const AnimatedBellWrap = styled.div<AnimatedBellWrapInterface>`
     font-size:28px;
     color:#000000;
     height:100%;

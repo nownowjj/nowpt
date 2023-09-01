@@ -1,7 +1,7 @@
-import {API_BASE, NOTIFICATION, request} from "./Api";
-import {NotificationSn} from "../model/NotificationApiModel";
+import {API_BASE, ApiResponse, NOTIFICATION, request} from "./Api";
+import {NotificationPagingDto, NotificationSn} from "../model/NotificationApiModel";
 
-export function getMyNotification(pageNumber:number, countMode=false){
+export function getMyNotification(pageNumber:number, countMode=false):Promise<ApiResponse<NotificationPagingDto>>{
     const url = API_BASE + NOTIFICATION;
     const param = "?page="+pageNumber+"&size=10&countMode="+countMode
     const requestUrl = url+ param

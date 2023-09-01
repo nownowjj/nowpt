@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "aos/dist/aos.css";
-import AOS from "aos";
 import ProfileComponent from "../../../component/ProfileComponent";
 import styled from "styled-components";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
@@ -12,21 +11,29 @@ import {useDispatch} from "react-redux";
 import {logoutAction} from "../../../redux/slice/userSlice";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
+import Aos from "aos";
+import {Member} from "../../../model/Common";
+import {CalenderRecordSm} from "../../../model/CalendarApiModel";
+
+
+interface ProfileItemProps{
+    borderBottom:string|null;
+}
 
 const CalendarMyPage = () => {
     const dispatch = useDispatch();
     // 해당 멤버 정보
-    const [membInfo, setMembInfo] = useState([""]);
+    const [membInfo, setMembInfo] = useState<Member>();
     const [isLoading, setIsLoading] = useState(true);
-    const [recordList, setRecordList] = useState([]);
+    const [recordList, setRecordList] = useState<CalenderRecordSm[]>([]);
 
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [okCallBackFn, setOkCallBackFn] = useState(null);
-    const [messageCall, setMessageCall] = useState('');
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
 
     useEffect(() => {
-        AOS.init();
+        Aos.init();
     },[])
 
 
@@ -34,6 +41,7 @@ const CalendarMyPage = () => {
     useEffect(() => {
         getMyInfoAndRecord()
             .then(response => {
+                console.log(response);
                 setMembInfo(response.data.member[0]);
                 setRecordList(response.data.myRecordSmList);
         }).catch(error => {
@@ -45,13 +53,13 @@ const CalendarMyPage = () => {
 
 
 
-    const confirmFunction =(okCallBack , message)=>{ // confirm 이벤트
+    const confirmFunction = (okCallBack: () => void,  message:string)=>{
         setOkCallBackFn(() => okCallBack);
         setMessageCall(message);
         setShowAlert(true);
     }
 
-    const logoutFunction = () => dispatch(logoutAction()); // 로그아웃 이벤트
+    const logoutFunction = () => dispatch(logoutAction); // 로그아웃 이벤트
     return (
         <MyPageWrap>
             {/* 상단 gnb */}
@@ -64,21 +72,21 @@ const CalendarMyPage = () => {
 
             {/* 개인정보 */}
             <ProfileItemBox>
-                <ProfileItem>
+                <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>성함</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo.membNm}</ProfileItemRight>
+                    <ProfileItemRight>{membInfo && membInfo.membNm}</ProfileItemRight>
                 </ProfileItem>
-                <ProfileItem>
+                <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>이메일</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo.emailAddr}</ProfileItemRight>
+                    <ProfileItemRight>{membInfo && membInfo.emailAddr}</ProfileItemRight>
                 </ProfileItem>
-                <ProfileItem>
+                <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>가입수단</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo.subscriptionMethod}</ProfileItemRight>
+                    <ProfileItemRight>{membInfo && membInfo.subscriptionMethod}</ProfileItemRight>
                 </ProfileItem>
                 <ProfileItem borderBottom="none">
                     <ProfileItemLeft>가입일자</ProfileItemLeft>
-                    <ProfileItemRight>{(dayjs(membInfo.frstRegistDt).format('YYYY년 MM월DD일'))}</ProfileItemRight>
+                    <ProfileItemRight>{(dayjs(membInfo && membInfo.frstRegistDt).format('YYYY년 MM월DD일'))}</ProfileItemRight>
                 </ProfileItem>
             </ProfileItemBox>
             {/* 개인정보 */}
@@ -87,9 +95,8 @@ const CalendarMyPage = () => {
             <>
                 {
                     isLoading
-                        ?
-                        '로딩중':
-                        <MyPageRecordSmComponent recordList={recordList}/>
+                        ? '로딩중'
+                        : recordList && <MyPageRecordSmComponent recordList={recordList} />
                 }
             </>
             {/* 기록 통계 */}
@@ -134,8 +141,7 @@ const ProfileItemLeft = styled.div`
     font-weight:600;
     font-size:16px;
 `
-
-const ProfileItem= styled.div`
+const ProfileItem= styled.div<ProfileItemProps>`
     width:100%;
     padding:15px 10px;
     display:flex;

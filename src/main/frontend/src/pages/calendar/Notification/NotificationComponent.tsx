@@ -2,16 +2,25 @@ import React, {useState} from 'react';
 import dayjs from "dayjs";
 import ConfirmComponent from "../component/ConfirmComponent";
 import styled from "styled-components";
+import {NotificationDto} from "../../../model/NotificationApiModel";
 
-const NotificationComponent = ({data,updateNoti,deleteAllNoti}) => {
+interface NotificationComponentInterface {
+    data:NotificationDto;
+    updateNoti:(notificationSn:number)=> void;
+    deleteAllNoti:()=>void;
+
+}
+
+const NotificationComponent:React.FC<NotificationComponentInterface> = ({data,updateNoti,deleteAllNoti}) => {
+    console.log(data);
 
 
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [okCallBackFn, setOkCallBackFn] = useState(null);
-    const [messageCall, setMessageCall] = useState('');
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
 
-    const confirmFunction =(okCallBack , message)=>{
+    const confirmFunction = (okCallBack: () => void,  message:string)=>{
         setOkCallBackFn(() => okCallBack);
         setMessageCall(message);
         setShowAlert(true);
@@ -23,7 +32,7 @@ const NotificationComponent = ({data,updateNoti,deleteAllNoti}) => {
     const deleteHandle=()=> deleteAllNoti();
 
     return (
-        <DetailContentWrap key={data.calendarSn}>
+        <DetailContentWrap key={data.notificationSn}>
             <div className="detailTitle">{data.notificationTitle}</div>
             <DetailContent className="detailContent">{data.notificationContent}</DetailContent>
 

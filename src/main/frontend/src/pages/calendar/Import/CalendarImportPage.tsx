@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalenderDto} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, CalenderDto} from "../../../model/CalendarApiModel";
 
 const CalendarImportPage = () => {
     const navigate = useNavigate();
@@ -32,10 +32,12 @@ const CalendarImportPage = () => {
                         return response.data.content;
                     }
                     if(response.data.last)  lastRef.current = true;
-                    return response.data.content;
+                    setImportRecordList(response.data.content);
                 }
-        }).then(data =>{
-            setImportRecordList((itemLists) => itemLists.concat(data));
+        }).then((data) =>{
+            // setImportRecordList(data);
+            console.log('dada');
+            // setImportRecordList((itemLists) => itemLists.concat(data));
         }).catch(error => {
             ApiErrorHandle(error);
         }).finally(()=>{
@@ -52,12 +54,14 @@ const CalendarImportPage = () => {
         }
     },[inView,importRecordList]);
 
-    let deleteParam = {};
+    // let deleteParam = {};
     // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn)=> {
+    const removeRecord =(calendarSn:number):void => {
         console.log(calendarSn+'??');
+        const deleteParam:CalendarSnParam={calendarSn:calendarSn};
         const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
+        // deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
+
         deleteRecord(deleteParam)
             .then(response =>{
                 if(response.data) {
@@ -68,11 +72,11 @@ const CalendarImportPage = () => {
                     }
                 }
             }).catch(error =>{
-                ApiErrorHandle(navigate,error)
+                ApiErrorHandle(error)
         })
     }
 
-    const importEvent =(calendarSn , newImportYn)=>{
+    const importEvent =(calendarSn:number , newImportYn:boolean)=>{
         const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); //
         importRecordList[recordIndex].importYn = newImportYn;
     }

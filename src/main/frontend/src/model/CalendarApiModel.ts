@@ -1,3 +1,5 @@
+import {Member, PagingResponse} from "./Common";
+
 export interface CalendarSnParam {
     calendarSn?: number;
 }
@@ -28,3 +30,20 @@ export interface CalenderDto{
     useYn:string;
     importYn:boolean;
 }
+
+export interface CalenderPagingDto extends PagingResponse{
+    content: CalenderDto[];
+}
+
+export interface CalenderRecordSm{
+    year:string;
+    month:string;
+    monthCount:number;
+}
+
+
+export interface CalenderMyInfoDto{
+    member:Member[];
+    myRecordSmList: CalenderRecordSm[];
+}
+

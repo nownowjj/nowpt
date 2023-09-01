@@ -7,14 +7,15 @@ import styled from "styled-components";
 import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
+import {NotificationDto, NotificationSn} from "../../../model/NotificationApiModel";
 
 const NotificationPage = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [ref, inView] = useInView();
-    const[pageNumber,setPageNumber] = useState(0);
-    const[last,setLast] = useState(false);
+    const[pageNumber,setPageNumber] = useState<number>(0);
+    const[last,setLast] = useState<boolean>(false);
 
-    const [notificationList , setNotificationList] = useState([]);
+    const [notificationList , setNotificationList] = useState<NotificationDto[]>([]);
 
     useEffect(()=>{
         getMyNotification(pageNumber)
@@ -27,10 +28,10 @@ const NotificationPage = () => {
                         return response.data.content;
                     }
                     if(response.data.last) setLast(true);
-                    return response.data.content;
+                    setNotificationList(response.data.content);
                 }
             }).then(data =>{
-            setNotificationList((itemLists) => itemLists.concat(data));
+            // setNotificationList((itemLists) => itemLists.concat(data));
             }).catch((error)=>{
                 ApiErrorHandle(error)
             }).finally(()=>{
@@ -57,12 +58,11 @@ const NotificationPage = () => {
         })
     }
 
-    let updateParam = {};
-    const updateNotiFn=(notificationSn)=>{
+    const updateNotiFn=(notificationSn:number)=>{
         console.log("updateNotiFn");
         console.log(notificationSn);
         const recordIndex = notificationList.findIndex((data) => data.notificationSn === notificationSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        updateParam.notificationSn = notificationSn; // 요청 파라미터에 Sn 저장
+        const updateParam:NotificationSn={notificationSn:notificationSn};
         updateNotification(updateParam)
             .then(response=>{
                 console.log(response);

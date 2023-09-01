@@ -2,33 +2,54 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import MyPageSmListToggleIconComponent from "./MyPageSmListToggleIconComponent";
 import CountUp from "react-countup";
+import {CalenderRecordSm} from "../../../model/CalendarApiModel";
 
-const MyPageRecordSmComponent = ({recordList}) => {
+interface MyPageRecordSmComponentInterface {
+    recordList:CalenderRecordSm[];
+}
 
-    const  yearGrouped = {};
+interface YearData {
+    year: string;
+    data: {
+        month: string;
+        monthCount: number;
+    }[];
+    monthCountSum: number;
+}
+
+interface YearGroupedData {
+    [year: string]: YearData;
+}
+
+const MyPageRecordSmComponent :React.FC<MyPageRecordSmComponentInterface> = ({recordList}) => {
+    console.log(recordList);
+    const  yearGrouped:YearGroupedData = {};
     recordList.length >0 &&recordList.forEach((item)=>{
-        const { year, month, monthCount } = item;
+        const { year, month, monthCount }:CalenderRecordSm = item;
         if (!yearGrouped[year]) {
             yearGrouped[year] = {
                 year: year,
-                data: [ ] ,
+                data: [] ,
                 monthCountSum:0
             };
         }
-        yearGrouped[year].monthCountSum += parseInt(monthCount);
+        yearGrouped[year].monthCountSum += parseInt(monthCount.toString());
         yearGrouped[year].data.push({ month, monthCount });
     })
+    console.log(yearGrouped);
 
 
-    const [visibility, setVisibility] = useState({});
-    // toggle event
-    const handleToggle = (itemId) => {
+    // const [visibility, setVisibility] = useState({});
+    const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
+
+
+
+    const handleToggle = (itemId:number) => {
         setVisibility((prevVisibility) => ({
             ...prevVisibility,
             [itemId]: !prevVisibility[itemId],
         }));
     };
-    // console.log(visibility);
 
     return (
         <MyRecordSmComponentWrap>

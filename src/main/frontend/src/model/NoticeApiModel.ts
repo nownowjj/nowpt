@@ -6,3 +6,4 @@ export interface NoticeNew{
 export interface NoticeSn{
     noticeSn:number;
 }
+
