@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {LuBell, LuBellRing} from "react-icons/lu";
 import styled from "styled-components";
 import {BsPeopleFill} from "react-icons/bs";
-import {getMyNotification} from "../../../api/NotificationApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../../services/remocon";
+import {getMyNotificationCount} from "../../../api/NotificationApi";
 
 interface AnimatedBellWrapInterface {
     redDots:boolean;
@@ -16,7 +16,7 @@ const FriendAndNotificationArea = () => {
     const [isActiveBell , setIsActiveBell] = useState<boolean>(false);
 
     useEffect(()=>{
-        getMyNotification(0,true)
+        getMyNotificationCount()
             .then((result)=>{
                 if(result.data !== 0 ) setIsActiveBell(true);
             })

@@ -17,3 +17,4 @@ export interface NotificationDto {
 export interface NotificationPagingDto extends PagingResponse{
     content: NotificationDto[];
 }
+

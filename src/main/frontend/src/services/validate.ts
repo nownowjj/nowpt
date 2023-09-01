@@ -32,7 +32,7 @@ export function validateEmail(email,originEmail){
  * @returns {boolean}
  * 로그인 유효성 검사
  */
-export function validateLogin(id,pw){
+export function validateLogin(id:string,pw:string){
     console.log(id , pw ,'dd');
     if(id === "" && pw === "")  return "아이디와 비밀번호를 입력해 주세요"
     return true;

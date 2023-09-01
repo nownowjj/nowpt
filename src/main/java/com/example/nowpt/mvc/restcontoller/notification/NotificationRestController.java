@@ -37,18 +37,20 @@ public class NotificationRestController {
     }
 
     @GetMapping("")
-    public ResponseDto<?> selectNotification(@AuthenticationPrincipal Member member, Pageable pageable , @RequestParam boolean countMode , Principal principal){
-        log.debug("principal : {}",principal);
-        log.debug("알림 조회 :{}, {} ,{}"  ,member.getMemberSn() ,pageable , countMode);
+    public ResponseDto<?> selectNotification(@AuthenticationPrincipal Member member, Pageable pageable){
 
-        if(countMode){
-            Long count = notificationRepo.countByTargetMemberSnAndUseYn(member.getMemberSn(),"Y");
-            log.debug("메인 카운트모드 {}",count);
-            return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,  count);
-        }
         Page<Notification> result = notificationRepo.findByUseYnAndTargetMemberSn(member.getMemberSn(),pageable);
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,    result);
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
     }
+
+    @GetMapping("/count")
+    public ResponseDto<?> selectNotificationCount(@AuthenticationPrincipal Member member){
+
+        Long count = notificationRepo.countByTargetMemberSnAndUseYn(member.getMemberSn(),"Y");
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,  count);
+    }
+
+
 
     @PutMapping("")
     public ResponseDto<?> deleteNotification(@RequestBody NotificationDto notificationDto){

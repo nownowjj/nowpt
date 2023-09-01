@@ -1,7 +1,7 @@
 import styled, {keyframes} from "styled-components";
 import React from "react";
 
-const Container = styled.div({
+const Container = styled.div`
     position: 'absolute',
     width: '100%',
     height: '100%',
@@ -10,7 +10,7 @@ const Container = styled.div({
     alignItems: 'center',
     justifyContent: 'center',
     background: '#e8e8e8',
-});
+`
 
 const rotation = keyframes`
     from {
@@ -31,18 +31,11 @@ const Spinner = styled.div`
   margin: 10rem auto;
   animation: ${rotation} 1s linear infinite;
 `;
-
-
-
-
-
  const Loading =()=> {
     return (
-        <>
             <Container>
                 <Spinner/>
             </Container>
-        </>
     );
 }
 export default Loading;

@@ -1,13 +1,20 @@
 import {API_BASE, ApiResponse, NOTIFICATION, request} from "./Api";
 import {NotificationPagingDto, NotificationSn} from "../model/NotificationApiModel";
 
-export function getMyNotification(pageNumber:number, countMode=false):Promise<ApiResponse<NotificationPagingDto>>{
+export function getMyNotification(pageNumber:number):Promise<ApiResponse<NotificationPagingDto>>{
     const url = API_BASE + NOTIFICATION;
-    const param = "?page="+pageNumber+"&size=10&countMode="+countMode
+    const param = "?page="+pageNumber+"&size=10"
     const requestUrl = url+ param
-    console.log("countMode",countMode);
     return request({
         url: requestUrl,
+        method: 'GET'
+    });
+}
+
+export function getMyNotificationCount():Promise<ApiResponse<number>>{
+    const url = API_BASE + NOTIFICATION+"/count";
+    return request({
+        url: url,
         method: 'GET'
     });
 }

@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import React, {useState} from 'react'
 import {useNavigate} from "react-router";
-import Button from "../component/JoinButton";
 import {ACCESS_TOKEN, login} from "../api/Api";
 import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
 import '../styles/style.css'
@@ -16,11 +15,12 @@ import {UserLoginInfo} from "../model/model";
 
 const LoginPage = () => {
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [messageCall, setMessageCall] = useState('');
-    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
-    const alertFunction =(closeCallBack,message)=>{
-        setCloseCallBackFn(() => closeCallBack)
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState<()=>void>();
+
+    const alertFunction =(closeCallBack: ()=> void , message:string)=>{
+        setCloseCallBackFn(() => closeCallBack);
         setMessageCall(message);
         setShowAlert(true);
     }
@@ -50,7 +50,7 @@ const LoginPage = () => {
         // ID ,PW 유효성 검사
         const validateResult = validateLogin(loginDto.membId , loginDto.membPw);
         if (validateResult !== true) {
-            alertFunction(null , validateResult);
+            alertFunction(()=>{} , validateResult);
             return;
         }
 
@@ -103,7 +103,7 @@ const LoginPage = () => {
                         />
                         <Label>PW</Label>
                     </InputGroup>
-                    <Button
+                    <LoginButton
                         style={{width:"100%",height:"45px",color:"white",backgroundColor:"skyblue"}}
                         onClick={originLogin}
                         value="로그인"
@@ -237,6 +237,22 @@ const Input = styled.input`
     -webkit-appearance: none;
 }
 `;
-
+const LoginButton = styled.button`
+    width:100%;
+    height:45px;
+    color:white;
+    backgroundColor:skyblue;
+    border-radius: 4px;
+    color: black;
+    font-weight: bold;
+    padding: 10px 6px 10px 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    outline:none;
+    border: none;
+    &:hover {
+        // background-color: #d32f2f;
+    }
+`
 
 export default LoginPage

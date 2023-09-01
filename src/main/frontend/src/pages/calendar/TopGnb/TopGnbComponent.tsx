@@ -3,7 +3,11 @@ import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {IoIosArrowBack} from "react-icons/io";
 
-const TopGnbComponent = (data) => {
+interface TopGnbComponentInterface {
+    page:string;
+}
+
+const TopGnbComponent = (data:TopGnbComponentInterface) => {
     const navigate = useNavigate();
     return (
         <TopGnbWrap>
