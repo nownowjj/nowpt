@@ -1,7 +1,6 @@
 import {API_BASE, ApiResponse, CALENDAR, request} from "./Api";
 // import { URLSearchParams } from "url"
-import {CalendarSnParam, ImportParam, NewRecordParam, RecordDate} from "../model/CalendarApiModel";
-import {CalenderDto} from "../pages/calendar/Detail/CalendarDayDetailPage";
+import {CalendarSnParam, CalenderDto, ImportParam, NewRecordParam, RecordDate} from "../model/CalendarApiModel";
 
 export function commonSearchParam(param: Record<string, any>){
     const queryParams = new URLSearchParams();
@@ -75,7 +74,7 @@ export function importRecord(param:ImportParam):Promise<ApiResponse<CalenderDto>
 }
 
 //  pageNumber :number
-export function selectImportRecordPaging(pageNumber:number) {
+export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<CalenderDto>> {
     console.log(pageNumber);
     return request({
         url: API_BASE + CALENDAR + "/import?page=" + pageNumber +

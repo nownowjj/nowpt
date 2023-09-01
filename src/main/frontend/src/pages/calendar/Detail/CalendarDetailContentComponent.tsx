@@ -9,8 +9,8 @@ import DetailStarSubComponent from "./DetailStarSubComponent";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
-import {CalenderDto} from "./CalendarDayDetailPage";
-import {useNavigate} from "react-router-dom"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import {useNavigate} from "react-router-dom";
+import {CalenderDto} from "../../../model/CalendarApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**

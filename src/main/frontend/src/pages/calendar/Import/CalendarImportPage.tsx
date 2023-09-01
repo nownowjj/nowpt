@@ -9,13 +9,14 @@ import styled from "styled-components";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
+import {CalenderDto} from "../../../model/CalendarApiModel";
 
 const CalendarImportPage = () => {
     const navigate = useNavigate();
     const [ref, inView] = useInView();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const[pageNumber,setPageNumber] = useState<number>(0);
-    const [importRecordList,setImportRecordList] = useState([]);
+    const [importRecordList,setImportRecordList] = useState<CalenderDto[]>([]);
     const lastRef = useRef(false);
 
     useEffect(() => {

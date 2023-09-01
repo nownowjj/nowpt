@@ -9,19 +9,8 @@ import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, CalenderDto, RecordDate} from "../../../model/CalendarApiModel";
 
-export interface CalenderDto{
-    recordDate:string;
-    memberSn:number;
-    calendarSn:number;
-    title:string;
-    content:string;
-    frstRegistDt:Date;
-    lastChangeDt:Date;
-    useYn:string;
-    importYn:boolean;
-}
 interface DetailNoBalloonProps{
     leftSize:string;
 }

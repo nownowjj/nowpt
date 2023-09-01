@@ -15,3 +15,16 @@ export interface NewRecordParam extends RecordDate,ImportParam{
     content: string;
     importYn: boolean;
 }
+
+
+export interface CalenderDto{
+    recordDate:string;
+    memberSn:number;
+    calendarSn:number;
+    title:string;
+    content:string;
+    frstRegistDt:Date;
+    lastChangeDt:Date;
+    useYn:string;
+    importYn:boolean;
+}
