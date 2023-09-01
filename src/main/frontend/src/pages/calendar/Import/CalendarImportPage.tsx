@@ -11,11 +11,10 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 
 const CalendarImportPage = () => {
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [ref, inView] = useInView();
-    const[pageNumber,setPageNumber] = useState(0);
-    // const[last,setLast] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const[pageNumber,setPageNumber] = useState<number>(0);
     const [importRecordList,setImportRecordList] = useState([]);
     const lastRef = useRef(false);
 

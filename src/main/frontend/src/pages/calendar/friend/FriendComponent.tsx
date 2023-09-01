@@ -2,19 +2,33 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import loginTrueButNoProfile from "../../../assets/ggwak.png";
 import ConfirmComponent from "../component/ConfirmComponent";
+import {FriendDto} from "../../../model/FriendApiModel";
 
-const FriendComponent = ({data , leftText ,rightText ,leftCallBack , rightCallBack , paramKey}) => {
+interface FriendComponentTypeInterface {
+    data:FriendDto;
+    leftText:string;
+    rightText:string;
+    leftCallBack: (key:number)=> void;
+    rightCallBack:(key:number)=> void;
+    paramKey : number;
+}
+
+interface rightConfirmMsgMapInterface {
+    [index:string] : string;
+}
+
+const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftText ,rightText ,leftCallBack , rightCallBack , paramKey}) => {
     const profileSrc = data.friendProfile ? data.friendProfile :loginTrueButNoProfile;
 
     const leftEvent =()=> leftCallBack(paramKey)
-    const rightEvent =()=>rightCallBack(paramKey)
+    const rightEvent =()=> rightCallBack(paramKey)
 
     // Alert 여부
-    const [showConfirm , setShowConfirm] = useState(false);
-    const [okCallBackFn, setOkCallBackFn] = useState(null);
-    const [messageCall, setMessageCall] = useState('');
+    const [showConfirm , setShowConfirm] = useState<boolean>(false);
+    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
+    const [messageCall, setMessageCall] = useState<string>('');
 
-    const rightConfirmMsgMap ={
+    const rightConfirmMsgMap:rightConfirmMsgMapInterface ={
         '친구삭제' : `${data.friendNm}님 친구삭제`,
         '요청 취소'    : `${data.friendNm}님에게 보낸 친구 요청을<br/> 취소 하시겠습니까?`,
         '거절하기'    : `${data.friendNm}님이 보낸 친구 요청을<br/> 거절 하시겠습니까?`
@@ -27,7 +41,7 @@ const FriendComponent = ({data , leftText ,rightText ,leftCallBack , rightCallBa
         confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )
     }
 
-    const confirmFunction =(okCallBack , message)=>{
+    const confirmFunction =(okCallBack:()=>void , message:string)=>{
         setOkCallBackFn(() => okCallBack);
         setMessageCall(message);
         setShowConfirm(true);

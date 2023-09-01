@@ -8,47 +8,56 @@ import moment from "moment";
 import {useDispatch} from "react-redux";
 import {firstEvent} from "../../../redux/slice/friendSlice";
 import AlertComponent from "../component/AlertComponent";
+import {FriendMemberSn} from "../../../model/FriendApiModel";
+import {friendDto} from "./FriendPage";
 
-const FriendRecommendComponent = ({data}) => {
+interface FriendRecommendComponentInterface {
+    data:friendDto[];
+}
+
+const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({data}) => {
+    console.log(data);
     const dispatch = useDispatch();
 
 
-    let param={};
 
 
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [messageCall, setMessageCall] = useState('');
-    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
-    const alertFunction =(closeCallBack,message)=>{
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState<()=>void>();
+    const alertFunction =(closeCallBack:()=> void ,message:string)=>{
         setCloseCallBackFn(() => closeCallBack)
         setMessageCall(message);
         setShowAlert(true);
     }
 
-    const addCallBack=(key)=>{
-        param.friendMemberSn = key;
+    const closeCallBack:()=>void=()=>{
+        setShowAlert(false);
+    }
+
+    const addCallBack=(key:number)=>{
+        const param :FriendMemberSn={friendMemberSn:key};
         console.log("FriendApplyWaitComponent 친구 요청 ",key);
         requestFriend(param)
             .then((response)=>{
                 console.log(response);
                 // 친구 요청에 성공 했으면 보낸요청 , 친구추천 리스트를 리렌더링 시켜야함
-                alertFunction(setShowAlert(false),'요청 성공!')
-                dispatch(firstEvent());
+                alertFunction(closeCallBack,'요청 성공!')
+                dispatch(firstEvent);
             }).catch((error)=>{
-                alertFunction(setShowAlert(false),'요청 실패!')
+                alertFunction(closeCallBack,'요청 실패!')
                 console.log(error);
         })
     }
 
 
-    const [searchTerm, setSearchTerm] = useState('');     // 검색어
-    const [filteredData, setFilteredData] = useState([]); // 검색 결과
+    const [searchTerm, setSearchTerm] = useState<string>('');     // 검색어
+    const [filteredData, setFilteredData] = useState<friendDto[]>([]); // 검색 결과
     useEffect(() => {
         // 검색어에 따라 데이터 필터링
-        let filtered;
         if(searchTerm.length > 0) { // 검색어가 존재해야함
-            filtered = data.filter(item => item.friendNm.toLowerCase().includes(searchTerm.toLowerCase())); // 검색어로 이름 조회
+            const filtered = data.filter(item => item.friendNm.toLowerCase().includes(searchTerm.toLowerCase())); // 검색어로 이름 조회
             if(filtered.length > 0 ){
                 setFilteredData(filtered); // 결과를 담음
             }else{
@@ -59,11 +68,11 @@ const FriendRecommendComponent = ({data}) => {
 
     }, [searchTerm, data]);
 
-    const handleInputChange = event => {
-        setSearchTerm(event.target.value);
+    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
     };
 
-    const [searchCancel , setSearchCancel] = useState(true);
+    const [searchCancel , setSearchCancel] = useState<boolean>(true);
     return (
         <>
             {/* 추천 헤더 */}
@@ -105,7 +114,7 @@ const FriendRecommendComponent = ({data}) => {
                         leftText='친구 요청'
                         rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
                         leftCallBack={addCallBack}
-                        // rightCallBack={removeCallBack}
+                        rightCallBack={()=>{}}
                     />
                 ))
                     :
@@ -123,7 +132,7 @@ const FriendRecommendComponent = ({data}) => {
                         leftText='친구 요청'
                         rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
                         leftCallBack={addCallBack}
-                        // rightCallBack={removeCallBack}
+                        rightCallBack={()=>{}}
                     />
                 ))
                 // 검색 모드 X

@@ -3,8 +3,13 @@ import styled from "styled-components";
 import FriendComponent from "./FriendComponent";
 import FriendTitleComponent from "./FriendTitleComponent";
 import AlertComponent from "../component/AlertComponent";
+import {friendDto} from "./FriendPage";
 
-const FriendRequestWaitComponent = ({data}) => {
+interface FriendRequestWaitComponentInterface {
+    data : friendDto[];
+}
+
+const FriendRequestWaitComponent : React.FC<FriendRequestWaitComponentInterface>= ({data}) => {
 
     /**
      * friendSn , acceptYn
@@ -12,12 +17,12 @@ const FriendRequestWaitComponent = ({data}) => {
      */
     // let param={};
 
-    // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [messageCall, setMessageCall] = useState('');
-    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
+        // Alert 여부
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState<()=>void>();
 
-    const alertFunction =(closeCallBack,message)=>{
+    const alertFunction =(closeCallBack: ()=> void , message:string)=>{
         setCloseCallBackFn(() => closeCallBack)
         setMessageCall(message);
         setShowAlert(true);
@@ -27,9 +32,13 @@ const FriendRequestWaitComponent = ({data}) => {
     //     console.log("성공!");
     // }
 
+    const closeCallBack:()=>void=()=>{
+        setShowAlert(false);
+    }
+
     // 수락 대기중 Alert 띄워준다
     const applyCallBack =()=>{
-        alertFunction(setShowAlert(false),'수락 대기중 입니다.')
+        alertFunction(closeCallBack,'수락 대기중 입니다.')
     }
 
     /**
@@ -42,7 +51,7 @@ const FriendRequestWaitComponent = ({data}) => {
      * 5. ACCEPT 상태라면 상대방이 요청을 수락한 상태이므로 Alert을 띄어준 후 [친구 목록 , 요청 대기] 리렌더링 해야 함
      * @param key
      */
-    const requestCancelFunction =(key)=>{
+    const requestCancelFunction =(key:number)=>{
         console.log(`보낸 요청 취소 ${key}`);
         // updateRequestFriend(param)
         //     .then((response)=>{

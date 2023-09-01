@@ -1,17 +1,21 @@
 import React from 'react';
 import {BiBookmarks, BiSolidBookmarks} from "react-icons/bi";
 
-const DetailStarSubComponent = ({ initialYn, importantRecord ,style }) => {
+interface DetailStarSubComponentProps{
+    initialYn : boolean;
+    importantRecord:(important:boolean) => void;
+    style : React.CSSProperties;
+}
+
+const DetailStarSubComponent:React.FC<DetailStarSubComponentProps> = ({ initialYn, importantRecord ,style }) => {
     return (
         <>
             {initialYn ? (
-                // <TiStarFullOutline
                 <BiSolidBookmarks
                     onClick={() => importantRecord(false)}
                     style={style}
                 />
             ) : (
-                // <TiStarOutline
                 <BiBookmarks
                     onClick={() => importantRecord(true)}
                     style={style}

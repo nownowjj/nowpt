@@ -5,23 +5,27 @@ import FriendTitleComponent from "./FriendTitleComponent";
 import {updateRequestFriend} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
+import {FriendDto, FriendUpdateParam} from "../../../model/FriendApiModel";
 
-const FriendApplyWaitComponent = ({data}) => {
-console.log(data.length);
+interface FriendApplyWaitComponentProps  {
+    data: FriendDto[];
+}
 
+const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ data }) => {
+    console.log(data);
     /**
      * friendSn , acceptYn
      * @param key
      */
-    let param={};
+    // let param={};
 
     // Alert 여부
-    const [showAlert , setShowAlert] = useState(false);
-    const [messageCall, setMessageCall] = useState('');
-    const [closeCallBackFn , setCloseCallBackFn] = useState(null);
+    const [showAlert , setShowAlert] = useState<boolean>(false);
+    const [messageCall, setMessageCall] = useState<string>('');
+    const [closeCallBackFn , setCloseCallBackFn] = useState<() => void>();
 
-    const alertFunction =(closeCallBack,message)=>{
-        setCloseCallBackFn(() => closeCallBack)
+    const alertFunction =(closeCallBack: ()=> void , message:string)=>{
+        setCloseCallBackFn(() => closeCallBack);
         setMessageCall(message);
         setShowAlert(true);
     }
@@ -30,21 +34,19 @@ console.log(data.length);
         console.log("성공!");
     }
 
-    const applyCallBack =(key)=>{
-        param.friendSn = key;
-        param.acceptYn = true;
+    const applyCallBack =(key:number)=>{
+        const param:FriendUpdateParam = {friendSn : key ,acceptYn : true};
         console.log("FriendApplyWaitComponent 친구 수락 ",key);
         updateFunction(param,true);
     }
 
-    const rejectCallBack =(key)=>{
-        param.friendSn = key;
-        param.acceptYn = false;
+    const rejectCallBack =(key:number)=>{
+        const param:FriendUpdateParam = {friendSn : key ,acceptYn : false};
         console.log("FriendApplyWaitComponent 친구 거절 ",key);
         updateFunction(param);
     }
 
-    const updateFunction =(param , mode=false)=>{
+    const updateFunction =(param:FriendUpdateParam , mode=false)=>{
         // const recordIndex = waitList.findIndex((data) => data.friendSn === param.friendSn); // 삭제 요청이 들어온 객체의 index를 찾음
         // console.log(recordIndex);
         updateRequestFriend(param)
@@ -59,7 +61,7 @@ console.log(data.length);
                 //     console.log(updatedData);
                 // }
             }).catch((error)=>{
-            alertFunction(null,'에러 발생')
+            alertFunction(()=>{},'에러 발생');
             ApiErrorHandle(error)
         })
     }

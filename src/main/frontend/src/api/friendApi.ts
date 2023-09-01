@@ -2,7 +2,7 @@ import {API_BASE, ApiResponse, FRIEND, request} from "./Api";
 import {FriendMemberSn, FriendUpdateParam} from "../model/FriendApiModel";
 import {friendDto} from "../pages/calendar/friend/FriendPage";
 
-export function getMyApplyWaitFriend(){
+export function getMyApplyWaitFriend():Promise<ApiResponse<friendDto[]>>{
     const url = API_BASE +"/auth" + FRIEND +"/apply";
     return request({
         url: url,
@@ -26,7 +26,7 @@ export function getRequestWaitFriend(): Promise<ApiResponse<friendDto[]>> {
     });
 }
 
-export function getRecommendFriend(){
+export function getRecommendFriend():Promise<ApiResponse<friendDto[]>>{
     const url = API_BASE +"/auth" + FRIEND;
     return request({
         url: url,
@@ -35,14 +35,15 @@ export function getRecommendFriend(){
 }
 
 // {friendSn:number , acceptYn:boolean}
-export function updateRequestFriend(param:FriendUpdateParam){
+// return "수락 or 거절 msg"
+export function updateRequestFriend(param:FriendUpdateParam):Promise<ApiResponse<string>>{
     return request({
         url: API_BASE + "/auth" + FRIEND + "/apply",
         method: 'PUT',
         body: JSON.stringify(param)
     })
 }
-export function getMyFriend(){
+export function getMyFriend():Promise<ApiResponse<friendDto[]>>{
     const url = API_BASE +"/auth" + FRIEND + "/myFriend";
     return request({
         url: url,
@@ -62,7 +63,7 @@ export function getMyFriend(){
  * @param param:FriendMemberSn
  */
 // {friendMemberSn:number}
-export function requestFriend(param:FriendMemberSn){
+export function requestFriend(param:FriendMemberSn):Promise<ApiResponse<string>>{
     return request({
         url: API_BASE + "/auth" + FRIEND + "/apply",
         method: 'POST',

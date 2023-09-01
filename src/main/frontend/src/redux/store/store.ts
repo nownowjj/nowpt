@@ -7,8 +7,7 @@ import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
-// RootReducer 타입 정의
-export type RootState = ReturnType<typeof reducers>;
+
 // useSelector, useDispatch 타입 선언 추가
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 export type AppDispatch = typeof store.dispatch;
@@ -37,8 +36,8 @@ export const store = configureStore({
     // 기본 값이 true지만 배포할때 코드를 숨기기 위해서 false로 변환하기 쉽게 설정에 넣어놨다.
     devTools: true,
 })
-
-// useDispatch 활용
+// RootReducer 타입 정의
+export type RootState = ReturnType<typeof store.getState>;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;

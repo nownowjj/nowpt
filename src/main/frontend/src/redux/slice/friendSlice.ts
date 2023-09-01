@@ -1,23 +1,26 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+interface FriendState{
+    firstCount : number;
+    secondCount : number;
+}
 
-const initialState ={
+const initialState:FriendState ={
     firstCount : 0,
     secondCount : 0,
 };
 
-export const friendSlice = createSlice({
+const friendSlice = createSlice({
     name: "friendCount",
     initialState ,
     reducers:{
-        firstEvent:(state, action)=>{
-            console.log("firstEvent");
+        firstEvent:(state)=>{
             state.firstCount += 1;
         }
-        // ,
-        // secondEvent:(state, action)=>{
-        //     state.secondCount += 1;
-        // }
+        ,
+        secondEvent:(state)=>{
+            state.secondCount += 1;
+        }
     },
 });
 

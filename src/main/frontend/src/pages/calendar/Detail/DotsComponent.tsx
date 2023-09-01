@@ -2,32 +2,21 @@ import React from 'react';
 import moment from "moment";
 import styled from "styled-components";
 
-const DotsComponent = (data) => {  // data {date...  mark...}
-    const styles = {
-        dot1: {backgroundColor: 'red'},
-        dot2: {backgroundColor: 'blue'},
-        dot3: {backgroundColor: 'purple'},
-        dot4: {backgroundColor: 'green'},
-        dot5: {backgroundColor: 'black'},
-        dot6: {backgroundColor: 'black'},
-        dot7: {backgroundColor: 'black'},
-        dot8: {backgroundColor: 'black'},
-        dot9: {backgroundColor: 'black'},
-        dot10: {backgroundColor: 'black'}
-    };
+interface DotsComponentInterface {
+    date:Date;
+    mark:string[]
+}
+
+const DotsComponent = (data:DotsComponentInterface) => {
+    const colors = ['red', 'blue', 'purple', 'green', 'black', 'black', 'black', 'black', 'black', 'black'];
 
     const date =moment(data.date).format('YYYYMMDD');// 해당 일자
     const mark = data.mark;                                   // 이벤트 일자 ex : ['2023-06-10','2023-06-23','2023..]
     const count = mark.filter(item => item === date).length;  // 해당 일자가 이벤트 일자에 몇개 포함하는지
-    const dotsDivs = Array(count).fill().map((_, index) => {
-        return (
-            <Dot key={index} style={styles[`dot${index + 1}`]}/>
-        );
-    });
-
-    // const dotWrapStyles = count > 0 ? { background: '#e8e8e8' } : {};
-
-
+    const dotsDivs = [];
+    for (let index = 0; index < count; index++) {
+        dotsDivs.push(<Dot key={index} color={colors[index]} />);
+    }
     return (
         <DotWrap className="dotWrap" >
             {dotsDivs}
@@ -35,12 +24,13 @@ const DotsComponent = (data) => {  // data {date...  mark...}
     );
 };
 
-const Dot = styled.div`
+const Dot = styled.div<{color:string}>`
     height: 8px;
     width: 8px;
     border-radius: 50%;
     display: flex;
     margin-left: 1px;
+    background-color: ${({ color }) => color};
 `
 const DotWrap = styled.div`
     display: flex;
@@ -50,6 +40,4 @@ const DotWrap = styled.div`
     flex-wrap: wrap;
     padding-right: 6px;
 `
-
-
 export default DotsComponent;

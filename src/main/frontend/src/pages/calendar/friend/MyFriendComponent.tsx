@@ -2,13 +2,18 @@ import React from 'react';
 import FriendTitleComponent from "./FriendTitleComponent";
 import FriendComponent from "./FriendComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
+import {friendDto} from "./FriendPage";
 
-const MyFriendComponent = ({data}) => {
-    const watchMyFriend =(friendMemberSn)=>{
+interface MyFriendComponentInterface {
+    data:friendDto[];
+}
+
+const MyFriendComponent : React.FC<MyFriendComponentInterface> = ({data}) => {
+    const watchMyFriend =(friendMemberSn:number)=>{
         console.log("구경",friendMemberSn);
     }
 
-    const removeMyFriend=(friendMemberSn)=>{
+    const removeMyFriend=(friendMemberSn:number)=>{
        console.log("삭제", friendMemberSn);
     }
     return (

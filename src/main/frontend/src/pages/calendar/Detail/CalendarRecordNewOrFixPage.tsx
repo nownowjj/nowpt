@@ -93,9 +93,13 @@ const CalendarRecordNewOrFixPage = () => {
     }
 
 
-    const changeTitleHandle=(e)=>setTitleValue(e.target.value);
-    const changeContentHandle=(e)=>setContentValue( (e.target.value).replaceAll("<br>", "\r\n") );
-    const importantRecordEvent =()=> setImportYn(prevState => !prevState);
+    const changeTitleHandle=(e: React.ChangeEvent<HTMLInputElement>)=>setTitleValue(e.target.value);
+    const changeContentHandle=(e: React.ChangeEvent<HTMLTextAreaElement>)=>{
+        setContentValue( (e.target.value).replaceAll("<br>", "\r\n") );
+    }
+    const importantRecordEvent =()=> {
+        setImportYn(prevState => !prevState);
+    }
     return (
         <CalendarWrap>
             <CalendarRecordNewOrFixWrap>
@@ -108,8 +112,8 @@ const CalendarRecordNewOrFixPage = () => {
 
                 {/* record Wrap*/}
                 <CalendarRecordAddArea>
-                    <RecordTitleInput spellcheck={false} type="text" onChange={changeTitleHandle} value={titleValue} maxLength={100} placeholder='제목입력'/>
-                    <RecordContentInput  spellcheck={false} type="text"  onChange={changeContentHandle} maxLength={2000} value={contentValue} placeholder='내용입력'/>
+                    <RecordTitleInput type="text" onChange={changeTitleHandle} value={titleValue} maxLength={100} placeholder='제목입력'/>
+                    <RecordContentTextArea  onChange={changeContentHandle} value={contentValue} maxLength={2000} placeholder='내용입력'/>
 
                     <DetailStarSubComponent
                         initialYn={importYn} // 하위 컴포넌트로 상태 전달
@@ -150,7 +154,7 @@ const RecordTitleInput = styled.input`
         border-bottom:2px solid skyblue;
     }
 `
-const RecordContentInput = styled.textarea`
+const RecordContentTextArea = styled.textarea`
     width: 100%;
     border: none;
     border-radius: 5px;

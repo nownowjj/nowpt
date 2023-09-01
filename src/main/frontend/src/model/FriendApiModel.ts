@@ -6,3 +6,14 @@ export interface FriendUpdateParam{
 export interface FriendMemberSn{
     friendMemberSn:number;
 }
+
+export interface FriendDto{
+    acceptYn:boolean;
+    friendMemberSn:number;
+    friendNm:string;
+    friendProfile:string
+    friendSn:number;
+    frstRegistDt:Date;
+    memberSn:number;
+    requestStatus?:string;
+}

@@ -12,6 +12,7 @@ import MyFriendComponent from "./MyFriendComponent";
 import FriendRequestWaitComponent from "./FriendRequestWaitComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {useSelector} from "react-redux";
+import {useTypedSelector} from "../../../redux/store/store";
 
 export interface friendDto {
     friendSn:number;
@@ -31,7 +32,7 @@ const FriendPage = () => {
     const [myFriendList , setMyFriendList] = useState<friendDto[]>([]);
     const [requestWaitList,setRequestWaitList] = useState<friendDto[]>([]);
 
-    const firstCount = useSelector(state => state.friend.firstCount);
+    const firstCount = useTypedSelector(state => state.friend.firstCount);
 
 
     // 내가 보낸 요청 대기중인 리스트
@@ -81,8 +82,10 @@ const FriendPage = () => {
         })
     },[firstCount,navigate])
 
-    const [activeIndex , setActiveIndex] = useState(0);
-    const activeFn =index=> setActiveIndex(index);
+    const [activeIndex , setActiveIndex] = useState<number>(0);
+    const activeFn =(index:number) => {
+        setActiveIndex(index);
+    }
 
 
 
