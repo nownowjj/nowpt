@@ -1,8 +1,7 @@
 package com.example.nowpt.mvc.repository.calendar;
 
-import com.example.nowpt.mvc.dto.CalenderDto;
-import com.example.nowpt.mvc.dto.CalenderSmDto;
-import com.example.nowpt.mvc.model.Calendar;
+import com.example.nowpt.mvc.dto.CalendarDto;
+import com.example.nowpt.mvc.dto.CalendarSmDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -11,11 +10,11 @@ import java.util.List;
 
 @Repository
 public interface CalendarCustomRepo {
-    List<String> selectRecordDate (CalenderDto calenderDto);
+    List<String> selectRecordDate (CalendarDto calendarDto);
 
-    List<CalenderDto> selectDetailRecord (CalenderDto calenderDto);
+    List<CalendarDto> selectDetailRecord (CalendarDto calendarDto);
 
-    List<CalenderSmDto> selectMyRecordSm (Long membSn);
+    List<CalendarSmDto> selectMyRecordSm (Long membSn);
 
-    Page<CalenderDto> findImportRecordByMembSn(Long calendarSn , Pageable pageable);
+    Page<CalendarDto> findImportRecordByMembSn(Long calendarSn , Pageable pageable);
 }

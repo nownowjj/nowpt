@@ -9,7 +9,7 @@ import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalenderDto, RecordDate} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, CalendarDto, RecordDate} from "../../../model/CalendarApiModel";
 
 interface DetailNoBalloonProps{
     leftSize:string;
@@ -18,7 +18,7 @@ const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     const [isLoading, setIsLoading] = useState(true);
-    const [detail,setDetail] = useState<CalenderDto[]>([]);
+    const [detail,setDetail] = useState<CalendarDto[]>([]);
     const {detailDay} = state;
 
     useEffect(()=>{

@@ -8,13 +8,13 @@ import styled from "styled-components";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalenderDto, CalenderPagingDto} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, CalendarDto, CalendarPagingDto} from "../../../model/CalendarApiModel";
 
 const CalendarImportPage = () => {
     const [ref, inView] = useInView();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const[pageNumber,setPageNumber] = useState<number>(0);
-    const [importRecordList,setImportRecordList] = useState<CalenderDto[]>([]);
+    const [importRecordList,setImportRecordList] = useState<CalendarDto[]>([]);
     const lastRef = useRef(false);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const CalendarImportPage = () => {
                     if(response.data.last)  lastRef.current = true;
                     return response.data.content;
                 }
-        }).then((content:CalenderDto[] | undefined) =>{
+        }).then((content:CalendarDto[] | undefined) =>{
             if (content) setImportRecordList((prevData) => prevData.concat(content));
         }).catch(error => {
             ApiErrorHandle(error);

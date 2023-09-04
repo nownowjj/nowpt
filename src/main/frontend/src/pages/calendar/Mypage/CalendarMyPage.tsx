@@ -13,7 +13,7 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import Aos from "aos";
 import {Member} from "../../../model/Common";
-import {CalenderRecordSm} from "../../../model/CalendarApiModel";
+import {CalendarRecordSm} from "../../../model/CalendarApiModel";
 
 
 interface ProfileItemProps{
@@ -25,7 +25,7 @@ const CalendarMyPage = () => {
     // 해당 멤버 정보
     const [membInfo, setMembInfo] = useState<Member>();
     const [isLoading, setIsLoading] = useState(true);
-    const [recordList, setRecordList] = useState<CalenderRecordSm[]>([]);
+    const [recordList, setRecordList] = useState<CalendarRecordSm[]>([]);
 
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);

@@ -10,7 +10,7 @@ import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
-import {CalenderDto} from "../../../model/CalendarApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import {CalendarDto} from "../../../model/CalendarApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
@@ -23,7 +23,7 @@ dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
  */
 
 interface CalendarDetailContentComponentProps{
-    data: CalenderDto;
+    data: CalendarDto;
     removeRecord: (calendarSn: number) => void; // Update the prop type here
     importPage: boolean;
     importEvent: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalenderSmDto {
+public class CalendarSmDto {
     private String year;
     private String month;
     private Long monthCount;

@@ -1,13 +1,9 @@
 package com.example.nowpt.mvc.repository.calendar;
 
-import com.example.nowpt.mvc.dto.CalenderDto;
-import com.example.nowpt.mvc.dto.CalenderSmDto;
-import com.example.nowpt.mvc.dto.LoginHstDto;
+import com.example.nowpt.mvc.dto.CalendarDto;
+import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.QCalendar;
-import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +12,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -29,21 +23,21 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
     QCalendar qCalendar = QCalendar.calendar;
 
     @Override
-    public List<String> selectRecordDate(CalenderDto calenderDto) {
+    public List<String> selectRecordDate(CalendarDto calendarDto) {
         return queryFactory
                 .select(qCalendar.recordDate)
                 .from(qCalendar)
                 .where(
-                        qCalendar.memberSn.eq(calenderDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(calenderDto.getRecordDate()+'%')))
+                        qCalendar.memberSn.eq(calendarDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(calendarDto.getRecordDate()+'%')))
                 )
                 .fetch();
 
     }
 
     @Override
-    public List<CalenderDto> selectDetailRecord(CalenderDto calenderDto) {
+    public List<CalendarDto> selectDetailRecord(CalendarDto calendarDto) {
         return queryFactory
-                .select(Projections.fields(CalenderDto.class,
+                .select(Projections.fields(CalendarDto.class,
                         qCalendar.calendarSn.as("calendarSn"),
                         qCalendar.memberSn.as("memberSn"),
                         qCalendar.recordDate.as("recordDate"),
@@ -55,15 +49,15 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.importYn.as("importYn")
                         ))
                 .from(qCalendar)
-                .where(qCalendar.memberSn.eq(calenderDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.eq(calenderDto.getRecordDate()))))
+                .where(qCalendar.memberSn.eq(calendarDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.eq(calendarDto.getRecordDate()))))
                 .fetch();
 
     }
 
     @Override
-    public List<CalenderSmDto> selectMyRecordSm(Long membSn) {
+    public List<CalendarSmDto> selectMyRecordSm(Long membSn) {
         return queryFactory
-                .select(Projections.fields(CalenderSmDto.class,
+                .select(Projections.fields(CalendarSmDto.class,
                         qCalendar.recordDate.substring(0, 4).as("year"),
                         qCalendar.recordDate.substring(4, 6).as("month"),
                         qCalendar.recordDate.count().as("monthCount")
@@ -76,7 +70,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
     }
 
     @Override
-    public Page<CalenderDto> findImportRecordByMembSn(Long memberSn, Pageable pageable) {
+    public Page<CalendarDto> findImportRecordByMembSn(Long memberSn, Pageable pageable) {
         QCalendar qSubCalendar = new QCalendar("subCalendar");
 
         // Subquery to fetch the total count
@@ -88,8 +82,8 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                 .fetchOne();
 
 
-        List<CalenderDto> content = queryFactory
-                .select(Projections.fields(CalenderDto.class,
+        List<CalendarDto> content = queryFactory
+                .select(Projections.fields(CalendarDto.class,
                         qCalendar.calendarSn.as("calendarSn"),
                         qCalendar.memberSn.as("memberSn"),
                         qCalendar.recordDate.as("recordDate"),

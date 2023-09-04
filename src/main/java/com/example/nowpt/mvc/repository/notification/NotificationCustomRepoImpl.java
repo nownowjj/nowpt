@@ -1,10 +1,7 @@
 package com.example.nowpt.mvc.repository.notification;
 
-import com.example.nowpt.mvc.dto.CalenderDto;
 import com.example.nowpt.mvc.model.Notification;
-import com.example.nowpt.mvc.model.QCalendar;
 import com.example.nowpt.mvc.model.QNotification;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -23,7 +23,7 @@ export interface FixParam {
     contentValue: string; // Assuming contentValue is of type string
 }
 
-export interface CalenderDto{
+export interface CalendarDto{
     recordDate:string;
     memberSn:number;
     calendarSn:number;
@@ -35,19 +35,19 @@ export interface CalenderDto{
     importYn:boolean;
 }
 
-export interface CalenderPagingDto extends PagingResponse{
-    content: CalenderDto[];
+export interface CalendarPagingDto extends PagingResponse{
+    content: CalendarDto[];
 }
 
-export interface CalenderRecordSm{
+export interface CalendarRecordSm{
     year:string;
     month:string;
     monthCount:number;
 }
 
 
-export interface CalenderMyInfoDto{
+export interface CalendarMyInfoDto{
     member:Member[];
-    myRecordSmList: CalenderRecordSm[];
+    myRecordSmList: CalendarRecordSm[];
 }
 

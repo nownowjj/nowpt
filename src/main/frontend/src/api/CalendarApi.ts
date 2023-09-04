@@ -2,8 +2,9 @@ import {API_BASE, ApiResponse, CALENDAR, request} from "./Api";
 // import { URLSearchParams } from "url"
 import {
     CalendarSnParam,
-    CalenderDto, CalenderMyInfoDto,
-    CalenderPagingDto,
+    CalendarDto,
+    CalendarMyInfoDto,
+    CalendarPagingDto,
     ImportParam,
     NewRecordParam,
     RecordDate
@@ -30,7 +31,7 @@ export function getMyCalendar(param:RecordDate){
 }
 
 // {recordDate:string}
-export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<CalenderDto[]>>{
+export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<CalendarDto[]>>{
     const url = API_BASE + CALENDAR;
     // const queryParams = new URLSearchParams(param).toString();
     const fullUrl = url + "?" + commonSearchParam(param);
@@ -61,7 +62,7 @@ export function deleteRecord(param:CalendarSnParam){
 }
 
 
-export function getMyInfoAndRecord():Promise<ApiResponse<CalenderMyInfoDto>>{
+export function getMyInfoAndRecord():Promise<ApiResponse<CalendarMyInfoDto>>{
     return request({
         url: API_BASE + '/calendar/myRecord',
         method: 'GET'
@@ -69,7 +70,7 @@ export function getMyInfoAndRecord():Promise<ApiResponse<CalenderMyInfoDto>>{
 }
 
 //   param :{calendarSn:number  , importYn:boolean}
-export function importRecord(param:ImportParam):Promise<ApiResponse<CalenderDto>>{
+export function importRecord(param:ImportParam):Promise<ApiResponse<CalendarDto>>{
     const url = API_BASE + CALENDAR;
     const fullUrl = url + "?" + commonSearchParam(param);
     console.log(fullUrl);
@@ -81,7 +82,7 @@ export function importRecord(param:ImportParam):Promise<ApiResponse<CalenderDto>
 }
 
 //  pageNumber :number
-export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<CalenderPagingDto>> {
+export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<CalendarPagingDto>> {
     console.log(pageNumber);
     return request({
         url: API_BASE + CALENDAR + "/import?page=" + pageNumber +

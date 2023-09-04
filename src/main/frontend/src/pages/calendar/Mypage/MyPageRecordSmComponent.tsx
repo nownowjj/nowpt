@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import MyPageSmListToggleIconComponent from "./MyPageSmListToggleIconComponent";
 import CountUp from "react-countup";
-import {CalenderRecordSm} from "../../../model/CalendarApiModel";
+import {CalendarRecordSm} from "../../../model/CalendarApiModel";
 
 interface MyPageRecordSmComponentInterface {
-    recordList:CalenderRecordSm[];
+    recordList:CalendarRecordSm[];
 }
 
 interface YearData {
@@ -24,7 +24,7 @@ interface YearGroupedData {
 const MyPageRecordSmComponent :React.FC<MyPageRecordSmComponentInterface> = ({recordList}) => {
     const  yearGrouped:YearGroupedData = {};
     recordList.length >0 &&recordList.forEach((item)=>{
-        const { year, month, monthCount }:CalenderRecordSm = item;
+        const { year, month, monthCount }:CalendarRecordSm = item;
         if (!yearGrouped[year]) {
             yearGrouped[year] = {
                 year: year,
