@@ -34,7 +34,6 @@ public class CalenderRestController {
 
         calenderDto.setMemberSn(member.getMemberSn());
         List<String> calenderList = calenderService.selectRecordDate(calenderDto);
-
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calenderList);
     }
 

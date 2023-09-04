@@ -19,7 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 로그인, 회원가입 등과 같이 권한이 없어도 사용할 수 있는 api
@@ -67,10 +70,16 @@ public class AuthRestController {
     @PostMapping("/userLogin")
     public ResponseDto<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
-        log.debug("[LoginDto]{},{}",loginDto.getMembId(),loginDto.getMembPw());
+        Map<String,String> errMap = new HashMap<>();
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
-        if(token.equals("fail"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notF");
-        if(token.equals("peNot"))return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, "notP");
+        if(token.equals("fail")){
+            errMap.put("errorMessage","notF");
+            return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, errMap);
+        }
+        if(token.equals("peNot")){
+            errMap.put("errorMessage","notP");
+            return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, errMap);
+        }
         return ResponseUtil.SUCCESS(Cd.LOGIN_SUCCESS, new JwtAuthenticationResponse(token));
     }
 

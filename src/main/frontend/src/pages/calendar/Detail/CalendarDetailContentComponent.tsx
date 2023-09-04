@@ -29,7 +29,6 @@ interface CalendarDetailContentComponentProps{
     importEvent: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed
 }
 const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent }) => {
-    console.log(data.recordDate);
     const navigate = useNavigate();
     const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
     // 즐겨찾기를 등록 할 떄에는 바로 등록

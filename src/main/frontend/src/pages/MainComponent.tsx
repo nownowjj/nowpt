@@ -3,19 +3,18 @@ import {mainTest} from "../api/Api";
 import Kakaomap from "../services/kakaomap/Kakaomap";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../redux/slice/countSlice";
-import isId from "../services/authService/IsId";
 import ApiErrorHandle from "../services/ApiErrorHandle";
+import {RootState, useTypedSelector} from "../redux/store/store";
 
 const MainComponent = () => {
     const dispatch = useDispatch();
 
 
-    const [message,setMessage] = useState("");
+    const [message,setMessage] = useState<string>("");
 
-    const count = useSelector(state => state.count.value.count);
-    const isLoggedIn = useSelector((state) => state.user.value.isLoggedIn);
+    const count = useSelector((state:RootState) => state.count.count);
+    const isLoggedIn = useTypedSelector((state:RootState) => state.user.isLoggedIn);
     // const user = useSelector((state) => state.user.value.user);
-    const id = isId();
 
     useEffect(()=>{
         mainTest()
@@ -28,19 +27,10 @@ const MainComponent = () => {
 
 
 
-    const checkFn = (text,e) =>{
-        console.log(text,e)
-    }
-    
     
     
     return (
         <div>
-            <div
-                onClick={(event) => checkFn("응애",event)}>
-                ==
-            </div>
-            <br/>
             api : {message}, 홈,메인은 로그인을 하지 않아도 api를 호출 합니다.
             <br/>
             Main 페이지
@@ -50,7 +40,6 @@ const MainComponent = () => {
                     <div>
                         로그인 상태
                         <br/>
-                        {id}
                     </div>
                 :
                     <div>비로그인 상태</div>

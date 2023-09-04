@@ -19,11 +19,5 @@ const route = {
     friend : '/friend'
 }
 
-const isNotLogin = err => {
-    console.log(err);
-    if(err.code === '4444') {
-        return true;
-    }
-}
 
-export {methodObj,route , isNotLogin};
+export {methodObj,route };

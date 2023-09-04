@@ -91,7 +91,7 @@ export function updateMembAddr(email:string) {
 }
 
 // 로그인시 사용할 api
-export function login(loginDto:UserLoginInfo) {
+export function login(loginDto:UserLoginInfo):Promise<ApiResponse<LoginResponse>> {
     return request({
         url: API_BASE + "/auth/userLogin",
         method: 'POST',

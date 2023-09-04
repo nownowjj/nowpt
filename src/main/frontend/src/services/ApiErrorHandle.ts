@@ -1,5 +1,6 @@
 import {route} from "./remocon";
 import {useNavigate} from 'react-router-dom';
+import React from "react";
 
 /**
  *
@@ -7,7 +8,14 @@ import {useNavigate} from 'react-router-dom';
  * @param error
  * 공통으로 사용할 Api error handleComponent
  */
-const ApiErrorHandle = (error) => {
+
+interface ApiErrorHandleInterface {
+    code:string;
+    msg:string;
+    data:string;
+}
+
+const ApiErrorHandle = (error:ApiErrorHandleInterface) => {
     const navigate = useNavigate();
 
     console.log("error 발생 !! ApiErrorHandle 진입 %O",error);

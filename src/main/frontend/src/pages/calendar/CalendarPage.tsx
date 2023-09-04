@@ -29,6 +29,7 @@ const CalendarPage = () => {
         // const param: RecordDate = { recordDate: month ? month : moment(dateValue).format('YYYYMM')};
         getMyCalendar(param)
             .then(response =>{
+                console.log(response);
                 setMark(response.data as string[])
             })
             .catch(error =>{ApiErrorHandle(error)})
@@ -70,7 +71,7 @@ const CalendarPage = () => {
                 tileContent={({ date }) => <DotsComponent date={date} mark={mark} />} // 일자 하단에 이벤트 dot
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
-                calendarType={"US"}
+                calendarType={"gregory"}
             />
             {/* 캘린더 */}
 

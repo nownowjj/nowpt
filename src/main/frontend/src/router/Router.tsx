@@ -3,29 +3,27 @@ import MainComponent from "../pages/MainComponent";
 import LoginComponent from "../pages/LoginPage";
 import CalendarMyPage from "../pages/calendar/Mypage/CalendarMyPage";
 import Oauth from "../api/Oauth";
-import NoticePage from "../pages/notice/NoticePage";
-import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
-import MeetingPage from "../pages/meetingRoom/MeetingPage";
-import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
+// import NoticePage from "../pages/notice/NoticePage";
+// import NoticeUpdateComponent from "../pages/notice/NoticeUpdateComponent";
+// import MeetingPage from "../pages/meetingRoom/MeetingPage";
+// import MeetingUpdateComponent from "../pages/meetingRoom/MeetingUpdateComponent";
 import LoadingComponent from "../pages/LoadingComponent";
 import {useSelector} from "react-redux";
 import PrivateRoute from "./PrivateRoute";
-import TestPage from "../pages/TestPage";
-import SearchPage from "../pages/product/searchPage";
-import ChartMain from "../pages/chart/ChartMain";
+// import TestPage from "../pages/TestPage";
+// import SearchPage from "../pages/product/searchPage";
+// import ChartMain from "../pages/chart/ChartMain";
 import Calendar from "../pages/calendar/CalendarPage";
 import CalendarRecordNewOrFixPage from "../pages/calendar/Detail/CalendarRecordNewOrFixPage";
 import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
 import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 import FriendPage from "../pages/calendar/friend/FriendPage";
+import {RootState, useTypedSelector} from "../redux/store/store";
 
 
 const Router = () => {
-    let isLogin = useSelector((state) => state.user.value.isLoggedIn);
-    // let product = useSelector((state) => state.product.value);
-    //
-    // console.log(useSelector((state) => state.product.value));
+    const isLogin = useTypedSelector((state:RootState) => state.user.isLoggedIn);
     console.log(isLogin)
     return (
 
@@ -35,7 +33,7 @@ const Router = () => {
 
             <Routes>
                 {/*<Route path="/" element={<HomeComponent />} />*/}
-                <Route path="/test" element={<TestPage />} />
+                {/*<Route path="/test" element={<TestPage />} />*/}
                 <Route path="/go/main" element={<MainComponent />} />
 
                 <Route
@@ -47,11 +45,11 @@ const Router = () => {
                 {/*<Route path="/go/test/jpa" element={<TestComponent />} />*/}
                 <Route path="/go/login" element={<LoginComponent />} />
 
-                <Route path="/go/notice" element={<NoticePage />} />
-                <Route path="/go/notice/:noticeSn" element={<NoticeUpdateComponent />} />
+                {/*<Route path="/go/notice" element={<NoticePage />} />*/}
+                {/*<Route path="/go/notice/:noticeSn" element={<NoticeUpdateComponent />} />*/}
 
-                <Route path="/go/meetingRoom" element={<MeetingPage />} />
-                <Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />
+                {/*<Route path="/go/meetingRoom" element={<MeetingPage />} />*/}
+                {/*<Route path="/go/meetingRoom/:reservationSn" element={<MeetingUpdateComponent />} />*/}
 
                 {/*<Route path="/go/product" element={<ProductPage />} />*/}
                 {/*<Route path="/go/product/:productSn" element={<ProductDetailComponent />} />*/}
@@ -102,8 +100,8 @@ const Router = () => {
 
                 {/*<Route path="/scroll" element={<ScrollComponent />} />*/}
 
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/chart" element={<ChartMain />} />
+                {/*<Route path="/search" element={<SearchPage />} />*/}
+                {/*<Route path="/chart" element={<ChartMain />} />*/}
             </Routes>
 
         </BrowserRouter>

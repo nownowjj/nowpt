@@ -56,15 +56,15 @@ const LoginPage = () => {
 
         login(loginDto)
             .then(response => {
+                console.log(response);
                 if(response.status === 'FAILURE'){
-                    if(response.data === 'notF'){
+                    if(response.data.errorMessage === 'notF'){
                         alert('존재하지 않는 계정.');
-                    }else if(response.data === 'notP'){
+                    }else if(response.data.errorMessage === 'notP'){
                         alert('비밀번호 오류.');
                     }
                 }else if(response.status === 'SUCCESS'){
-                    console.log(response);
-                    localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
+                    localStorage.setItem(ACCESS_TOKEN, response.data.accessToken as string);
                     dispatch(loginAction(response.data.accessToken));
                     navigate("/calendar");
                 }
@@ -104,10 +104,8 @@ const LoginPage = () => {
                         <Label>PW</Label>
                     </InputGroup>
                     <LoginButton
-                        style={{width:"100%",height:"45px",color:"white",backgroundColor:"skyblue"}}
                         onClick={originLogin}
-                        value="로그인"
-                    />
+                    >로그인</LoginButton>
                     <div className="emailTextBox">
                         <span>아이디 찾기</span>
                         <span>비밀번호 찾기</span>
@@ -241,9 +239,9 @@ const LoginButton = styled.button`
     width:100%;
     height:45px;
     color:white;
-    backgroundColor:skyblue;
+    background-color:skyblue;
     border-radius: 4px;
-    color: black;
+    color: white;
     font-weight: bold;
     padding: 10px 6px 10px 6px;
     font-size: 1.1rem;

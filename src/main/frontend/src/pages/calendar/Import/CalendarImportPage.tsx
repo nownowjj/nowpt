@@ -3,16 +3,14 @@ import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import LoadingComponent from "../../LoadingComponent";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
-import {useNavigate} from "react-router-dom";
 import {useInView} from "react-intersection-observer";
 import styled from "styled-components";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalenderDto} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, CalenderDto, CalenderPagingDto} from "../../../model/CalendarApiModel";
 
 const CalendarImportPage = () => {
-    const navigate = useNavigate();
     const [ref, inView] = useInView();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const[pageNumber,setPageNumber] = useState<number>(0);
@@ -22,22 +20,16 @@ const CalendarImportPage = () => {
     useEffect(() => {
         selectImportRecordPaging(pageNumber)
             .then(response => {
-                console.log(pageNumber + " response %O :" , response.data);
-
                 if(!lastRef.current) {
-                    //첫번쨰 페이지이자 마지막 페이지 일 경우
                     if (response.data.first && response.data.last) {
-                        console.log('첫번쨰이자 마지막임');
                         lastRef.current = true;
                         return response.data.content;
                     }
                     if(response.data.last)  lastRef.current = true;
-                    setImportRecordList(response.data.content);
+                    return response.data.content;
                 }
-        }).then((data) =>{
-            // setImportRecordList(data);
-            console.log('dada');
-            // setImportRecordList((itemLists) => itemLists.concat(data));
+        }).then((content:CalenderDto[] | undefined) =>{
+            if (content) setImportRecordList((prevData) => prevData.concat(content));
         }).catch(error => {
             ApiErrorHandle(error);
         }).finally(()=>{
@@ -54,13 +46,11 @@ const CalendarImportPage = () => {
         }
     },[inView,importRecordList]);
 
-    // let deleteParam = {};
-    // 디테일 페이지에서 삭제 요청 수행
+
     const removeRecord =(calendarSn:number):void => {
         console.log(calendarSn+'??');
         const deleteParam:CalendarSnParam={calendarSn:calendarSn};
         const recordIndex = importRecordList.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        // deleteParam.calendarSn = calendarSn; // 요청 파라미터에 Sn 저장
 
         deleteRecord(deleteParam)
             .then(response =>{
@@ -97,7 +87,6 @@ const CalendarImportPage = () => {
                             <CalendarDetailContentComponent
                                 key={data.calendarSn}
                                 data={data}
-                                // navigate={navigate}
                                 removeRecord={removeRecord}
                                 importPage={true}
                                 importEvent={importEvent}

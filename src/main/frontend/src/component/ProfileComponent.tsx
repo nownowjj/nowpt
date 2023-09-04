@@ -24,7 +24,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = (data) => {
     let userEtt = UserEtt();
 
     // RootState 타입으로 useSelector에 타입을 지정합니다
-    let isLogin = useSelector((state: RootState) => state.user.value.isLoggedIn);
+    let isLogin = useSelector((state: RootState) => state.user.isLoggedIn);
     // 비로그인시 맹구 이미지
     let imageSrc = loginFalse;
 

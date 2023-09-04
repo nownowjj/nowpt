@@ -1,18 +1,20 @@
 /**
- * 
- * @param email 
+ *
+ * @param email
  * @param originEmail
  * @returns {boolean}
  * 이메일 변경 유효성 검사
  */
-export function validateEmail(email,originEmail){
+import {FixParam, NewRecordParam} from "../model/CalendarApiModel";
+
+export function validateEmail(email:string,originEmail:string){
     console.log("검증 실행")
     if(email.length < 5){
         alert("값이 부족해");
         console.log("1 : 통과 못함");
         return false;
     }
-    if( (email.includes('@')) === false ){
+    if( !(email.includes('@')) ){
         alert("@ 없어요");
         console.log("2 : 통과 못함");
         return false;
@@ -39,24 +41,25 @@ export function validateLogin(id:string,pw:string){
 }
 
 /**
- * 
- * @param noticeDto
+ *
  * @returns {boolean}
+ * @param param
+ * @param fixParam
  */
-export function validateNotice(noticeDto){
-    console.log(noticeDto)
-    if((noticeDto.noticeTitle) === ""){
-        alert("제목을 입력하지 않았습니다.")
-        return false;
-    }
-    if((noticeDto.noticeContent) === ""){
-        alert("내용을 입력하지 않았습니다.")
-        return false;
-    }
-    return true;
-}
+// export function validateNotice(noticeDto){
+//     console.log(noticeDto)
+//     if((noticeDto.noticeTitle) === ""){
+//         alert("제목을 입력하지 않았습니다.")
+//         return false;
+//     }
+//     if((noticeDto.noticeContent) === ""){
+//         alert("내용을 입력하지 않았습니다.")
+//         return false;
+//     }
+//     return true;
+// }
 
-const validateRecordInsertOrUpdate =(param , fixParam)=>{
+const validateRecordInsertOrUpdate =(param:NewRecordParam , fixParam:FixParam)=>{
     const { title, content } = param;
     const { titleValue , contentValue } = fixParam;
 

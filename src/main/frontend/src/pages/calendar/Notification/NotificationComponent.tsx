@@ -12,9 +12,6 @@ interface NotificationComponentInterface {
 }
 
 const NotificationComponent:React.FC<NotificationComponentInterface> = ({data,updateNoti,deleteAllNoti}) => {
-    console.log(data);
-
-
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');

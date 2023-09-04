@@ -7,19 +7,7 @@ import validateRecordInsertOrUpdate from "../../../services/validate";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
 import DetailStarSubComponent from "./DetailStarSubComponent";
-
-interface FixParam {
-    titleValue: string; // Assuming titleValue is of type string
-    contentValue: string; // Assuming contentValue is of type string
-}
-
-interface NewReCordParam {
-    recordDate:string;
-    calendarSn?:number;
-    title:string;
-    content:string;
-    importYn:boolean;
-}
+import {FixParam, NewRecordParam} from "../../../model/CalendarApiModel";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -66,12 +54,12 @@ const CalendarRecordNewOrFixPage = () => {
     const newOrFixRecordSuccess =()=> navigate(-1);
 
     // api 요청 시에 사용할 param
-    const param: NewReCordParam = {
+    const param: NewRecordParam = {
         recordDate: recordDate,
         calendarSn: state.sn && state.sn ,
         title: titleValue,
         content: contentValue,
-        importYn: false,
+        importYn: importYn,
     };
 
     const newRecordEvent=()=>{

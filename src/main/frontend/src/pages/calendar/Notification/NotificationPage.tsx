@@ -8,6 +8,7 @@ import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {NotificationDto, NotificationSn} from "../../../model/NotificationApiModel";
+import {CalenderDto} from "../../../model/CalendarApiModel";
 
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,18 +22,16 @@ const NotificationPage = () => {
         getMyNotification(pageNumber)
             .then((response)=>{
                 if(!last) {
-                    //첫번쨰 페이지이자 마지막 페이지 일 경우
                     if (response.data.first && response.data.last) {
-                        console.log('첫번쨰이자 마지막임');
                         setLast(true);
                         return response.data.content;
                     }
                     if(response.data.last) setLast(true);
-                    setNotificationList(response.data.content);
+                    return response.data.content;
                 }
-            }).then(data =>{
-            // setNotificationList((itemLists) => itemLists.concat(data));
-            }).catch((error)=>{
+            }).then((content:NotificationDto[] | undefined) =>{
+            if (content) setNotificationList((prevData) => prevData.concat(content));
+        }).catch(error => {
                 ApiErrorHandle(error)
             }).finally(()=>{
                 setIsLoading(false)

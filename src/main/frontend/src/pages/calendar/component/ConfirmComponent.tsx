@@ -16,7 +16,7 @@ interface ConfirmComponentProps{
 }
 
 interface ConfirmButtonProps {
-    backGround?: string; // Define the prop type here
+    backGround?: string|null; // Define the prop type here
 }
 
 const ConfirmComponent:React.FC<ConfirmComponentProps> = ({ message, okCallBack, onClose }) => {

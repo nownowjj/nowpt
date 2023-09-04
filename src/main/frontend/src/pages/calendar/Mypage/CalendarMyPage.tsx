@@ -59,7 +59,8 @@ const CalendarMyPage = () => {
         setShowAlert(true);
     }
 
-    const logoutFunction = () => dispatch(logoutAction); // 로그아웃 이벤트
+    const logoutFunction = () => dispatch(logoutAction()); // 로그아웃 이벤트
+
     return (
         <MyPageWrap>
             {/* 상단 gnb */}
@@ -102,7 +103,7 @@ const CalendarMyPage = () => {
             {/* 기록 통계 */}
 
             {/* 로그아웃 버튼 */}
-            <LogOutButton onClick={()=> confirmFunction(logoutFunction ,`정말<br/> 로그아웃 하시겠습니까?` )}>로그아웃</LogOutButton>
+            <LogOutButton onClick={()=> confirmFunction(()=> dispatch(logoutAction()) ,`정말<br/> 로그아웃 하시겠습니까?` )}>로그아웃</LogOutButton>
             {/* 로그아웃 버튼 */}
 
 

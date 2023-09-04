@@ -22,7 +22,6 @@ interface YearGroupedData {
 }
 
 const MyPageRecordSmComponent :React.FC<MyPageRecordSmComponentInterface> = ({recordList}) => {
-    console.log(recordList);
     const  yearGrouped:YearGroupedData = {};
     recordList.length >0 &&recordList.forEach((item)=>{
         const { year, month, monthCount }:CalenderRecordSm = item;

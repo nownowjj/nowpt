@@ -18,6 +18,10 @@ export interface NewRecordParam extends RecordDate,ImportParam{
     importYn: boolean;
 }
 
+export interface FixParam {
+    titleValue: string; // Assuming titleValue is of type string
+    contentValue: string; // Assuming contentValue is of type string
+}
 
 export interface CalenderDto{
     recordDate:string;

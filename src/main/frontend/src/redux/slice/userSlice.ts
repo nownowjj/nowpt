@@ -1,27 +1,42 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ACCESS_TOKEN} from "../../api/Api";
 
-const initialStateValue= {
+export interface UserInterface  {
+    membEmail: string;
+    membPw: string;
+    roles: string;
+    membId: string;
+    profileImage: string;
+    exp: number;
+    iat: number;
+}
+
+export interface UserState {
+    isLoggedIn: boolean;
+    user: UserInterface | null;
+}
+
+const initialState: UserState = {
     isLoggedIn: false,
     user: null,
 };
 
 export const userSlice = createSlice({
     name: "user",
-    initialState: { value: initialStateValue},
+    initialState,
     reducers: {
         loginAction: (state, action) => {
             let jwt = action.payload;
             let jwtData = jwt.split('.')[1];
             let decodedJwtJsonData = window.atob(jwtData);
-            state.value.user = JSON.parse(decodedJwtJsonData) ;
-            state.value.isLoggedIn = true
+            state.user = JSON.parse(decodedJwtJsonData) ;
+            state.isLoggedIn = true
             // localStorage.setItem(ACCESS_TOKEN, action.payload);
         },
-        logoutAction: (state) => {
+        logoutAction: (state=initialState) => {
             localStorage.removeItem(ACCESS_TOKEN)
-            state.value.user = null;
-            state.value.isLoggedIn = false
+            state.user = null;
+            state.isLoggedIn = false
         }
     },
 });
