@@ -6,21 +6,18 @@ import styled from "styled-components";
 import {MdSearch, MdSearchOff} from "react-icons/md";
 import moment from "moment";
 import {useDispatch} from "react-redux";
-import {firstEvent} from "../../../redux/slice/friendSlice";
+import {firstEvent, fiveEvent} from "../../../redux/slice/friendSlice";
 import AlertComponent from "../component/AlertComponent";
 import {FriendMemberSn} from "../../../model/FriendApiModel";
 import {friendDto} from "./FriendPage";
+import CalendarDetailNo from "../component/CalendarDetailNo";
 
 interface FriendRecommendComponentInterface {
     data:friendDto[];
 }
 
 const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({data}) => {
-    console.log(data);
     const dispatch = useDispatch();
-
-
-
 
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
@@ -32,8 +29,12 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
         setShowAlert(true);
     }
 
-    const closeCallBack:()=>void=()=>{
-        setShowAlert(false);
+    interface requestType {
+        [key:string] :()=>void;
+    }
+    const requestResponseMap:requestType ={
+        'REQUEST_SUCCESS' :()=> dispatch(firstEvent()),
+        'DIRECT_ACCEPT'   :()=> dispatch(fiveEvent())
     }
 
     const addCallBack=(key:number)=>{
@@ -43,11 +44,11 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
             .then((response)=>{
                 console.log(response);
                 // 친구 요청에 성공 했으면 보낸요청 , 친구추천 리스트를 리렌더링 시켜야함
-                alertFunction(closeCallBack,'요청 성공!')
-                dispatch(firstEvent);
+                requestResponseMap[response.data]();
+                alertFunction(()=> setShowAlert(false),response.message)
             }).catch((error)=>{
-                alertFunction(closeCallBack,'요청 실패!')
-                console.log(error);
+            alertFunction(()=> setShowAlert(false),'요청 실패!')
+            console.log(error);
         })
     }
 
@@ -79,21 +80,22 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
             <RecommendHeader>
                 <FriendTitleComponent
                     title="친구 추천"
+                    size={data.length}
                 />
                 {
-                        searchCancel
-                            ?
-                            <StyledSearch onClick={()=>  setSearchCancel(prevState => !prevState)}/>
-                            :
-                            <SearchWrap>
-                                <SearchInput
-                                    type="text"
-                                    placeholder="성함을 입력해주세요"
-                                    value={searchTerm}
-                                    onChange={handleInputChange}
-                                />
-                                <StyledSearchCancel onClick={()=>  setSearchCancel(prevState => !prevState)}/>
-                            </SearchWrap>
+                    searchCancel
+                        ?
+                        <StyledSearch onClick={()=>  setSearchCancel(prevState => !prevState)}/>
+                        :
+                        <SearchWrap>
+                            <SearchInput
+                                type="text"
+                                placeholder="성함을 입력해주세요"
+                                value={searchTerm}
+                                onChange={handleInputChange}
+                            />
+                            <StyledSearchCancel onClick={()=>  setSearchCancel(prevState => !prevState)}/>
+                        </SearchWrap>
                 }
             </RecommendHeader>
             {/* 추천 헤더 */}
@@ -102,39 +104,42 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
             {
                 !searchCancel
                     ?
-                <>
-                {   // 검색 모드
-                    searchTerm && searchTerm.length >0 &&
-                    filteredData.length > 0 ?
-                    filteredData.map(item => (
-                    <FriendComponent
-                        key={item.friendMemberSn}
-                        data={item}
-                        paramKey={item.friendMemberSn}
-                        leftText='친구 요청'
-                        rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
-                        leftCallBack={addCallBack}
-                        rightCallBack={()=>{}}
-                    />
-                ))
+                    <>
+                        {   // 검색 모드
+                            searchTerm && searchTerm.length >0 &&
+                            filteredData.length > 0 ?
+                                filteredData.map(item => (
+                                    <FriendComponent
+                                        key={item.friendMemberSn}
+                                        data={item}
+                                        paramKey={item.friendMemberSn}
+                                        leftText='친구 요청'
+                                        rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
+                                        leftCallBack={addCallBack}
+                                        rightCallBack={()=>{}}
+                                    />
+                                ))
+                                :
+                                !searchTerm? '검색어를 입력해 주세요' : '검색 결과가 없습니다'
+                        }
+                    </>
+                    // 검색 모드
                     :
-                    !searchTerm? '검색어를 입력해 주세요' : '검색 결과가 없습니다'
-                }
-                </>
-                // 검색 모드
-            :
-                // 검색 모드 X
-                data.map((recommendList) => (
-                    <FriendComponent
-                        key={recommendList.friendMemberSn}
-                        data={recommendList}
-                        paramKey={recommendList.friendMemberSn}
-                        leftText='친구 요청'
-                        rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
-                        leftCallBack={addCallBack}
-                        rightCallBack={()=>{}}
-                    />
-                ))
+                    // 검색 모드 X
+                    data && data.length > 0 ?
+                    data.map((recommendList) => (
+                        <FriendComponent
+                            key={recommendList.friendMemberSn}
+                            data={recommendList}
+                            paramKey={recommendList.friendMemberSn}
+                            leftText='친구 요청'
+                            rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
+                            leftCallBack={addCallBack}
+                            rightCallBack={()=>{}}
+                        />
+                    ))
+                        :
+                        <CalendarDetailNo/>
                 // 검색 모드 X
             }
             {/* 추천 리스트 */}

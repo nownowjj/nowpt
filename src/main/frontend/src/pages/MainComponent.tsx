@@ -13,7 +13,7 @@ const MainComponent = () => {
     const [message,setMessage] = useState<string>("");
 
     const count = useSelector((state:RootState) => state.count.count);
-    const isLoggedIn = useTypedSelector((state:RootState) => state.user.isLoggedIn);
+    const isLoggedIn = useSelector((state:RootState) => state.user.isLoggedIn);
     // const user = useSelector((state) => state.user.value.user);
 
     useEffect(()=>{

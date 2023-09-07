@@ -4,14 +4,15 @@ interface CountState {
     count:number;
 }
 
-const initialStateValue:CountState = {
+const initialState:CountState = {
     count: 0,
 };
 
 
 const countSlice = createSlice({
     name: "count",
-    initialState: initialStateValue,
+    initialState,
+
     reducers: {
         increment: (state) => {
             state.count += 1;
@@ -20,7 +21,7 @@ const countSlice = createSlice({
             state.count -= -1;
         },
         resetCount:(state)=>{
-            state.count = initialStateValue.count;
+            state.count = initialState.count;
         }
     },
 });

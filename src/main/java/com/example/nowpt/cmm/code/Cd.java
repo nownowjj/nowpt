@@ -33,4 +33,10 @@ public interface Cd {
 	String LOGIN_SUCCESS = "로그인 성공";
 	String LOGIN_FAIL = "로그인 실패";
 
+	// Friend
+	String F_DIRECT_ACCEPT = "DIRECT_ACCEPT";  // 친구 요청을 보낼 떄 상대방이 이미 요청을 보냄
+	String F_DIRECT_ACCEPT_MSG = "친구 요청을 보낸 대상이 먼저 요청을 보내셔서 바로 친구가 됩니다"; // 친구 요청을 보낼 떄 상대방이 이미 요청을 보냄
+	String F_REQUEST_SUCCESS = "REQUEST_SUCCESS"; // 친구 요청 성공
+	String F_REQUEST_SUCCESS_MSG = "친구 요청 성공!"; // 친구 요청 성공
+
 }

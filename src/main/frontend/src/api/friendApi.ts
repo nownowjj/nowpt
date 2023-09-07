@@ -1,5 +1,5 @@
 import {API_BASE, ApiResponse, FRIEND, request} from "./Api";
-import {FriendMemberSn, FriendUpdateParam} from "../model/FriendApiModel";
+import {FriendMemberSn, FriendSn, FriendUpdateParam} from "../model/FriendApiModel";
 import {friendDto} from "../pages/calendar/friend/FriendPage";
 
 export function getMyApplyWaitFriend():Promise<ApiResponse<friendDto[]>>{
@@ -9,14 +9,6 @@ export function getMyApplyWaitFriend():Promise<ApiResponse<friendDto[]>>{
         method: 'GET'
     });
 }
-
-// export function getRequestWaitFriend(){
-//     const url = API_BASE +"/auth" + FRIEND +"/requestWait";
-//     return request({
-//         url: url,
-//         method: 'GET'
-//     });
-// }
 
 export function getRequestWaitFriend(): Promise<ApiResponse<friendDto[]>> {
     const url = API_BASE + "/auth" + FRIEND + "/requestWait";
@@ -72,18 +64,32 @@ export function requestFriend(param:FriendMemberSn):Promise<ApiResponse<string>>
 }
 
 /**
- * @param friendSn
- * @title 보낸 친구 요청을 취소한다
- * @order
- * 1. 
+ * @validate 내가 보낸 요청을 취소 해야 한다.
+ * 1. friendSn 상태 조회 -> api 요청시에 WAIT 상태인지 확인 해야 함
+ * 2. WAIT 상태면 friendSn use_yn(N) -> 요청을 받은 상대는 Notification 전송 되었지만 수락 대기중인 목록에는 조회되지 않는다.
+ * 3. WAIT 아니라면 REFUSE 이거나 ACCEPT 상태이다
+ * 4. REFUSE 상태라면 상대방이 요청을 거절한 것이므로 그대로 N으로 꺾는다.
+ * 5. ACCEPT 상태라면 상대방이 요청을 수락한 상태이므로 Alert을 띄어준 후 [친구 목록 , 요청 대기] 리렌더링 해야 함
+ * @param param:friendSn
  */
-// export function cancelFriendRequestApi(param){
-//     return request({
-//         url: API_BASE + "/auth"+ FRIEND +"/apply" ,
-//         method:'PUT',
-//         body:JSON.stringify(param)
-//     })
-// }
+export function cancelFriendRequestApi(param:FriendSn):Promise<ApiResponse<string>>{
+    return request({
+        url: API_BASE + "/auth"+ FRIEND +"/cancel" ,
+        method:'PUT',
+        body:JSON.stringify(param)
+    })
+}
+
+/**
+ * 친구삭제
+ */
+export function deleteFriendApi(param:{ memberSn: number; friendMemberSn: number }):Promise<ApiResponse<string>>{
+    return request({
+        url: API_BASE + "/auth"+ FRIEND +"/cancel" ,
+        method:'DELETE',
+        body:JSON.stringify(param)
+    })
+}
 
 
 

@@ -9,6 +9,7 @@ export interface UserInterface  {
     profileImage: string;
     exp: number;
     iat: number;
+    membSn:number;
 }
 
 export interface UserState {
@@ -31,7 +32,6 @@ export const userSlice = createSlice({
             let decodedJwtJsonData = window.atob(jwtData);
             state.user = JSON.parse(decodedJwtJsonData) ;
             state.isLoggedIn = true
-            // localStorage.setItem(ACCESS_TOKEN, action.payload);
         },
         logoutAction: (state=initialState) => {
             localStorage.removeItem(ACCESS_TOKEN)
@@ -43,4 +43,4 @@ export const userSlice = createSlice({
 
 export const { loginAction, logoutAction } = userSlice.actions;
 
-export default userSlice.reducer;
+ export default userSlice.reducer;

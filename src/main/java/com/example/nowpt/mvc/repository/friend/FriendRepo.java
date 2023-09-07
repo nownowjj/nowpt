@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendRepo extends JpaRepository<Friend, Long> , FriendCustomRepo {
     Friend findByFriendSn(long friendSn);
+
+    Friend findByRequestStatusAndMemberSnAndFriendMemberSn(String requestStatus, long membSn, long friendMembSn);
+
+    Friend findByMemberSnAndFriendMemberSn(long friendMemberSn, long memberSn);
 }

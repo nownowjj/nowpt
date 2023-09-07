@@ -1,5 +1,4 @@
-export interface FriendUpdateParam{
-    friendSn:number;
+export interface FriendUpdateParam extends FriendSn{
     acceptYn:boolean;
 }
 
@@ -16,4 +15,8 @@ export interface FriendDto{
     frstRegistDt:Date;
     memberSn:number;
     requestStatus?:string;
+}
+
+export interface FriendSn{
+    friendSn:number;
 }

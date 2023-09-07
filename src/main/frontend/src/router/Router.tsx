@@ -20,10 +20,12 @@ import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPag
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 import FriendPage from "../pages/calendar/friend/FriendPage";
 import {RootState, useTypedSelector} from "../redux/store/store";
+import React from "react";
+import HomeComponent from "../pages/HomeComponent";
 
 
 const Router = () => {
-    const isLogin = useTypedSelector((state:RootState) => state.user.isLoggedIn);
+    const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);
     console.log(isLogin)
     return (
 
@@ -32,7 +34,7 @@ const Router = () => {
 
 
             <Routes>
-                {/*<Route path="/" element={<HomeComponent />} />*/}
+                <Route path="/" element={<HomeComponent />} />
                 {/*<Route path="/test" element={<TestPage />} />*/}
                 <Route path="/go/main" element={<MainComponent />} />
 

@@ -6,13 +6,16 @@ import {updateRequestFriend} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
 import {FriendDto, FriendUpdateParam} from "../../../model/FriendApiModel";
+import {fourthEvent, thirdEvent} from "../../../redux/slice/friendSlice";
+import {useDispatch} from "react-redux";
 
 interface FriendApplyWaitComponentProps  {
     data: FriendDto[];
 }
 
-const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ data }) => {
+const ReceivedFriendComponent: React.FC<FriendApplyWaitComponentProps> = ({ data }) => {
     console.log(data);
+    const dispatch = useDispatch();
     /**
      * friendSn , acceptYn
      * @param key
@@ -30,39 +33,34 @@ const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ dat
         setShowAlert(true);
     }
 
-    const applySuccess=()=>{
-        console.log("성공!");
-    }
 
     const applyCallBack =(key:number)=>{
         const param:FriendUpdateParam = {friendSn : key ,acceptYn : true};
-        console.log("FriendApplyWaitComponent 친구 수락 ",key);
         updateFunction(param,true);
     }
 
     const rejectCallBack =(key:number)=>{
         const param:FriendUpdateParam = {friendSn : key ,acceptYn : false};
-        console.log("FriendApplyWaitComponent 친구 거절 ",key);
         updateFunction(param);
     }
 
-    const updateFunction =(param:FriendUpdateParam , mode=false)=>{
-        // const recordIndex = waitList.findIndex((data) => data.friendSn === param.friendSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        // console.log(recordIndex);
+
+    const updateFunction =(param:FriendUpdateParam , accept=false)=>{
         updateRequestFriend(param)
             .then((response)=>{
-                if(mode)alertFunction(applySuccess,response.data);
-                // if (recordIndex !== -1) { // 삭제 요청이 성공 되었고 해당 요소의 index를 찾음
-                //     const updatedData = [...waitList]; // 새롭게
-                //     console.log(updatedData);
-                //     updatedData.splice(recordIndex, 1); //새로 복사한 객체에서 삭제한 index를 제거함
-                //     setWaitList(updatedData);
-                //     console.log(waitList);
-                //     console.log(updatedData);
-                // }
+                console.log(response);
+                if(accept){
+                    dispatch(thirdEvent());
+                    alertFunction(()=> setShowAlert(false),'수락 성공');
+                }
+                if(!accept){
+                    dispatch(fourthEvent());
+                    alertFunction(()=> setShowAlert(false),'거절 성공');
+                }
             }).catch((error)=>{
-            alertFunction(()=>{},'에러 발생');
-            ApiErrorHandle(error)
+                console.log(error);
+                alertFunction(()=> setShowAlert(false),'에러 발생');
+                ApiErrorHandle(error)
         })
     }
     return (
@@ -74,8 +72,7 @@ const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ dat
                     color='red'
                 />
                 {
-                    data.length > 0
-                        ?
+                    data.length > 0 &&
                             data.map((applyList) => (
                                 <FriendComponent
                                     key={applyList.friendSn}
@@ -87,8 +84,6 @@ const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ dat
                                     rightCallBack={rejectCallBack}
                                 />
                             ))
-                        :
-                          null
                 }
             </FriendWaitWrap>
 
@@ -109,8 +104,6 @@ const FriendApplyWaitComponent: React.FC<FriendApplyWaitComponentProps> = ({ dat
 };
 const FriendWaitWrap = styled.div`
     width:100%;
-    // height:80px;
-    border-bottom:1px solid #e8e8e8;
 `
 
-export default FriendApplyWaitComponent;
+export default ReceivedFriendComponent;

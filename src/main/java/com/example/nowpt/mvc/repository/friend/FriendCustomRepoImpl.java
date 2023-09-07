@@ -25,7 +25,7 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
 
 
     @Override
-    public List<FriendDto> selectMyFriend(Long memberSn) {
+    public List<FriendDto> selectMyFriend(long memberSn) {
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                     qFriend.friendSn.as("friendSn"),
@@ -38,12 +38,16 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                 .from(qFriend)
                 .leftJoin(qMember)
                 .on(qFriend.friendMemberSn.eq(qMember.memberSn))
-                .where(qFriend.memberSn.eq(memberSn).and(qFriend.requestStatus.eq("ACCEPT")))
+                .where(
+                        qFriend.memberSn.eq(memberSn)
+                                .and(qFriend.requestStatus.eq("ACCEPT"))
+                                .and(qFriend.useYn.eq("Y"))
+                      )
                 .fetch();
     }
 
     @Override
-    public List<FriendDto> selectMyWaitFriend(Long memberSn) {
+    public List<FriendDto> selectMyWaitFriend(long memberSn) {
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                         qFriend.friendSn.as("friendSn"),
@@ -59,6 +63,7 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                 .where(
                         qFriend.friendMemberSn.eq(memberSn)
                                 .and(qFriend.requestStatus.eq("WAIT"))
+                                .and(qFriend.useYn.eq("Y"))
                 )
                 .orderBy(qFriend.frstRegistDt.desc())
                 .fetch();
@@ -66,8 +71,7 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
 
 
     @Override
-    public List<FriendDto> selectRecommendFriendList(Long memberSn) {
-        log.debug("tqqw");
+    public List<FriendDto> selectRecommendFriendList(long memberSn) {
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                         qMember.memberSn.as("friendMemberSn"),
@@ -80,14 +84,15 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                 .leftJoin(qFriend)
                 .on(qMember.memberSn.eq(qFriend.friendMemberSn).and(qFriend.memberSn.eq(memberSn)))
                 .where(
-                        qMember.useYn.eq("Y").and(qMember.memberSn.ne(memberSn)).and
-                        ((qFriend.requestStatus.eq("REFUSE")).or(qFriend.requestStatus.isNull()))
+                        qMember.useYn.eq("Y").and(qMember.memberSn.ne(memberSn))
+                                .and( (qFriend.requestStatus.eq("CANCEL")).or(qFriend.requestStatus.eq("REFUSE")).or(qFriend.requestStatus.isNull()) )
+//                                .and(qFriend.useYn.ne("N"))
                 )
                 .fetch();
     }
 
     @Override
-    public List<FriendDto> selectMyRequestWaitFriendList(Long memberSn) {
+    public List<FriendDto> selectMyRequestWaitFriendList(long memberSn) {
         return queryFactory
                 .select(Projections.fields(FriendDto.class,
                         qFriend.friendSn.as("friendSn"),
@@ -103,8 +108,21 @@ public class FriendCustomRepoImpl implements FriendCustomRepo {
                 .where(
                         qFriend.memberSn.eq(memberSn)
                                 .and(qFriend.requestStatus.eq("WAIT"))
+                                .and(qFriend.useYn.eq("Y"))
                 )
                 .orderBy(qFriend.frstRegistDt.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<Friend> selectDeleteFriend(long membSn , long friendMembSn) {
+        return queryFactory
+                .selectFrom(qFriend)
+                .where(
+                        qFriend.memberSn.eq(membSn).and(qFriend.friendMemberSn.eq(friendMembSn))
+                                .or(qFriend.memberSn.eq(friendMembSn).and(qFriend.friendMemberSn.eq(membSn)))
+                        .and(qFriend.requestStatus.eq("ACCEPT"))
+                )
                 .fetch();
     }
 

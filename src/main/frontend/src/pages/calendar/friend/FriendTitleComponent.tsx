@@ -11,10 +11,11 @@ interface FriendTitleComponent {
     title:string;
     size?:number;
     color?:string;
+    style?:React.CSSProperties
 }
-const FriendTitleComponent:React.FC<FriendTitleComponent> = ({title , size , color}) => {
+const FriendTitleComponent:React.FC<FriendTitleComponent> = ({title , size , color , style}) => {
     return (
-        <FriendTitleComponentWrap>
+        <FriendTitleComponentWrap style={style}>
             <span>
                 {title}
                 {

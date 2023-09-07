@@ -8,10 +8,11 @@ import java.util.List;
 
 @Repository
 public interface FriendCustomRepo {
-    List<FriendDto> selectMyFriend(Long memberSn);
-    List<FriendDto>selectMyWaitFriend(Long memberSn);
-    List<FriendDto> selectRecommendFriendList(Long memberSn);
-    List<FriendDto> selectMyRequestWaitFriendList(Long memberSn);
+    List<FriendDto> selectMyFriend(long memberSn);
+    List<FriendDto>selectMyWaitFriend(long memberSn);
+    List<FriendDto> selectRecommendFriendList(long memberSn);
+    List<FriendDto> selectMyRequestWaitFriendList(long memberSn);
 
 
+    List<Friend> selectDeleteFriend(long membSn , long friendMembSn );
 }

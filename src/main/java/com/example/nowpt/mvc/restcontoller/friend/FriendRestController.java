@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.nowpt.cmm.code.Cd.*;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -39,15 +41,32 @@ public class FriendRestController {
         log.debug("본인 sn : {} , 친구 sn : {} "  ,member.getMemberSn() , friendDto.getFriendMemberSn());
         friendDto.setMemberSn(member.getMemberSn());
 
+        // 요청을 보내기전에 친구가 이미 나에게 요청을 보냈는지 체크
+        Friend requestCheck = friendRepo.findByMemberSnAndFriendMemberSn(friendDto.getFriendMemberSn() , member.getMemberSn());
+        if(requestCheck != null){
+            requestCheck.setRequestStatus("ACCEPT");
+            friendRepo.save(requestCheck);
 
-
+            Friend newFriend = new Friend();
+            newFriend.setMemberSn(requestCheck.getFriendMemberSn());
+            newFriend.setFriendMemberSn(requestCheck.getMemberSn());
+            newFriend.setRequestStatus("ACCEPT");
+            friendRepo.save(newFriend);
+            return ResponseUtil.SUCCESS(F_DIRECT_ACCEPT_MSG, F_DIRECT_ACCEPT);
+        }
 
         friendService.insertFriend(friendDto);
         Notification notification =  notificationService.newNotification( member.getMembNm(),friendDto.getFriendMemberSn());
 
-        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, "친구 요청 성공");
+        return ResponseUtil.SUCCESS(F_REQUEST_SUCCESS_MSG, F_REQUEST_SUCCESS);
     }
 
+    /**
+     *
+     * @param member
+     * @param friendDto
+     * @return 친구 수락 or 거절
+     */
     @PutMapping("/api/auth/friend/apply")
     public ResponseDto<?> updateFriend(@AuthenticationPrincipal Member member, @RequestBody FriendDto friendDto){
         log.debug("수락여부 : {} "  ,friendDto.getAcceptYn());
@@ -56,6 +75,7 @@ public class FriendRestController {
         String resultMsg = acceptYn ? "수락 완료":"거절 완료";
 
         Friend friend = friendRepo.findByFriendSn(friendDto.getFriendSn());
+        if(friend == null) return ResponseUtil.FAILURE(Cd.PUT_FAIL, "취소된 요청입니다");
         if(acceptYn){
             log.debug("수락임");
             friend.setRequestStatus("ACCEPT");
@@ -75,7 +95,7 @@ public class FriendRestController {
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, resultMsg);
     }
 
-    // 본인에게 친구 신청을 한 목록
+    // 본인에게 친구 신청을 한 목록 조회
     @GetMapping("/api/auth/friend/apply")
     public ResponseDto<?> selectMyWaitFriendList(@AuthenticationPrincipal Member member){
         log.debug("나에게 신청 한 친구 조회 : {}",member.getMemberSn());
@@ -84,7 +104,7 @@ public class FriendRestController {
       return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
     }
 
-    // 본인이 친구 신청을 한 목록
+    // 본인이 친구 요청을 한 목록
     @GetMapping("/api/auth/friend/requestWait")
     public ResponseDto<?> selectMyRequestWaitFriendList(@AuthenticationPrincipal Member member){
         log.debug("내가 신청 한 친구 조회 : {}",member.getMemberSn());
@@ -113,4 +133,35 @@ public class FriendRestController {
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,    result);
     }
+
+    /**
+     * 보낸 요청 취소
+     * 1. friendSn => requestStatus 상태 조회 WAIT or REFUSE 상태이면 status = CANCEL 변경
+     * 2. membSn , friendMembSn 이력이 남아있다면 delete
+     * @param friendDto{friendSn}
+     * @return msg
+     */
+    @PutMapping("/api/auth/friend/cancel")
+    public ResponseDto<?> cancelRequestFriend(@RequestBody FriendDto friendDto){
+        Friend friend = friendRepo.findByFriendSn(friendDto.getFriendSn());
+        if( "WAIT".equals(friend.getRequestStatus()) || "REFUSE".equals(friend.getRequestStatus()) ){
+//            friendService.cancelDeleteService(friend.getMemberSn() , friend.getFriendMemberSn());
+//            friend.setRequestStatus("CANCEL");
+            friendRepo.delete(friend);
+            return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, "요청이 취소되었습니다.");
+        }else{
+            return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, "이미 수락된 요청입니다.");
+        }
+    }
+
+    @DeleteMapping("/api/auth/friend/cancel")
+    public ResponseDto<?> deleteFriend(@RequestBody FriendDto friendDto){
+        log.debug("dd : {}",friendDto);
+        List<Friend> friend = friendService.selectDeleteFriend(friendDto.getMemberSn(),friendDto.getFriendMemberSn());
+        log.debug("읭 : {}",friend);
+        friendRepo.deleteAll(friend);
+        return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, "친구 삭제 성공");
+    }
+
+
 }

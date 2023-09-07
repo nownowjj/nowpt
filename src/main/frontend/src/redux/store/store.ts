@@ -38,6 +38,6 @@ export const store = configureStore({
 })
 // RootReducer 타입 정의
 export type RootState = ReturnType<typeof store.getState>;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const AppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;

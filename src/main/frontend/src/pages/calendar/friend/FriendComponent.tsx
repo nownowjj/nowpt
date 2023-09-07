@@ -36,8 +36,6 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
 
     const confirmCallFunction =()=>{
         if(!rightCallBack) return false;
-        console.log(rightText);
-        console.log(rightConfirmMsgMap[rightText]);
         confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )
     }
 
@@ -61,7 +59,6 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
                 <FriendButtonWrap>
                     <FriendButton style={{color:"white",background:"skyblue"}} onClick={()=> leftEvent()}>{leftText ? leftText : '수락'}</FriendButton>
                     <FriendButton style={{color:"white",background:"#ff8b39",fontWeight:500}} onClick={()=> confirmCallFunction()} >{rightText}</FriendButton>
-                    {/*<FriendButton style={{color:"black",background:"#e8e8e8"}} onClick={()=> confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )} >{rightText}</FriendButton>*/}
                 </FriendButtonWrap>
             </FriendComponentRight>
 
@@ -87,6 +84,7 @@ const FriendName = styled.div`
     padding-bottom: 10px;
 `
 const FriendButtonWrap = styled.div`
+    gap:10px;
     display:flex;
     justify-content: space-between;
 `
@@ -96,7 +94,7 @@ const FriendButton = styled.button`
     border-radius:5px;
     font-size:14px;
     font-weight: 400;
-    width: 120px;
+    width: 50%;
     height: 30px;
 `
 const FriendComponentWrap =styled.div`

@@ -1,13 +1,14 @@
 import React from 'react';
 import {Navigate} from 'react-router-dom';
-import {RootState, useTypedSelector} from "../redux/store/store";
+import {RootState} from "../redux/store/store";
+import {useSelector} from "react-redux";
 
 interface PrivateRouteProps {
     component: React.ElementType;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
-    const isLogin = useTypedSelector((state:RootState) => state.user.isLoggedIn);
+    const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);
     let { component: Component} = props
     
     return isLogin ? <Component/> : <Navigate to="/go/login"/>
