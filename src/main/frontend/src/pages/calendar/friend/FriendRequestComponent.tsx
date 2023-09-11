@@ -7,7 +7,7 @@ import {friendDto} from "./FriendPage";
 import {cancelFriendRequestApi} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useDispatch} from "react-redux";
-import {firstEvent, fiveEvent} from "../../../redux/slice/friendSlice";
+import {firstEvent} from "../../../redux/slice/friendSlice";
 import {FriendSn} from "../../../model/FriendApiModel";
 
 interface FriendRequestWaitComponentInterface {

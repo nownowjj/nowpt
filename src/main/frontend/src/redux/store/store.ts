@@ -5,12 +5,11 @@ import productReducer from '../slice/productSlice'
 import friendReducer from '../slice/friendSlice'
 import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 
 // useSelector, useDispatch 타입 선언 추가
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-export type AppDispatch = typeof store.dispatch;
+// export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+// export type AppDispatch = typeof store.dispatch;
 
 const reducers = combineReducers({
     user:userReducer,
@@ -38,6 +37,6 @@ export const store = configureStore({
 })
 // RootReducer 타입 정의
 export type RootState = ReturnType<typeof store.getState>;
-export const AppDispatch = () => useDispatch<AppDispatch>();
+// export const AppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;

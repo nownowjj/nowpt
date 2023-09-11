@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import ReceivedFriendComponent from "./ReceivedFriendComponent";
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import {getMyApplyWaitFriend, getMyFriend, getRecommendFriend, getRequestWaitFriend} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import FriendRecommendComponent from "./FriendRecommendComponent";
@@ -10,8 +10,7 @@ import FriendTopNaviComponent from "./FriendTopNaviComponent";
 import '../../../styles/calendarCss/friend.css';
 import MyFriendListComponent from "./MyFriendListComponent";
 import FriendRequestComponent from "./FriendRequestComponent";
-import CalendarDetailNo from "../component/CalendarDetailNo";
-import {RootState, useTypedSelector} from "../../../redux/store/store";
+import {RootState} from "../../../redux/store/store";
 import {useSelector} from "react-redux";
 
 export interface friendDto {
@@ -26,7 +25,7 @@ export interface friendDto {
 }
 
 const FriendPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [waitList,setWaitList] = useState<friendDto[]>([]);
     const [recommendList,setRecommendList] = useState<friendDto[]>([]);
     const [myFriendList , setMyFriendList] = useState<friendDto[]>([]);

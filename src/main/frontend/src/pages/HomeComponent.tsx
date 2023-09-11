@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {homeTest, naverMovie} from "../api/Api";
+import {homeTest} from "../api/Api";
 import Loading from "./LoadingComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {increment, resetCount} from "../redux/slice/countSlice";

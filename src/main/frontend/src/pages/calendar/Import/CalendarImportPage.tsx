@@ -8,7 +8,7 @@ import styled from "styled-components";
 import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalendarDto, CalendarPagingDto} from "../../../model/CalendarApiModel";
+import {CalendarDto, CalendarSnParam} from "../../../model/CalendarApiModel";
 
 const CalendarImportPage = () => {
     const [ref, inView] = useInView();

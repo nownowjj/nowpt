@@ -1,6 +1,5 @@
 import {route} from "./remocon";
 import {useNavigate} from 'react-router-dom';
-import React from "react";
 
 /**
  *

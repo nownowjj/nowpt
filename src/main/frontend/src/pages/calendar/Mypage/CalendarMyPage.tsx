@@ -59,7 +59,6 @@ const CalendarMyPage = () => {
         setShowAlert(true);
     }
 
-    const logoutFunction = () => dispatch(logoutAction()); // 로그아웃 이벤트
 
     return (
         <MyPageWrap>

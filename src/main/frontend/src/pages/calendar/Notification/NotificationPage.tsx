@@ -8,7 +8,6 @@ import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {NotificationDto, NotificationSn} from "../../../model/NotificationApiModel";
-import {CalendarDto} from "../../../model/CalendarApiModel";
 
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);

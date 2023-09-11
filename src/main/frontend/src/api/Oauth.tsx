@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
 import {ACCESS_TOKEN, kakaoLogin, naverLogin} from "./Api";
 import {useDispatch} from "react-redux";
@@ -45,7 +45,7 @@ const Oauth = () => {
     };
 
     useEffect(() => {
-        if (state) {loginMap[state]();}
+        if (state) loginMap[state]();
     }, [state]);
 
 

@@ -4,7 +4,7 @@ import Kakaomap from "../services/kakaomap/Kakaomap";
 import {useDispatch, useSelector} from "react-redux";
 import {decrement, increment} from "../redux/slice/countSlice";
 import ApiErrorHandle from "../services/ApiErrorHandle";
-import {RootState, useTypedSelector} from "../redux/store/store";
+import {RootState} from "../redux/store/store";
 
 const MainComponent = () => {
     const dispatch = useDispatch();

@@ -26,7 +26,6 @@ const CalendarPage = () => {
 
     useEffect(()=>{
         const param: RecordDate = { recordDate: month ? month : moment(value as Date).format('YYYYMM')};
-        // const param: RecordDate = { recordDate: month ? month : moment(dateValue).format('YYYYMM')};
         getMyCalendar(param)
             .then(response =>{
                 console.log(response);

@@ -19,7 +19,7 @@ import CalendarImportPage from "../pages/calendar/Import/CalendarImportPage";
 import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPage";
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 import FriendPage from "../pages/calendar/friend/FriendPage";
-import {RootState, useTypedSelector} from "../redux/store/store";
+import {RootState} from "../redux/store/store";
 import React from "react";
 import HomeComponent from "../pages/HomeComponent";
 
