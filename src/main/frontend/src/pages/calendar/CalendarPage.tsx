@@ -36,12 +36,10 @@ const CalendarPage = () => {
 
     const onClickDay =(date:Date)=> {
         const formattedDate = moment(date).format('YYYYMMDD');
-        // navigate(route.calendarDayDetail,{state:{"detailDay": moment(value).format('YYYYMMDD')}});
         navigate(route.calendarDayDetail, { state: { detailDay: formattedDate } });
     }
 
     // 월이 변경 될 경우
-    // const handleMonthChange = (date: { activeStartDate: Date }) => {
     const handleMonthChange = ({ activeStartDate }: OnArgs) => {
         const formattedDate = moment(activeStartDate).format('YYYYMM');
         setMonth(formattedDate);

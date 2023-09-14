@@ -4,7 +4,6 @@ import FriendComponent from "./FriendComponent";
 import {requestFriend} from "../../../api/friendApi";
 import styled from "styled-components";
 import {MdSearch, MdSearchOff} from "react-icons/md";
-import moment from "moment";
 import {useDispatch} from "react-redux";
 import {firstEvent, fiveEvent} from "../../../redux/slice/friendSlice";
 import AlertComponent from "../component/AlertComponent";
@@ -15,7 +14,9 @@ import CalendarDetailNo from "../component/CalendarDetailNo";
 interface FriendRecommendComponentInterface {
     data:friendDto[];
 }
-
+export interface requestType {
+    [key:string] :()=>void;
+}
 const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({data}) => {
     const dispatch = useDispatch();
 
@@ -29,9 +30,7 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
         setShowAlert(true);
     }
 
-    interface requestType {
-        [key:string] :()=>void;
-    }
+
     const requestResponseMap:requestType ={
         'REQUEST_SUCCESS' :()=> dispatch(firstEvent()),
         'DIRECT_ACCEPT'   :()=> dispatch(fiveEvent())
@@ -72,6 +71,11 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
     const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
+
+    const info =(key:number)=>{
+        console.log(key);
+        alertFunction(()=>setShowAlert(false),`${key}`)
+    }
 
     const [searchCancel , setSearchCancel] = useState<boolean>(true);
     return (
@@ -114,7 +118,7 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
                                         data={item}
                                         paramKey={item.friendMemberSn}
                                         leftText='친구 요청'
-                                        rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
+                                        // rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
                                         leftCallBack={addCallBack}
                                         rightCallBack={()=>{}}
                                     />
@@ -133,9 +137,9 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
                             data={recommendList}
                             paramKey={recommendList.friendMemberSn}
                             leftText='친구 요청'
-                            rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
+                            // rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
                             leftCallBack={addCallBack}
-                            rightCallBack={()=>{}}
+                            rightCallBack={info}
                         />
                     ))
                         :

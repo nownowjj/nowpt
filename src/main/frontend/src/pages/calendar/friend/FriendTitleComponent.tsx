@@ -7,13 +7,13 @@ import styled from "styled-components";
  * @param size   친구 요청에서만 사용
  * @param color  문구 색상
  */
-interface FriendTitleComponent {
+interface FriendTitleComponentInterface {
     title:string;
     size?:number;
     color?:string;
     style?:React.CSSProperties
 }
-const FriendTitleComponent:React.FC<FriendTitleComponent> = ({title , size , color , style}) => {
+const FriendTitleComponent:React.FC<FriendTitleComponentInterface> = ({title , size , color , style}) => {
     return (
         <FriendTitleComponentWrap style={style}>
             <span>

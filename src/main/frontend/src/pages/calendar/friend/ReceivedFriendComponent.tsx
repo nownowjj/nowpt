@@ -8,6 +8,7 @@ import AlertComponent from "../component/AlertComponent";
 import {FriendDto, FriendUpdateParam} from "../../../model/FriendApiModel";
 import {fourthEvent, thirdEvent} from "../../../redux/slice/friendSlice";
 import {useDispatch} from "react-redux";
+import {requestType} from "./FriendRecommendComponent";
 
 interface FriendApplyWaitComponentProps  {
     data: FriendDto[];
@@ -44,19 +45,19 @@ const ReceivedFriendComponent: React.FC<FriendApplyWaitComponentProps> = ({ data
         updateFunction(param);
     }
 
+    const requestResponseMap:requestType ={
+        'REQUEST_CANCELED' :()=> dispatch(fourthEvent()),
+        'REQUEST_ACCEPT'   :()=> dispatch(thirdEvent()),
+        'REQUEST_REFUSE'   :()=> dispatch(fourthEvent()),
+        'ALREADY_ACCEPT'   :()=> dispatch(thirdEvent())
+    }
 
     const updateFunction =(param:FriendUpdateParam , accept=false)=>{
         updateRequestFriend(param)
             .then((response)=>{
                 console.log(response);
-                if(accept){
-                    dispatch(thirdEvent());
-                    alertFunction(()=> setShowAlert(false),'수락 성공');
-                }
-                if(!accept){
-                    dispatch(fourthEvent());
-                    alertFunction(()=> setShowAlert(false),'거절 성공');
-                }
+                requestResponseMap[response.data]();
+                alertFunction(()=> setShowAlert(false),response.message);
             }).catch((error)=>{
                 console.log(error);
                 alertFunction(()=> setShowAlert(false),'에러 발생');

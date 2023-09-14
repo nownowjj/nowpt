@@ -16,7 +16,8 @@ const route = {
     scroll : '/scroll',
     calendarRecordNewOrFix : '/calendarRecordNewOrFix',
     notification : '/notification',
-    friend : '/friend'
+    friend : '/friend',
+    weather : '/weather'
 }
 
 

@@ -3,8 +3,7 @@ import FriendTitleComponent from "./FriendTitleComponent";
 import FriendComponent from "./FriendComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {friendDto} from "./FriendPage";
-import {RootState} from "../../../redux/store/store";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {deleteFriendApi} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {secondEvent} from "../../../redux/slice/friendSlice";
@@ -16,7 +15,6 @@ interface MyFriendComponentInterface {
 
 const MyFriendListComponent : React.FC<MyFriendComponentInterface> = ({data}) => {
     const dispatch = useDispatch();
-    const membSn = useSelector((state :RootState)=> state.user.user!.membSn);
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
@@ -28,11 +26,16 @@ const MyFriendListComponent : React.FC<MyFriendComponentInterface> = ({data}) =>
         setShowAlert(true);
     }
 
+    const watchEvent =(sn:number)=>{
+        alertFunction(()=> setShowAlert(false),`${sn}준비중입니다.`)
+    }
+
     const watchMyFriend =(friendMemberSn:number)=>{
         console.log("구경",friendMemberSn);
+        watchEvent(friendMemberSn)
     }
     const deleteMyFriend=(friendMemberSn:number)=>{
-        const deleteParam:{ memberSn: number; friendMemberSn: number } = {friendMemberSn:friendMemberSn,memberSn:membSn};
+        const deleteParam:{friendMemberSn: number } = {friendMemberSn:friendMemberSn};
         deleteFriendApi(deleteParam)
             .then((response)=>{
                 dispatch(secondEvent());

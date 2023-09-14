@@ -39,4 +39,18 @@ public interface Cd {
 	String F_REQUEST_SUCCESS = "REQUEST_SUCCESS"; // 친구 요청 성공
 	String F_REQUEST_SUCCESS_MSG = "친구 요청 성공!"; // 친구 요청 성공
 
+
+	// 친구 요청 수락 OR 거절
+	String F_CANCELED_REQUEST = "REQUEST_CANCELED"; // 요청을 수락하였지만 상대방이 요청을 취소함
+	String F_CANCELED_REQUEST_MSG = "상대방이 요청을 취소 하셔서 친구 관계가 성립되지 않습니다"; // 요청을 수락하였지만 상대방이 요청을 취소함
+	String F_REQUEST_ACCEPT = "REQUEST_ACCEPT";
+	String F_REQUEST_ACCEPT_MSG = "수락 완료";
+	String F_REQUEST_REFUSE = "REQUEST_REFUSE";
+	String F_REQUEST_REFUSE_MSG = "거절 완료";
+
+	// 친구요청 취소
+	String F_REQUEST_CANCEL_SUCCESS ="REQUEST_CANCEL_SUCCESS";
+	String F_REQUEST_CANCEL_SUCCESS_MSG ="요청이 취소되었습니다";
+	String F_REQUEST_ALREADY_ACCEPT ="REQUEST_ALREADY_ACCEPT";
+	String F_REQUEST_ALREADY_ACCEPT_MSG ="상대방이 이미 요청을 수락하였습니다<br/>친구목록을 확인해 주세요";
 }

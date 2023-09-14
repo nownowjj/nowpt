@@ -7,7 +7,7 @@ import {FriendDto} from "../../../model/FriendApiModel";
 interface FriendComponentTypeInterface {
     data:FriendDto;
     leftText:string;
-    rightText:string;
+    rightText?:string;
     leftCallBack: (key:number)=> void;
     rightCallBack:(key:number)=> void;
     paramKey : number;
@@ -29,6 +29,7 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
     const [messageCall, setMessageCall] = useState<string>('');
 
     const rightConfirmMsgMap:rightConfirmMsgMapInterface ={
+        ''  : '준비중',
         '친구삭제' : `${data.friendNm}님 친구삭제`,
         '요청 취소'    : `${data.friendNm}님에게 보낸 친구 요청을<br/> 취소 하시겠습니까?`,
         '거절하기'    : `${data.friendNm}님이 보낸 친구 요청을<br/> 거절 하시겠습니까?`
@@ -36,7 +37,8 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
 
     const confirmCallFunction =()=>{
         if(!rightCallBack) return false;
-        confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )
+        console.log(rightText);
+        if(rightText)confirmFunction(rightEvent , rightConfirmMsgMap[rightText] )
     }
 
     const confirmFunction =(okCallBack:()=>void , message:string)=>{
@@ -55,10 +57,11 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
             </FriendComponentLeft>
 
             <FriendComponentRight>
-                <FriendName>{data.friendNm}</FriendName>
+                {rightText && <FriendName>{data.friendNm}</FriendName>}
                 <FriendButtonWrap>
+                    {!rightText && <FriendName>{data.friendNm}</FriendName>}
                     <FriendButton style={{color:"white",background:"skyblue"}} onClick={()=> leftEvent()}>{leftText ? leftText : '수락'}</FriendButton>
-                    <FriendButton style={{color:"white",background:"#ff8b39",fontWeight:500}} onClick={()=> confirmCallFunction()} >{rightText}</FriendButton>
+                    {rightText && <FriendButton style={{color:"white",background:"#ff8b39",fontWeight:500}} onClick={()=> confirmCallFunction()} >{rightText}</FriendButton>}
                 </FriendButtonWrap>
             </FriendComponentRight>
 
@@ -81,7 +84,7 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
 };
 const FriendName = styled.div`
     font-weight:bold;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 `
 const FriendButtonWrap = styled.div`
     gap:10px;
@@ -96,6 +99,7 @@ const FriendButton = styled.button`
     font-weight: 400;
     width: 50%;
     height: 30px;
+    white-space: nowrap;
 `
 const FriendComponentWrap =styled.div`
     width:100%;
@@ -103,12 +107,13 @@ const FriendComponentWrap =styled.div`
     display:flex;
     align-items:center;
     padding:5px 0;
+    border-bottom: 1px solid #e8e8e8;
 
 `
 const FriendImage = styled.img`
     border-radius:50%;
-    width:80px;
-    height:80px;
+    width:70px;
+    height:70px;
     object-fit: cover;
 `
 const FriendComponentLeft = styled.div`
@@ -121,6 +126,10 @@ const FriendComponentRight = styled.div`
     flex-direction:column;
     justify-content: center;
     padding:15px;
+    
+    // border: 1px solid #e8e8e8;
+    // margin-left: 5px;
+    // border-radius: 30px 30px 30px 30px;
 `
 
 export default FriendComponent;

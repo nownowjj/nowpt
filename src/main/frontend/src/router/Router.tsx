@@ -22,6 +22,7 @@ import FriendPage from "../pages/calendar/friend/FriendPage";
 import {RootState} from "../redux/store/store";
 import React from "react";
 import HomeComponent from "../pages/HomeComponent";
+import WeatherPage from "../pages/calendar/Weather/WeatherPage";
 
 
 const Router = () => {
@@ -97,6 +98,11 @@ const Router = () => {
                 <Route
                     path="/friend"
                     element={<PrivateRoute component={FriendPage}/>}
+                />
+
+                <Route
+                    path="/weather"
+                    element={<PrivateRoute component={WeatherPage}/>}
                 />
 
 

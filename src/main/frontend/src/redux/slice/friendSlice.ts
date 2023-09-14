@@ -6,6 +6,7 @@ interface FriendState{
     thirdCount : number;
     fourthCount : number;
     fiveCount : number;
+    sixCount : number;
 }
 
 const initialState:FriendState ={
@@ -14,6 +15,7 @@ const initialState:FriendState ={
     thirdCount : 0,
     fourthCount : 0,
     fiveCount : 0,
+    sixCount : 0,
 };
 
 const friendSlice = createSlice({
@@ -41,9 +43,14 @@ const friendSlice = createSlice({
             console.log('fiveEvent 실행');
             state.fiveCount += 1;
         }
+        ,
+        sixEvent:(state)=>{ // 친구 요청을 보낼 때 상대방이 먼저 요청을 보냈을 경우 (내 친구 , 받은 요청 , 친구 추천)
+            console.log('fiveEvent 실행');
+            state.sixCount += 1;
+        }
     },
 });
 
-export const {firstEvent , secondEvent , thirdEvent ,fourthEvent ,fiveEvent} = friendSlice.actions;
+export const {firstEvent , secondEvent , thirdEvent ,fourthEvent ,fiveEvent,sixEvent} = friendSlice.actions;
 
 export default friendSlice.reducer;

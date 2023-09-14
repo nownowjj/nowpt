@@ -36,6 +36,7 @@ const FriendPage = () => {
     const thirdCount = useSelector((state:RootState) => state.friend.thirdCount);
     const fourthCount = useSelector((state:RootState) => state.friend.fourthCount);
     const fiveCount = useSelector((state:RootState) => state.friend.fiveCount);
+    const sixCount = useSelector((state:RootState) => state.friend.sixCount);
 
 
     // 내가 보낸 요청중인 리스트
@@ -47,7 +48,7 @@ const FriendPage = () => {
             .catch(error=>{
                 ApiErrorHandle(error)
             })
-    },[firstCount])
+    },[firstCount,sixCount])
 
 
     // 내 친구 리스트
@@ -59,7 +60,7 @@ const FriendPage = () => {
             .catch(error=>{
                 ApiErrorHandle(error)
             })
-    },[secondCount,thirdCount ,fiveCount])
+    },[secondCount,thirdCount ,fiveCount,sixCount])
 
     // 나에게 친구 요청을 보낸 리스트
     useEffect(()=>{
@@ -79,7 +80,7 @@ const FriendPage = () => {
             }).catch((error)=>{
             ApiErrorHandle(error)
         })
-    },[firstCount,secondCount,fourthCount ,fiveCount])
+    },[firstCount,secondCount,thirdCount,fourthCount ,fiveCount])
 
     const [activeIndex , setActiveIndex] = useState<number>(0);
     const activeFn =(index:number) => {

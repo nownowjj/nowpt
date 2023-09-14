@@ -7,8 +7,9 @@ import {friendDto} from "./FriendPage";
 import {cancelFriendRequestApi} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useDispatch} from "react-redux";
-import {firstEvent} from "../../../redux/slice/friendSlice";
+import {firstEvent, sixEvent} from "../../../redux/slice/friendSlice";
 import {FriendSn} from "../../../model/FriendApiModel";
+import {requestType} from "./FriendRecommendComponent";
 
 interface FriendRequestWaitComponentInterface {
     data : friendDto[];
@@ -28,6 +29,10 @@ const FriendRequestComponent : React.FC<FriendRequestWaitComponentInterface>= ({
         setShowAlert(true);
     }
 
+    const requestResponseMap:requestType ={
+        'REQUEST_CANCEL_SUCCESS' :()=> dispatch(firstEvent()),
+        'REQUEST_ALREADY_ACCEPT'   :()=> dispatch(sixEvent())
+    }
 
     const requestCancelFunction =(key:number) =>{
         const param:FriendSn={friendSn:key};
@@ -35,8 +40,8 @@ const FriendRequestComponent : React.FC<FriendRequestWaitComponentInterface>= ({
         cancelFriendRequestApi(param)
             .then((response)=>{
                 console.log(response);
-                dispatch(firstEvent())
-                alertFunction(()=> setShowAlert(false),'요청 취소 성공')
+                requestResponseMap[response.data]();
+                alertFunction(()=> setShowAlert(false),response.message)
             }).catch((error)=>{
                 alertFunction(()=> setShowAlert(false),'요청 취소 실패')
                 ApiErrorHandle(error)

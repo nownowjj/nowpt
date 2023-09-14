@@ -30,6 +30,7 @@ const HomeComponent =()=>{
                 setMessage(response.message);
                 setLoading(false)
             }).catch(error => {
+                console.log(error);
             ApiErrorHandle(error)
         });
     },[]);

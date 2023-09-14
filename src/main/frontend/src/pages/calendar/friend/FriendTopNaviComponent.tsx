@@ -25,7 +25,6 @@ const FriendTopNaviComponent: React.FC<FriendTopNaviComponentProps> = ({ activeF
 const FriendTopNaviWrap =styled.ul`
     width:100%;
     height:35px;
-    // padding:0 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
