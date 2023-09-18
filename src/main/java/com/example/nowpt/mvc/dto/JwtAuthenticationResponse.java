@@ -12,7 +12,6 @@ public class JwtAuthenticationResponse {
     public JwtAuthenticationResponse(String accessToken) {
         log.debug("JwtAuthenticationResponse");
         this.accessToken = accessToken;
-        this.role = role;
     }
 
     public String getAccessToken() {

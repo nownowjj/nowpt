@@ -14,7 +14,6 @@ public class JoinDto {
 	private String membPw;
 	@NonNull
 	private String membNm;
-	
 	private String mobileNo;
 	private String emailAddr;
 	private String zipCd;

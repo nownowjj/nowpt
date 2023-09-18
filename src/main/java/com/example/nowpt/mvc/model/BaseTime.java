@@ -1,9 +1,6 @@
 package com.example.nowpt.mvc.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -33,14 +30,4 @@ public class BaseTime {
 	@LastModifiedDate
 	@Column(name = "last_change_dt", nullable = false)
 	private LocalDateTime lastChangeDt;
-
-
-
-
-
-
-
-
-
-
 }

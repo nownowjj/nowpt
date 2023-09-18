@@ -2,14 +2,15 @@ package com.example.nowpt.cmm.utils;
 
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.mvc.model.CmmnCodeDetail;
-import com.example.nowpt.repository.cmmn_code_detail.CmmnCodeDetailRepo;
+import com.example.nowpt.mvc.repository.cmmn_code_detail.CmmnCodeDetailRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class EntityUtil {
-@Autowired private static CmmnCodeDetailRepo ccdRepo;
+	 private final CmmnCodeDetailRepo ccdRepo;
 	
 	public CmmnCodeDetail getMemberTyCmm(String codeValue) {
 		log.debug("getMemberTyCmm {} " ,codeValue);

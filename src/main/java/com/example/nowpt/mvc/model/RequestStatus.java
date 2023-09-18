@@ -7,8 +7,18 @@ package com.example.nowpt.mvc.model;
  * REFUSE : 요청 거절
  */
 public enum RequestStatus {
-   BEFORE,
-   WAIT,
-   ACCEPT,
-   REFUSE
+   BEFORE("BEFORE"),
+   WAIT("WAIT"),
+   ACCEPT("ACCEPT"),
+   REFUSE("REFUSE");
+
+   private final String dbValue;
+
+   RequestStatus(String dbValue) {
+      this.dbValue = dbValue;
+   }
+
+   public String getDbValue() {
+      return dbValue;
+   }
 }

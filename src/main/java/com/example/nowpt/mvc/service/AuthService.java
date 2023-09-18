@@ -7,10 +7,10 @@ import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberLoginHst;
 import com.example.nowpt.mvc.model.MemberMoney;
-import com.example.nowpt.repository.member.MemberRepo;
-import com.example.nowpt.repository.member_login_hst.MemberLoginHstRepo;
-import com.example.nowpt.repository.member_money.MemberMoneyRepo;
-import lombok.Data;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.member_login_hst.MemberLoginHstRepo;
+import com.example.nowpt.mvc.repository.member_money.MemberMoneyRepo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class AuthService {
-    @Autowired private ModelMapper mm;
-    @Autowired private MemberRepo memRepo;
-    @Autowired private MemberLoginHstRepo memLoginHstRepo;
-    @Autowired private EntityUtil eu;
-    @Autowired private MemberMoneyRepo mmRepo;
-
-    @Autowired private PasswordEncoder pe;
+    private final ModelMapper mm;
+    private final MemberRepo memRepo;
+    private final MemberLoginHstRepo memLoginHstRepo;
+    private final EntityUtil eu;
+    private final MemberMoneyRepo mmRepo;
+    private final PasswordEncoder pe;
 
     public String gettoken(String id, String pw, String ip, String sns) {
 
@@ -41,10 +40,11 @@ public class AuthService {
         if (!(sns.equals("Y"))){
             // membId로 검증
              mem = memRepo.memberChkById(id);
+             if(mem == null) return "fail";
 
              // 일반 로그인은 비밀번호 체크가 필요함
             if(! pe.matches(pw, mem.getPassword())) {
-                throw new RuntimeException("비밀번호가 틀립니다.");
+                return "peNot";
             }
 
         }
@@ -71,7 +71,7 @@ public class AuthService {
         mlg.setConnectIp(ip);
         mlg.setMemberSn(mem);
         memLoginHstRepo.save(mlg);
-        return JwtTokenProvider.generateToken(id, pw, mem.getMembCls().getCodeValue() ,mem.getEmailAddr() , mem.getProfileImage() );
+        return JwtTokenProvider.generateToken(id, pw, mem.getMembCls().getCodeValue() ,mem.getEmailAddr() , mem.getProfileImage(),mem.getMemberSn() );
     }
 
     public MemberMoney userJoin(JoinDto joinDto) {

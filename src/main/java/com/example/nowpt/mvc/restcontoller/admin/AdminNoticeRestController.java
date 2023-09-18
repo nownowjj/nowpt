@@ -7,7 +7,7 @@ import com.example.nowpt.mvc.dto.NoticeDto;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notice;
 import com.example.nowpt.mvc.service.admin.NoticeService;
-import com.example.nowpt.repository.notice.NoticeRepo;
+import com.example.nowpt.mvc.repository.notice.NoticeRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

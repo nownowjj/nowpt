@@ -16,6 +16,8 @@ target/
 ### IntelliJ IDEA ###
 application.yml
 
+.env
+
 *.bin
 *.lock
 .class

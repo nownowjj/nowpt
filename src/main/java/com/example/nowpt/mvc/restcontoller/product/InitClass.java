@@ -1,12 +1,11 @@
 package com.example.nowpt.mvc.restcontoller.product;
 
 import com.example.nowpt.mvc.model.Product;
-import com.example.nowpt.repository.product.ProductRepo;
+import com.example.nowpt.mvc.repository.product.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component

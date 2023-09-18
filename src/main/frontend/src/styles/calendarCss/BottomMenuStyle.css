@@ -1,0 +1,45 @@
+/*.menuBottom{*/
+
+/*}*/
+/*.menuBottom a{*/
+/*    border-top: 1px solid black;*/
+/*    position: relative;*/
+/*    !*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);*!*/
+/*    !*box-shadow: 0 -5px 5px -5px #333;*!*/
+/*}*/
+
+/*.menuBottom a svg{*/
+/*    border: 1px solid black;*/
+/*    background-color: white;*/
+/*    border-radius: 50%;*/
+/*    width:30px;*/
+/*    height: 30px;*/
+/*    padding: 2px;*/
+/*    transition-delay: 2s;*/
+/*}*/
+
+/*.menuBottom > .active > svg{*/
+/*    position: absolute;*/
+/*    bottom: 30px;*/
+/*    transition-delay: 2s;*/
+
+/*}*/
+
+/*.menuBottom > .active{*/
+/*    border-top: none;*/
+/*    !*border-bottom-left-radius: 50%;*!*/
+/*    !*border-bottom-right-radius: 50%;*!*/
+/*}*/
+
+/*.menuBottom > .active::before,*/
+/*.menuBottom > .active::after{*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    border-bottom: 1px solid black;*/
+/*    !*border-top: none;*!*/
+/*    width: 64px;*/
+/*    height: 60px;*/
+/*    top: -38px;*/
+/*    border-bottom-left-radius: 40%;*/
+/*    border-bottom-right-radius: 40%;*/
+/*}*/

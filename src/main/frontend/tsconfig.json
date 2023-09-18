@@ -1,0 +1,70 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "typeRoots": ["src/types"],
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
+//{
+//  "compilerOptions": {
+//    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+//    "module": "commonjs",                                /* Specify what module code is generated. */
+//    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
+//    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+//    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+//    "strict": true,                                      /* Enable all strict type-checking options. */
+//    "skipLibCheck": true,
+//    "jsx": "react"
+//  }
+//}
+
+//{
+//  "compilerOptions": {
+//    "target": "es6", //어떤버전의 js로 컴파일할지 정의
+//    "lib": [ //어떤 환경에서 사용하는지 정의(api자동완성 제공해줌)
+//      "dom", //브라우저
+//      "dom.iterable",
+//      "esnext"
+//    ],
+//    "baseUrl": "./src", // 추가된 것 ./src를 절대 경로로 지정
+//    "allowJs": true, //ts안에서 js허용(js파일 import가능)
+//    "skipLibCheck": true,
+//    "esModuleInterop": true,
+//    "allowSyntheticDefaultImports": true,
+//    "strict": true,
+//    "forceConsistentCasingInFileNames": true,
+//    "noFallthroughCasesInSwitch": true,
+//    "module": "esnext",
+//    "moduleResolution": "node",
+//    "resolveJsonModule": true,
+//    "isolatedModules": true,
+//    "noEmit": true,
+//    "jsx": "react-jsx"
+//  },
+//  "include": [ //컴파일할 폴더 입력. src의 모든파일 확인함
+//    "src"
+//  ],
+//  "exclude": [
+//    "node_modules"
+//  ],
+//}

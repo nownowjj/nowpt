@@ -4,8 +4,8 @@ import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.UserEttDto;
-import com.example.nowpt.repository.member.MemberRepo;
-import com.example.nowpt.repository.product.ProductRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
+import com.example.nowpt.mvc.repository.product.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +38,7 @@ public class ProductRestController {
             sn =  memberRepo.findByEmailAddr(userEttDto.getMembEmail()).getMemberSn();
         }
 
-        if( productRepo.findProductList(sn) != null) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(sn));
+        if( productRepo.findProductList(sn ,false) != null) return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, productRepo.findProductList(sn ,false));
         else return ResponseUtil.ERROR(Cd.SELECT_FAIL, null);
     }
 

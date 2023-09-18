@@ -1,0 +1,28 @@
+.friendTopNavi li{
+    /*border:2px solid skyblue;*/
+    /*width: 100%;*/
+    text-align: center;
+    white-space: nowrap;
+    background-color: #d1eeff;
+    color: white;
+    font-size: 13px;
+    height: 35px;
+    line-height: 35px;
+    flex:1;
+}
+.friendTopNavi li:first-child{
+    /*border-top-left-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+    border-right:2px solid white;
+}
+
+.friendTopNavi li:last-child{
+    /*border-top-right-radius: 5px;*/
+    /*border-bottom-right-radius: 5px;*/
+    border-left:2px solid white ;
+}
+.friend-active{
+    background-color: skyblue !important;
+    transition-duration: 0.2s;
+    font-weight: bold;
+}

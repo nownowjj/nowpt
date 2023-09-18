@@ -8,7 +8,7 @@ spring:
   #    converters:
   #      preferred-json-mapper: gson
   profiles:
-    active: default
+    active: prd
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: ${SPRING_DATASOURCE_URL}

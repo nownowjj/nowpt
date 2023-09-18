@@ -15,12 +15,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Transactional
 public class MapperService {
-
-    @Autowired
-    private MemberMapper memberMapper;
-
-    @Autowired
-    private LoginHstMapper loginHstMapper;
+    private final MemberMapper memberMapper;
+    private final LoginHstMapper loginHstMapper;
 
     public List<Member> selectAllMember() {
         return memberMapper.selectAllMember();

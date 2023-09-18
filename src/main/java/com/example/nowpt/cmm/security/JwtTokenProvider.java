@@ -25,9 +25,9 @@ public class JwtTokenProvider {
 		JWT_SECRET = value;
 	}
 
-	private final static int JWT_EXPIRATION_MS = 1000 * 60 * 60;
+	private final static int JWT_EXPIRATION_MS = 100000 * 60 * 60;
 
-	public static String generateToken(String id, String pw, String authority , String email , String profileImage) {
+	public static String generateToken(String id, String pw, String authority , String email , String profileImage , Long memberSn) {
 		Map<String, Object> claims = new HashMap<>();
 //		log.debug("토큰 프로바이드 {}");
 		log.debug("권한 : {}",authority);
@@ -38,6 +38,7 @@ public class JwtTokenProvider {
 		claims.put("membEmail", email);
 		claims.put("roles", authority);
 		claims.put("profileImage", profileImage);
+		claims.put("membSn", memberSn);
 
 		return Jwts.builder()
 				.setClaims(claims)
@@ -47,11 +48,10 @@ public class JwtTokenProvider {
 				.compact();
 	}
 	public static Claims getClaims(String jwt) {
-		Claims claims = Jwts.parser()
+		return Jwts.parser()
 				.setSigningKey(JWT_SECRET)
 				.parseClaimsJws(jwt)
 				.getBody();
-		return claims;
 	}
 	
 	public static boolean validateToken(String token) {

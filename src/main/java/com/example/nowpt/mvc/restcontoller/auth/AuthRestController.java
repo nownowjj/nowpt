@@ -1,7 +1,10 @@
 package com.example.nowpt.mvc.restcontoller.auth;
 
 import com.example.nowpt.cmm.code.ApiCd;
+import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.RVO;
+import com.example.nowpt.cmm.rvo.ResponseDto;
+import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
@@ -16,7 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 로그인, 회원가입 등과 같이 권한이 없어도 사용할 수 있는 api
@@ -28,14 +34,9 @@ import java.util.HashMap;
 @RequestMapping("/api/auth")
 public class AuthRestController {
 
-    @Autowired
-    private AuthService authService;
-
-    @Autowired
-    private MapperService mapperService;
-
-    @Autowired
-    private MemberMapper memberMapper;
+    private final AuthService authService;
+    private final MapperService mapperService;
+    private final MemberMapper memberMapper;
 
     String  sns = "N";
 
@@ -57,12 +58,29 @@ public class AuthRestController {
         return result;
     }
 
+//    @PostMapping("/userLogin")
+//    public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
+//        log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
+//        String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
+////        if(token.equals("fail"))
+//        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
+//        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+//    }
+
     @PostMapping("/userLogin")
-    public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
+    public ResponseDto<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
         log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
+        Map<String,String> errMap = new HashMap<>();
         String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
-        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        if(token.equals("fail")){
+            errMap.put("errorMessage","notF");
+            return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, errMap);
+        }
+        if(token.equals("peNot")){
+            errMap.put("errorMessage","notP");
+            return ResponseUtil.FAILURE(Cd.LOGIN_FAIL, errMap);
+        }
+        return ResponseUtil.SUCCESS(Cd.LOGIN_SUCCESS, new JwtAuthenticationResponse(token));
     }
 
 

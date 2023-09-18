@@ -2,7 +2,7 @@ package com.example.nowpt.mvc.restcontoller.room;
 
 import com.example.nowpt.mvc.dto.RoomCreateDto;
 import com.example.nowpt.mvc.model.Room;
-import com.example.nowpt.repository.room.RoomRepo;
+import com.example.nowpt.mvc.repository.room.RoomRepo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

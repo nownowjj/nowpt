@@ -1,20 +1,31 @@
 package com.example.nowpt.mvc.openApi.chatGpt;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/auth/chat-gpt")
+@Slf4j
 public class ChatGptController {
 
-    @Autowired private final ChatGptService chatGptService;
+    private final ChatGptService chatGPTService;
 
-    public ChatGptController(ChatGptService chatGptService) {
-        this.chatGptService = chatGptService;
+    @Autowired
+    public ChatGptController(ChatGptService chatGPTService) {
+        this.chatGPTService = chatGPTService;
     }
 
-    @PostMapping("/question")
-    public ChatGptResponseDto sendQuestion(@RequestBody QuestionRequestDto requestDto) {
-        return chatGptService.askQuestion(requestDto);
+    @PostMapping("/chat")
+    public String chatWithGPT(@RequestBody ChatGptRequestDto requestDto) {
+        // Call the ChatGPT service to get the response
+        String response = chatGPTService.getChatGPTResponse(requestDto);
+        // Process the response as needed
+        return response;
     }
 }
