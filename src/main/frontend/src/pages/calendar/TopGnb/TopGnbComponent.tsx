@@ -2,9 +2,11 @@ import React from 'react';
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {IoIosArrowBack} from "react-icons/io";
+import ProfileComponent from "../../../component/ProfileComponent";
 
 interface TopGnbComponentInterface {
     page:string;
+    friendProfile?:string;
 }
 
 const TopGnbComponent = (data:TopGnbComponentInterface) => {
@@ -14,10 +16,19 @@ const TopGnbComponent = (data:TopGnbComponentInterface) => {
             <GnbBackBtn onClick={()=> navigate(-1)}>
                 <IoIosArrowBack/>
             </GnbBackBtn>
-            <div>{data.page}</div>
+            <GnbTitle>
+                <span>{data.page}</span>
+                {/*{data.friendProfile && <img style={{width:"40px",borderRadius:"50%",marginLeft:"5px"}} src={data.friendProfile}/>}*/}
+                {data.friendProfile && <ProfileComponent naviUse={false} size={40} friendImageSrc={data.friendProfile} style={{marginLeft:"5px"}}/> }
+            </GnbTitle>
         </TopGnbWrap>
     );
 };
+const GnbTitle =styled.div`
+    display:flex;
+    align-items:center;
+    height:100%;
+`
 
 const TopGnbWrap = styled.div`
     position:fixed;

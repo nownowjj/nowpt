@@ -8,6 +8,9 @@ import {deleteFriendApi} from "../../../api/friendApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {secondEvent} from "../../../redux/slice/friendSlice";
 import AlertComponent from "../component/AlertComponent";
+import {useNavigate} from "react-router-dom";
+import {route} from "../../../services/remocon";
+import {FriendDto} from "../../../model/FriendApiModel";
 
 interface MyFriendComponentInterface {
     data:friendDto[];
@@ -15,6 +18,7 @@ interface MyFriendComponentInterface {
 
 const MyFriendListComponent : React.FC<MyFriendComponentInterface> = ({data}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
@@ -26,13 +30,10 @@ const MyFriendListComponent : React.FC<MyFriendComponentInterface> = ({data}) =>
         setShowAlert(true);
     }
 
-    const watchEvent =(sn:number)=>{
-        alertFunction(()=> setShowAlert(false),`${sn}준비중입니다.`)
-    }
-
-    const watchMyFriend =(friendMemberSn:number)=>{
+    const watchMyFriend =(friendMemberSn:number,data:FriendDto)=>{
         console.log("구경",friendMemberSn);
-        watchEvent(friendMemberSn)
+        console.log(data);
+        navigate(route.myFriend,{state:{"friendInfo":data}})
     }
     const deleteMyFriend=(friendMemberSn:number)=>{
         const deleteParam:{friendMemberSn: number } = {friendMemberSn:friendMemberSn};

@@ -47,7 +47,6 @@ public class NotificationCustomRepoImpl implements NotificationCustomRepo {
 
     @Transactional
     public long deleteAllNotificationByMemberSn(Long memberSn){
-        log.debug("me s n : {} ",memberSn);
         return queryFactory
                 .update(notification)
                 .set(notification.useYn,"N")

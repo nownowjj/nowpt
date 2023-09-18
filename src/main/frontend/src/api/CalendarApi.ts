@@ -10,7 +10,7 @@ import {
     RecordDate
 } from "../model/CalendarApiModel";
 
-export function commonSearchParam(param: Record<string, any>){
+export function commonSearchParam(param: Record<string|number, any>){
     const queryParams = new URLSearchParams();
     for (const key in param) {
         if (param.hasOwnProperty(key)) {

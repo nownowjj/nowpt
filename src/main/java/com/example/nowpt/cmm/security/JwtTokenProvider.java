@@ -48,11 +48,10 @@ public class JwtTokenProvider {
 				.compact();
 	}
 	public static Claims getClaims(String jwt) {
-		Claims claims = Jwts.parser()
+		return Jwts.parser()
 				.setSigningKey(JWT_SECRET)
 				.parseClaimsJws(jwt)
 				.getBody();
-		return claims;
 	}
 	
 	public static boolean validateToken(String token) {

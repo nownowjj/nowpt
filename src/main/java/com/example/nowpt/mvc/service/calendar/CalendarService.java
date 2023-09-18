@@ -71,4 +71,9 @@ public class CalendarService {
         return calendarRepo.selectMyRecordSm(membSn);
     }
 
+
+    // 내 친구 일정 조회
+    public Page<CalendarDto> selectMyFriendRecord(long memberSn , Pageable pageable){
+        return calendarRepo.selectMyFriendRecord(memberSn, pageable);
+    }
 }

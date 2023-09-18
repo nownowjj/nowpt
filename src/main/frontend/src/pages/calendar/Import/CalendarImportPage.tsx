@@ -112,14 +112,14 @@ const CalendarImportPage = () => {
     );
 };
 
-const ImportWrap =styled.div`
+export const ImportWrap =styled.div`
     height: fit-content;
     padding-top: 50px;
     padding-bottom: 50px;
     width:100%;
 `
 
-const ObserverArea = styled.p`
+export const ObserverArea = styled.p`
     width:1px;
     border-bottom:1px solid #e8e8e8;
 `

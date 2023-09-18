@@ -17,4 +17,5 @@ public interface CalendarCustomRepo {
     List<CalendarSmDto> selectMyRecordSm (Long membSn);
 
     Page<CalendarDto> findImportRecordByMembSn(Long calendarSn , Pageable pageable);
+    Page<CalendarDto> selectMyFriendRecord(long memberSn , Pageable pageable);
 }

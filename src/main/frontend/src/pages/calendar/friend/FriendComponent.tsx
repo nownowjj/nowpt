@@ -8,7 +8,7 @@ interface FriendComponentTypeInterface {
     data:FriendDto;
     leftText:string;
     rightText?:string;
-    leftCallBack: (key:number)=> void;
+    leftCallBack: (key:number , data:FriendDto)=> void;
     rightCallBack:(key:number)=> void;
     paramKey : number;
 }
@@ -20,7 +20,7 @@ interface rightConfirmMsgMapInterface {
 const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftText ,rightText ,leftCallBack , rightCallBack , paramKey}) => {
     const profileSrc = data.friendProfile ? data.friendProfile :loginTrueButNoProfile;
 
-    const leftEvent =()=> leftCallBack(paramKey)
+    const leftEvent =()=> leftCallBack(paramKey,data)
     const rightEvent =()=> rightCallBack(paramKey)
 
     // Alert 여부

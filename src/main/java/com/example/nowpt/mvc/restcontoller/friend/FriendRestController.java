@@ -3,16 +3,20 @@ package com.example.nowpt.mvc.restcontoller.friend;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
+import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.FriendDto;
 import com.example.nowpt.mvc.model.Friend;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Notification;
 import com.example.nowpt.mvc.repository.friend.FriendRepo;
 import com.example.nowpt.mvc.repository.notification.NotificationRepo;
+import com.example.nowpt.mvc.service.calendar.CalendarService;
 import com.example.nowpt.mvc.service.friend.FriendService;
 import com.example.nowpt.mvc.service.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +35,7 @@ public class FriendRestController {
     private final FriendRepo friendRepo;
     private final FriendService friendService;
     private final NotificationService notificationService;
+    private final CalendarService calendarService;
 
     /**
      @title 친구 요청 보내기
@@ -153,5 +158,15 @@ public class FriendRestController {
     }
 
 
+
+
+    // 내 친구 조회 캘린더 조회
+    @GetMapping("/calendar")
+    public ResponseDto<?> selectMyFriendCalendar(@RequestParam long memberSn , Pageable pageable){
+        log.debug("내 친구  조회 : {} ,{}" ,memberSn ,pageable);
+        Page<CalendarDto> friendCalendarList = calendarService.selectMyFriendRecord(memberSn ,pageable);
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,    friendCalendarList);
+    }
 
 }

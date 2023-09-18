@@ -23,6 +23,7 @@ import {RootState} from "../redux/store/store";
 import React from "react";
 import HomeComponent from "../pages/HomeComponent";
 import WeatherPage from "../pages/calendar/Weather/WeatherPage";
+import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage";
 
 
 const Router = () => {
@@ -98,6 +99,11 @@ const Router = () => {
                 <Route
                     path="/friend"
                     element={<PrivateRoute component={FriendPage}/>}
+                />
+
+                <Route
+                    path="/myFriend"
+                    element={<PrivateRoute component={MyFriendCalendarPage}/>}
                 />
 
                 <Route

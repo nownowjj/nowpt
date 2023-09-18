@@ -27,8 +27,9 @@ interface CalendarDetailContentComponentProps{
     removeRecord: (calendarSn: number) => void; // Update the prop type here
     importPage: boolean;
     importEvent: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed
+    friendPage?:boolean;
 }
-const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent }) => {
+const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent , friendPage }) => {
     const navigate = useNavigate();
     const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
     // 즐겨찾기를 등록 할 떄에는 바로 등록
@@ -90,26 +91,31 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                             (dayjs(data.frstRegistDt).format('A HH:mm:ss'))
                     }
                 </span>
-                <DetailStarSubComponent
-                    initialYn={initialYn} // 하위 컴포넌트로 상태 전달
-                    importantRecord={importantRecord}
-                    style={{color:"black",fontSize:"19px"}}
-                />
-                <PiWrenchFill style={{marginRight : "2px"}}
-                    onClick={() =>
-                        navigate(route.calendarRecordNewOrFix, {
-                            state: {
-                                "recordDate" : data.recordDate,
-                                "sn": data.calendarSn,
-                                "content": data.content,
-                                "title": data.title,
-                                "importYn": data.importYn,
-                            },
-                        })
-                    }
-                >
-                </PiWrenchFill>
-                <BiTrash onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} />
+                {
+                    !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
+                <>
+                    <DetailStarSubComponent
+                        initialYn={initialYn} // 하위 컴포넌트로 상태 전달
+                        importantRecord={importantRecord}
+                        style={{color:"black",fontSize:"19px"}}
+                    />
+                    <PiWrenchFill style={{marginRight : "2px"}}
+                        onClick={() =>
+                            navigate(route.calendarRecordNewOrFix, {
+                                state: {
+                                    "recordDate" : data.recordDate,
+                                    "sn": data.calendarSn,
+                                    "content": data.content,
+                                    "title": data.title,
+                                    "importYn": data.importYn,
+                                },
+                            })
+                        }
+                    >
+                    </PiWrenchFill>
+                    <BiTrash onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} />
+                </>
+                }
             </DetailTimeAndFixDelete>
 
             {/* 삭제전 Confirm */}

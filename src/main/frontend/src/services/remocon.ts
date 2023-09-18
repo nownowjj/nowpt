@@ -17,6 +17,7 @@ const route = {
     calendarRecordNewOrFix : '/calendarRecordNewOrFix',
     notification : '/notification',
     friend : '/friend',
+    myFriend : '/myFriend',
     weather : '/weather'
 }
 

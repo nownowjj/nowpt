@@ -11,6 +11,7 @@ export interface ProfileComponentProps {
     naviUse: boolean;
     size: number;
     style?: React.CSSProperties;
+    friendImageSrc?:string;
 }
 
 /**
@@ -20,22 +21,20 @@ export interface ProfileComponentProps {
  */
 const ProfileComponent: React.FC<ProfileComponentProps> = (data) => {
     const navigate = useNavigate();
-    let user = useSelector((state:RootState) => state.user as UserState);
+    let user = useSelector((state: RootState) => state.user as UserState);
 
     // 비로그인시 맹구 이미지
     let imageSrc;
-    if (user.isLoggedIn && user.user){
-        // 로그인을 하였지만 프로필이 없음
-       imageSrc = user.user.profileImage ? user.user.profileImage :  loginTrueButNoProfile;
+    if (data.friendImageSrc) imageSrc = data.friendImageSrc;
+    else {
+        if (user.isLoggedIn && user.user) imageSrc = user.user.profileImage ? user.user.profileImage : loginTrueButNoProfile;  // 로그인을 하였지만 프로필이 없음
     }
-
     return (
         <ProfileImageWrap size={data.size}  onClick={() => data.naviUse && navigate(route.myPage)}
             style={{
                 ...data.style
             }}>
             <ProfileImage src={imageSrc}/>
-            {/*{isLogin ? ' ' : 'no'}*/}
         </ProfileImageWrap>
     );
 };

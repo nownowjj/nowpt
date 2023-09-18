@@ -21,7 +21,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
 
     private final JPAQueryFactory queryFactory;
     QCalendar qCalendar = QCalendar.calendar;
-
+    QCalendar qSubCalendar = new QCalendar("subCalendar");
     @Override
     public List<String> selectRecordDate(CalendarDto calendarDto) {
         return queryFactory
@@ -71,7 +71,6 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
 
     @Override
     public Page<CalendarDto> findImportRecordByMembSn(Long memberSn, Pageable pageable) {
-        QCalendar qSubCalendar = new QCalendar("subCalendar");
 
         // Subquery to fetch the total count
         long total = queryFactory
@@ -98,6 +97,43 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                 .where(
                         qCalendar.memberSn.eq(memberSn).and(qCalendar.importYn.eq(true)).and(qCalendar.useYn.eq("Y"))
                       )
+                .orderBy(qCalendar.frstRegistDt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<CalendarDto> selectMyFriendRecord(long memberSn, Pageable pageable) {
+        long total = queryFactory
+                .select(qSubCalendar.count())
+                .from(qSubCalendar)
+                .where(
+                        qSubCalendar.memberSn.eq(memberSn)
+                        .and(qSubCalendar.useYn.eq("Y"))
+                )
+                .fetchOne();
+
+
+        List<CalendarDto> content = queryFactory
+                .select(Projections.fields(CalendarDto.class,
+                        qCalendar.calendarSn.as("calendarSn"),
+                        qCalendar.memberSn.as("memberSn"),
+                        qCalendar.recordDate.as("recordDate"),
+                        qCalendar.title.as("title"),
+                        qCalendar.content.as("content"),
+                        qCalendar.frstRegistDt.as("frstRegistDt"),
+                        qCalendar.lastChangeDt.as("lastChangeDt"),
+                        qCalendar.useYn.as("useYn"),
+                        qCalendar.importYn.as("importYn")
+                ))
+                .from(qCalendar)
+                .where(
+                        qCalendar.memberSn.eq(memberSn)
+                                .and(qCalendar.useYn.eq("Y"))
+                )
                 .orderBy(qCalendar.frstRegistDt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
