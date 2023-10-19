@@ -102,6 +102,9 @@ dependencies {
     // @NotEmpty
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // 욕설방지 필터링 테스트 20231019
+    implementation 'io.github.vaneproject:badwordfiltering:1.0.0'
+
     //thymeleaf
 //    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 //    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'

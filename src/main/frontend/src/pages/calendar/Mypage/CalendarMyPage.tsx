@@ -45,6 +45,8 @@ const CalendarMyPage = () => {
                 setMembInfo(response.data.member[0]);
                 setRecordList(response.data.myRecordSmList);
         }).catch(error => {
+            console.log('my error' , error);
+            console.log(error);
             ApiErrorHandle(error)
             }).finally(()=>{
                 setIsLoading(false);

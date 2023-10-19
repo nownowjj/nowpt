@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import styled from "styled-components";
-import {BiTrash} from "react-icons/bi";
+import {BiCommentDetail, BiTrash} from "react-icons/bi";
 import {PiWrenchFill} from "react-icons/pi";
 import dayjs from "dayjs";
 import 'dayjs/locale/ko';
@@ -10,7 +10,8 @@ import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
-import {CalendarDto} from "../../../model/CalendarApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import {CalendarDto} from "../../../model/CalendarApiModel";
+import {FaRegComment} from "react-icons/fa"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
@@ -75,30 +76,25 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
         removeRecord(data.calendarSn);
     };
 
+
     return (
         <DetailContentWrap key={data.calendarSn}>
             <div className="detailTitle">{data.title}</div>
             <DetailContent className="detailContent">{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
-
-                <span style={{marginRight : "5px"}}  className="detailRegistDt">
-                    {
-                        importPage
-                        ?
-                            (dayjs(data.frstRegistDt).format('YYYY-MM-DD A HH:mm:ss'))
-                            :
-                            (dayjs(data.frstRegistDt).format('A HH:mm:ss'))
-                    }
-                </span>
+                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>
+                <FaRegComment style={{marginRight : "2px"}}/> {/* 댓글 */}
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>
+                    {/* 중요 */}
                     <DetailStarSubComponent
-                        initialYn={initialYn} // 하위 컴포넌트로 상태 전달
+                        initialYn={initialYn}
                         importantRecord={importantRecord}
                         style={{color:"black",fontSize:"19px"}}
                     />
+                    {/* 수정 */}
                     <PiWrenchFill style={{marginRight : "2px"}}
                         onClick={() =>
                             navigate(route.calendarRecordNewOrFix, {
@@ -113,7 +109,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                         }
                     >
                     </PiWrenchFill>
-                    <BiTrash onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} />
+                    <BiTrash onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} /> {/* 삭제 */}
                 </>
                 }
             </DetailTimeAndFixDelete>

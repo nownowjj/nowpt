@@ -11,9 +11,6 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {CalendarSnParam, CalendarDto, RecordDate} from "../../../model/CalendarApiModel";
 
-interface DetailNoBalloonProps{
-    leftSize:string;
-}
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
@@ -26,6 +23,7 @@ const CalendarDayDetailPage = () => {
         getMyDetailCalendar(param)
             .then(response => {
                 setDetail(response.data)
+                console.log(response.data);
             })
             .catch(error => {
                 ApiErrorHandle(error)
@@ -102,6 +100,9 @@ const CalendarDetailWrap = styled.div`
     height:100%;
 `
 
+interface DetailNoBalloonProps{
+    leftSize:string;
+}
 const DetailNoBalloon = styled.div<DetailNoBalloonProps>`
     z-index:100;
     position: fixed;

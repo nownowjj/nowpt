@@ -79,9 +79,9 @@ const CalendarImportPage = () => {
 
             {/* 반복 출력시킬 element 영역 */}
             <ImportWrap>
-                {isLoading ? (
-                        <LoadingComponent/>
-                    ) :
+                {
+                    isLoading ? (<LoadingComponent/>)
+                        :
                     importRecordList && importRecordList.length > 0 ? (
                         importRecordList.map((data) => (
                             <CalendarDetailContentComponent
@@ -92,7 +92,6 @@ const CalendarImportPage = () => {
                                 importEvent={importEvent}
                             />
                         ))
-
                     ) : (
                         <CalendarDetailNo/>
                     )}
