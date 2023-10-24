@@ -9,7 +9,7 @@ import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalendarDto, RecordDate} from "../../../model/CalendarApiModel";
+import {CalendarDto, CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -92,7 +92,6 @@ const CalendarDetail = styled.div`
     height:fit-content;
     background:white;
     padding-top:50px;
-    
 `
 const CalendarDetailWrap = styled.div`
     position:relative;

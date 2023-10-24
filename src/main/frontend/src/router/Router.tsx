@@ -24,6 +24,7 @@ import React from "react";
 import HomeComponent from "../pages/HomeComponent";
 import WeatherPage from "../pages/calendar/Weather/WeatherPage";
 import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage";
+import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 
 
 const Router = () => {
@@ -109,6 +110,11 @@ const Router = () => {
                 <Route
                     path="/weather"
                     element={<PrivateRoute component={WeatherPage}/>}
+                />
+
+                <Route
+                    path="/comment"
+                    element={<PrivateRoute component={CalendarCommentPage}/>}
                 />
 
 

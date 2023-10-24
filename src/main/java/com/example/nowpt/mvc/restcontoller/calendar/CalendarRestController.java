@@ -68,8 +68,6 @@ public class CalendarRestController {
     @GetMapping("/api/calendar")
     public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto){
         log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
-//        log.debug("emm : {}",member);
-//        if(member == null) return ResponseUtil.FAILURE(Cd.ANNONYMOUSE_USER, "로그인 필요");
         calendarDto.setMemberSn(member.getMemberSn());
         calendarDto.setRecordDate(recordDate);
         List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);

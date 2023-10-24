@@ -10,12 +10,10 @@ import com.example.nowpt.mvc.repository.comment.CommentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -25,9 +23,8 @@ public class CommentRestController {
     private final CommentRepo commentRepo;
 
     @PostMapping("")
-    public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member , @RequestBody CommentDto commentDto){
-        log.debug("기록 일자 리스트 조회 : {}"  , commentDto);
-        log.debug("기록 일자 리스트 조회 member : {}"  ,member);
+    public ResponseDto<?> insertComment(@AuthenticationPrincipal Member member , @RequestBody CommentDto commentDto){
+        log.debug("댓글등록 : {}"  , commentDto);
 
         Comment comment = new Comment();
         comment.setCommentContent(commentDto.getCommentContent());
@@ -38,5 +35,13 @@ public class CommentRestController {
         commentRepo.save(comment);
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, comment);
+    }
+
+    @GetMapping("")
+    public ResponseDto<?> selectComment(@RequestParam long calendarSn){
+        log.debug("댓글 조회  : {}"  , calendarSn);
+        List<CommentDto> comments = commentRepo.selectComments(calendarSn);
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, comments);
     }
 }

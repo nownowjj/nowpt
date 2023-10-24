@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import styled from "styled-components";
-import {BiCommentDetail, BiTrash} from "react-icons/bi";
+import {BiTrash} from "react-icons/bi";
 import {PiWrenchFill} from "react-icons/pi";
 import dayjs from "dayjs";
 import 'dayjs/locale/ko';
@@ -11,7 +11,9 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
 import {CalendarDto} from "../../../model/CalendarApiModel";
-import {FaRegComment} from "react-icons/fa"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+import CommentIconComponent from "../Comment/CommentIconComponent";
+import {getComments} from "../../../api/CommentApi";
+import {CommentDto} from "../../../model/CommentApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
@@ -33,10 +35,7 @@ interface CalendarDetailContentComponentProps{
 const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent , friendPage }) => {
     const navigate = useNavigate();
     const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
-    // 즐겨찾기를 등록 할 떄에는 바로 등록
-    // 취소시에는 동의를 받고 취소 시킴. confirm 사용
     const [isProcessing, setIsProcessing] = useState(false); // 상태 추가: 요청 처리 중 여부
-
 
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
@@ -76,15 +75,13 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
         removeRecord(data.calendarSn);
     };
 
-
     return (
         <DetailContentWrap key={data.calendarSn}>
-            <div className="detailTitle">{data.title}</div>
-            <DetailContent className="detailContent">{data.content}</DetailContent>
+            <div>{data.title}</div>
+            <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
                 <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>
-                <FaRegComment style={{marginRight : "2px"}}/> {/* 댓글 */}
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>
@@ -109,11 +106,13 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                         }
                     >
                     </PiWrenchFill>
-                    <BiTrash onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} /> {/* 삭제 */}
+                    <BiTrash  style={{marginRight : "3px"}} onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} /> {/* 삭제 */}
                 </>
                 }
+                <CommentIconComponent
+                    data={data}
+                />
             </DetailTimeAndFixDelete>
-
             {/* 삭제전 Confirm */}
             {showAlert &&(
                 <ConfirmComponent
@@ -126,8 +125,6 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                 />
             )}
             {/* 삭제전 Confirm */}
-
-
         </DetailContentWrap>
     )
 }
@@ -135,7 +132,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
 
 const DetailContentWrap = styled.div`
     width:100%;
-    height:125px;
+    //height:125px;
     padding:10px;
     border-bottom:1px solid #e8e8e8;
 `

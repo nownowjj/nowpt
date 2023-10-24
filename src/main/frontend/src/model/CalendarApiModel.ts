@@ -33,6 +33,7 @@ export interface CalendarDto{
     lastChangeDt:Date;
     useYn:string;
     importYn:boolean;
+    commentCount:number;
 }
 
 export interface CalendarPagingDto extends PagingResponse{

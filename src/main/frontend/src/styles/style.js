@@ -6,4 +6,3 @@ export const li =
 
 export const none=  {display:"none"};
 
-export const marginRight:string = {marginRight:"2px"};
