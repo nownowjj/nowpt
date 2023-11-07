@@ -48,8 +48,6 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
                 return json;
             })
         ).catch(e =>{
-            console.log('request error');
-            console.log(e);
             ApiErrorHandle(e)
         });
 };

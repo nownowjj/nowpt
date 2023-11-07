@@ -1,8 +1,6 @@
 import {route} from "./remocon";
-import {NavigateFunction, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import React from "react";
-import {useDispatch} from "react-redux";
-import {logoutAction} from "../redux/slice/userSlice";
 
 /**
  *
@@ -18,10 +16,8 @@ export interface ApiErrorHandleInterface {
 }
 
 const ApiErrorHandle: React.FC<ApiErrorHandleInterface>  = ({ code, msg, data }) => {
-    console.log(code , msg , data);
-    const navigate: NavigateFunction = useNavigate();
-
-    console.log("error 발생 !! ApiErrorHandle 진입 %O", { code, msg, data });
+    console.log(`code ${code}, msg ${msg} , data ${data}`);
+    const navigate  = useNavigate();
     if (code === '4444') navigate(route.login);
     else if(code === '4445'){
         console.log();

@@ -9,17 +9,18 @@ interface CommentDetailComponentProps {
     user:number;
 }
 const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,user}) => {
-    // console.log(data.membSn == user);
+    let myComment = data.membSn == user;
+
     return (
         <CommentWrap>
             <CommentProfile>
-                {data.profileImage && <ProfileComponent naviUse={false} size={40} friendImageSrc={data.profileImage} style={{margin:"0 5px"}}/> }
+                 <ProfileComponent naviUse={false} size={40} friendImageSrc={data.profileImage} style={{margin:"0 5px"}}/>
             </CommentProfile>
 
             <CommentInnerWrap>
                 <CommentWriter>{data.membNm}</CommentWriter>
                 <CommentDt>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</CommentDt>
-                <CommentContent value={data.commentContent}/>
+                <CommentContent>{data.commentContent}</CommentContent>
             </CommentInnerWrap>
         </CommentWrap>
     );
@@ -48,9 +49,16 @@ const CommentDt = styled.span`
     font-size: 14px;
     color:#4f4f4f;
 `
-const CommentContent = styled.input`
-    width:90%;
+const CommentContent = styled.div`
+    width: 90%;
     border: none;
+    margin: 5px 0;
+    background: none;
+    resize: none;
+    height: auto; /* 초기 높이를 자동으로 조절하도록 설정 */
+    overflow: hidden; /* 내용이 넘치면 스크롤바를 표시하지 않도록 설정 */
+    word-break: break-all;
+    word-wrap: break-word;
 `
 
 

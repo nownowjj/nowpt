@@ -8,11 +8,17 @@ import userEtt from "../../../services/UserEtt";
 
 interface CommentComponentPropsInterface {
     calendarSn : number;
+    newComment?:CommentDto;
 }
-const CommentComponent:React.FC<CommentComponentPropsInterface> = ({calendarSn}) => {
+const CommentComponent:React.FC<CommentComponentPropsInterface> = ({calendarSn,newComment}) => {
     const [comments , setComments] = useState<CommentDto[]>([]);
     const user = userEtt();
 
+    if(newComment) {
+        console.log("??");
+        console.log(newComment);
+        comments.unshift(newComment);
+    }
 
     useEffect(() => {
         getComments(calendarSn)
@@ -43,5 +49,6 @@ const CommentDetailWrap = styled.div`
     width:100%;
     height:fit-content;
     background:white;
+    padding-bottom: 49px;
 `
 export default CommentComponent;

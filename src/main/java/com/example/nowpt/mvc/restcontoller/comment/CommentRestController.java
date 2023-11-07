@@ -34,7 +34,12 @@ public class CommentRestController {
         comment.setLastChangeDt(LocalDateTime.now());
         commentRepo.save(comment);
 
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, comment);
+        commentDto.setCommentSn(comment.getCommentSn());
+        commentDto.setFrstRegistDt(comment.getFrstRegistDt());
+        commentDto.setMembNm(member.getMembNm());
+        commentDto.setProfileImage(member.getProfileImage());
+        commentDto.setMembSn(member.getMemberSn());
+        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, commentDto);
     }
 
     @GetMapping("")

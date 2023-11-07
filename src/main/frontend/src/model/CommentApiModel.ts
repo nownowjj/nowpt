@@ -9,3 +9,8 @@ export interface CommentDto{
     useYn:string;
     commentSn:number;
 }
+
+export interface CommentParam{
+    commentContent:string;
+    calendarSn:number;
+}

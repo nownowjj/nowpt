@@ -36,6 +36,7 @@ public class CommentCustomRepoImpl implements CommentCustomRepo {
                 .innerJoin(qMember)
                 .on(qComment.memberSn.eq(qMember))
                 .where(qComment.useYn.eq("Y").and(qComment.calendarSn.eq(calendarSn)))
+                .orderBy(qComment.frstRegistDt.desc())
                 .fetch();
     }
 }
