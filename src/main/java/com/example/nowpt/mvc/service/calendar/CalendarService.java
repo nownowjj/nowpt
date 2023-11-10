@@ -20,8 +20,8 @@ public class CalendarService {
     private final CalendarRepo calendarRepo;
 
     // 기록한 일자 조회
-    public List<String> selectRecordDate(CalendarDto calendarDto){
-        return calendarRepo.selectRecordDate(calendarDto);
+    public List<String> selectRecordDate(String recordDate , long memberSn){
+        return calendarRepo.selectRecordDate(recordDate,memberSn);
     }
 
     // 일자 상세

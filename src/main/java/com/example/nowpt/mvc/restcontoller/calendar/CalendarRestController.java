@@ -26,14 +26,38 @@ public class CalendarRestController {
     private final CalendarService calendarService;
     private final CalendarRepo calendarRepo;
 
-    @PostMapping("/api/calendar")
-    public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member , @RequestBody CalendarDto calendarDto){
-        log.debug("기록 일자 리스트 조회 : {}"  , calendarDto);
-        log.debug("기록 일자 리스트 조회 member : {}"  ,member);
+    @GetMapping("/api/calendar")
+    public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member, @RequestParam String recordDate){
 
-        calendarDto.setMemberSn(member.getMemberSn());
-        List<String> calendarList = calendarService.selectRecordDate(calendarDto);
+        List<String> calendarList = calendarService.selectRecordDate(recordDate , member.getMemberSn());
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
+    }
+
+    @GetMapping("/api/calendar/detail")
+    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto){
+        log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
+        calendarDto.setMemberSn(member.getMemberSn());
+        calendarDto.setRecordDate(recordDate);
+        List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
+    }
+
+
+    @DeleteMapping("/api/calendar")
+    public ResponseDto<?> deleteRecord(@AuthenticationPrincipal Member member ,@RequestParam Long calendarSn){
+        log.debug("일정 삭제 : {}"  ,calendarSn);
+        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
+        if(calendar != null)return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calendarService.deleteRecord(calendar));
+        else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
+    }
+
+    @PutMapping("/api/calendar")
+    public ResponseDto<?> importRecord(@RequestParam Long calendarSn ,@RequestParam boolean importYn){
+        log.debug("일정 즐겨찾기 : {} , {}"  ,calendarSn , (importYn ? "등록" : "취소"));
+        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
+        if(calendar != null)return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calendarService.importRecord(calendar,importYn));
+        else return ResponseUtil.FAILURE(Cd.PUT_FAIL, null);
     }
 
     @PostMapping("/api/calendar/insert")
@@ -65,24 +89,7 @@ public class CalendarRestController {
         }
     }
 
-    @GetMapping("/api/calendar")
-    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto){
-        log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
-        calendarDto.setMemberSn(member.getMemberSn());
-        calendarDto.setRecordDate(recordDate);
-        List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
 
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
-    }
-
-
-    @DeleteMapping("/api/calendar")
-    public ResponseDto<?> deleteRecord(@AuthenticationPrincipal Member member ,@RequestParam Long calendarSn){
-        log.debug("일정 삭제 : {}"  ,calendarSn);
-        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
-        if(calendar != null)return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calendarService.deleteRecord(calendar));
-        else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
-    }
 
     @GetMapping("/api/calendar/myRecord")
     public ResponseDto<?> selectMyRecordSm(@AuthenticationPrincipal Member member){
@@ -100,13 +107,6 @@ public class CalendarRestController {
     }
 
 
-    @PutMapping("/api/calendar")
-    public ResponseDto<?> importRecord(@RequestParam Long calendarSn ,@RequestParam boolean importYn){
-        log.debug("일정 즐겨찾기 : {} , {}"  ,calendarSn , (importYn ? "등록" : "취소"));
-        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
-        if(calendar != null)return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calendarService.importRecord(calendar,importYn));
-        else return ResponseUtil.FAILURE(Cd.PUT_FAIL, null);
-    }
 
     @GetMapping("/api/calendar/import")
     public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable){

@@ -1,4 +1,4 @@
-import {API_BASE, ApiResponse, CALENDAR, request} from "./Api";
+import {API_BASE, ApiResponse, CALENDAR, GET, request} from "./Api";
 // import { URLSearchParams } from "url"
 import {
     CalendarSnParam,
@@ -22,17 +22,16 @@ export function commonSearchParam(param: Record<string|number, any>){
 
 
 // {recordDate:string}
-export function getMyCalendar(param:RecordDate){
+export function getMyCalendar(param:RecordDate):Promise<ApiResponse<string[]>>{
     return request({
-        url: API_BASE + CALENDAR,
-        method: 'POST',
-        body: JSON.stringify(param)
+        url: API_BASE + CALENDAR + "?recordDate="+param.recordDate,
+        method: GET
     })
 }
 
 // {recordDate:string}
 export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<CalendarDto[]>>{
-    const url = API_BASE + CALENDAR;
+    const url = API_BASE + CALENDAR + "/detail";
     // const queryParams = new URLSearchParams(param).toString();
     const fullUrl = url + "?" + commonSearchParam(param);
     return request({

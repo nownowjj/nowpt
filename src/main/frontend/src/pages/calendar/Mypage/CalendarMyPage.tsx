@@ -14,6 +14,8 @@ import ConfirmComponent from "../component/ConfirmComponent";
 import Aos from "aos";
 import {Member} from "../../../model/Common";
 import {CalendarRecordSm} from "../../../model/CalendarApiModel";
+import {useQuery} from "react-query";
+import {homeTest} from "../../../api/Api";
 
 
 interface ProfileItemProps{
@@ -23,37 +25,25 @@ interface ProfileItemProps{
 const CalendarMyPage = () => {
     const dispatch = useDispatch();
     // 해당 멤버 정보
-    const [membInfo, setMembInfo] = useState<Member>();
-    const [isLoading, setIsLoading] = useState(true);
-    const [recordList, setRecordList] = useState<CalendarRecordSm[]>([]);
 
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
     const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
 
-    useEffect(() => {
-        Aos.init();
-    },[])
+    // useEffect(() => {
+    Aos.init();
+    // },[])
 
 
-    // year을 group하고 해당 group 마다 month와 monthCounts 배열 생성
-    useEffect(() => {
-        getMyInfoAndRecord()
-            .then(response => {
-                console.log(response);
-                setMembInfo(response.data.member[0]);
-                setRecordList(response.data.myRecordSmList);
-        }).catch(error => {
-            console.log('my error' , error);
-            console.log(error);
-            ApiErrorHandle(error)
-            }).finally(()=>{
-                setIsLoading(false);
-        })
-    }, []);
-
-
+    const { isLoading, error, data:myInfo, isFetching } = useQuery({
+        queryKey: ['myInfoData'],
+        queryFn: async () => {
+            const result = await getMyInfoAndRecord();
+            return result.data;
+        },
+        staleTime: 60 * 1000, // 1분
+    })
 
     const confirmFunction = (okCallBack: () => void,  message:string)=>{
         setOkCallBackFn(() => okCallBack);
@@ -76,19 +66,19 @@ const CalendarMyPage = () => {
             <ProfileItemBox>
                 <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>성함</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo && membInfo.membNm}</ProfileItemRight>
+                    <ProfileItemRight>{myInfo?.member[0].membNm}</ProfileItemRight>
                 </ProfileItem>
                 <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>이메일</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo && membInfo.emailAddr}</ProfileItemRight>
+                    <ProfileItemRight>{myInfo?.member[0].emailAddr}</ProfileItemRight>
                 </ProfileItem>
                 <ProfileItem borderBottom={null}>
                     <ProfileItemLeft>가입수단</ProfileItemLeft>
-                    <ProfileItemRight>{membInfo && membInfo.subscriptionMethod}</ProfileItemRight>
+                    <ProfileItemRight>{myInfo?.member[0].subscriptionMethod}</ProfileItemRight>
                 </ProfileItem>
                 <ProfileItem borderBottom="none">
                     <ProfileItemLeft>가입일자</ProfileItemLeft>
-                    <ProfileItemRight>{(dayjs(membInfo && membInfo.frstRegistDt).format('YYYY년 MM월DD일'))}</ProfileItemRight>
+                    <ProfileItemRight>{(dayjs(myInfo?.member[0].frstRegistDt).format('YYYY년 MM월DD일'))}</ProfileItemRight>
                 </ProfileItem>
             </ProfileItemBox>
             {/* 개인정보 */}
@@ -96,9 +86,9 @@ const CalendarMyPage = () => {
             {/* 기록 통계 */}
             <>
                 {
-                    isLoading
-                        ? '로딩중'
-                        : recordList && <MyPageRecordSmComponent recordList={recordList} />
+                    isFetching
+                        ? '...'
+                        : myInfo && <MyPageRecordSmComponent recordList={myInfo.myRecordSmList} />
                 }
             </>
             {/* 기록 통계 */}

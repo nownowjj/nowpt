@@ -45,8 +45,8 @@ public class NotificationRestController {
 
     @GetMapping("/count")
     public ResponseDto<?> selectNotificationCount(@AuthenticationPrincipal Member member){
-
         Long count = notificationRepo.countByTargetMemberSnAndUseYn(member.getMemberSn(),"Y");
+        log.debug("알림 : {}" , count);
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,  count);
     }
 

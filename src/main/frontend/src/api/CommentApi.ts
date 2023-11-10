@@ -3,7 +3,6 @@ import {CommentDto, CommentParam} from "../model/CommentApiModel";
 
 
 export function getComments(param:number):Promise<ApiResponse<CommentDto[]>>{
-    console.log();
     return request({
         url: API_BASE  + "/auth" + "/comment?calendarSn="+param ,
         method: 'GET'

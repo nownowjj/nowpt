@@ -1,6 +1,4 @@
-// export const API_BASE = "http://192.168.10.215:8060/api";
 import {UserLoginInfo} from "../model/model";
-import ApiErrorHandle, {ApiErrorHandleInterface} from "../services/ApiErrorHandle";
 import {HomeTestData} from "../pages/HomeComponent";
 
 export const API_BASE = "http://localhost:8060/api";

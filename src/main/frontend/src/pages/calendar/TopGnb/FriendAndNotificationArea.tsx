@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {LuBell, LuBellRing} from "react-icons/lu";
 import styled from "styled-components";
 import {BsPeopleFill} from "react-icons/bs";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../../services/remocon";
 import {getMyNotificationCount} from "../../../api/NotificationApi";
+import {useQuery} from "react-query";
 
 interface AnimatedBellWrapInterface {
     redDots:boolean;
@@ -15,15 +15,30 @@ const FriendAndNotificationArea = () => {
     const navigate = useNavigate();
     const [isActiveBell , setIsActiveBell] = useState<boolean>(false);
 
-    useEffect(()=>{
-        getMyNotificationCount()
-            .then((result)=>{
-                if(result.data !== 0 ) setIsActiveBell(true);
-            })
-            .catch((error)=>{
-                ApiErrorHandle(error)
-            })
-    },[])
+    // useEffect(()=>{
+    //     getMyNotificationCount()
+    //         .then((result)=>{
+    //             if(result.data !== 0 ) setIsActiveBell(true);
+    //         })
+    //         .catch((error)=>{
+    //             ApiErrorHandle(error)
+    //         })
+    // },[])
+
+    const { isLoading, error, data, isFetching } = useQuery({
+        queryKey: ['repoData'],
+        queryFn: async () => {
+            const result = await getMyNotificationCount();
+            return result.data; // homeTest의 결과를 반환
+        },
+        onSuccess:((data)=>{
+            if(data > 0 ) setIsActiveBell(true)
+        }),
+        staleTime: 60 * 1000, // 1분
+    })
+
+    console.log(isLoading , error , data , isFetching);
+
 
     return (
         <AnimatedBellWrap redDots={isActiveBell}>

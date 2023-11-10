@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import styled from "styled-components";
@@ -11,11 +11,14 @@ import ConfirmComponent from "../component/ConfirmComponent";
 import CommentDetailComponent from "./CommentDetailComponent";
 import userEtt from "../../../services/UserEtt";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
+import {useMutation, useQuery, useQueryClient} from "react-query";
+import {homeTest} from "../../../api/Api";
 
 const CalendarCommentPage = () => {
     const {state} = useLocation();
-    const data = state.data;
-
+    const calendarData = state.data;
+    console.log(calendarData.calendarSn);
+    const queryClient = useQueryClient();
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
@@ -26,60 +29,49 @@ const CalendarCommentPage = () => {
         setShowAlert(true);
     }
 
+    const [commentValue, setValue] = useState("");
+    // Query
+    const { isLoading, data:commentData, isError } = useQuery({
+        queryKey: ['getComments'],
+        queryFn: async () => {
+            const result = await getComments(calendarData.calendarSn);
+            return result.data; // homeTest의 결과를 반환
+        }
+    });
+
+    console.log(isLoading, commentData , isError);
 
     // 해당 calendarSn 댓글 요청 api
-    const [comments , setComments] = useState<CommentDto[]>([]);
+    // const [comments , setComments] = useState<CommentDto[]>([]);
     const user = userEtt();
-    const [commentValue, setValue] = useState("");
-    const [newComment , setNew] = useState<boolean>(false);
 
-    useEffect(() => {
-        getComments(data.calendarSn)
-            .then(response=>{
-                console.log("댓글 가져오기;");
-                setComments(response.data);
-            }).catch(error =>{
-            ApiErrorHandle(error)
-        })
-    }, [newComment]);
+
 
     const changeCommentHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     }
-    const newCommentFunction =()=>{
-        let param:CommentParam= {calendarSn:data.calendarSn,commentContent:commentValue};
-        insertComment(param)
-            .then(response=>{
-                setNew(prevState => !prevState);
-                setValue("");
-            }).catch(error =>{
-                console.log(error);
-        })
-    }
-
-
     return (
         <>
-            <TopGnbComponent page={dayjs(data.recordDate).format('YYYY-MM-DD 일정')}/>
+            <TopGnbComponent page={dayjs(calendarData.recordDate).format('YYYY-MM-DD 일정')}/>
 
             <CommentTargetWrap>
-                <div>{data.title}</div>
-                <Content>{data.content}</Content>
-                <div style={{textAlign: "right"}}>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm 작성')}</div>
+                <div>{calendarData.title}</div>
+                <Content>{calendarData.content}</Content>
+                <div style={{textAlign: "right"}}>{dayjs(calendarData.frstRegistDt).format('YYYY.MM.DD HH:mm 작성')}</div>
             </CommentTargetWrap>
 
-            <FriendTitleComponent title={'댓글'} size={comments.length}
+            <FriendTitleComponent title={'댓글'} size={commentData?.length}
                                   style={{marginLeft: "7px", marginBottom: "7px"}}/>
 
             {/*!!!*/}
             <CommentDetailWrap>
-                {
-                    comments.length > 0 &&
-                    comments.map((comment)=>(
+                {isLoading ?'로딩중'
+                    :
+                    commentData?.map((comment)=>(
                         <CommentDetailComponent
                             key={comment.commentSn}
                             data={comment}
-                            user={user.membSn}
+                            isMyComment={user.membSn === comment.membSn}
 
                         />
                     ))
@@ -94,7 +86,7 @@ const CalendarCommentPage = () => {
                     <CommentInput
                         value={commentValue} type="text" placeholder="댓글을 입력하세요"
                         onChange={changeCommentHandle}/>
-                    <RegisterBtn onClick={()=> confirmFunction(newCommentFunction ,`댓글을 작성 하시겠습니까?` )} type="button">작성</RegisterBtn>
+                    {/*<RegisterBtn onClick={()=> confirmFunction(newCommentFunction ,`댓글을 작성 하시겠습니까?` )} type="button">작성</RegisterBtn>*/}
                 </Div>
             </CommentWriteArea>
 

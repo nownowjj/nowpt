@@ -28,8 +28,7 @@ const CalendarPage = () => {
         const param: RecordDate = { recordDate: month ? month : moment(value as Date).format('YYYYMM')};
         getMyCalendar(param)
             .then(response =>{
-                console.log(response);
-                setMark(response.data as string[])
+                setMark(response.data)
             })
             .catch(error =>{ApiErrorHandle(error)})
     },[month])

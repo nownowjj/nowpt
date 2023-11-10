@@ -31,12 +31,12 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
     QComment qComment = QComment.comment;
 
     @Override
-    public List<String> selectRecordDate(CalendarDto calendarDto) {
+    public List<String> selectRecordDate(String recordDate , long memberSn) {
         return queryFactory
                 .select(qCalendar.recordDate)
                 .from(qCalendar)
                 .where(
-                        qCalendar.memberSn.eq(calendarDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(calendarDto.getRecordDate()+'%')))
+                        qCalendar.memberSn.eq(memberSn).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(recordDate+'%')))
                 )
                 .fetch();
 

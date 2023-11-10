@@ -6,11 +6,9 @@ import dayjs from "dayjs";
 
 interface CommentDetailComponentProps {
     data: CommentDto;
-    user:number;
+    isMyComment:boolean;
 }
-const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,user}) => {
-    let myComment = data.membSn === user;
-
+const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,isMyComment}) => {
     return (
         <CommentWrap>
             <CommentProfile>
@@ -20,7 +18,7 @@ const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,user
             <CommentInnerWrap>
                 <CommentWriter>{data.membNm}</CommentWriter>
                 <CommentDt>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</CommentDt>
-                <CommentContent> {myComment ? '내꺼' :'아니용'} {data.commentContent}</CommentContent>
+                <CommentContent> {isMyComment ? '내꺼' :'아니용'} {data.commentContent}</CommentContent>
             </CommentInnerWrap>
         </CommentWrap>
     );
