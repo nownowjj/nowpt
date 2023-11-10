@@ -12,6 +12,11 @@ export const CALENDAR = "/calendar";
 export const NOTIFICATION = "/notification";
 export const FRIEND = "/friend";
 
+export const GET = "GET";
+export const POST = "POST";
+export const PUT = "PUT";
+export const DELETE = "DELETE";
+
 
 export interface ApiResponse<T> {
     status: string;
@@ -63,33 +68,33 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
 export function homeTest() {
     return request({
         url: API_BASE + "/auth/home",
-        method: 'GET'
+        method: GET
     });
 }
 export function mainTest() {
     return request({
         url: API_BASE + "/auth/main",
-        method: 'GET'
+        method: GET
     });
 }
 
 export function fetchTest() {
     return request({
         url: API_BASE + "/test/jpa",
-        method: 'GET'
+        method: GET
     });
 }
 export function batisTest() {
     return request({
         url: API_BASE + "/test/batis",
-        method: 'GET'
+        method: GET
     });
 }
 export function updateMembAddr(email:string) {
     console.log("param : " + email)
     return request({
         url: API_BASE + "/common/updateEmail/" + email,
-        method: 'PUT'
+        method: PUT
     });
 }
 
@@ -97,7 +102,7 @@ export function updateMembAddr(email:string) {
 export function login(loginDto:UserLoginInfo):Promise<ApiResponse<LoginResponse>> {
     return request({
         url: API_BASE + "/auth/userLogin",
-        method: 'POST',
+        method: POST,
         body: JSON.stringify(loginDto)
     });
 }
@@ -106,7 +111,7 @@ export function login(loginDto:UserLoginInfo):Promise<ApiResponse<LoginResponse>
 export function kakaoLogin(code:string) {
     return request({
         url: API_BASE.replace("/api", "") + "/oauth/kakao?code=" + code,
-        method: 'GET'
+        method: GET
     });
 }
 
@@ -114,7 +119,7 @@ export function kakaoLogin(code:string) {
 export function naverLogin(code:string,state:string) {
     return request({
         url: API_BASE.replace("/api", "") + "/oauth/naver?code=" + code + "&state=" + state,
-        method: 'GET'
+        method: GET
     });
 }
 
@@ -125,6 +130,6 @@ export function naverLogin(code:string,state:string) {
 export function naverMovie(search:string) {
     return request({
         url: API_BASE + "/auth/movies/" + search,
-        method: 'GET'
+        method: GET
     });
 }

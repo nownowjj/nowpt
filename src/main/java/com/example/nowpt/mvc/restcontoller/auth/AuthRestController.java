@@ -8,14 +8,18 @@ import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
+import com.example.nowpt.mvc.dto.MemberDto;
 import com.example.nowpt.mvc.mapper.MemberMapper;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +41,7 @@ public class AuthRestController {
     private final AuthService authService;
     private final MapperService mapperService;
     private final MemberMapper memberMapper;
+    private final MemberRepo memberRepo;
 
     String  sns = "N";
 
@@ -94,10 +99,13 @@ public class AuthRestController {
                 .build();
     }
 
-    // 닉네임 중복체크
-//    @GetMapping("/nicknameCheck/{nickname}")
-//    public ResponseEntity<Boolean> checkNickName(@PathVariable String nickname){
-//        return ResponseEntity.ok(authService.checkNickName(nickname));
-//    }
+
+
+    @GetMapping("/swift")
+    public List<MemberDto> swiftApiTest(){
+        log.debug("요청이 왔다");
+        List<MemberDto> list  = memberRepo.selectAllMember();
+        return list;
+    }
 
 }

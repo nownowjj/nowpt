@@ -105,16 +105,10 @@ const FriendPage = () => {
                         ?
                             <>
                                 {
-                                    // waitList.length > 0 || requestWaitList.length > 0
-                                    // ?
                                         <>
-                                            {/*{waitList.length > 0 && <ReceivedFriendComponent data={waitList}/>}*/}
-                                            {/*{requestWaitList.length > 0 &&<FriendRequestComponent data={requestWaitList}/>}*/}
                                             <ReceivedFriendComponent data={waitList}/>
                                             <FriendRequestComponent data={requestWaitList}/>
                                         </>
-                                    // :
-                                    // <CalendarDetailNo/>
                                 }
                             </>
                         :

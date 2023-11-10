@@ -1,18 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import CommentComponent from "./CommentComponent";
 import styled from "styled-components";
 import FriendTitleComponent from "../friend/FriendTitleComponent";
 import dayjs from "dayjs";
 import ProfileComponent from "../../../component/ProfileComponent";
 import {CommentDto, CommentParam} from "../../../model/CommentApiModel";
-import {insertComment} from "../../../api/CommentApi";
+import {getComments, insertComment} from "../../../api/CommentApi";
 import ConfirmComponent from "../component/ConfirmComponent";
+import CommentDetailComponent from "./CommentDetailComponent";
+import userEtt from "../../../services/UserEtt";
+import ApiErrorHandle from "../../../services/ApiErrorHandle";
 
 const CalendarCommentPage = () => {
     const {state} = useLocation();
     const data = state.data;
+
     // Alert 여부
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
@@ -24,8 +27,22 @@ const CalendarCommentPage = () => {
     }
 
 
+    // 해당 calendarSn 댓글 요청 api
+    const [comments , setComments] = useState<CommentDto[]>([]);
+    const user = userEtt();
     const [commentValue, setValue] = useState("");
-    const [newComment,setNew] = useState<CommentDto>();
+    const [newComment , setNew] = useState<boolean>(false);
+
+    useEffect(() => {
+        getComments(data.calendarSn)
+            .then(response=>{
+                console.log("댓글 가져오기;");
+                setComments(response.data);
+            }).catch(error =>{
+            ApiErrorHandle(error)
+        })
+    }, [newComment]);
+
     const changeCommentHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     }
@@ -33,8 +50,8 @@ const CalendarCommentPage = () => {
         let param:CommentParam= {calendarSn:data.calendarSn,commentContent:commentValue};
         insertComment(param)
             .then(response=>{
-                console.log(response.data);
-                setNew(response.data)
+                setNew(prevState => !prevState);
+                setValue("");
             }).catch(error =>{
                 console.log(error);
         })
@@ -51,12 +68,25 @@ const CalendarCommentPage = () => {
                 <div style={{textAlign: "right"}}>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm 작성')}</div>
             </CommentTargetWrap>
 
-            <FriendTitleComponent title={'댓글'} size={data.commentCount}
+            <FriendTitleComponent title={'댓글'} size={comments.length}
                                   style={{marginLeft: "7px", marginBottom: "7px"}}/>
-            <CommentComponent
-                calendarSn={data.calendarSn}
-                newComment={newComment}
-            />
+
+            {/*!!!*/}
+            <CommentDetailWrap>
+                {
+                    comments.length > 0 &&
+                    comments.map((comment)=>(
+                        <CommentDetailComponent
+                            key={comment.commentSn}
+                            data={comment}
+                            user={user.membSn}
+
+                        />
+                    ))
+                }
+            </CommentDetailWrap>
+            {/*!!!*/}
+
 
             <CommentWriteArea>
                 <ProfileComponent naviUse={false} size={35}/>
@@ -139,5 +169,11 @@ const Div = styled.div`
   padding: 3px 5px;
   height: 40px;
   min-width: 300px;
+`
+const CommentDetailWrap = styled.div`
+    width:100%;
+    height:fit-content;
+    background:white;
+    padding-bottom: 49px;
 `
 export default CalendarCommentPage;

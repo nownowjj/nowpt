@@ -12,8 +12,7 @@ import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
 import {CalendarDto} from "../../../model/CalendarApiModel";
 import CommentIconComponent from "../Comment/CommentIconComponent";
-import {getComments} from "../../../api/CommentApi";
-import {CommentDto} from "../../../model/CommentApiModel"; // 해당 로케일을 import해야 오후/오전 표시가 가능합니다
+
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
@@ -81,7 +80,8 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
             <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
-                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>
+                {/*<span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>*/}
+                <span style={{marginRight : "5px"}}>{dayjs(data.recordDate).format('YYYY-MM-DD')}</span>
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>

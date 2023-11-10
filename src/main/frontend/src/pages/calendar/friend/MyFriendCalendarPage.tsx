@@ -22,6 +22,7 @@ const MyFriendCalendarPage = () => {
     useEffect(()=>{
          getMyFriendCalendar(state.friendInfo.friendMemberSn , pageNumber)
              .then(response => {
+                 console.log(response);
                  if(!lastRef.current) {
                      if (response.data.first && response.data.last) {
                          lastRef.current = true;

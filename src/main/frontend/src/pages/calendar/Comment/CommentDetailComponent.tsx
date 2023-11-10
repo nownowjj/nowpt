@@ -9,7 +9,7 @@ interface CommentDetailComponentProps {
     user:number;
 }
 const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,user}) => {
-    let myComment = data.membSn == user;
+    let myComment = data.membSn === user;
 
     return (
         <CommentWrap>
@@ -20,7 +20,7 @@ const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,user
             <CommentInnerWrap>
                 <CommentWriter>{data.membNm}</CommentWriter>
                 <CommentDt>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</CommentDt>
-                <CommentContent>{data.commentContent}</CommentContent>
+                <CommentContent> {myComment ? '내꺼' :'아니용'} {data.commentContent}</CommentContent>
             </CommentInnerWrap>
         </CommentWrap>
     );
