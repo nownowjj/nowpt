@@ -22,7 +22,7 @@ import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 
 const Router = () => {
     const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);
-    console.log(isLogin)
+    // console.log(isLogin)
     return (
 
         <BrowserRouter>

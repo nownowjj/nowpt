@@ -4,6 +4,7 @@ import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.cmm.rvo.ResponseDto;
+import com.example.nowpt.cmm.rvo.ResponseStatus;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
@@ -18,6 +19,7 @@ import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -46,13 +48,20 @@ public class AuthRestController {
     String  sns = "N";
 
     @GetMapping("/home")
-    public HashMap<String, String> home(){
+    public ResponseDto<?> home() {
         HashMap<String, String> result = new HashMap<>();
         result.put("message","home입니다");
 
-        log.debug("restCheck : {}" ,result);
+        try {
+            Thread.sleep(3000);
+            if(result != null) throw new RuntimeException("예외를 강제로 발생시켰습니다.");
+        } catch (Exception e)    {
+            System.out.println("에러 메시지 : " + e.getMessage());
+            return ResponseUtil.ERROR(Cd.SELECT_FAIL,null);
+        }
+        log.debug("home api 체크");
 
-        return result;
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,result);
     }
     @GetMapping("/main")
     public HashMap<String, String> api(){

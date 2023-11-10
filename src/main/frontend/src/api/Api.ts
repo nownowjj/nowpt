@@ -1,6 +1,7 @@
 // export const API_BASE = "http://192.168.10.215:8060/api";
 import {UserLoginInfo} from "../model/model";
 import ApiErrorHandle, {ApiErrorHandleInterface} from "../services/ApiErrorHandle";
+import {HomeTestData} from "../pages/HomeComponent";
 
 export const API_BASE = "http://localhost:8060/api";
 export const ACCESS_TOKEN = 'accessToken';
@@ -30,7 +31,6 @@ export interface ApiRequest {
     body?:string;
 }
 
-//TODO response type interface 필요
 
 export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
     const headers = new Headers({
@@ -52,20 +52,14 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
                 }
                 return json;
             })
-        ).catch(e =>{
-            ApiErrorHandle(e)
+        )
+        .catch(e =>{
+            return e
         });
 };
 
-//  추출
-// export function getMembInfo():Promise<ApiResponse>{
-//     return request({
-//         url: API_BASE + "/common/getMembInfo",
-//         method: 'GET',
-//     })
-// }
-//
-export function homeTest() {
+export function homeTest():Promise<ApiResponse<HomeTestData>> {
+    console.log("요청?");
     return request({
         url: API_BASE + "/auth/home",
         method: GET
