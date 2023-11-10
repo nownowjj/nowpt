@@ -5,11 +5,11 @@ import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import LoadingComponent from "../../LoadingComponent";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
-import moment from "moment/moment";
 import {route} from "../../../services/remocon";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {CalendarDto, CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
+import dayjs from "dayjs";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -58,7 +58,7 @@ const CalendarDayDetailPage = () => {
 
     return (
         <CalendarDetailWrap>
-            <TopGnbComponent page={moment(detailDay).format('YYYY-MM-DD')}/>
+            <TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>
 
             <CalendarDetail>
                 {isLoading ?(

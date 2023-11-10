@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {insertRecord} from "../../../api/CalendarApi";
 import {useLocation, useNavigate} from 'react-router-dom'
-import moment from "moment";
 import validateRecordInsertOrUpdate from "../../../services/validate";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {FixParam, NewRecordParam} from "../../../model/CalendarApiModel";
+import dayjs from "dayjs";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -94,7 +94,7 @@ const CalendarRecordNewOrFixPage = () => {
                 {/* back button*/}
                 <CalendarBack>
                     <span onClick={()=> navigate(-1) }>◀</span>
-                    <span style={{color:"black"}}>{moment(recordDate).format('YYYY-MM-DD')}</span>
+                    <span style={{color:"black"}}>{dayjs(recordDate).format('YYYY-MM-DD')}</span>
                 </CalendarBack>
 
 

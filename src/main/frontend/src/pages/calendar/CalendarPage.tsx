@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import CalendarLib from 'react-calendar'
 import '../../styles/calendarCss/cal.css' // css import
-import moment from 'moment';
 import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
@@ -15,6 +14,7 @@ import styled from "styled-components";
 import {RecordDate} from "../../model/CalendarApiModel";
 import {Value} from "react-calendar/src/shared/types";
 import {OnArgs} from "react-calendar/dist/cjs/shared/types";
+import dayjs from "dayjs";
 
 
 const CalendarPage = () => {
@@ -25,7 +25,7 @@ const CalendarPage = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        const param: RecordDate = { recordDate: month ? month : moment(value as Date).format('YYYYMM')};
+        const param: RecordDate = { recordDate: month ? month : dayjs(value as Date).format('YYYYMM')};
         getMyCalendar(param)
             .then(response =>{
                 setMark(response.data)
@@ -34,13 +34,13 @@ const CalendarPage = () => {
     },[month])
 
     const onClickDay =(date:Date)=> {
-        const formattedDate = moment(date).format('YYYYMMDD');
+        const formattedDate = dayjs(date).format('YYYYMMDD');
         navigate(route.calendarDayDetail, { state: { detailDay: formattedDate } });
     }
 
     // 월이 변경 될 경우
     const handleMonthChange = ({ activeStartDate }: OnArgs) => {
-        const formattedDate = moment(activeStartDate).format('YYYYMM');
+        const formattedDate = dayjs(activeStartDate).format('YYYYMM');
         setMonth(formattedDate);
     }
 
@@ -62,7 +62,7 @@ const CalendarPage = () => {
             <CalendarLib
                 onChange={onChange}
                 onClickDay={onClickDay}
-                formatDay={(locale, date) => moment(date).format('DD')}
+                formatDay={(locale, date) => dayjs(date).format('DD')}
                 value={value} // 일자
                 tileContent={({ date }) => <DotsComponent date={date} mark={mark} />} // 일자 하단에 이벤트 dot
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지

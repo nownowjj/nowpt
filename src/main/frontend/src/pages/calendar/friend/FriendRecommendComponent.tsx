@@ -118,7 +118,6 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
                                         data={item}
                                         paramKey={item.friendMemberSn}
                                         leftText='친구 요청'
-                                        // rightText={moment(item.frstRegistDt).format('YYYY-MM-DD')}
                                         leftCallBack={addCallBack}
                                         rightCallBack={()=>{}}
                                     />
@@ -137,7 +136,6 @@ const FriendRecommendComponent:React.FC<FriendRecommendComponentInterface> = ({d
                             data={recommendList}
                             paramKey={recommendList.friendMemberSn}
                             leftText='친구 요청'
-                            // rightText={moment(recommendList.frstRegistDt).format('가입 : YYYY-MM-DD')}
                             leftCallBack={addCallBack}
                             rightCallBack={info}
                         />
