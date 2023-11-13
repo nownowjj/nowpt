@@ -1,4 +1,4 @@
-import {Member, PagingResponse} from "./Common";
+import {Member} from "./Common";
 
 export interface CalendarSnParam {
     calendarSn?: number;
@@ -36,9 +36,6 @@ export interface CalendarDto{
     commentCount:number;
 }
 
-export interface CalendarPagingDto extends PagingResponse{
-    content: CalendarDto[];
-}
 
 export interface CalendarRecordSm{
     year:string;

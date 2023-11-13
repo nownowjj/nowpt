@@ -32,7 +32,6 @@ const HomeComponent =()=>{
     });
 
     console.log(isLoading , isError , data , isFetching);
-    if(isFetching) return <div>데이터 요청중</div>
 
     return (
             <div>
@@ -44,7 +43,7 @@ const HomeComponent =()=>{
 
                 <hr/>
                 {data?.message}
-                <div>{isFetching ? '요청중...' : data}</div>
+                <div>{isFetching ? '요청중...' : '요청 성공'}</div>
             </div>
         )
     }

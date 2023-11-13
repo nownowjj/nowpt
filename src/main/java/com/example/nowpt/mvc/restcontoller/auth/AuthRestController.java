@@ -53,7 +53,7 @@ public class AuthRestController {
         result.put("message","home입니다");
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1500);
             if(result != null) throw new RuntimeException("예외를 강제로 발생시켰습니다.");
         } catch (Exception e)    {
             System.out.println("에러 메시지 : " + e.getMessage());

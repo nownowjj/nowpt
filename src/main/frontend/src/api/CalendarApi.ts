@@ -4,11 +4,11 @@ import {
     CalendarSnParam,
     CalendarDto,
     CalendarMyInfoDto,
-    CalendarPagingDto,
     ImportParam,
     NewRecordParam,
     RecordDate
 } from "../model/CalendarApiModel";
+import {PagingResponse} from "../model/Common";
 
 export function commonSearchParam(param: Record<string|number, any>){
     const queryParams = new URLSearchParams();
@@ -81,7 +81,7 @@ export function importRecord(param:ImportParam):Promise<ApiResponse<CalendarDto>
 }
 
 //  pageNumber :number
-export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<CalendarPagingDto>> {
+export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<PagingResponse<CalendarDto[]>>> {
     console.log(pageNumber);
     return request({
         url: API_BASE + CALENDAR + "/import?page=" + pageNumber +
