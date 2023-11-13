@@ -28,7 +28,7 @@ const CommentWrap = styled.div`
   width: 100%;
   display: flex;
   border-bottom: 1px solid #e8e8e8;
-  padding-top: 5px;
+  padding: 5px 10px 0 0;
 `
 
 const CommentProfile = styled.div`
@@ -37,6 +37,7 @@ const CommentProfile = styled.div`
 `
 
 const CommentInnerWrap = styled.div`
+    width: 90%;
 `
 const CommentWriter = styled.span`
     font-weight: 450;
