@@ -111,6 +111,8 @@ public class CalendarRestController {
     @GetMapping("/api/calendar/import")
     public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable){
         Page<CalendarDto> calendar = calendarService.findImportRecordByMembSn(member.getMemberSn(),pageable);
+        log.debug("페이징 : {}" , pageable);
+        log.debug("결과 {} ",calendar.toString());
         if(calendar != null)return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendar);
         else return ResponseUtil.FAILURE(Cd.SELECT_FAIL, null);
     }

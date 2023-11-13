@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {ACCESS_TOKEN, kakaoLogin, naverLogin} from "./Api";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
-import LoadingComponent from "../pages/LoadingComponent";
+import LoadingComponent from "../component/LoadingComponent";
 
 const Oauth = () => {
     const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
-import LoadingComponent from "../../LoadingComponent";
+import LoadingComponent from "../../../component/LoadingComponent";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
 import {useInView} from "react-intersection-observer";
 import styled from "styled-components";

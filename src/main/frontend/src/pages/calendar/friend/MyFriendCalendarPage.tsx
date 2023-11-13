@@ -5,7 +5,7 @@ import {useInView} from "react-intersection-observer";
 import {CalendarDto} from "../../../model/CalendarApiModel";
 import {ImportWrap, ObserverArea} from "../Import/CalendarImportPage";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import LoadingComponent from "../../LoadingComponent";
+import LoadingComponent from "../../../component/LoadingComponent";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";

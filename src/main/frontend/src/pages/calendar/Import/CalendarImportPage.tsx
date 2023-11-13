@@ -1,23 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect} from 'react';
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
-import LoadingComponent from "../../LoadingComponent";
+import styled from "styled-components";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
 import {useInView} from "react-intersection-observer";
-import styled from "styled-components";
-import {deleteRecord, selectImportRecordPaging} from "../../../api/CalendarApi";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
-import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarDto, CalendarSnParam} from "../../../model/CalendarApiModel";
+import {useInfiniteScrollQuery} from "./useInfiniteScrollQuery";
+import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 
 const CalendarImportPage = () => {
 
+    const { isLoading , isFetching,queryResult, getNextPage, getIsSuccess, getNextPageIsPossible } = useInfiniteScrollQuery();
+    console.log(isLoading , isFetching ,queryResult  , getIsSuccess , getNextPageIsPossible);
 
-
-
-
-
-
+    const [ref, isView] = useInView();
+    useEffect(() => {
+        if (isView && getNextPageIsPossible) {
+            getNextPage();
+        }
+    }, [isView, queryResult]);
 
 
     return (
@@ -29,26 +29,24 @@ const CalendarImportPage = () => {
             {/* 반복 출력시킬 element 영역 */}
             <ImportWrap>
                 {
-                    isLoading ? (<LoadingComponent/>)
-                        :
-                    importRecordList && importRecordList.length > 0 ? (
-                        importRecordList.map((data) => (
+                    isLoading ? <DetailLoadingComponent size={4}/> :
+                    getIsSuccess &&
+                    queryResult?.pages.flatMap((page) =>
+                        page.resultList.map((data) => (
                             <CalendarDetailContentComponent
                                 key={data.calendarSn}
                                 data={data}
-                                removeRecord={removeRecord}
                                 importPage={true}
-                                importEvent={importEvent}
                             />
                         ))
-                    ) : (
-                        <CalendarDetailNo/>
-                    )}
-                {/*  스크롤 하단 감지 영역  */}
-                <ObserverArea ref={ref} />
-                {/*  스크롤 하단 감지 영역  */}
+                    )
+                }
+                {(!isLoading &&  getNextPageIsPossible )&& <div ref={ref}>!!</div>}
+
             </ImportWrap>
             {/* 반복 출력시킬 element 영역 */}
+            {/* 무한 스크롤 옵저버 */}
+
 
 
 

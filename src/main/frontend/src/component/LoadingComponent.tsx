@@ -2,14 +2,14 @@ import styled, {keyframes} from "styled-components";
 import React from "react";
 
 const Container = styled.div`
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    margin: '0 auto',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#e8e8e8',
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    alignItems: center;
+    justifyContent: center;
+    background: #e8e8e8;
 `
 
 const rotation = keyframes`

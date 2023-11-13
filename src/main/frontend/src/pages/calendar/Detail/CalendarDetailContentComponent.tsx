@@ -26,9 +26,9 @@ dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 interface CalendarDetailContentComponentProps{
     data: CalendarDto;
-    removeRecord: (calendarSn: number) => void; // Update the prop type here
+    removeRecord?: (calendarSn: number) => void; // Update the prop type here
     importPage: boolean;
-    importEvent: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed
+    importEvent?: (calendarSn: number, newImportYn: boolean) => void; // Update this type too if needed
     friendPage?:boolean;
 }
 const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent , friendPage }) => {
@@ -59,7 +59,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
         importRecord(param)
             .then(response=>{
                 setInitialYn(response.data.importYn);
-                importEvent(data.calendarSn,param.importYn)
+                // importEvent(data.calendarSn,param.importYn)
             })
             .catch(error=>{
                 console.log(error);
@@ -71,12 +71,12 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
     );
 
     const handleDelete = () => {
-        removeRecord(data.calendarSn);
+        // removeRecord(data.calendarSn);
     };
 
     return (
         <DetailContentWrap key={data.calendarSn}>
-            <div>{data.title}</div>
+            <DetailTitle>{data.title}</DetailTitle>
             <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
@@ -130,21 +130,22 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
 }
 
 
-const DetailContentWrap = styled.div`
+export const DetailContentWrap = styled.div`
     width:100%;
-    //height:125px;
     padding:10px;
     border-bottom:1px solid #e8e8e8;
 `
-
-const DetailContent = styled.div`
+export const DetailTitle = styled.div`
+    text-align: left;
+`
+export const DetailContent = styled.div`
     height: 65px; 
     overflow: auto;
     font-size: 13px;
     white-space: break-spaces;
 `
 
-const DetailTimeAndFixDelete = styled.div`
+export const DetailTimeAndFixDelete = styled.div`
     display: flex;
     justify-content: right;
     align-items: center;

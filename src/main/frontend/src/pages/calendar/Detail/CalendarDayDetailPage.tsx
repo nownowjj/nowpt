@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import LoadingComponent from "../../LoadingComponent";
+import LoadingComponent from "../../../component/LoadingComponent";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import {route} from "../../../services/remocon";
