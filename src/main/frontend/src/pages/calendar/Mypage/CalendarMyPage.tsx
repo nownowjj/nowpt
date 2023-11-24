@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import "aos/dist/aos.css";
 import ProfileComponent from "../../../component/ProfileComponent";
 import styled from "styled-components";
@@ -9,13 +9,9 @@ import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import MyPageRecordSmComponent from "./MyPageRecordSmComponent";
 import {useDispatch} from "react-redux";
 import {logoutAction} from "../../../redux/slice/userSlice";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import Aos from "aos";
-import {Member} from "../../../model/Common";
-import {CalendarRecordSm} from "../../../model/CalendarApiModel";
 import {useQuery} from "react-query";
-import {homeTest} from "../../../api/Api";
 
 
 interface ProfileItemProps{

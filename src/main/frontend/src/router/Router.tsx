@@ -4,7 +4,6 @@ import LoginComponent from "../pages/LoginPage";
 import CalendarMyPage from "../pages/calendar/Mypage/CalendarMyPage";
 import Oauth from "../api/Oauth";
 import LoadingComponent from "../component/LoadingComponent";
-import PrivateRoute from "./PrivateRoute";
 import PrivateRouteNew from "./PrivateRoute";
 import Calendar from "../pages/calendar/CalendarPage";
 import CalendarRecordNewOrFixPage from "../pages/calendar/Detail/CalendarRecordNewOrFixPage";
@@ -17,6 +16,8 @@ import HomeComponent from "../pages/HomeComponent";
 import WeatherPage from "../pages/calendar/Weather/WeatherPage";
 import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage";
 import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
+import IsExpiredComponent from "../component/IsExpiredComponent";
+import ErrorComponent from "../component/ErrorComponent";
 
 
 const Router = () => {
@@ -29,6 +30,10 @@ const Router = () => {
                 <Route path="/go/login" element={<LoginComponent />} />
                 <Route path="/oauth" element={<Oauth />} />
                 <Route path="/loading" element={<LoadingComponent />} />
+
+                <Route path="/isExpired" element={<IsExpiredComponent />} />
+                <Route path="/isError" element={<ErrorComponent />} />
+
 
 
                 <Route element={<PrivateRouteNew />}>
@@ -59,7 +64,7 @@ const Router = () => {
                     <Route path="/weather" element={<WeatherPage />} />
                 </Route>
                 <Route element={<PrivateRouteNew />}>
-                    <Route path="/comment" element={<MyFriendCalendarPage />} />
+                    <Route path="/comment" element={<CalendarCommentPage />} />
                 </Route>
 
             </Routes>

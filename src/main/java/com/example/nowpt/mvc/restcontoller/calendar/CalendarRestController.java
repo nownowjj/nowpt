@@ -109,7 +109,7 @@ public class CalendarRestController {
 
 
     @GetMapping("/api/calendar/import")
-    public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable){
+    public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable) throws InterruptedException {
         Page<CalendarDto> calendar = calendarService.findImportRecordByMembSn(member.getMemberSn(),pageable);
         log.debug("페이징 : {}" , pageable);
         log.debug("결과 {} ",calendar.toString());

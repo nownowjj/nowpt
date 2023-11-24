@@ -5,7 +5,7 @@ import {RootState} from "../redux/store/store";
 
 const PrivateRoute = (): React.ReactElement => {
     const isLogin = useSelector((state: RootState) => state.user.isLoggedIn);
-    return isLogin ? <Outlet /> : <Navigate to="/" />;
+    return isLogin ? <Outlet /> : <Navigate to="/go/login" />;
 };
 
 export default  PrivateRoute

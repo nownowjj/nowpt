@@ -21,7 +21,7 @@ const Oauth = () => {
                 navigate("/calendar");
             })
             .catch((error:any) => {
-                alert("로그인 실패");
+                alert("로그인 실패ㅇ?");
                 console.log(error);
                 navigate('/go/login');
             });

@@ -1,5 +1,6 @@
 import {UserLoginInfo} from "../model/model";
 import {HomeTestData} from "../pages/HomeComponent";
+import {isTokenExpiredFilter} from "./JwtDecode";
 
 export const API_BASE = "http://localhost:8060/api";
 export const ACCESS_TOKEN = 'accessToken';
@@ -35,9 +36,10 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
         'Content-Type' : 'application/json',
     })
 
-    if(localStorage.getItem(ACCESS_TOKEN)) {
-        headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
-    }
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    // @ts-ignore
+    if(token) headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
+
 
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
@@ -52,7 +54,15 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
             })
         )
         .catch(e =>{
-            return e
+            console.log(e);
+            console.log('에러발생');
+            debugger;
+            if(e.code){
+                console.log(e);
+                if(e.code === '4444') window.location.replace("/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
+            }else{
+                window.location.replace("/isError");
+            }
         });
 };
 
