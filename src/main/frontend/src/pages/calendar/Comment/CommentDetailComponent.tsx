@@ -3,12 +3,14 @@ import {CommentDto} from "../../../model/CommentApiModel";
 import styled from "styled-components";
 import ProfileComponent from "../../../component/ProfileComponent";
 import dayjs from "dayjs";
+import {BiTrash} from "react-icons/bi";
 
 interface CommentDetailComponentProps {
     data: CommentDto;
     isMyComment:boolean;
+    trashFuntion:(commentSn:number)=> void;
 }
-const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,isMyComment}) => {
+const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,isMyComment ,trashFuntion}) => {
     return (
         <CommentWrap>
             <CommentProfile>
@@ -18,11 +20,15 @@ const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,isMy
             <CommentInnerWrap>
                 <CommentWriter>{data.membNm}</CommentWriter>
                 <CommentDt>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</CommentDt>
-                <CommentContent> {isMyComment ? '내꺼' :'아니용'} {data.commentContent}</CommentContent>
+                {isMyComment &&<CommentRemove onClick={()=> trashFuntion(data.commentSn)}/>}
+                <CommentContent>{data.commentContent}</CommentContent>
             </CommentInnerWrap>
         </CommentWrap>
     );
 };
+const CommentRemove = styled(BiTrash)`
+    margin-left: 3px;
+`
 
 const CommentWrap = styled.div`
   width: 100%;

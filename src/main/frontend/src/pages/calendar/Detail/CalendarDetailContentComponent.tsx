@@ -71,7 +71,9 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
     );
 
     const handleDelete = () => {
-        // removeRecord(data.calendarSn);
+        if (removeRecord) {
+            removeRecord(data.calendarSn);
+        }
     };
 
     return (

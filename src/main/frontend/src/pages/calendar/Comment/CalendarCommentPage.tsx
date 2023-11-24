@@ -53,6 +53,12 @@ const CalendarCommentPage = () => {
         setMessageCall(message);
         setShowAlert(true);
     }
+
+    // TODO 댓글 삭제시 queryKey 제어 https://pozafly.github.io/react-query/mutation-after-data-update/
+    const removeComment =(commentSn:number)=>{
+        console.log(commentSn);
+    }
+
     return (
         <>
             <TopGnbComponent page={dayjs(calendarData.recordDate).format('YYYY-MM-DD 일정')}/>
@@ -77,7 +83,7 @@ const CalendarCommentPage = () => {
                             key={comment.commentSn}
                             data={comment}
                             isMyComment={user.membSn === comment.membSn}
-
+                            trashFuntion={removeComment}
                         />
                     ))
                 }

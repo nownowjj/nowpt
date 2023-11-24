@@ -53,7 +53,7 @@ const CalendarPage = () => {
 
             {/*헤더*/}
             <div className="header">
-                <ProfileComponent naviUse={true} size={45}/>
+                <ProfileComponent naviUse={true} size={45} isMy={true}/>
                 <FriendAndNotificationArea/>
             </div>
             {/*헤더*/}
