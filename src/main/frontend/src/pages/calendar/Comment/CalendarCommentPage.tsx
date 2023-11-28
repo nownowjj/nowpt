@@ -5,8 +5,8 @@ import styled from "styled-components";
 import FriendTitleComponent from "../friend/FriendTitleComponent";
 import dayjs from "dayjs";
 import ProfileComponent from "../../../component/ProfileComponent";
-import {CommentDto, CommentParam} from "../../../model/CommentApiModel";
-import {getComments, insertComment} from "../../../api/CommentApi";
+import {CommentDto, CommentParam, CommentSn} from "../../../model/CommentApiModel";
+import {deleteComment, getComments, insertComment} from "../../../api/CommentApi";
 import ConfirmComponent from "../component/ConfirmComponent";
 import CommentDetailComponent from "./CommentDetailComponent";
 import userEtt from "../../../services/UserEtt";
@@ -31,16 +31,12 @@ const CalendarCommentPage = () => {
 
     const [newCommentValue, setNewCommentValue] = useState("");
     const newCommentFunction = async () => {
-        try {
-            let param: CommentParam = { calendarSn: calendarData.calendarSn, commentContent: newCommentValue };
-            const response = await insertComment(param);
-            console.log(response);
-            const existingData:CommentDto[] = queryClient.getQueryData(['getComments', calendarData.calendarSn]) || []; // 기존 데이터를 가져옵니다.
-            const newData = [ response.data , ...existingData]; // 새로운 데이터를 추가합니다.
-            queryClient.setQueryData(['getComments', calendarData.calendarSn], newData);// 데이터를 업데이트합니다.
-        } catch (error) {
-            console.error(error);
-        }
+        let param: CommentParam = { calendarSn: calendarData.calendarSn, commentContent: newCommentValue };
+        const {data:newComment} = await insertComment(param);
+        const existingData:CommentDto[] = queryClient.getQueryData(['getComments', calendarData.calendarSn]) || []; // 기존 데이터를 가져옵니다.
+        const newData = [ newComment , ...existingData]; // 새로운 데이터를 추가합니다.
+        queryClient.setQueryData(['getComments', calendarData.calendarSn], newData);// 데이터를 업데이트합니다.
+
     };
 
     // Alert 여부
@@ -54,9 +50,16 @@ const CalendarCommentPage = () => {
         setShowAlert(true);
     }
 
-    // TODO 댓글 삭제시 queryKey 제어 https://pozafly.github.io/react-query/mutation-after-data-update/
-    const removeComment =(commentSn:number)=>{
-        console.log(commentSn);
+    const removeCommentCallBack =async (commentSn: number) => {
+        let param: CommentSn = {commentSn: commentSn};
+        const {data} = await deleteComment(param);
+        if(data > 0){
+            await queryClient.invalidateQueries(['getComments', calendarData.calendarSn])
+        }
+    }
+
+    const removeComment =(sn:number)=>{
+        confirmFunction(()=> removeCommentCallBack(sn) ,'댓글을 삭제합니다<br/>삭제한 댓글을 복구할 수 없습니다')
     }
 
     return (
@@ -92,7 +95,7 @@ const CalendarCommentPage = () => {
 
 
             <CommentWriteArea>
-                <ProfileComponent naviUse={false} size={35}/>
+                <ProfileComponent naviUse={false} size={35} isMy={true}/>
                 <Div>
                     <CommentInput
                         value={newCommentValue} type="text" placeholder="댓글을 입력하세요"

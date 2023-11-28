@@ -14,3 +14,7 @@ export interface CommentParam{
     commentContent:string;
     calendarSn:number;
 }
+
+export interface CommentSn{
+    commentSn:number;
+}

@@ -49,4 +49,13 @@ public class CommentRestController {
 
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, comments);
     }
+
+    @DeleteMapping("")
+    public ResponseDto<?> deleteComment(@RequestBody CommentDto commentDto){
+        log.debug("댓글 삭제  : {}"  , commentDto.getCommentSn());
+        long deleteComment = commentRepo.deleteComment(commentDto.getCommentSn());
+
+        return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, deleteComment);
+    }
+
 }

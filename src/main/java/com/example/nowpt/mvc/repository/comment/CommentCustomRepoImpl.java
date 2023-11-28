@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -38,5 +39,15 @@ public class CommentCustomRepoImpl implements CommentCustomRepo {
                 .where(qComment.useYn.eq("Y").and(qComment.calendarSn.eq(calendarSn)))
                 .orderBy(qComment.frstRegistDt.desc())
                 .fetch();
+    }
+
+    @Override
+    @Transactional
+    public long deleteComment(long commentSn) {
+        return queryFactory
+                .update(qComment)
+                .set(qComment.useYn,"N")
+                .where(qComment.commentSn.eq(commentSn))
+                .execute();
     }
 }
