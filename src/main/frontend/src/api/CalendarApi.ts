@@ -9,6 +9,7 @@ import {
     RecordDate
 } from "../model/CalendarApiModel";
 import {PagingResponse} from "../model/Common";
+import {CommentSn} from "../model/CommentApiModel";
 
 export function commonSearchParam(param: Record<string|number, any>){
     const queryParams = new URLSearchParams();
@@ -49,8 +50,7 @@ export function insertRecord(param:NewRecordParam){
     })
 }
 
-//  {calendarSn:number}
-export function deleteRecord(param:CalendarSnParam){
+export function deleteRecord(param:CalendarSnParam):Promise<ApiResponse<number>>{
     const url = API_BASE + CALENDAR;
     const fullUrl = url + "?" + commonSearchParam(param);
     return request({

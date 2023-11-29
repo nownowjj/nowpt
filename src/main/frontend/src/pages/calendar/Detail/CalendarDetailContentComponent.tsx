@@ -56,13 +56,14 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
             calendarSn: data.calendarSn,
             importYn  : boolean
         };
+
+        console.log(param);
+
         importRecord(param)
             .then(response=>{
                 setInitialYn(response.data.importYn);
-                // importEvent(data.calendarSn,param.importYn)
             })
             .catch(error=>{
-                console.log(error);
                 ApiErrorHandle(error);
             }).finally(()=>{
             setIsProcessing(false);
@@ -71,9 +72,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
     );
 
     const handleDelete = () => {
-        if (removeRecord) {
-            removeRecord(data.calendarSn);
-        }
+        if (removeRecord) removeRecord(data.calendarSn);
     };
 
     return (
@@ -82,8 +81,8 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
             <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
-                {/*<span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>*/}
-                <span style={{marginRight : "5px"}}>{dayjs(data.recordDate).format('YYYY-MM-DD')}</span>
+                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>
+                {/*<span style={{marginRight : "5px"}}>{dayjs(data.recordDate).format('YYYY-MM-DD')}</span>*/}
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>

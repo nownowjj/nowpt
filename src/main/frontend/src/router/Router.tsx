@@ -18,6 +18,7 @@ import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage"
 import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
+import LoginWaitComponent from "../component/LoginWaitComponent";
 
 
 const Router = () => {
@@ -30,6 +31,7 @@ const Router = () => {
                 <Route path="/go/login" element={<LoginComponent />} />
                 <Route path="/oauth" element={<Oauth />} />
                 <Route path="/loading" element={<LoadingComponent />} />
+                <Route path="/loginwait" element={<LoginWaitComponent />} />
 
                 <Route path="/isExpired" element={<IsExpiredComponent />} />
                 <Route path="/isError" element={<ErrorComponent />} />

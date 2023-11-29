@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {LuBell, LuBellRing} from "react-icons/lu";
 import styled from "styled-components";
 import {BsPeopleFill} from "react-icons/bs";
@@ -15,40 +15,27 @@ const FriendAndNotificationArea = () => {
     const navigate = useNavigate();
     const [isActiveBell , setIsActiveBell] = useState<boolean>(false);
 
-    // useEffect(()=>{
-    //     getMyNotificationCount()
-    //         .then((result)=>{
-    //             if(result.data !== 0 ) setIsActiveBell(true);
-    //         })
-    //         .catch((error)=>{
-    //             ApiErrorHandle(error)
-    //         })
-    // },[])
-
-    const { isLoading, error, data, isFetching } = useQuery({
-        queryKey: ['repoData'],
+    const { data } = useQuery({
+        queryKey: ['isNewNotification'],
         queryFn: async () => {
             const result = await getMyNotificationCount();
-            return result.data; // homeTest의 결과를 반환
+            return result.data;
         },
-        onSuccess:((data)=>{
-            if(data > 0 ) setIsActiveBell(true)
-        }),
-        staleTime: 60 * 1000, // 1분
-    })
+        staleTime: 3 * 60 * 1000, // 3분
+    });
 
-    console.log(isLoading , error , data , isFetching);
+    useEffect(() => {
+        console.log(data);
+        if (data && data > 0) {
+            setIsActiveBell(true);
+        }
+    }, [data]);
 
 
     return (
-        <AnimatedBellWrap redDots={isActiveBell}>
+        <AnimatedBellWrap onClick={()=> navigate(route.notification)}  redDots={isActiveBell}>
             <StyledBsPeopleFill onClick={()=> navigate(route.friend)}/>
-            {isActiveBell
-            ?
-                <LuBellRing onClick={()=> navigate(route.notification)} className="vibrating-bell-icon" />
-            :
-                <LuBell onClick={()=> navigate(route.notification)} />
-            }
+            {isActiveBell ? <LuBellRing className="vibrating-bell-icon" />:<LuBell />}
         </AnimatedBellWrap>
     );
 };
@@ -63,7 +50,6 @@ const AnimatedBellWrap = styled.div<AnimatedBellWrapInterface>`
     font-size:28px;
     color:#000000;
     height:100%;
-    // line-height:50%;
     position:relative;
     display: flex;
     align-items: center;

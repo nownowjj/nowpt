@@ -2,6 +2,7 @@ package com.example.nowpt.mvc.model;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@NoArgsConstructor
 @Data
 @Table(name = "tb_calendar")
 @DynamicInsert

@@ -10,50 +10,38 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
 import {CalendarDto, CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
 import dayjs from "dayjs";
+import {useQuery, useQueryClient} from "react-query";
+import {getComments} from "../../../api/CommentApi";
+import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
-    const [isLoading, setIsLoading] = useState(true);
-    const [detail,setDetail] = useState<CalendarDto[]>([]);
+    // const [isLoading, setIsLoading] = useState(true);
+    // const [detail,setDetail] = useState<CalendarDto[]>([]);
     const {detailDay} = state;
+    const queryClient = useQueryClient();
 
-    useEffect(()=>{
-        const param: RecordDate = {"recordDate":detailDay}
-        getMyDetailCalendar(param)
-            .then(response => {
-                setDetail(response.data)
-                console.log(response.data);
-            })
-            .catch(error => {
-                ApiErrorHandle(error)
-            }).finally(()=>{
-                setIsLoading(false);
-            })
-    },[detailDay])
+
+    const param: RecordDate = {"recordDate":detailDay}
+
+    const { isLoading, data:detail, isError } = useQuery({
+        queryKey: ['getDayDetail', detailDay], // 고유한 쿼리 키
+        queryFn: async () => {
+            const result = await getMyDetailCalendar(param);
+            return result.data;
+        },
+        // refetchOnMount: false, // 마운트 시에만 새로고침
+    });
+
 
     // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn:number) :void =>{
+    const removeRecord =async (calendarSn:number)  =>{
         const deleteParam:CalendarSnParam={calendarSn:calendarSn};
-        const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        deleteRecord(deleteParam)
-            .then(response =>{
-                if(response.data) {
-                    if (recordIndex !== -1) { // 삭제 요청이 성공 되었고 해당 요소의 index를 찾음
-                        const updatedDetail = [...detail]; // 새롭게
-                        updatedDetail.splice(recordIndex, 1);
-                        setDetail(updatedDetail);
-                    }
-                }
-            }).catch(error =>{
-            ApiErrorHandle(error);
-            })
+        const {data} = await deleteRecord(deleteParam);
+        if(data > 0)  await queryClient.invalidateQueries(['getDayDetail', detailDay])
     }
 
-    const importEvent =(calendarSn:number , newImportYn:boolean)=>{
-        const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); //
-        detail[recordIndex].importYn = newImportYn;
-    }
 
 
     return (
@@ -61,9 +49,9 @@ const CalendarDayDetailPage = () => {
             <TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>
 
             <CalendarDetail>
-                {isLoading ?(
-                        <LoadingComponent/>
-                ): detail && detail.length > 0 ?(
+                {
+                  isLoading ? <DetailLoadingComponent size={4}/> :
+                  detail && detail.length > 0 ?
                         <>
                         {detail.map((data) => (
                             <CalendarDetailContentComponent
@@ -71,17 +59,16 @@ const CalendarDayDetailPage = () => {
                                 data={data}
                                 removeRecord={removeRecord}
                                 importPage={false}
-                                importEvent={importEvent}
                             />
                         ))}
                             <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>
                         </>
-                    ): (
+                    :
                         <>
                         <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
                         <CalendarDetailNo/>
                         </>
-                )}
+                }
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
         </CalendarDetailWrap>

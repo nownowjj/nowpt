@@ -67,6 +67,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.memberSn.eq(calendarDto.getMemberSn())
                                 .and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.eq(calendarDto.getRecordDate())))
                       )
+                .orderBy(qCalendar.frstRegistDt.desc())
                 .fetch();
     }
 

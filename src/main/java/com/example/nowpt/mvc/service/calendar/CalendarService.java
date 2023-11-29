@@ -6,6 +6,7 @@ import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.Calendar;
 import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CalendarService {
     private final CalendarRepo calendarRepo;
@@ -35,7 +37,7 @@ public class CalendarService {
 //    Optional로 감싸진 Data가 null이면 Data 객체에 new Data가 들어갑니다.
     @Transactional
     public Calendar recordSave(final Calendar calendar) {
-        Calendar newCalendar = calendarRepo.findById(calendar.getCalendarSn()).orElseGet(Calendar::new);
+        Calendar newCalendar = calendarRepo.findById(calendar.getCalendarSn()).orElseGet(() -> new Calendar());
         newCalendar.setTitle(calendar.getTitle());
         newCalendar.setContent(calendar.getContent());
         newCalendar.setLastChangeDt(LocalDateTime.now());
@@ -45,13 +47,22 @@ public class CalendarService {
 
 
     // 일정 삭제
-    public Calendar deleteRecord(Calendar calendar) {
+    public int deleteRecord(long calendarSn) {
+        Calendar calendar = this.findByCalendarSn(calendarSn);
         calendar.setUseYn("N");
-        return calendarRepo.save(calendar);
+        try{
+            calendarRepo.save(calendar);
+            return 1;
+        }catch (Exception e){
+            log.error("일정 삭제 실패 : {}" , e.getMessage());
+            return 0;
+        }
     }
 
-    // 기록 즐겨찾기 등
-    public Calendar importRecord(Calendar calendar,boolean importYn) {
+    // 기록 즐겨찾기
+    public Calendar importRecord(long calendarSn , boolean importYn) {
+        Calendar calendar = this.findByCalendarSn(calendarSn);
+
         calendar.setImportYn(importYn);
         return calendarRepo.save(calendar);
     }

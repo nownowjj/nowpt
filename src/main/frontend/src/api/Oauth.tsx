@@ -4,6 +4,7 @@ import {ACCESS_TOKEN, kakaoLogin, naverLogin} from "./Api";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
 import LoadingComponent from "../component/LoadingComponent";
+import LoginWaitComponent from "../component/LoginWaitComponent";
 
 const Oauth = () => {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const Oauth = () => {
 
 
     return (
-        <LoadingComponent/>
+        <LoginWaitComponent/>
     )
 }
 

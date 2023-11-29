@@ -34,30 +34,26 @@ public class CalendarRestController {
     }
 
     @GetMapping("/api/calendar/detail")
-    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto){
+    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto) throws InterruptedException {
         log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
         calendarDto.setMemberSn(member.getMemberSn());
         calendarDto.setRecordDate(recordDate);
         List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
-
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
     }
 
 
     @DeleteMapping("/api/calendar")
-    public ResponseDto<?> deleteRecord(@AuthenticationPrincipal Member member ,@RequestParam Long calendarSn){
+    public ResponseDto<?> deleteRecord(@RequestParam Long calendarSn){
         log.debug("일정 삭제 : {}"  ,calendarSn);
-        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
-        if(calendar != null)return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calendarService.deleteRecord(calendar));
-        else return ResponseUtil.FAILURE(Cd.DELETE_FAIL, null);
+        return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calendarService.deleteRecord(calendarSn));
     }
 
     @PutMapping("/api/calendar")
     public ResponseDto<?> importRecord(@RequestParam Long calendarSn ,@RequestParam boolean importYn){
         log.debug("일정 즐겨찾기 : {} , {}"  ,calendarSn , (importYn ? "등록" : "취소"));
-        Calendar calendar = calendarService.findByCalendarSn(calendarSn);
-        if(calendar != null)return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calendarService.importRecord(calendar,importYn));
-        else return ResponseUtil.FAILURE(Cd.PUT_FAIL, null);
+
+        return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calendarService.importRecord(calendarSn,importYn));
     }
 
     @PostMapping("/api/calendar/insert")
