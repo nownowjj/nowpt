@@ -175,10 +175,10 @@ background: #ffffa9;
 }
 
 /* active class */
-.react-calendar__tile--active abbr{
-    background: #ff01b1;
-    color: white;
-}
+/*.react-calendar__tile--active abbr{*/
+/*    background: #ff01b1;*/
+/*    color: white;*/
+/*}*/
 
 
 .react-calendar__tile--active abbr:enabled:hover,
