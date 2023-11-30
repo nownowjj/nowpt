@@ -62,7 +62,6 @@ public class CalendarService {
     // 기록 즐겨찾기
     public Calendar importRecord(long calendarSn , boolean importYn) {
         Calendar calendar = this.findByCalendarSn(calendarSn);
-
         calendar.setImportYn(importYn);
         return calendarRepo.save(calendar);
     }

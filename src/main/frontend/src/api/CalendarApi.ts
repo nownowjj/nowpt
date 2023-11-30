@@ -44,7 +44,7 @@ export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<Calend
 //  {recordDate:string ,calendarSn:number|null,title:string, content:string ,importYn:string}
 export function insertRecord(param:NewRecordParam){
     return request({
-        url: API_BASE + CALENDAR + '/insert',
+        url: API_BASE + CALENDAR ,
         method: 'POST',
         body: JSON.stringify(param)
     })
@@ -63,7 +63,7 @@ export function deleteRecord(param:CalendarSnParam):Promise<ApiResponse<number>>
 
 export function getMyInfoAndRecord():Promise<ApiResponse<CalendarMyInfoDto>>{
     return request({
-        url: API_BASE + '/calendar/myRecord',
+        url: API_BASE + CALENDAR + '/myRecord',
         method: 'GET'
     })
 }

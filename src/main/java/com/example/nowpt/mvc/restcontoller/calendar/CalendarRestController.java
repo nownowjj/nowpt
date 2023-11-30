@@ -22,41 +22,33 @@ import java.util.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/api/calendar")
 public class CalendarRestController {
     private final CalendarService calendarService;
     private final CalendarRepo calendarRepo;
 
-    @GetMapping("/api/calendar")
+    @GetMapping
     public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member, @RequestParam String recordDate){
+        log.debug("요청일자 : {}" , recordDate);
 
         List<String> calendarList = calendarService.selectRecordDate(recordDate , member.getMemberSn());
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
     }
 
-    @GetMapping("/api/calendar/detail")
-    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto) throws InterruptedException {
-        log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
-        calendarDto.setMemberSn(member.getMemberSn());
-        calendarDto.setRecordDate(recordDate);
-        List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
-    }
-
-
-    @DeleteMapping("/api/calendar")
+    @DeleteMapping
     public ResponseDto<?> deleteRecord(@RequestParam Long calendarSn){
         log.debug("일정 삭제 : {}"  ,calendarSn);
         return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, calendarService.deleteRecord(calendarSn));
     }
 
-    @PutMapping("/api/calendar")
+    @PutMapping
     public ResponseDto<?> importRecord(@RequestParam Long calendarSn ,@RequestParam boolean importYn){
         log.debug("일정 즐겨찾기 : {} , {}"  ,calendarSn , (importYn ? "등록" : "취소"));
 
         return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, calendarService.importRecord(calendarSn,importYn));
     }
 
-    @PostMapping("/api/calendar/insert")
+    @PostMapping
     public ResponseDto<?> createRecord(@AuthenticationPrincipal Member member,@RequestBody CalendarDto calendarDto){
         log.debug("등록 및 수정 : {}", calendarDto);
 
@@ -86,8 +78,17 @@ public class CalendarRestController {
     }
 
 
+    @GetMapping("/detail")
+    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto) throws InterruptedException {
+        log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
+        calendarDto.setMemberSn(member.getMemberSn());
+        calendarDto.setRecordDate(recordDate);
+        List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
+    }
 
-    @GetMapping("/api/calendar/myRecord")
+
+    @GetMapping("/myRecord")
     public ResponseDto<?> selectMyRecordSm(@AuthenticationPrincipal Member member){
         Map<String,List<?>> result = new HashMap<>();
 
@@ -102,9 +103,7 @@ public class CalendarRestController {
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, result);
     }
 
-
-
-    @GetMapping("/api/calendar/import")
+    @GetMapping("/import")
     public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable) throws InterruptedException {
         Page<CalendarDto> calendar = calendarService.findImportRecordByMembSn(member.getMemberSn(),pageable);
         log.debug("페이징 : {}" , pageable);
