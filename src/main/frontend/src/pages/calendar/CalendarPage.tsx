@@ -18,15 +18,25 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store/store";
 import {setDay} from "../../redux/slice/calendarSlice";
 import {useQuery} from "react-query";
+import holidaysJson from "../../db/holiday.json"
 
+interface ScheduleType {
+    [year: string]: {
+        startDate: string;
+        endDate: string;
+        title: string;
+    }[];
+}
 
 const CalendarPage = () => {
+    const holidays:ScheduleType = holidaysJson;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const selectedDay = useSelector((state: RootState) => state.calendar.selectedDay);
 
     const [value] = useState<Value>(new Date(selectedDay));  //라이브러리 내장 Type 사용
     const [month , setMonth] = useState("");
+
 
 
     const param: RecordDate = { recordDate: month ? month : dayjs(value as Date).format('YYYYMM')};
@@ -36,8 +46,8 @@ const CalendarPage = () => {
             const result = await getMyCalendar(param);
             return result.data;
         },
-        cacheTime: 60000, // 1분 동안 캐시로 저장
-        staleTime: 10000, // 10초 이내에는 캐시된 결과를 사용
+        // cacheTime: 60000, // 1분 동안 캐시로 저장
+        staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
         // refetchOnMount: false, // 마운트 시에만 새로고침
     });
 
@@ -55,6 +65,23 @@ const CalendarPage = () => {
         const formattedDate = dayjs(activeStartDate).format('YYYYMM');
         setMonth(formattedDate);
     }
+
+    const tileContent = ({ date }: { date: Date }) => {
+        const loopDate =dayjs(date).format('YYYYMMDD');
+
+        const yearHolidays = holidays[loopDate.substring(0,4)];
+
+        if(yearHolidays){
+            const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
+                const holidayStart = holiday.startDate
+                const holidayEnd =holiday.endDate
+                return loopDate >= holidayStart && loopDate <= holidayEnd;
+            });
+
+            const holidayTitles = holidayData.map((holiday: { title: string; }) => holiday.title);
+            if(recordData ||holidayTitles )  return <DotsComponent date={date} mark={recordData} schedule={holidayTitles} />;
+        }
+    };
 
 
     return (
@@ -77,7 +104,8 @@ const CalendarPage = () => {
                 onClickDay={onClickDay}
                 formatDay={(locale, date) => dayjs(date).format('DD')}
                 value={value} // 일자
-                tileContent={({ date }) => <DotsComponent date={date} mark={recordData} />} // 일자 하단에 이벤트 dot
+                // tileContent={({ date }) => <DotsComponent date={date} mark={recordData} schedule={holidays} />} // 일자 하단에 이벤트 dot
+                tileContent={tileContent}
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                 calendarType={"gregory"}
@@ -85,7 +113,7 @@ const CalendarPage = () => {
             {/* 캘린더 */}
             
             {/* 신규 */}
-            <div>ㅇㅇㅇ</div>
+            <NewArea>ㅇㅇㅇ</NewArea>
             {/* 신규 */}
 
             {/*바텀*/}
@@ -94,6 +122,11 @@ const CalendarPage = () => {
         </CalendarWrap>
     );
 };
+
+const NewArea = styled.div`
+    margin: 20px 0 60px;
+`
+
 const CalendarWrap = styled.div`
     width:100%;
     //height:100%;

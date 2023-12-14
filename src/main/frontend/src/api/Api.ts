@@ -56,7 +56,6 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
         .catch(e =>{
             console.log(e);
             console.log('에러발생');
-            debugger;
             if(e.code){
                 console.log(e);
                 if(e.code === '4444') window.location.replace("/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}

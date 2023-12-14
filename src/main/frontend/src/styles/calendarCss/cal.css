@@ -11,7 +11,7 @@
     flex-direction: column;
     padding: 0 5px;
     box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.08);
-    margin-bottom: 60px;
+    /*margin-bottom: 60px;*/
 }
 
 .react-calendar__viewContainer
@@ -105,7 +105,7 @@ abbr[title]{
     /*box-shadow: 0 0px 5px rgba(0, 0, 0, 0.08);*/
 }
 .react-calendar__month-view__days button{
-    padding: 5px;
+    padding: 5px 1px;
 }
 .react-calendar__month-view__days__day--weekend{
     color: #d10000;
@@ -127,7 +127,7 @@ abbr[title]{
     background: none;
     text-align: center;
     line-height: 16px;
-    height: 90px !important;
+    height: 100px !important;
 }
 .react-calendar__tile abbr{
     display: inline-block;
@@ -139,7 +139,7 @@ abbr[title]{
     height: 20px;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 40%;
     transform: translate(-50%, -200%);
 }
 

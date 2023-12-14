@@ -17,8 +17,6 @@ import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
-    // const [isLoading, setIsLoading] = useState(true);
-    // const [detail,setDetail] = useState<CalendarDto[]>([]);
     const {detailDay} = state;
     const queryClient = useQueryClient();
 
@@ -39,7 +37,10 @@ const CalendarDayDetailPage = () => {
     const removeRecord =async (calendarSn:number)  =>{
         const deleteParam:CalendarSnParam={calendarSn:calendarSn};
         const {data} = await deleteRecord(deleteParam);
-        if(data > 0)  await queryClient.invalidateQueries(['getDayDetail', detailDay])
+        if(data > 0)  {
+            await queryClient.invalidateQueries(['getDayDetail', detailDay])
+            await queryClient.invalidateQueries(['myCalendar', detailDay.substring(0,6)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
+        }
     }
 
 

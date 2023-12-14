@@ -31,11 +31,11 @@ const FriendAndNotificationArea = () => {
         }
     }, [data]);
 
-
+    // onClick={()=> navigate(route.notification)}
     return (
-        <AnimatedBellWrap onClick={()=> navigate(route.notification)}  redDots={isActiveBell}>
+        <AnimatedBellWrap  redDots={isActiveBell}>
             <StyledBsPeopleFill onClick={()=> navigate(route.friend)}/>
-            {isActiveBell ? <LuBellRing className="vibrating-bell-icon" />:<LuBell />}
+            {isActiveBell ? <LuBellRing onClick={()=> navigate(route.notification)} className="vibrating-bell-icon" />:<LuBell onClick={()=> navigate(route.notification)} />}
         </AnimatedBellWrap>
     );
 };
