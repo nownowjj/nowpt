@@ -140,7 +140,8 @@ export const DetailTitle = styled.div`
     text-align: left;
 `
 export const DetailContent = styled.div`
-    height: 65px; 
+    height: fit-content; 
+    //height: 65px; 
     overflow: auto;
     font-size: 13px;
     white-space: break-spaces;

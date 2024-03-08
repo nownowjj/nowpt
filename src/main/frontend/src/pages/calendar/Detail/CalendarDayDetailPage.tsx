@@ -2,24 +2,27 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import LoadingComponent from "../../../component/LoadingComponent";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import {route} from "../../../services/remocon";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarDto, CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
-import dayjs from "dayjs";
+import {CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
 import {useQuery, useQueryClient} from "react-query";
-import {getComments} from "../../../api/CommentApi";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
+import {getY_m_dDay} from "../../../services/formattingDay";
+import {ScheduleDetailType} from "../CalendarPage";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../redux/store/store";
+import Slider from "react-slick";
+import DetailSchedule from "./DetailSchedule";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     const {detailDay} = state;
     const queryClient = useQueryClient();
-
+    const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
+    const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
 
     const param: RecordDate = {"recordDate":detailDay}
 
@@ -29,7 +32,7 @@ const CalendarDayDetailPage = () => {
             const result = await getMyDetailCalendar(param);
             return result.data;
         },
-        // refetchOnMount: false, // 마운트 시에만 새로고침
+        refetchIntervalInBackground:false,
     });
 
 
@@ -43,12 +46,25 @@ const CalendarDayDetailPage = () => {
         }
     }
 
+    useEffect(() => {
+        console.log('확인 : ',detailDay,yearHolidays);
+        const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
+            const holidayStart = holiday.startDate
+            const holidayEnd =holiday.endDate
+            console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
+            return detailDay >= holidayStart && detailDay <= holidayEnd;
+        })
+        setDetailSchedule(holidayData);
+    }, []);
 
 
     return (
         <CalendarDetailWrap>
-            <TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>
-
+            {/*<TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>*/}
+            <TopGnbComponent page={getY_m_dDay(detailDay)}/>
+            {detailSchedule.length > 0 && (
+                <DetailSchedule data={detailSchedule} />
+            )}
             <CalendarDetail>
                 {
                   isLoading ? <DetailLoadingComponent size={4}/> :
@@ -72,9 +88,15 @@ const CalendarDayDetailPage = () => {
                 }
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
+
+
+
+
         </CalendarDetailWrap>
     );
 };
+
+
 const CalendarDetail = styled.div`
     width:100%;
     height:fit-content;

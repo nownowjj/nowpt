@@ -2,12 +2,15 @@ import React from 'react';
 import styled from "styled-components";
 import dayjs from "dayjs";
 
-
+interface ScheduleType{
+    color:string;
+    title:string;
+}
 
 interface DotsComponentInterface {
     date:Date;
     mark:string[];
-    schedule ?: string[]; // or specific type if applicable
+    schedule ?: ScheduleType[];
 }
 
 const DotsComponent = (data:DotsComponentInterface) => {
@@ -26,10 +29,9 @@ const DotsComponent = (data:DotsComponentInterface) => {
 
     if (schedule) {
         for (let i = 0; i < schedule.length; i++) {
-            if (i < 3) {
-                divs.push(<Schedule key={i}>{schedule[i]}</Schedule>);
-            } else if (i === 3) {
-                divs.push(<Schedule key={i}>...</Schedule>);
+            if (i < 3) divs.push(<Schedule color={schedule[i].color} key={i}>{schedule[i].title}</Schedule>);
+            else if (i === 3) {
+                divs.push(<Schedule color={schedule[i].color} key={i}>...</Schedule>);
                 break; // 4번째 요소일 때 반복문 중지
             }
         }
@@ -46,17 +48,17 @@ const DotsComponent = (data:DotsComponentInterface) => {
         </>
     );
 };
-const Schedule = styled.div`
+const Schedule = styled.div<{color:string}>`
     margin-bottom: 1.5px;
     border-radius: 2px;
     color: white ;
-    background-color: skyblue;
     height: 14px;
     line-height: 14px;
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    background-color: ${({ color }) => color};
 `
 
 const ScheduleWrap = styled.div`

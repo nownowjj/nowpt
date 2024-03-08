@@ -134,6 +134,7 @@ public class Member extends Base implements UserDetails{
         return true;
     }
 
+
 //    public Member(){
 //
 //    }

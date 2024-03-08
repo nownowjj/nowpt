@@ -55,7 +55,7 @@ const CalendarMyPage = () => {
             {/* 상단 gnb */}
 
             {/* 프로필 */}
-            <ProfileComponent style={{marginTop:"60px"}} naviUse={false} size={150} />
+            <ProfileComponent isMy={true} style={{marginTop:"60px"}} naviUse={false} size={150} />
             {/* 프로필 */}
 
             {/* 개인정보 */}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import CalendarLib from 'react-calendar'
 import '../../styles/calendarCss/cal.css' // css import
 import DotsComponent from "./Detail/DotsComponent";
@@ -16,30 +16,56 @@ import {OnArgs} from "react-calendar/dist/cjs/shared/types";
 import dayjs from "dayjs";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store/store";
-import {setDay} from "../../redux/slice/calendarSlice";
+import {setDay, setYearHolidays} from "../../redux/slice/calendarSlice";
 import {useQuery} from "react-query";
-import holidaysJson from "../../db/holiday.json"
+import holidaysJsonFile from "../../db/holiday.json"
+import {getFirstOrLastMonthYear, getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
 
-interface ScheduleType {
-    [year: string]: {
-        startDate: string;
-        endDate: string;
-        title: string;
-    }[];
+export interface ScheduleDetailType{
+    startDate: string;
+    endDate: string;
+    title: string;
+    color:string;
+}
+
+export interface ScheduleType {
+    [year: string]: ScheduleDetailType[];
 }
 
 const CalendarPage = () => {
-    const holidays:ScheduleType = holidaysJson;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const selectedDay = useSelector((state: RootState) => state.calendar.selectedDay);
-
-    const [value] = useState<Value>(new Date(selectedDay));  //라이브러리 내장 Type 사용
+    const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
+    const [value,onChange] = useState<Value>(new Date(selectedDay));  //라이브러리 내장 Type 사용
     const [month , setMonth] = useState("");
+    const holidaysJson:ScheduleType = holidaysJsonFile;
 
+    // 월이 변경 될 경우
+    const handleMonthChange = ({ activeStartDate }: OnArgs) => {
+        const date =activeStartDate as Date;
+        if(getYDay(selectedDay) !== getYDay(date)){
+            dispatch(setYearHolidays({ year: getYDay(date), holidays: holidaysJson[getYDay(date)] }));
+        }
+        dispatch(setDay(date));
+        setMonth(getYmDay(date));
+    }
 
+    const tileContent = ({ date }: { date: Date }) => {
+        if (holidaysJson.hasOwnProperty(getYDay(date))) {
+            const loopDate =getYmdDay(date);
+            console.log(loopDate);
+            const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
+                const holidayStart = holiday.startDate
+                const holidayEnd =holiday.endDate
+                return loopDate >= holidayStart && loopDate <= holidayEnd;
+            }) .map(({ title, color }) => ({ title, color }));
+            if(recordData ||holidayData )  return <DotsComponent date={date} mark={recordData} schedule={holidayData} />;
+        }
+        if(recordData)  return <DotsComponent date={date} mark={recordData} />;
+    }
 
-    const param: RecordDate = { recordDate: month ? month : dayjs(value as Date).format('YYYYMM')};
+    const param: RecordDate = { recordDate: month ? month : getYmDay(value as Date)};
     const {data:recordData=[]} = useQuery({
         queryKey: ['myCalendar', param.recordDate],
         queryFn: async () => {
@@ -48,41 +74,27 @@ const CalendarPage = () => {
         },
         // cacheTime: 60000, // 1분 동안 캐시로 저장
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
-        // refetchOnMount: false, // 마운트 시에만 새로고침
     });
-
 
     // 일자 클릭
     const onClickDay =(date:Date)=> {
         dispatch(setDay(date));
-        const formattedDate = dayjs(date).format('YYYYMMDD');
-        navigate(route.calendarDayDetail, { state: { detailDay: formattedDate } });
+        navigate(route.calendarDayDetail, { state: { detailDay: getYmdDay(date) } });
     }
 
-    // 월이 변경 될 경우
-    const handleMonthChange = ({ activeStartDate }: OnArgs) => {
-        dispatch(setDay(activeStartDate as Date));
-        const formattedDate = dayjs(activeStartDate).format('YYYYMM');
-        setMonth(formattedDate);
-    }
+    useEffect(() => {
+        if(holidaysJson.hasOwnProperty(getYDay(value as Date))){ // 공휴일 json 데이터에 보고 있는 연도 데이터가 존재 하는지 체크
 
-    const tileContent = ({ date }: { date: Date }) => {
-        const loopDate =dayjs(date).format('YYYYMMDD');
 
-        const yearHolidays = holidays[loopDate.substring(0,4)];
-
-        if(yearHolidays){
-            const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
-                const holidayStart = holiday.startDate
-                const holidayEnd =holiday.endDate
-                return loopDate >= holidayStart && loopDate <= holidayEnd;
-            });
-
-            const holidayTitles = holidayData.map((holiday: { title: string; }) => holiday.title);
-            if(recordData ||holidayTitles )  return <DotsComponent date={date} mark={recordData} schedule={holidayTitles} />;
+            dispatch(setYearHolidays({ year: getYDay(value as Date), holidays: holidaysJson[getYDay(value as Date)] })); //연도와 공휴일 데이터를 넘긴다 , 이미 넘긴 연도라면 함수 종료
         }
-    };
+    }, [getYDay(value as Date)]);
 
+
+    useEffect(() => {
+        console.log(month , '월 변경 감지');
+        console.log(getFirstOrLastMonthYear(value as Date));
+    }, [month]);
 
     return (
         <CalendarWrap>
@@ -99,16 +111,15 @@ const CalendarPage = () => {
 
             {/* 캘린더 */}
             <CalendarLib
-                // onChange={onChange}
-                // onChange={changeValue}
                 onClickDay={onClickDay}
                 formatDay={(locale, date) => dayjs(date).format('DD')}
                 value={value} // 일자
-                // tileContent={({ date }) => <DotsComponent date={date} mark={recordData} schedule={holidays} />} // 일자 하단에 이벤트 dot
                 tileContent={tileContent}
                 showNeighboringMonth={true} // 해당 월 일자만 보여줄지
                 onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                 calendarType={"gregory"}
+                onChange={onChange}
+                // onChange={changeValue}
             />
             {/* 캘린더 */}
             
