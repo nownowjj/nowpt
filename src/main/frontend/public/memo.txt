@@ -25,6 +25,10 @@ cacheTime (number | Infinity)
 default : 5분
 inactive 상태인 캐시 데이터가 메모리에 남아있는 시간이다. 이 시간이 지나면 캐시 데이터는 가비지 컬렉터에 의해 메모리에서 제거된다.
 
+refetchInterval: 2000, 일정 시간마다 자동으로 refetch를 시켜준다. ms 단위로 설정해줄 수 있다.
+
+refetchIntervalInBackground : 브라우저에 focus 되어있지 않아도 refetch가 되게해준다. true 값을 설정해주면된다.
+
 refetchOnMount (boolean | "always")
 default : true
 데이터가 stale 상태일 경우 마운트 시 마다 refetch를 실행하는 옵션이다.

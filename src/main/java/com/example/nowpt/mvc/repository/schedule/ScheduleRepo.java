@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScheduleRepo extends JpaRepository<Schedule, Long>, ScheduleCustomRepo {
+    Schedule findByScheduleSn(long scheduleSn);
 
 }

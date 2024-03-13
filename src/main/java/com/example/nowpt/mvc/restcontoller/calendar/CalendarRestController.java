@@ -115,13 +115,5 @@ public class CalendarRestController {
         else return ResponseUtil.FAILURE(Cd.SELECT_FAIL, null);
     }
 
-    @GetMapping("/schedule")
-    public ResponseDto<?> selectSchedule(@AuthenticationPrincipal Member member, @RequestParam String date){
-        log.debug("스케쥴 조회 월 : {}" , member);
-
-        List<ScheduleDto> scheduleList = scheduleRepo.selectSchedule(date , member.getMemberSn());
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, scheduleList);
-    }
-
 
 }

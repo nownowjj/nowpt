@@ -13,7 +13,7 @@ const getY_m_dDay=(date:DateType)=> getFormatDay(date,'YYYY-MM-DD');
 
 /**
  * Get YYYYMM formatted date
- * @param {DateType}
+ * @param date
  * @return {YYYYMM}
  */
 const getYmDay=(date:DateType)=> getFormatDay(date,'YYYYMM');

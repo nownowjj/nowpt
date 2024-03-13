@@ -19,6 +19,7 @@ import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
 import LoginWaitComponent from "../component/LoginWaitComponent";
+import {ReactQueryDevtools} from "react-query/devtools";
 
 
 const Router = () => {
@@ -69,6 +70,7 @@ const Router = () => {
                     <Route path="/comment" element={<CalendarCommentPage />} />
                 </Route>
 
+                {/*<ReactQueryDevtools initialIsOpen={false} position='bottom-right' />*/}
             </Routes>
 
         </BrowserRouter>

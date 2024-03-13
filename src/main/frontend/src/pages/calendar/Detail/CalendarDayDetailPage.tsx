@@ -9,7 +9,7 @@ import CalendarDetailNo from "../component/CalendarDetailNo";
 import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/CalendarApiModel";
 import {useQuery, useQueryClient} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
-import {getY_m_dDay} from "../../../services/formattingDay";
+import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
 // import {ScheduleDetailType} from "../CalendarPage";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
@@ -18,8 +18,7 @@ import DetailSchedule from "./DetailSchedule";
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
-    const {detailDay} = state;
-    const {schedule} = state;
+    const {detailDay , schedule} = state;
 
     const queryClient = useQueryClient();
     const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
@@ -33,7 +32,6 @@ const CalendarDayDetailPage = () => {
             const result = await getMyDetailCalendar(param);
             return result.data;
         },
-        refetchIntervalInBackground:false,
     });
 
 
@@ -43,7 +41,7 @@ const CalendarDayDetailPage = () => {
         const {data} = await deleteRecord(deleteParam);
         if(data > 0)  {
             await queryClient.invalidateQueries(['getDayDetail', detailDay])
-            await queryClient.invalidateQueries(['myCalendar', detailDay.substring(0,6)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
+            await queryClient.invalidateQueries(['myCalendar', getYmDay(detailDay)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
         }
     }
 
@@ -65,9 +63,8 @@ const CalendarDayDetailPage = () => {
         <CalendarDetailWrap>
             {/*<TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>*/}
             <TopGnbComponent page={getY_m_dDay(detailDay)}/>
-            {detailSchedule.length > 0 && (
-                <DetailSchedule data={detailSchedule} />
-            )}
+            <DetailSchedule ymKeyDay={getYmDay(detailDay)} data={detailSchedule} />
+
             <CalendarDetail>
                 {
                   isLoading ? <DetailLoadingComponent size={4}/> :

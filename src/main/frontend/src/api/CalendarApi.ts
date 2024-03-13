@@ -33,7 +33,7 @@ export function getMyCalendar(param:RecordDate):Promise<ApiResponse<string[]>>{
 
 export function getMySchedule(param:RecordDate):Promise<ApiResponse<ScheduleDetailType[]>>{
     return request({
-        url: API_BASE + CALENDAR +"/schedule"+ "?date="+param.recordDate,
+        url: API_BASE  +"/schedule"+ "?date="+param.recordDate,
         method: GET
     })
 }
