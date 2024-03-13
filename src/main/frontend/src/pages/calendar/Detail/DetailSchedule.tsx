@@ -1,9 +1,10 @@
 import React from 'react';
-import {ScheduleDetailType} from "../CalendarPage";
+// import {ScheduleDetailType} from "../CalendarPage";
 import styled from "styled-components";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import {getMyDay, getY_m_dDay} from "../../../services/formattingDay";
+import {getMyDay} from "../../../services/formattingDay";
+import {ScheduleDetailType} from "../../../model/CalendarApiModel";
 
 interface DetailScheduleProps {
     data: ScheduleDetailType[];

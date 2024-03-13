@@ -49,3 +49,26 @@ export interface CalendarMyInfoDto{
     myRecordSmList: CalendarRecordSm[];
 }
 
+export interface ScheduleDetailType{
+    startDate: string;
+    endDate: string;
+    title: string;
+    color:string;
+    membSn?:number;
+    scheduleSn?:number;
+    useYn?:string;
+    frstRegistDt?: string;
+    lastChangeDt?: string;
+}
+
+// export interface ScheduleResponseType extends ScheduleDetailType{
+//     membSn:number;
+//     scheduleSn:number;
+//     useYn:string;
+//     frstRegistDt: string;
+//     lastChangeDt: string;
+// }
+
+export interface ScheduleType {
+    [year: string]: ScheduleDetailType[];
+}

@@ -1,5 +1,6 @@
 import {UserLoginInfo} from "../model/model";
 import {HomeTestData} from "../pages/HomeComponent";
+import {REDIRECT_URI} from "./OauthLoginUrl";
 
 export const API_BASE = "http://192.168.10.215:8060/api";
 export const ACCESS_TOKEN = 'accessToken';
@@ -110,7 +111,7 @@ export function login(loginDto:UserLoginInfo):Promise<ApiResponse<LoginResponse>
 // 카카오 로그인 api
 export function kakaoLogin(code:string) {
     return request({
-        url: API_BASE.replace("/api", "") + "/oauth/kakao?code=" + code,
+        url: API_BASE.replace("/api", "") + "/oauth/kakao?code=" + code +"&redirectUrl="+REDIRECT_URI,
         method: GET
     });
 }

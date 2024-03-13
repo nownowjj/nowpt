@@ -1,5 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ScheduleDetailType} from "../../pages/calendar/CalendarPage";
+import {ScheduleDetailType} from "../../model/CalendarApiModel";
+
+// import {ScheduleDetailType} from "../../pages/calendar/CalendarPage";
 
 interface DayState {
     selectedDay:Date;

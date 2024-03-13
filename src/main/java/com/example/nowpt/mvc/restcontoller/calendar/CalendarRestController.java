@@ -5,9 +5,11 @@ import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.CalendarSmDto;
+import com.example.nowpt.mvc.dto.ScheduleDto;
 import com.example.nowpt.mvc.model.Calendar;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
+import com.example.nowpt.mvc.repository.schedule.ScheduleRepo;
 import com.example.nowpt.mvc.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import java.util.*;
 public class CalendarRestController {
     private final CalendarService calendarService;
     private final CalendarRepo calendarRepo;
+    private final ScheduleRepo scheduleRepo;
 
     @GetMapping
     public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member, @RequestParam String recordDate){
@@ -110,6 +113,14 @@ public class CalendarRestController {
         log.debug("결과 {} ",calendar.toString());
         if(calendar != null)return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendar);
         else return ResponseUtil.FAILURE(Cd.SELECT_FAIL, null);
+    }
+
+    @GetMapping("/schedule")
+    public ResponseDto<?> selectSchedule(@AuthenticationPrincipal Member member, @RequestParam String date){
+        log.debug("스케쥴 조회 월 : {}" , member);
+
+        List<ScheduleDto> scheduleList = scheduleRepo.selectSchedule(date , member.getMemberSn());
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, scheduleList);
     }
 
 

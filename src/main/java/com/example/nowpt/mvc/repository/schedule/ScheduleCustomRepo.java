@@ -1,9 +1,11 @@
 package com.example.nowpt.mvc.repository.schedule;
 
-import com.example.nowpt.mvc.model.Room;
+import com.example.nowpt.mvc.dto.ScheduleDto;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ScheduleCustomRepo {
-//	Room findByRoomSn(Long roomSn);
+    List<ScheduleDto> selectSchedule(String date , long memberSn);
 }

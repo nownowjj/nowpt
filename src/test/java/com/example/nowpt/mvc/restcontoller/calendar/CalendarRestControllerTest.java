@@ -34,7 +34,7 @@ public class CalendarRestControllerTest {
         newSchedule.setColor("Blue");
         newSchedule.setStartDate("20240122"); // Set your desired date format
         newSchedule.setEndDate("20240123"); // Set your desired date format
-        newSchedule.setMemberSn(memberRepo.findByMemberSn(62L));
+//        newSchedule.setMemberSn(memberRepo.findByMemberSn(62));
 
         // Save the new Schedule to the database
         Schedule savedSchedule = scheduleRepo.save(newSchedule);

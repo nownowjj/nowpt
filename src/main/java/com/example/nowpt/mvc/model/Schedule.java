@@ -28,9 +28,9 @@ public class Schedule extends BaseTime {
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator = "schedule_seq")
     private Long scheduleSn;
 
-    @ManyToOne
-    @JoinColumn(name = "memb_sn")
-    private Member memberSn;
+    @NotNull
+    @Column(name = "memb_sn")
+    private long memberSn;
 
     @NotNull
     @Column(name = "title")

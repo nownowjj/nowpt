@@ -38,8 +38,6 @@ const getMyDay=(date:DateType)=> getFormatDay(date,'MM월DD일');
 
 
 const getFirstOrLastMonthYear = (date:DateType) => {
-    console.log('getFirstOrLastMonthYear');
-
     const year = getYDay(date);
     const month =getMonthDay(date);
 
@@ -49,6 +47,7 @@ const getFirstOrLastMonthYear = (date:DateType) => {
 
 // return YYYY
 const getNextOrPreviousYear =(year:string , next:boolean)=> {
+    console.log(`$getNextOrPreviousYear 감지`);
     return (parseInt(year) + (next ? +1 : -1)).toString();
 }
 

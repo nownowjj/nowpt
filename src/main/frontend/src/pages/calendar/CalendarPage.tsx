@@ -5,12 +5,12 @@ import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
 import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
-import {getMyCalendar} from "../../api/CalendarApi";
+import {getMyCalendar, getMySchedule} from "../../api/CalendarApi";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
 import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
 import styled from "styled-components";
-import {RecordDate} from "../../model/CalendarApiModel";
+import {RecordDate, ScheduleDetailType, ScheduleType} from "../../model/CalendarApiModel";
 import {Value} from "react-calendar/src/shared/types";
 import {OnArgs} from "react-calendar/dist/cjs/shared/types";
 import dayjs from "dayjs";
@@ -21,16 +21,6 @@ import {useQuery} from "react-query";
 import holidaysJsonFile from "../../db/holiday.json"
 import {getFirstOrLastMonthYear, getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
 
-export interface ScheduleDetailType{
-    startDate: string;
-    endDate: string;
-    title: string;
-    color:string;
-}
-
-export interface ScheduleType {
-    [year: string]: ScheduleDetailType[];
-}
 
 const CalendarPage = () => {
     const dispatch = useDispatch();
@@ -54,13 +44,13 @@ const CalendarPage = () => {
     const tileContent = ({ date }: { date: Date }) => {
         if (holidaysJson.hasOwnProperty(getYDay(date))) {
             const loopDate =getYmdDay(date);
-            console.log(loopDate);
+            // console.log(loopDate);
             const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
                 const holidayStart = holiday.startDate
                 const holidayEnd =holiday.endDate
                 return loopDate >= holidayStart && loopDate <= holidayEnd;
             }) .map(({ title, color }) => ({ title, color }));
-            if(recordData ||holidayData )  return <DotsComponent date={date} mark={recordData} schedule={holidayData} />;
+            if(recordData ||holidayData )  return <DotsComponent date={date} mark={recordData} schedule={holidayData} customSchedule={customSchedule} />;
         }
         if(recordData)  return <DotsComponent date={date} mark={recordData} />;
     }
@@ -76,15 +66,35 @@ const CalendarPage = () => {
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
 
+    const {data:customSchedule} = useQuery({
+        queryKey: ['mySchedule', param.recordDate],
+        queryFn: async () => {
+            const result = await getMySchedule(param);
+            console.log(result.data);
+            return result.data;
+        },
+        // cacheTime: 60000, // 1분 동안 캐시로 저장
+        staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
+    });
+
     // 일자 클릭
     const onClickDay =(date:Date)=> {
         dispatch(setDay(date));
-        navigate(route.calendarDayDetail, { state: { detailDay: getYmdDay(date) } });
+        let filteredSchedule: ScheduleDetailType[]|null;
+        if(customSchedule) {
+            filteredSchedule = customSchedule.filter(schedule => {
+                const startDate = schedule.startDate;
+                const endDate = schedule.endDate;
+                return startDate <= getYmdDay(date) && endDate >= getYmdDay(date);
+            });
+        }
+
+        // @ts-ignore
+        navigate(route.calendarDayDetail, { state: { detailDay: getYmdDay(date) , schedule:filteredSchedule }  });
     }
 
     useEffect(() => {
         if(holidaysJson.hasOwnProperty(getYDay(value as Date))){ // 공휴일 json 데이터에 보고 있는 연도 데이터가 존재 하는지 체크
-
 
             dispatch(setYearHolidays({ year: getYDay(value as Date), holidays: holidaysJson[getYDay(value as Date)] })); //연도와 공휴일 데이터를 넘긴다 , 이미 넘긴 연도라면 함수 종료
         }

@@ -6,20 +6,21 @@ import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import {route} from "../../../services/remocon";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, RecordDate} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/CalendarApiModel";
 import {useQuery, useQueryClient} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay} from "../../../services/formattingDay";
-import {ScheduleDetailType} from "../CalendarPage";
+// import {ScheduleDetailType} from "../CalendarPage";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
-import Slider from "react-slick";
 import DetailSchedule from "./DetailSchedule";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
     const {detailDay} = state;
+    const {schedule} = state;
+
     const queryClient = useQueryClient();
     const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
     const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
@@ -47,13 +48,15 @@ const CalendarDayDetailPage = () => {
     }
 
     useEffect(() => {
-        console.log('확인 : ',detailDay,yearHolidays);
-        const holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
+        let holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
             const holidayStart = holiday.startDate
             const holidayEnd =holiday.endDate
             console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
             return detailDay >= holidayStart && detailDay <= holidayEnd;
-        })
+        });
+        console.log(holidayData);
+
+        if(schedule.length > 0) holidayData.push(...schedule);
         setDetailSchedule(holidayData);
     }, []);
 

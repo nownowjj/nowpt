@@ -14,7 +14,7 @@ const Oauth = () => {
 
 
     const performSocialLogin = (loginFunction:Function, successMessage:string) => {
-        loginFunction(code, state)
+        loginFunction(code , state)
             .then((response:any) => {
                 dispatch(loginAction(response.token.accessToken));
                 localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);

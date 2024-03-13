@@ -1,15 +1,16 @@
 import {API_BASE, ApiResponse, CALENDAR, GET, request} from "./Api";
 // import { URLSearchParams } from "url"
 import {
-    CalendarSnParam,
     CalendarDto,
     CalendarMyInfoDto,
+    CalendarSnParam,
     ImportParam,
     NewRecordParam,
-    RecordDate
+    RecordDate, ScheduleDetailType,
 } from "../model/CalendarApiModel";
 import {PagingResponse} from "../model/Common";
-import {CommentSn} from "../model/CommentApiModel";
+
+// import {ScheduleResponseType, ScheduleType} from "../pages/calendar/CalendarPage";
 
 export function commonSearchParam(param: Record<string|number, any>){
     const queryParams = new URLSearchParams();
@@ -26,6 +27,13 @@ export function commonSearchParam(param: Record<string|number, any>){
 export function getMyCalendar(param:RecordDate):Promise<ApiResponse<string[]>>{
     return request({
         url: API_BASE + CALENDAR + "?recordDate="+param.recordDate,
+        method: GET
+    })
+}
+
+export function getMySchedule(param:RecordDate):Promise<ApiResponse<ScheduleDetailType[]>>{
+    return request({
+        url: API_BASE + CALENDAR +"/schedule"+ "?date="+param.recordDate,
         method: GET
     })
 }
