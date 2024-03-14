@@ -34,7 +34,7 @@ const getMonthDay=(date:DateType)=> getFormatDay(date,'MM');
  * @param date
  * @return MM월DD일
  */
-const getMyDay=(date:DateType)=> getFormatDay(date,'MM월DD일');
+const getMyDay=(date:DateType)=> getFormatDay(date,'M월 DD일');
 
 
 const getFirstOrLastMonthYear = (date:DateType) => {

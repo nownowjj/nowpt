@@ -9,6 +9,7 @@ import com.example.nowpt.mvc.repository.schedule.ScheduleRepo;
 import com.example.nowpt.mvc.service.calendar.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.ucp.proxy.annotation.Post;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,16 @@ public class ScheduleRestController {
     public ResponseDto<?> deleteSchedule(@RequestBody ScheduleDto scheduleDto){
         log.debug("스케쥴 삭제: {}" , scheduleDto.getScheduleSn());
         return ResponseUtil.SUCCESS(Cd.DELETE_SUCCESS, scheduleService.deleteSchedule(scheduleDto.getScheduleSn()));
+    }
+
+    /**
+     * @param scheduleDto {title, color ,startDate , endDate}
+     * @return boolean
+     */
+    @PostMapping
+    public ResponseDto<?> insertSchedule(@AuthenticationPrincipal Member member , @RequestBody ScheduleDto scheduleDto){
+        log.debug("스케쥴 등록 : {}" , scheduleDto);
+        scheduleDto.setMemberSn(member.getMemberSn());
+        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, scheduleService.insertSchedule(scheduleDto));
     }
 }

@@ -27,7 +27,7 @@ const CalendarDayDetailPage = () => {
     const param: RecordDate = {"recordDate":detailDay}
 
     const { isLoading, data:detail, isError } = useQuery({
-        queryKey: ['getDayDetail', detailDay], // 고유한 쿼리 키
+        queryKey: ['getDayDetail'], // 고유한 쿼리 키
         queryFn: async () => {
             const result = await getMyDetailCalendar(param);
             return result.data;
@@ -52,7 +52,7 @@ const CalendarDayDetailPage = () => {
             console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
             return detailDay >= holidayStart && detailDay <= holidayEnd;
         });
-        console.log(holidayData);
+        // console.log(holidayData);
 
         if(schedule.length > 0) holidayData.push(...schedule);
         setDetailSchedule(holidayData);
@@ -61,7 +61,6 @@ const CalendarDayDetailPage = () => {
 
     return (
         <CalendarDetailWrap>
-            {/*<TopGnbComponent page={dayjs(detailDay).format('YYYY-MM-DD')}/>*/}
             <TopGnbComponent page={getY_m_dDay(detailDay)}/>
             <DetailSchedule ymKeyDay={getYmDay(detailDay)} data={detailSchedule} />
 
@@ -85,6 +84,8 @@ const CalendarDayDetailPage = () => {
                         <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
                         <CalendarDetailNo/>
                         </>
+
+
                 }
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
@@ -101,7 +102,6 @@ const CalendarDetail = styled.div`
     width:100%;
     height:fit-content;
     background:white;
-    padding-top:50px;
 `
 const CalendarDetailWrap = styled.div`
     position:relative;

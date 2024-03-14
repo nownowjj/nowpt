@@ -81,7 +81,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
             <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
-                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY-MM-DD HH:mm:ss')}</span>
+                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</span>
                 {/*<span style={{marginRight : "5px"}}>{dayjs(data.recordDate).format('YYYY-MM-DD')}</span>*/}
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음

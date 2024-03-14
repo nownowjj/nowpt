@@ -11,6 +11,7 @@ import {loginAction} from "../redux/slice/userSlice";
 import ApiErrorHandle from "../services/ApiErrorHandle";
 import AlertComponent from "./calendar/component/AlertComponent";
 import {UserLoginInfo} from "../model/model";
+import Base from "../component/BottomSheet/Base";
 
 
 const LoginPage = () => {
@@ -39,6 +40,8 @@ const LoginPage = () => {
             [e.target.name]: e.target.value,
         })
     }
+
+    const [show,setShow]=useState(false);
 
     // 로그인 버튼 요청
     const originLogin = () => {
@@ -142,6 +145,9 @@ const LoginPage = () => {
                 />
             )}
             {/* AlertComponent */}
+            {/*<div onClick={()=> {setShow(true)}}>터치</div>*/}
+
+            {/*{show ? <Base/> : ""}*/}
         </Wrap>
 
     )

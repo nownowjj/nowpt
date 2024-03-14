@@ -20,6 +20,7 @@ import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
 import LoginWaitComponent from "../component/LoginWaitComponent";
 import {ReactQueryDevtools} from "react-query/devtools";
+import Base from "../component/BottomSheet/Base";
 
 
 const Router = () => {
@@ -36,6 +37,7 @@ const Router = () => {
 
                 <Route path="/isExpired" element={<IsExpiredComponent />} />
                 <Route path="/isError" element={<ErrorComponent />} />
+                <Route path="/bottom" element={<Base />} />
 
 
 
