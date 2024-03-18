@@ -37,7 +37,7 @@ const Router = () => {
 
                 <Route path="/isExpired" element={<IsExpiredComponent />} />
                 <Route path="/isError" element={<ErrorComponent />} />
-                <Route path="/bottom" element={<Base />} />
+                {/*<Route path="/bottom" element={<Base/>} />*/}
 
 
 

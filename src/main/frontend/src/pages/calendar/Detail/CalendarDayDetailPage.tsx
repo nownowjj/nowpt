@@ -11,9 +11,14 @@ import {useQuery, useQueryClient} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
 // import {ScheduleDetailType} from "../CalendarPage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
 import DetailSchedule from "./DetailSchedule";
+import Base from "../../../component/BottomSheet/Base";
+import ScheduleDetailComponent from "./ScheduleDetailComponent";
+import ErrorComponent from "../../../component/ErrorComponent";
+import {setVisible} from "../../../redux/slice/bottomSheetSlice";
+import SelectAddTypeComponent from "./SelectAddTypeComponent";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -40,7 +45,7 @@ const CalendarDayDetailPage = () => {
         const deleteParam:CalendarSnParam={calendarSn:calendarSn};
         const {data} = await deleteRecord(deleteParam);
         if(data > 0)  {
-            await queryClient.invalidateQueries(['getDayDetail', detailDay])
+            await queryClient.invalidateQueries(['getDayDetail'])
             await queryClient.invalidateQueries(['myCalendar', getYmDay(detailDay)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
         }
     }
@@ -49,7 +54,7 @@ const CalendarDayDetailPage = () => {
         let holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
             const holidayStart = holiday.startDate
             const holidayEnd =holiday.endDate
-            console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
+            // console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
             return detailDay >= holidayStart && detailDay <= holidayEnd;
         });
         // console.log(holidayData);
@@ -58,6 +63,11 @@ const CalendarDayDetailPage = () => {
         setDetailSchedule(holidayData);
     }, []);
 
+
+    const dispatch = useDispatch();
+    const handleAddButton=()=>{
+
+    }
 
     return (
         <CalendarDetailWrap>
@@ -89,7 +99,6 @@ const CalendarDayDetailPage = () => {
                 }
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
-
 
 
 

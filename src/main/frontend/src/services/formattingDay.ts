@@ -35,6 +35,7 @@ const getMonthDay=(date:DateType)=> getFormatDay(date,'MM');
  * @return MM월DD일
  */
 const getMyDay=(date:DateType)=> getFormatDay(date,'M월 DD일');
+const getMyDddDay=(date:DateType)=> getFormatDay(date,'M월 DD일 ddd요일');
 
 
 const getFirstOrLastMonthYear = (date:DateType) => {
@@ -54,5 +55,5 @@ const getNextOrPreviousYear =(year:string , next:boolean)=> {
 
 
 
-export {getYmdDay ,getYmDay , getYDay , getY_m_dDay , getMyDay , getMonthDay , getFirstOrLastMonthYear};
+export {getYmdDay ,getYmDay , getYDay , getY_m_dDay , getMyDay , getMonthDay , getFirstOrLastMonthYear,getMyDddDay};
 

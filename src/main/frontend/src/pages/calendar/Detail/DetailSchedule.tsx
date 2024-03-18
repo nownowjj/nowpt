@@ -4,11 +4,17 @@ import styled from "styled-components";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import {getMyDay} from "../../../services/formattingDay";
-import {ScheduleDetailType, ScheduleType} from "../../../model/CalendarApiModel";
+import {ScheduleDetailType} from "../../../model/CalendarApiModel";
 import {deleteSchedule, ScheduleSn} from "../../../api/ScheduleApi";
 import {useQueryClient} from "react-query";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {BiTrash} from "react-icons/bi";
+import Base from "../../../component/BottomSheet/Base";
+import ScheduleDetailComponent from "./ScheduleDetailComponent";
+import {useDispatch} from "react-redux";
+import {setInvisible, setVisible} from "../../../redux/slice/bottomSheetSlice";
+import ErrorComponent from "../../../component/ErrorComponent";
+import ScheduleAddComponent from "./ScheduleAddComponent";
 
 interface DetailScheduleProps {
     data: ScheduleDetailType[];
@@ -35,49 +41,75 @@ const DetailSchedule = ({data,ymKeyDay}:DetailScheduleProps) => {
         setShowAlert(true);
     }
 
+
+    const [isNew , setIsNew] = useState(false);
     const queryClient = useQueryClient();
-
-    const scheduleClick =(sn:number)=>{
-        confirmFunction(()=> deleteScheduleCallBack(sn) ,'일정을 삭제합니다<br/>삭제한 일정을 복구할 수 없습니다')
+    const dispatch = useDispatch();
+    const [selectSchedule, setSelectSchedule] = useState<ScheduleDetailType|null>();
+    // 일정을 클릭 하였음
+    const scheduleClick =(data:ScheduleDetailType)=>{
+        setIsNew(false)
+        setSelectSchedule(data);
+        dispatch(setVisible());
     }
 
-    const deleteScheduleCallBack =async (scheduleSn: number) => {
-        let param: ScheduleSn = {scheduleSn: scheduleSn};
-        const {data} = await deleteSchedule(param);
-        data ?  deleteSuccess(scheduleSn) : confirmFunction(()=>{} , "삭제 실패");
+    // 일정 삭제 요청
+    const deleteScheduleCallBack =async () => {
+        if(selectSchedule && selectSchedule.scheduleSn) {
+            let param: ScheduleSn = {scheduleSn: selectSchedule.scheduleSn};
+            const {data} = await deleteSchedule(param);
+            data ?
+                deleteSuccess(selectSchedule.scheduleSn) :
+                confirmFunction(() => {}, "삭제 실패");
+        }
     }
 
+    // 삭제 성공
     const deleteSuccess =(scheduleSn:number)=>{
         setScheduleData(scheduleData && scheduleData.filter(item => item.scheduleSn !== scheduleSn)); // 삭제 성공 -> 삭제한 sn useState에서 제외
+        dispatch(setInvisible())
         queryClient.invalidateQueries(['mySchedule', ymKeyDay]) // 쿼리 refetch
     }
 
-    const insertScdule =()=>{
-
+    // 일정 등록
+    const handleNewSchedule =()=>{
+        setIsNew(true)
+        dispatch(setVisible());
     }
 
 
+
+
     return (
+        <>
         <DetailScheduleWrap>
+            {selectSchedule
+                &&
+                <Base bottomComponent={
+                    isNew ?
+                    <ScheduleAddComponent/> :
+                    <ScheduleDetailComponent
+                        data={selectSchedule}
+                        deleteFunction={()=> confirmFunction(()=> deleteScheduleCallBack() ,`정말<br/> 삭제 하시겠습니까?` )}
+                    />
+                }/>
+            }
+
             <Swiper
                 spaceBetween={15}
-                slidesPerView={2.2}
+                slidesPerView={2}
                 direction="horizontal"
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => {}}
-                // style={{ width: '100%', margin: '0 auto' }} // Set the Swiper width
             >
                 {
                     scheduleData != null && scheduleData.length > 0   ?
                         scheduleData.map((item , index)=>(
                             <SwiperSlide   key={index}> {/* Adjust SwiperSlide width */}
-                                <ScheduleItem onClick={()=> item.scheduleSn && scheduleClick(item.scheduleSn)}>
+                                <ScheduleItem onClick={()=> item.scheduleSn && scheduleClick(item)}>
                                     <div><ColorBox color={item.color}/></div>
                                     <div>
                                         <ScheduleTitle>{item.title}</ScheduleTitle>
                                         <ScheduleDate>{item.startDate === item.endDate ? getMyDay(item.startDate) : `${getMyDay(item.startDate)}~${getMyDay(item.endDate)}` }</ScheduleDate>
                                     </div>
-                                    <div><BiTrash  style={{marginRight : "3px"}} onClick={()=> confirmFunction(()=>{} ,`정말<br/> 삭제 하시겠습니까?` )} /></div>
                                 </ScheduleItem>
                             </SwiperSlide>
                         ))
@@ -89,6 +121,7 @@ const DetailSchedule = ({data,ymKeyDay}:DetailScheduleProps) => {
                         </SwiperSlide>
                 }
             </Swiper>
+            <ScheduleAddText onClick={()=> handleNewSchedule()}>일정 등록</ScheduleAddText>
 
             {/* 삭제전 Confirm */}
             {showAlert &&(
@@ -108,13 +141,23 @@ const DetailSchedule = ({data,ymKeyDay}:DetailScheduleProps) => {
             {/*    <div></div>*/}
             {/*</BottomSlideWrap>*/}
 
+
         </DetailScheduleWrap>
 
+        </>
     );
 };
 
+const ScheduleAddText = styled.div`
+    text-align: right;
+    padding-right: 10px;
+    font-weight: 500;
+    color: gray;
+    font-size: 14px;
+    margin-top: 10px;
+`
 const DetailScheduleWrap = styled.div`
-    padding: 5px 0 5px 5px;
+    padding: 5px 0 5px 10px;
     margin-top: 55px;
     border-bottom: 1px solid #e8e8e8;
 `
@@ -125,7 +168,7 @@ const ScheduleItem=styled.div`
   width:fit-content;
   gap:10px
 `
-const ColorBox=styled.div<{color:string}>`
+export const ColorBox=styled.div<{color:string}>`
   background-color: ${({color}) => color};
   width:20px;
   height: 20px;
@@ -140,13 +183,13 @@ const ScheduleTitle=styled.div`
   text-overflow: ellipsis;
   word-break: break-all;
 `
-const ScheduleDate=styled.div`
+export const ScheduleDate=styled.div`
   font-size: 12px;
   color: gray;
 `
 const NotSchedule=styled.div`
   font-size: 14px;
   color: gray;
-  margin: 10px 0;
+  margin: 10px;
 `
 export default DetailSchedule;

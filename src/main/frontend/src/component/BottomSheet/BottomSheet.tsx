@@ -4,44 +4,56 @@ import styled from 'styled-components';
 // import { motion } from "framer-motion";
 import useBottomSheet from './useBottomSheet';
 import Header from './Header';
-import Content from './Content';
+import {IoMdClose} from "react-icons/io";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   top: calc(100% - 90px); /*시트가 얼마나 높이 위치할지*/
   left: 0;
   right: 0;
-
   border-radius: 22px 22px 0 0;
-  
-  //box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
   height: ${BOTTOM_SHEET_HEIGHT}px;
-
   background: white;
-  //background: linear-gradient(359.26deg, #3C41C7 0.02%, #3742B2 83.23%, #3642AE 98.76%);
-  //box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  transition: transform 250ms ease-out; /*바텀시트 애니메이션 속도*/
+  transition: transform 150ms ease-out; /*바텀시트 애니메이션 속도*/
 `
 
 const BottomSheetContent = styled.div`
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  padding: 0 20px;
 `
 
-function BottomSheet() {
+const SheetContentTop = styled.div`
+  text-align: right;
+`
+const CustomCloseButton = styled(IoMdClose)`
+  color: lightgray;
+  font-size: 26px;
+`
+const SheetContent = styled.div`
+  padding-top:10px;
+`
 
-    const {sheet, content} = useBottomSheet();
+
+interface BottomSheetInterface {
+    component: JSX.Element
+}
+function BottomSheet({component}:BottomSheetInterface) {
+
+
+    const {sheet, content,sheetDismiss} = useBottomSheet();
 
     return (
-        <Wrapper ref={sheet}>
-            <Header/>
+        <Wrapper ref={sheet} >
+            <Header />
             <BottomSheetContent ref={content}>
-                <Content/>
+                <SheetContentTop><CustomCloseButton onClick={()=> sheetDismiss()} /></SheetContentTop>  {/* sheet 상단 영역 */}
+                <SheetContent>
+                    {component}
+                </SheetContent>
             </BottomSheetContent>
         </Wrapper>
     );

@@ -1,27 +1,29 @@
 import { useRef, useEffect } from 'react';
 import { MIN_Y, MAX_Y } from './BottomSheetOption';
+import {useDispatch} from "react-redux";
+import {setInvisible} from "../../redux/slice/bottomSheetSlice";
 
 interface BottomSheetMetrics {
     touchStart: {
-        sheetY: number;
-        touchY: number;
+        sheetY: number; // touchstart에서 BottomSheet의 최상단 모서리의 Y값
+        touchY: number; // touchstart에서 터치 포인트의 Y값
     };
     touchMove: {
-        prevTouchY?: number;
-        movingDirection: "none" | "down" | "up";
+        prevTouchY?: number; // 다음 touchmove 이벤트 핸들러에서 필요한 터치 포인트 Y값을 저장
+        movingDirection: "none" | "down" | "up"; // 유저가 터치를 움직이고 있는 방향
     };
     isContentAreaTouched: boolean;
 }
 
 export default function useBottomSheet() {
-
+    const dispatch = useDispatch();
     const sheet = useRef<HTMLDivElement>(null);
 
     const content = useRef<HTMLDivElement>(null);
 
     const metrics = useRef<BottomSheetMetrics>({
         touchStart: {
-            sheetY: 0,
+            sheetY: 500,
             touchY: 0,
         },
         touchMove: {
@@ -31,6 +33,12 @@ export default function useBottomSheet() {
         isContentAreaTouched: false
     });
 
+    const sheetDismiss =()=>{
+        sheet.current!.style.setProperty('transform', 'translateY(60px)'); // sheet down이 완성 되면 sheet가 하단으로 이동 후에 숨긴다
+        setTimeout(()=>{
+            dispatch(setInvisible())
+        },160)
+    }
 
     useEffect(() => {
 
@@ -116,8 +124,7 @@ export default function useBottomSheet() {
 
             if (currentSheetY !== MIN_Y) {
                 if (touchMove.movingDirection === 'down') {
-                    console.log("down");
-                    sheet.current!.style.setProperty('transform', 'translateY(20px)');
+                    sheetDismiss()
                 }
 
                 if (touchMove.movingDirection === 'up') {
@@ -147,12 +154,13 @@ export default function useBottomSheet() {
 
 
     useEffect(() => {
+        sheet.current!.style.setProperty('transform', `translateY(${MIN_Y - MAX_Y}px)`);
         const handleTouchStart = () => {
             metrics.current!.isContentAreaTouched = true;
         }
         content.current!.addEventListener('touchstart', handleTouchStart);
     }, []);
 
-    return { sheet, content }
+    return { sheet, content , sheetDismiss }
 
 }
