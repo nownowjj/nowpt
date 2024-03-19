@@ -10,15 +10,9 @@ import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/Ca
 import {useQuery, useQueryClient} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
-// import {ScheduleDetailType} from "../CalendarPage";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
 import DetailSchedule from "./DetailSchedule";
-import Base from "../../../component/BottomSheet/Base";
-import ScheduleDetailComponent from "./ScheduleDetailComponent";
-import ErrorComponent from "../../../component/ErrorComponent";
-import {setVisible} from "../../../redux/slice/bottomSheetSlice";
-import SelectAddTypeComponent from "./SelectAddTypeComponent";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -63,16 +57,10 @@ const CalendarDayDetailPage = () => {
         setDetailSchedule(holidayData);
     }, []);
 
-
-    const dispatch = useDispatch();
-    const handleAddButton=()=>{
-
-    }
-
     return (
         <CalendarDetailWrap>
             <TopGnbComponent page={getY_m_dDay(detailDay)}/>
-            <DetailSchedule ymKeyDay={getYmDay(detailDay)} data={detailSchedule} />
+            <DetailSchedule data={detailSchedule} />
 
             <CalendarDetail>
                 {
@@ -116,6 +104,7 @@ const CalendarDetailWrap = styled.div`
     position:relative;
     width:100%;
     height:100%;
+    padding-top: 55px;
 `
 
 interface DetailNoBalloonProps{

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleDto {
-    private long scheduleSn;
+    private Long scheduleSn;
     private String startDate;
     private String endDate;
     private long memberSn;

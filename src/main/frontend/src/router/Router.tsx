@@ -19,8 +19,6 @@ import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
 import LoginWaitComponent from "../component/LoginWaitComponent";
-import {ReactQueryDevtools} from "react-query/devtools";
-import Base from "../component/BottomSheet/Base";
 
 
 const Router = () => {
@@ -28,7 +26,7 @@ const Router = () => {
 
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HomeComponent />} />
+                <Route path="/" element={<Calendar />} />
                 <Route path="/go/main" element={<MainComponent />} />
                 <Route path="/go/login" element={<LoginComponent />} />
                 <Route path="/oauth" element={<Oauth />} />

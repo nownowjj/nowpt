@@ -1,5 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ScheduleDetailType} from "../../model/CalendarApiModel";
+import {createSlice} from '@reduxjs/toolkit';
 
 
 interface DayState {

@@ -48,9 +48,9 @@ const DotsComponent = (data:DotsComponentInterface) => {
         });
         if(filteredSchedule){
             for (let i = 0; i < filteredSchedule.length; i++) {
-                if (i < 3) divs.push(<Schedule color={filteredSchedule[i].color} key={i}>{filteredSchedule[i].title}</Schedule>);
+                if (i < 3) divs.push(<Schedule color={filteredSchedule[i].color} key={filteredSchedule[i].scheduleSn}>{filteredSchedule[i].title}</Schedule>);
                 else if (i === 3) {
-                    divs.push(<Schedule color={filteredSchedule[i].color} key={i}>...</Schedule>);
+                    divs.push(<Schedule color={filteredSchedule[i].color} key={filteredSchedule[i].scheduleSn}>...</Schedule>);
                     break; // 4번째 요소일 때 반복문 중지
                 }
             }
@@ -77,10 +77,11 @@ const Schedule = styled.div<{color:string}>`
     height: 14px;
     line-height: 14px;
     font-size: 11px;
-    text-overflow: ellipsis;
+    //text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     background-color: ${({ color }) => color};
+    text-align: left;
 `
 
 const ScheduleWrap = styled.div`

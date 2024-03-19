@@ -45,6 +45,16 @@ public class ScheduleRestController {
     public ResponseDto<?> insertSchedule(@AuthenticationPrincipal Member member , @RequestBody ScheduleDto scheduleDto){
         log.debug("스케쥴 등록 : {}" , scheduleDto);
         scheduleDto.setMemberSn(member.getMemberSn());
-        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, scheduleService.insertSchedule(scheduleDto));
+        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, scheduleService.saveSchedule(scheduleDto));
+    }
+
+    /**
+     * @param scheduleDto {title, color ,startDate , endDate}
+     * @return boolean
+     */
+    @PutMapping
+    public ResponseDto<?> updateSchedule(@RequestBody ScheduleDto scheduleDto){
+        log.debug("스케쥴 수정 : {}" , scheduleDto);
+        return ResponseUtil.SUCCESS(Cd.PUT_SUCCESS, scheduleService.saveSchedule(scheduleDto));
     }
 }

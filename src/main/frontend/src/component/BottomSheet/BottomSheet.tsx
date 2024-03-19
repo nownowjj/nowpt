@@ -34,7 +34,8 @@ const CustomCloseButton = styled(IoMdClose)`
   font-size: 26px;
 `
 const SheetContent = styled.div`
-  padding-top:10px;
+  padding-top:20px;
+  height: fit-content;
 `
 
 

@@ -11,13 +11,10 @@ import org.springframework.stereotype.Service;
 public class ScheduleService {
     private final ScheduleRepo scheduleRepo;
 
-    public boolean deleteSchedule(long scheduleSn) {
+    public Schedule deleteSchedule(long scheduleSn) {
         Schedule schedule = scheduleRepo.findByScheduleSn(scheduleSn);
-        if (schedule == null) return false;
-
         schedule.setUseYn("N");
-        scheduleRepo.save(schedule);
-        return true;
+        return scheduleRepo.save(schedule);
     }
 
     public Schedule insertSchedule(ScheduleDto scheduleDto) {
@@ -31,4 +28,32 @@ public class ScheduleService {
 
         return scheduleRepo.save(schedule);
     }
+
+    public Schedule updateSchedule(ScheduleDto scheduleDto) {
+        Schedule schedule = scheduleRepo.findByScheduleSn(scheduleDto.getScheduleSn());
+        schedule.setTitle(scheduleDto.getTitle());
+        schedule.setColor(scheduleDto.getColor());
+        schedule.setStartDate(scheduleDto.getStartDate());
+        schedule.setEndDate(scheduleDto.getEndDate());
+        return scheduleRepo.save(schedule);
+    }
+
+    public Schedule saveSchedule(ScheduleDto scheduleDto) {
+        Schedule schedule;
+        if (scheduleDto.getScheduleSn() != null) {
+            schedule = scheduleRepo.findByScheduleSn(scheduleDto.getScheduleSn());
+        } else {
+            schedule = new Schedule();
+        }
+
+        schedule.setTitle(scheduleDto.getTitle());
+        schedule.setColor(scheduleDto.getColor());
+        schedule.setStartDate(scheduleDto.getStartDate());
+        schedule.setEndDate(scheduleDto.getEndDate());
+        schedule.setMemberSn(scheduleDto.getMemberSn());
+        schedule.setUseYn("Y");
+
+        return scheduleRepo.save(schedule);
+    }
+
 }

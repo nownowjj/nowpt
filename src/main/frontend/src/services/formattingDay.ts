@@ -52,8 +52,12 @@ const getNextOrPreviousYear =(year:string , next:boolean)=> {
     return (parseInt(year) + (next ? +1 : -1)).toString();
 }
 
+// yyyymmdd string ->  Date
+const getYmdToDate=(ymd:string)=>{
+    return new Date(ymd.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+}
 
 
 
-export {getYmdDay ,getYmDay , getYDay , getY_m_dDay , getMyDay , getMonthDay , getFirstOrLastMonthYear,getMyDddDay};
+export {getYmdDay ,getYmDay , getYDay , getY_m_dDay , getMyDay , getMonthDay , getFirstOrLastMonthYear,getMyDddDay ,getYmdToDate};
 
