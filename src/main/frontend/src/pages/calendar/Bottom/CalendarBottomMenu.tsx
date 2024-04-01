@@ -11,7 +11,7 @@ const CalendarBottomMenu = () => {
 
     return (
         <CalendarBottom className='menuBottom'>
-            <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.weather} >
+            <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.memo} >
                 <MdArticle style={iconStyle}/>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendarImport} >

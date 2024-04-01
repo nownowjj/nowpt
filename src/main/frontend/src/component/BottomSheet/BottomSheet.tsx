@@ -2,7 +2,7 @@ import React from 'react';
 import {BOTTOM_SHEET_HEIGHT} from './BottomSheetOption';
 import styled from 'styled-components';
 // import { motion } from "framer-motion";
-import useBottomSheet from './useBottomSheet';
+import useBottomSheet from '../../hooks/useBottomSheet';
 import Header from './Header';
 import {IoMdClose} from "react-icons/io";
 

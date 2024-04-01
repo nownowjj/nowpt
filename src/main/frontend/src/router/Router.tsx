@@ -12,13 +12,13 @@ import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPag
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 import FriendPage from "../pages/calendar/friend/FriendPage";
 import React from "react";
-import HomeComponent from "../pages/HomeComponent";
 import WeatherPage from "../pages/calendar/Weather/WeatherPage";
 import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage";
 import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
 import LoginWaitComponent from "../component/LoginWaitComponent";
+import MemoPage from "../pages/memo/MemoPage";
 
 
 const Router = () => {
@@ -68,6 +68,9 @@ const Router = () => {
                 </Route>
                 <Route element={<PrivateRouteNew />}>
                     <Route path="/comment" element={<CalendarCommentPage />} />
+                </Route>
+                <Route element={<PrivateRouteNew />}>
+                    <Route path="/memo" element={<MemoPage />} />
                 </Route>
 
                 {/*<ReactQueryDevtools initialIsOpen={false} position='bottom-right' />*/}

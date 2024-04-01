@@ -13,16 +13,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {setInvisible, setVisible} from "../../../redux/slice/bottomSheetSlice";
 import ScheduleAddComponent from "./ScheduleAddComponent";
 import {RootState} from "../../../redux/store/store";
+import {useConfirm} from "../../../hooks/useConfirm";
 
 interface DetailScheduleProps {
     data: ScheduleDetailType[];
 }
 
 const DetailSchedule = ({data}:DetailScheduleProps) => {
-    // Alert 여부
-    const [showAlert , setShowAlert] = useState<boolean>(false);
-    const [messageCall, setMessageCall] = useState<string>('');
-    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
+    const { showAlert, messageCall, confirmFunction, handleConfirm, handleClose } = useConfirm();
 
     const selectedDay = useSelector((state: RootState) => state.calendar.selectedDay);
     const [scheduleData , setScheduleData] = useState<ScheduleDetailType[] | null>(data);
@@ -33,11 +31,6 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
         setScheduleData(data);
     }, [data]);
 
-    const confirmFunction = (okCallBack: () => void,  message:string)=>{
-        setOkCallBackFn(() => okCallBack);
-        setMessageCall(message);
-        setShowAlert(true);
-    }
 
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
@@ -168,18 +161,15 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
             </Swiper>
             <ScheduleAddText><span onClick={()=> handleNewSchedule()}>일정 등록</span></ScheduleAddText>
 
-            {/* 삭제전 Confirm */}
             {showAlert &&(
                 <ConfirmComponent
                     message= {messageCall}
                     okCallBack={() => {
-                        okCallBackFn && okCallBackFn(); // 확인 버튼 클릭 시, 콜백 함수를 실행
-                        setShowAlert(false);
+                        handleConfirm()
                     }}
-                    onClose={()=> setShowAlert(false)}
+                    onClose={()=> handleClose()}
                 />
             )}
-            {/* 삭제전 Confirm */}
 
 
             {/*<BottomSlideWrap>*/}

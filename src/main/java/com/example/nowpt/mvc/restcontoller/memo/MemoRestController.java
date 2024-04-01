@@ -1,0 +1,49 @@
+package com.example.nowpt.mvc.restcontoller.memo;
+
+import com.example.nowpt.cmm.code.Cd;
+import com.example.nowpt.cmm.rvo.ResponseDto;
+import com.example.nowpt.cmm.rvo.ResponseUtil;
+import com.example.nowpt.mvc.dto.MemoDto;
+import com.example.nowpt.mvc.dto.ScheduleDto;
+import com.example.nowpt.mvc.model.Member;
+import com.example.nowpt.mvc.model.Memo;
+import com.example.nowpt.mvc.repository.memo.MemoRepo;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/api/memo")
+public class MemoRestController {
+    private final MemoRepo memoRepo;
+//    private final ScheduleService scheduleService;
+
+    @GetMapping
+    public ResponseDto<?> getMemo(@AuthenticationPrincipal Member member){
+
+
+        List<Memo> scheduleList = memoRepo.findAll();
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, scheduleList);
+    }
+
+    /**
+     * @param memoDto {title, content}
+     * @return boolean
+     */
+    @PostMapping
+    public ResponseDto<?> insertMemo(@AuthenticationPrincipal Member member , @RequestBody MemoDto memoDto){
+        log.debug("메모 등록 : {}" , memoDto);
+        Memo memo = new Memo();
+        memo.setMemberSn(member.getMemberSn());
+        memo.setTitle("ads");
+        memo.setContent("내용");
+
+        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, memoRepo.save(memo));
+    }
+
+}

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
-import { MIN_Y, MAX_Y } from './BottomSheetOption';
+import { MIN_Y, MAX_Y } from '../component/BottomSheet/BottomSheetOption';
 import {useDispatch} from "react-redux";
-import {setInvisible} from "../../redux/slice/bottomSheetSlice";
+import {setInvisible} from "../redux/slice/bottomSheetSlice";
 
 interface BottomSheetMetrics {
     touchStart: {

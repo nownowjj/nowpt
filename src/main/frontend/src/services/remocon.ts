@@ -19,7 +19,8 @@ const route = {
     friend : '/friend',
     myFriend : '/myFriend',
     weather : '/weather',
-    comment: '/comment'
+    comment: '/comment',
+    memo: '/memo'
 }
 
 

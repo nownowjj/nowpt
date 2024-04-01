@@ -37,7 +37,7 @@ const CalendarPage = () => {
         if(getYDay(selectedDay) !== getYDay(date)){
             dispatch(setYearHolidays({ year: getYDay(date), holidays: holidaysJson[getYDay(date)] }));
         }
-        dispatch(setDay(date));
+        // dispatch(setDay(date));
         setMonth(getYmDay(date));
     }
 
@@ -79,6 +79,7 @@ const CalendarPage = () => {
 
     // 일자 클릭
     const onClickDay =(date:Date)=> {
+        console.log("일변경@!@!");
         dispatch(setDay(date));
         let filteredSchedule: ScheduleDetailType[]|null;
         if(customSchedule) {
