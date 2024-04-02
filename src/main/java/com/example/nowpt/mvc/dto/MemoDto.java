@@ -13,6 +13,7 @@ public class MemoDto {
     private Long memoSn;
     private String title;
     private String content;
+    private String useYn;
     private long memberSn;
     private LocalDateTime frstRegistDt;
     private LocalDateTime lastChangeDt;
