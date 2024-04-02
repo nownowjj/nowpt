@@ -9,11 +9,10 @@ import {setVisible} from "../../redux/slice/bottomSheetSlice";
 import {useDispatch} from "react-redux";
 import MemoAddComponent from "./MemoAddComponent";
 import {MemoResponseType, selectMemo} from "../../api/Memo";
-import {useQuery, useQueryClient} from "react-query";
+import {useQuery} from "react-query";
 import MemoEmptyWrap from "./MemoEmptyWrap";
 
 const MemoPage = () => {
-    const queryClient = useQueryClient();
     const dispatch = useDispatch();
 
     const {data: memoList} = useQuery({
