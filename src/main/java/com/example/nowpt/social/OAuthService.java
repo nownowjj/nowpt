@@ -12,9 +12,10 @@ import java.net.URL;
 @Service
 public class OAuthService{
     @Value("${kakaoLogin.clientId}") private String KAKAO_CLIENT_ID ;
+    @Deprecated
     @Value("${kakaoLogin.redirectUri}") private String KAKAO_REDIRECT_URI ;
 
-    public String getKakaoAccessToken (String code) {
+    public String getKakaoAccessToken (String code ,String redirectUrl) {
         String access_Token = "";
         String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -32,7 +33,7 @@ public class OAuthService{
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id="+KAKAO_CLIENT_ID); // TODO REST_API_KEY 입력
-            sb.append("&redirect_uri="+KAKAO_REDIRECT_URI); // TODO 인가코드 받은 redirect_uri 입력
+            sb.append("&redirect_uri="+redirectUrl); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();

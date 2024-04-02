@@ -1,5 +1,3 @@
-import {PagingResponse} from "./Common";
-
 export interface NotificationSn{
     notificationSn:number;
 }
@@ -14,7 +12,4 @@ export interface NotificationDto {
     useYn:string;
 }
 
-export interface NotificationPagingDto extends PagingResponse{
-    content: NotificationDto[];
-}
 

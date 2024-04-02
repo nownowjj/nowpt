@@ -12,5 +12,5 @@ textarea{
 }
 
 #root{
-  height: 100vh;
+  height: fit-content;
 }

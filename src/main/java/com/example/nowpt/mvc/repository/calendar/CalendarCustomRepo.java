@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface CalendarCustomRepo {
-    List<String> selectRecordDate (CalendarDto calendarDto);
+    List<String> selectRecordDate (String recordDate , long memberSn);
 
     List<CalendarDto> selectDetailRecord (CalendarDto calendarDto);
 

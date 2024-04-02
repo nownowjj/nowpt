@@ -36,13 +36,14 @@ public class OAuthController {
      */
     @ResponseBody
     @GetMapping("/kakao")
-    public HashMap kakaoCallback(HttpServletRequest request, @RequestParam String code) {
+    public HashMap kakaoCallback(HttpServletRequest request, @RequestParam String code , @RequestParam String redirectUrl) {
         log.debug("request ip는 : {}", request.getRemoteAddr());
         // 로그인 성공하고 params으로 전달받은 code
         log.debug("kakaoCode : {}", code);
+        log.debug("kakao redirectUrl : {}", redirectUrl);
 
         // 로그인 성공 후 code를 인자로 던져서
-        String access_token = oAuthService.getKakaoAccessToken(code);
+        String access_token = oAuthService.getKakaoAccessToken(code , redirectUrl);
         log.debug("access_token : {}", access_token);
 
 //        log.debug("check@ : {} ",oAuthService.createKakaoUser(access_token));

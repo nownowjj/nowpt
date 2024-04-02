@@ -3,7 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {ACCESS_TOKEN, kakaoLogin, naverLogin} from "./Api";
 import {useDispatch} from "react-redux";
 import {loginAction} from "../redux/slice/userSlice";
-import LoadingComponent from "../pages/LoadingComponent";
+import LoadingComponent from "../component/LoadingComponent";
+import LoginWaitComponent from "../component/LoginWaitComponent";
 
 const Oauth = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Oauth = () => {
 
 
     const performSocialLogin = (loginFunction:Function, successMessage:string) => {
-        loginFunction(code, state)
+        loginFunction(code , state)
             .then((response:any) => {
                 dispatch(loginAction(response.token.accessToken));
                 localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
@@ -21,7 +22,7 @@ const Oauth = () => {
                 navigate("/calendar");
             })
             .catch((error:any) => {
-                alert("로그인 실패");
+                alert("로그인 실패ㅇ?");
                 console.log(error);
                 navigate('/go/login');
             });
@@ -50,7 +51,7 @@ const Oauth = () => {
 
 
     return (
-        <LoadingComponent/>
+        <LoginWaitComponent/>
     )
 }
 

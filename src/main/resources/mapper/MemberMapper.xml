@@ -4,7 +4,11 @@
 <mapper namespace="com.example.nowpt.mvc.mapper.MemberMapper">
         <select id="selectAllMember" resultType="MemberDto">
                 SELECT
-                *
+                    memb_sn as membSn,
+                    memb_nm as membNm,
+                    memb_id as membId,
+                    use_yn as useYn,
+                    email_addr as emailAddr
                 FROM TB_MEMBER TM
         </select>
 

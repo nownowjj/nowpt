@@ -8,6 +8,7 @@ const CalendarHeaderBannerComponent = () => {
     return (
         <CalendarHeaderBannerWrap>
             <Slider
+                touchMove={true}
                 dots={false}
                 infinite={true}
                 speed={1000} // Time in milliseconds between each slide change

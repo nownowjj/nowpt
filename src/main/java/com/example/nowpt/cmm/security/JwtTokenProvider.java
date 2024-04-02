@@ -25,11 +25,10 @@ public class JwtTokenProvider {
 		JWT_SECRET = value;
 	}
 
-	private final static int JWT_EXPIRATION_MS = 100000 * 60 * 60;
+	private final static int JWT_EXPIRATION_MS = 60000 * 10 * 1000 ; // 60000(1분) * 10 = 10분 * 100 = 1000분
 
 	public static String generateToken(String id, String pw, String authority , String email , String profileImage , Long memberSn) {
 		Map<String, Object> claims = new HashMap<>();
-//		log.debug("토큰 프로바이드 {}");
 		log.debug("권한 : {}",authority);
 		log.debug("[토큰정보] : {}, : {} , : {} , : {}",authority,id,pw , profileImage);
 

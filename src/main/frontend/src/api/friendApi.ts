@@ -1,8 +1,9 @@
 import {API_BASE, ApiResponse, CALENDAR, FRIEND, request} from "./Api";
 import {FriendMemberSn, FriendSn, FriendUpdateParam} from "../model/FriendApiModel";
 import {friendDto} from "../pages/calendar/friend/FriendPage";
-import {CalendarDto, CalendarPagingDto, RecordDate} from "../model/CalendarApiModel";
-import {commonSearchParam} from "./CalendarApi";
+import {PagingResponse} from "../model/Common";
+import {CalendarDto} from "../model/CalendarApiModel";
+
 
 /**
  * @title 친구 요청을 보낸다
@@ -101,7 +102,7 @@ export function deleteFriendApi(param:{friendMemberSn: number }):Promise<ApiResp
 }
 
 
-export function getMyFriendCalendar(param:number ,pageNumber:number):Promise<ApiResponse<CalendarPagingDto>>{
+export function getMyFriendCalendar(param:number ,pageNumber:number):Promise<ApiResponse<PagingResponse<CalendarDto[]>>>{
     const url = API_BASE + FRIEND + CALENDAR;
     const fullUrl = url + "?" +"memberSn="+param +"&page="+pageNumber+"&size="+10;
     return request({

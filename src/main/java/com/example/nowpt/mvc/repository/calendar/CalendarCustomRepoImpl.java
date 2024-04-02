@@ -3,7 +3,13 @@ package com.example.nowpt.mvc.repository.calendar;
 import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.QCalendar;
+import com.example.nowpt.mvc.model.QComment;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +28,15 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
     private final JPAQueryFactory queryFactory;
     QCalendar qCalendar = QCalendar.calendar;
     QCalendar qSubCalendar = new QCalendar("subCalendar");
+    QComment qComment = QComment.comment;
+
     @Override
-    public List<String> selectRecordDate(CalendarDto calendarDto) {
+    public List<String> selectRecordDate(String recordDate , long memberSn) {
         return queryFactory
                 .select(qCalendar.recordDate)
                 .from(qCalendar)
                 .where(
-                        qCalendar.memberSn.eq(calendarDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(calendarDto.getRecordDate()+'%')))
+                        qCalendar.memberSn.eq(memberSn).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.like(recordDate+'%')))
                 )
                 .fetch();
 
@@ -46,12 +54,21 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.frstRegistDt.as("frstRegistDt"),
                         qCalendar.lastChangeDt.as("lastChangeDt"),
                         qCalendar.useYn.as("useYn"),
-                        qCalendar.importYn.as("importYn")
+                        qCalendar.importYn.as("importYn"),
+                        ExpressionUtils.as(
+                                JPAExpressions.select(qComment.count())
+                                        .from(qComment)
+                                        .where(qComment.useYn.eq("Y").and(qComment.calendarSn.eq(qCalendar.calendarSn))),
+                                "commentCount"
+                        )
                         ))
                 .from(qCalendar)
-                .where(qCalendar.memberSn.eq(calendarDto.getMemberSn()).and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.eq(calendarDto.getRecordDate()))))
+                .where(
+                        qCalendar.memberSn.eq(calendarDto.getMemberSn())
+                                .and(qCalendar.useYn.eq("Y").and(qCalendar.recordDate.eq(calendarDto.getRecordDate())))
+                      )
+                .orderBy(qCalendar.frstRegistDt.desc())
                 .fetch();
-
     }
 
     @Override
@@ -91,7 +108,13 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.frstRegistDt.as("frstRegistDt"),
                         qCalendar.lastChangeDt.as("lastChangeDt"),
                         qCalendar.useYn.as("useYn"),
-                        qCalendar.importYn.as("importYn")
+                        qCalendar.importYn.as("importYn"),
+                        ExpressionUtils.as(
+                                JPAExpressions.select(qComment.count())
+                                        .from(qComment)
+                                        .where(qComment.useYn.eq("Y").and(qComment.calendarSn.eq(qCalendar.calendarSn))),
+                                "commentCount"
+                        )
                 ))
                 .from(qCalendar)
                 .where(
@@ -127,7 +150,13 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.frstRegistDt.as("frstRegistDt"),
                         qCalendar.lastChangeDt.as("lastChangeDt"),
                         qCalendar.useYn.as("useYn"),
-                        qCalendar.importYn.as("importYn")
+                        qCalendar.importYn.as("importYn"),
+                        ExpressionUtils.as(
+                                JPAExpressions.select(qComment.count())
+                                        .from(qComment)
+                                        .where(qComment.useYn.eq("Y").and(qComment.calendarSn.eq(qCalendar.calendarSn))),
+                                "commentCount"
+                        )
                 ))
                 .from(qCalendar)
                 .where(

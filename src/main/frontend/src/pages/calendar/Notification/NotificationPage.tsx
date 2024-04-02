@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {deleteAllNotification, getMyNotification, updateNotification} from "../../../api/NotificationApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import LoadingComponent from "../../LoadingComponent";
+import LoadingComponent from "../../../component/LoadingComponent";
 import styled from "styled-components";
 import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";

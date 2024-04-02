@@ -11,7 +11,7 @@ export interface Pageable {
     unpaged: boolean;
 }
 
-export interface PagingResponse {
+export interface PagingResponse<T> {
     pageable: Pageable;
     last: boolean;
     totalElements: number;
@@ -26,6 +26,7 @@ export interface PagingResponse {
         empty: boolean;
     };
     empty: boolean;
+    content: T;
 }
 
 export interface Member {

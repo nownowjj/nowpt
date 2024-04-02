@@ -5,6 +5,8 @@ import productReducer from '../slice/productSlice'
 import friendReducer from '../slice/friendSlice'
 import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
+import calendarReducer from "../slice/calendarSlice";
+import bottomSheetReducer from "../slice/bottomSheetSlice";
 
 
 // useSelector, useDispatch 타입 선언 추가
@@ -15,7 +17,9 @@ const reducers = combineReducers({
     user:userReducer,
     count:countReducer,
     product:productReducer,
-    friend:friendReducer
+    friend:friendReducer,
+    calendar:calendarReducer,
+    bottomSheet:bottomSheetReducer
 })
 
 const persistConfig = {

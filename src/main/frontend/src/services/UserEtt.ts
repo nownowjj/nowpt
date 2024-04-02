@@ -3,7 +3,7 @@ import {RootState} from "../redux/store/store";
 
 const UserEtt = () => {
     // let userEtt = {"exp":"" , "iat" : "", "membEmail":"",  "membId":"" , "membPw":"" , "roles":"" , "profileImage":"" , "isLogin": false};
-    let userEtt: { isLogin: boolean; membEmail: string; membPw: string; roles: string; membId: string; profileImage: string; exp: number; iat: number } = {
+    let userEtt: { membSn:number;isLogin: boolean; membEmail: string; membPw: string; roles: string; membId: string; profileImage: string; exp: number; iat: number } = {
         exp: 0,
         iat: 0,
         membEmail: "",
@@ -12,6 +12,7 @@ const UserEtt = () => {
         roles: "",
         profileImage: "",
         isLogin: false,
+        membSn:0
     };
     const user = useSelector((state:RootState) => state.user.user);
     const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);

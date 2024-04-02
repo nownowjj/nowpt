@@ -2,70 +2,70 @@ import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import LoadingComponent from "../../LoadingComponent";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
-import moment from "moment/moment";
 import {route} from "../../../services/remocon";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, CalendarDto, RecordDate} from "../../../model/CalendarApiModel";
+import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/CalendarApiModel";
+import {useQuery, useQueryClient} from "react-query";
+import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
+import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../redux/store/store";
+import DetailSchedule from "./DetailSchedule";
 
-interface DetailNoBalloonProps{
-    leftSize:string;
-}
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
     const {state} = useLocation();
-    const [isLoading, setIsLoading] = useState(true);
-    const [detail,setDetail] = useState<CalendarDto[]>([]);
-    const {detailDay} = state;
+    const {detailDay , schedule} = state;
 
-    useEffect(()=>{
-        const param: RecordDate = {"recordDate":detailDay}
-        getMyDetailCalendar(param)
-            .then(response => {
-                setDetail(response.data)
-            })
-            .catch(error => {
-                ApiErrorHandle(error)
-            }).finally(()=>{
-                setIsLoading(false);
-            })
-    },[detailDay])
+    const queryClient = useQueryClient();
+    const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
+    const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
+
+    const param: RecordDate = {"recordDate":detailDay}
+
+    const { isLoading, data:detail, isError } = useQuery({
+        queryKey: ['getDayDetail'], // 고유한 쿼리 키
+        queryFn: async () => {
+            const result = await getMyDetailCalendar(param);
+            return result.data;
+        },
+    });
+
 
     // 디테일 페이지에서 삭제 요청 수행
-    const removeRecord =(calendarSn:number) :void =>{
+    const removeRecord =async (calendarSn:number)  =>{
         const deleteParam:CalendarSnParam={calendarSn:calendarSn};
-        const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); // 삭제 요청이 들어온 객체의 index를 찾음
-        deleteRecord(deleteParam)
-            .then(response =>{
-                if(response.data) {
-                    if (recordIndex !== -1) { // 삭제 요청이 성공 되었고 해당 요소의 index를 찾음
-                        const updatedDetail = [...detail]; // 새롭게
-                        updatedDetail.splice(recordIndex, 1);
-                        setDetail(updatedDetail);
-                    }
-                }
-            }).catch(error =>{
-            ApiErrorHandle(error);
-            })
+        const {data} = await deleteRecord(deleteParam);
+        if(data > 0)  {
+            await queryClient.invalidateQueries(['getDayDetail'])
+            await queryClient.invalidateQueries(['myCalendar', getYmDay(detailDay)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
+        }
     }
 
-    const importEvent =(calendarSn:number , newImportYn:boolean)=>{
-        const recordIndex = detail.findIndex((data) => data.calendarSn === calendarSn); //
-        detail[recordIndex].importYn = newImportYn;
-    }
+    useEffect(() => {
+        let holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
+            const holidayStart = holiday.startDate
+            const holidayEnd =holiday.endDate
+            // console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
+            return detailDay >= holidayStart && detailDay <= holidayEnd;
+        });
+        // console.log(holidayData);
 
+        if(schedule.length > 0) holidayData.push(...schedule);
+        setDetailSchedule(holidayData);
+    }, []);
 
     return (
         <CalendarDetailWrap>
-            <TopGnbComponent page={moment(detailDay).format('YYYY-MM-DD')}/>
+            <TopGnbComponent page={getY_m_dDay(detailDay)}/>
+            <DetailSchedule data={detailSchedule} />
 
             <CalendarDetail>
-                {isLoading ?(
-                        <LoadingComponent/>
-                ): detail && detail.length > 0 ?(
+                {
+                  isLoading ? <DetailLoadingComponent size={4}/> :
+                  detail && detail.length > 0 ?
                         <>
                         {detail.map((data) => (
                             <CalendarDetailContentComponent
@@ -73,35 +73,43 @@ const CalendarDayDetailPage = () => {
                                 data={data}
                                 removeRecord={removeRecord}
                                 importPage={false}
-                                importEvent={importEvent}
                             />
                         ))}
                             <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>
                         </>
-                    ): (
+                    :
                         <>
                         <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
                         <CalendarDetailNo/>
                         </>
-                )}
+
+
+                }
                 <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
             </CalendarDetail>
+
+
+
         </CalendarDetailWrap>
     );
 };
+
+
 const CalendarDetail = styled.div`
     width:100%;
     height:fit-content;
     background:white;
-    padding-top:50px;
-    
 `
 const CalendarDetailWrap = styled.div`
     position:relative;
     width:100%;
     height:100%;
+    padding-top: 55px;
 `
 
+interface DetailNoBalloonProps{
+    leftSize:string;
+}
 const DetailNoBalloon = styled.div<DetailNoBalloonProps>`
     z-index:100;
     position: fixed;

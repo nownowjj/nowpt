@@ -1,4 +1,4 @@
-import {Member, PagingResponse} from "./Common";
+import {Member} from "./Common";
 
 export interface CalendarSnParam {
     calendarSn?: number;
@@ -33,11 +33,9 @@ export interface CalendarDto{
     lastChangeDt:Date;
     useYn:string;
     importYn:boolean;
+    commentCount:number;
 }
 
-export interface CalendarPagingDto extends PagingResponse{
-    content: CalendarDto[];
-}
 
 export interface CalendarRecordSm{
     year:string;
@@ -51,3 +49,26 @@ export interface CalendarMyInfoDto{
     myRecordSmList: CalendarRecordSm[];
 }
 
+export interface ScheduleDetailType{
+    startDate: string;
+    endDate: string;
+    title: string;
+    color:string;
+    membSn?:number;
+    scheduleSn?:number;
+    useYn?:string;
+    frstRegistDt?: string;
+    lastChangeDt?: string;
+}
+
+// export interface ScheduleResponseType extends ScheduleDetailType{
+//     membSn:number;
+//     scheduleSn:number;
+//     useYn:string;
+//     frstRegistDt: string;
+//     lastChangeDt: string;
+// }
+
+export interface ScheduleType {
+    [year: string]: ScheduleDetailType[];
+}

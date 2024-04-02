@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import loginTrueButNoProfile from "../../../assets/ggwak.png";
+import profileImageError from "../../../assets/error_ori.png";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {FriendDto} from "../../../model/FriendApiModel";
 
@@ -46,14 +47,16 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
         setMessageCall(message);
         setShowConfirm(true);
     }
-
-
+ 
+    const onErrorImg = (e:React.SyntheticEvent<HTMLImageElement, Event>) => {
+        e.currentTarget.src = profileImageError
+    }
 
     return (
         <FriendComponentWrap>
 
             <FriendComponentLeft>
-                <FriendImage src={profileSrc} />
+                <FriendImage src={profileSrc} onError={onErrorImg}/>
             </FriendComponentLeft>
 
             <FriendComponentRight>

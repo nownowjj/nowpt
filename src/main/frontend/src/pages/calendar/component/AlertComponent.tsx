@@ -44,8 +44,6 @@ const AlertButtonBottom= styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-}
-    
 `
 const AlertMessage= styled.div`
     width: 100%;

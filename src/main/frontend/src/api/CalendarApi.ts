@@ -1,14 +1,16 @@
-import {API_BASE, ApiResponse, CALENDAR, request} from "./Api";
+import {API_BASE, ApiResponse, CALENDAR, GET, request} from "./Api";
 // import { URLSearchParams } from "url"
 import {
-    CalendarSnParam,
     CalendarDto,
     CalendarMyInfoDto,
-    CalendarPagingDto,
+    CalendarSnParam,
     ImportParam,
     NewRecordParam,
-    RecordDate
+    RecordDate, ScheduleDetailType,
 } from "../model/CalendarApiModel";
+import {PagingResponse} from "../model/Common";
+
+// import {ScheduleResponseType, ScheduleType} from "../pages/calendar/CalendarPage";
 
 export function commonSearchParam(param: Record<string|number, any>){
     const queryParams = new URLSearchParams();
@@ -22,17 +24,23 @@ export function commonSearchParam(param: Record<string|number, any>){
 
 
 // {recordDate:string}
-export function getMyCalendar(param:RecordDate){
+export function getMyCalendar(param:RecordDate):Promise<ApiResponse<string[]>>{
     return request({
-        url: API_BASE + CALENDAR,
-        method: 'POST',
-        body: JSON.stringify(param)
+        url: API_BASE + CALENDAR + "?recordDate="+param.recordDate,
+        method: GET
+    })
+}
+
+export function getMySchedule(param:RecordDate):Promise<ApiResponse<ScheduleDetailType[]>>{
+    return request({
+        url: API_BASE  +"/schedule"+ "?date="+param.recordDate,
+        method: GET
     })
 }
 
 // {recordDate:string}
 export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<CalendarDto[]>>{
-    const url = API_BASE + CALENDAR;
+    const url = API_BASE + CALENDAR + "/detail";
     // const queryParams = new URLSearchParams(param).toString();
     const fullUrl = url + "?" + commonSearchParam(param);
     return request({
@@ -44,14 +52,13 @@ export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<Calend
 //  {recordDate:string ,calendarSn:number|null,title:string, content:string ,importYn:string}
 export function insertRecord(param:NewRecordParam){
     return request({
-        url: API_BASE + CALENDAR + '/insert',
+        url: API_BASE + CALENDAR ,
         method: 'POST',
         body: JSON.stringify(param)
     })
 }
 
-//  {calendarSn:number}
-export function deleteRecord(param:CalendarSnParam){
+export function deleteRecord(param:CalendarSnParam):Promise<ApiResponse<number>>{
     const url = API_BASE + CALENDAR;
     const fullUrl = url + "?" + commonSearchParam(param);
     return request({
@@ -64,7 +71,7 @@ export function deleteRecord(param:CalendarSnParam){
 
 export function getMyInfoAndRecord():Promise<ApiResponse<CalendarMyInfoDto>>{
     return request({
-        url: API_BASE + '/calendar/myRecord',
+        url: API_BASE + CALENDAR + '/myRecord',
         method: 'GET'
     })
 }
@@ -82,7 +89,7 @@ export function importRecord(param:ImportParam):Promise<ApiResponse<CalendarDto>
 }
 
 //  pageNumber :number
-export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<CalendarPagingDto>> {
+export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<PagingResponse<CalendarDto[]>>> {
     console.log(pageNumber);
     return request({
         url: API_BASE + CALENDAR + "/import?page=" + pageNumber +

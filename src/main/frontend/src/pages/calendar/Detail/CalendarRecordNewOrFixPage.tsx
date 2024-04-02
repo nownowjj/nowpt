@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {insertRecord} from "../../../api/CalendarApi";
 import {useLocation, useNavigate} from 'react-router-dom'
-import moment from "moment";
 import validateRecordInsertOrUpdate from "../../../services/validate";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {FixParam, NewRecordParam} from "../../../model/CalendarApiModel";
+import dayjs from "dayjs";
+import {useQueryClient} from "react-query";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -36,9 +37,9 @@ const CalendarRecordNewOrFixPage = () => {
     const [messageCall, setMessageCall] = useState<string>('');
     const [closeCallBackFn , setCloseCallBackFn] = useState<()=>void>();
 
-
+    const queryClient = useQueryClient();
     /**
-     * @param closeCallBack,message
+     * @param closeCallBack
      * @param message
      * @guide "확인" 버튼의 onClick callback을 넣어준다 단순히 노티만 할거면 closeCallBack을 null로 주고 추가 callback이 필요 하다면  callback Funciton을 넘겨준다
      * @return <AlertComponent>
@@ -74,6 +75,7 @@ const CalendarRecordNewOrFixPage = () => {
         insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
             .then(response =>{
                 alertFunction(newOrFixRecordSuccess,response.message);
+                queryClient.invalidateQueries(['myCalendar', recordDate.substring(0,6)]) // 일정 새로 등록시에 cache 제거
             }).catch(error =>{
                 alertFunction(()=>{},'에러 발생')
                 ApiErrorHandle(error);
@@ -94,7 +96,7 @@ const CalendarRecordNewOrFixPage = () => {
                 {/* back button*/}
                 <CalendarBack>
                     <span onClick={()=> navigate(-1) }>◀</span>
-                    <span style={{color:"black"}}>{moment(recordDate).format('YYYY-MM-DD')}</span>
+                    <span style={{color:"black"}}>{dayjs(recordDate).format('YYYY-MM-DD')}</span>
                 </CalendarBack>
 
 
@@ -129,7 +131,7 @@ const CalendarRecordNewOrFixPage = () => {
 };
 const CalendarWrap = styled.div`
     width:100%;
-    height:100%;
+    height:100vh;
 `
 
 const RecordTitleInput = styled.input`

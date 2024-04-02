@@ -4,18 +4,24 @@ import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.cmm.rvo.ResponseDto;
+import com.example.nowpt.cmm.rvo.ResponseStatus;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
 import com.example.nowpt.mvc.dto.JoinDto;
 import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
 import com.example.nowpt.mvc.dto.LoginDto;
+import com.example.nowpt.mvc.dto.MemberDto;
 import com.example.nowpt.mvc.mapper.MemberMapper;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,17 +43,25 @@ public class AuthRestController {
     private final AuthService authService;
     private final MapperService mapperService;
     private final MemberMapper memberMapper;
+    private final MemberRepo memberRepo;
 
     String  sns = "N";
 
     @GetMapping("/home")
-    public HashMap<String, String> home(){
+    public ResponseDto<?> home() {
         HashMap<String, String> result = new HashMap<>();
         result.put("message","home입니다");
 
-        log.debug("restCheck : {}" ,result);
+        try {
+            Thread.sleep(1500);
+            if(result != null) throw new RuntimeException("예외를 강제로 발생시켰습니다.");
+        } catch (Exception e)    {
+            System.out.println("에러 메시지 : " + e.getMessage());
+            return ResponseUtil.ERROR(Cd.SELECT_FAIL,null);
+        }
+        log.debug("home api 체크");
 
-        return result;
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS,result);
     }
     @GetMapping("/main")
     public HashMap<String, String> api(){
@@ -94,10 +108,13 @@ public class AuthRestController {
                 .build();
     }
 
-    // 닉네임 중복체크
-//    @GetMapping("/nicknameCheck/{nickname}")
-//    public ResponseEntity<Boolean> checkNickName(@PathVariable String nickname){
-//        return ResponseEntity.ok(authService.checkNickName(nickname));
-//    }
+
+
+    @GetMapping("/swift")
+    public List<MemberDto> swiftApiTest(){
+        log.debug("요청이 왔다");
+        List<MemberDto> list  = memberRepo.selectAllMember();
+        return list;
+    }
 
 }

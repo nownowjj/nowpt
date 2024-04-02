@@ -1,7 +1,8 @@
 const KAKAO_CLIENT_ID = "77cbf4dbfe4487f6bb02d3360642a389";
 const NAVER_CLIENT_ID = "4cwWn7LL7M_zyYFJyzDy";
 
-const REDIRECT_URI = 'http://localhost:3000/oauth';
+const HOST_NAME = `${window.location.protocol}//${window.location.host}`
+export const REDIRECT_URI = `${HOST_NAME}/oauth`;
 
 export const KAKAO_STATE = "KAKAO";
 export const NAVER_STATE = "NAVER";

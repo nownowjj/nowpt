@@ -1,7 +1,8 @@
 import {API_BASE, ApiResponse, NOTIFICATION, request} from "./Api";
-import {NotificationPagingDto, NotificationSn} from "../model/NotificationApiModel";
+import {NotificationDto, NotificationSn} from "../model/NotificationApiModel";
+import {PagingResponse} from "../model/Common";
 
-export function getMyNotification(pageNumber:number):Promise<ApiResponse<NotificationPagingDto>>{
+export function getMyNotification(pageNumber:number):Promise<ApiResponse<PagingResponse<NotificationDto[]>>>{
     const url = API_BASE + NOTIFICATION;
     const param = "?page="+pageNumber+"&size=10"
     const requestUrl = url+ param
