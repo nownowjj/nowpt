@@ -41,8 +41,8 @@ export function getMySchedule(param:RecordDate):Promise<ApiResponse<ScheduleDeta
 // {recordDate:string}
 export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<CalendarDto[]>>{
     const url = API_BASE + CALENDAR + "/detail";
-    // const queryParams = new URLSearchParams(param).toString();
     const fullUrl = url + "?" + commonSearchParam(param);
+
     return request({
         url: fullUrl,
         method: 'GET'

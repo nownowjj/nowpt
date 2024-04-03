@@ -7,6 +7,7 @@ import ProfileComponent from "../../../component/ProfileComponent";
 interface TopGnbComponentInterface {
     page:string;
     friendProfile?:string;
+    subTitle?: JSX.Element;
 }
 
 const TopGnbComponent = (data:TopGnbComponentInterface) => {
@@ -17,8 +18,8 @@ const TopGnbComponent = (data:TopGnbComponentInterface) => {
                 <IoIosArrowBack/>
             </GnbBackBtn>
             <GnbTitle>
+                {data.subTitle ?? data.subTitle}
                 <span>{data.page}</span>
-                {/*{data.friendProfile && <img style={{width:"40px",borderRadius:"50%",marginLeft:"5px"}} src={data.friendProfile}/>}*/}
                 {data.friendProfile && <ProfileComponent naviUse={false} size={40} friendImageSrc={data.friendProfile} style={{marginLeft:"5px"}}/> }
             </GnbTitle>
         </TopGnbWrap>
