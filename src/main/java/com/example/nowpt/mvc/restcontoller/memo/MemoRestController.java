@@ -41,4 +41,14 @@ public class MemoRestController {
         return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, memoService.upsertMemo(memoDto));
     }
 
+    /**
+     * @param memoDto {title, content}
+     * @return boolean
+     */
+    @DeleteMapping
+    public ResponseDto<?> deleteMemo(@RequestBody List<Long> deleteLists){
+        log.debug("메모 등록 : {}" , deleteLists);
+        return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, memoService.deleteMemo(deleteLists));
+    }
+
 }

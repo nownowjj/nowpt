@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,10 @@ public class MemoService {
         String content = memoDto.getContent();
         memo.setTitle(title.isEmpty() ? "제목없는 메모 " + DateUtils.getTodayYmd() : title);
         memo.setContent(content.isEmpty() ? "빈 메모장" : content);
+    }
+
+
+    public boolean deleteMemo(List<Long> deleteLists) {
+        return memoRepo.updateByMemoSnIn(deleteLists) > 0;
     }
 }

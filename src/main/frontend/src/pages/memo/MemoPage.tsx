@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TopGnbComponent from "../calendar/TopGnb/TopGnbComponent";
 import styled from "styled-components";
 import CalendarBottomMenu from "../calendar/Bottom/CalendarBottomMenu";
@@ -6,47 +6,101 @@ import MemoItemComponent from "./MemoItemComponent";
 import {AiFillEdit} from "react-icons/ai";
 import Base from "../../component/BottomSheet/Base";
 import {setVisible} from "../../redux/slice/bottomSheetSlice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import MemoAddComponent from "./MemoAddComponent";
-import {MemoResponseType, selectMemo} from "../../api/Memo";
-import {useQuery} from "react-query";
+import {deleteAllMemo, insertMemo, MemoResponseType, selectMemo} from "../../api/Memo";
+import {useQuery, useQueryClient} from "react-query";
 import MemoEmptyWrap from "./MemoEmptyWrap";
+import MemoItemLoadingComponent from "./MemoItemLoadingComponent";
+import {BsFillTrashFill} from "react-icons/bs";
+import {RootState} from "../../redux/store/store";
+import {setMemoLists} from "../../redux/slice/memoSlice";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
+    const queryClient = useQueryClient();
 
-    const {data: memoList} = useQuery({
+    const [memoDetail, setMemoDetail] = useState<MemoResponseType | null>(null);
+    const [deleteMode, setMode] =useState<boolean>(false);
+    const selectSnLists = useSelector((state: RootState) => state.memo.deleteSnLists);
+
+    const [memoSize, setMemoSize] = useState<number>(0);
+
+
+    const {data: memoList,isFetching} = useQuery({
         queryKey: ['myMemo'],
         queryFn: async () => {
             const result = await selectMemo();
+            console.log('result.data.length' , result.data.length);
+            setMemoSize(result.data.length);
+            await new Promise(resolve => setTimeout(resolve, 1000));
             return result.data;
         },
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
-
-    const [memoDetail, setMemoDetail] = useState<MemoResponseType | null>(null);
 
     const openMemoDetail = (data: MemoResponseType | null) => {
         setMemoDetail(data);
         dispatch(setVisible())
     }
 
+
+
+    // This useEffect will be triggered when memoList changes
+    useEffect(() => {
+        if (memoList) {
+            setMemoSize(memoList.length); // Update memoSize when memoList changes
+        }
+    }, [memoList]);
+
+
+    const handleDeleteAll =async ()=>{
+        console.log(selectSnLists);
+        if(selectSnLists.length == 0) return false;
+        await deleteAllMemo(selectSnLists)
+        dispatch(setMemoLists([]))
+        setMode(false)
+        queryClient.invalidateQueries(['myMemo'])
+    }
+
     return (
         <MemoPageWrap>
-            <TopGnbComponent page={'메모'}/>
+            <TopGnbComponent
+                subTitle={
+                    <span
+                        onClick={
+                        ()=>{
+                            setMode(prevState => !prevState)
+                            dispatch(setMemoLists([]))
+                        }} style={{marginRight:"5px"}}>{deleteMode ? "취소":"삭제"}
+                    </span>
+                }
+                page={'메모'}/>
 
-            {memoList && memoList.length > 0 ?
+            {isFetching ?
+                <MemoItemWrap>
+                    <MemoItemLoadingComponent size={memoSize}/>
+                </MemoItemWrap>:
+                    memoList && memoList.length > 0
+                    ?
                 <React.Fragment>
                     <MemoItemWrap>
                         {memoList.map((memo) => (
                             <MemoItemComponent
+                                isDeleteMode={deleteMode}
                                 key={memo.memoSn}
                                 click={() => openMemoDetail(memo)} data={memo}
                             />
                         ))
                         }
                     </MemoItemWrap>
-                    <MemoBtn onClick={() => openMemoDetail(null)}/>
+                    {deleteMode &&
+                        <TrashWrapBtnWrap>
+                            <MemoTrashBtn onClick={() => handleDeleteAll()}/>
+                        </TrashWrapBtnWrap>
+
+                    }
+                    <MemoAddBtn onClick={() => openMemoDetail(null)}/>
                 </React.Fragment>
                 :
                 <MemoEmptyWrap clickAction={()=>openMemoDetail(null)}/>
@@ -63,15 +117,46 @@ const MemoPage = () => {
     );
 };
 
-const MemoBtn = styled(AiFillEdit)`
+const TrashWrapBtnWrap = styled.div`
+  position: fixed;
+  right: 6%;
+  bottom: 130px;
+  display: flex;
+  justify-content: center; /* 수평 정렬 */
+  align-items: center; /* 수직 정렬 */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 10px;
+  border:1px solid #e8e8e8;
+  color: #373636;
+  background: white;
+  z-index: 2;
+`
+
+const MemoTrashBtn = styled(BsFillTrashFill)`
+  font-size: 24px;
+  
+  animation: bounce 0.3s 0.1s cubic-bezier(0, 0, 0.18, 0.99) infinite alternate;
+  
+  @keyframes bounce{
+    to{
+      transform: translateY(-4px);
+    }
+  }
+  
+`
+const MemoAddBtn = styled(AiFillEdit)`
+  z-index: 2;
   position: fixed;
   right: 6%;
   bottom: 70px;
   font-size: 50px;
   border-radius: 50%;
-  background: #373636;
+  border:1px solid #e8e8e8;
+  color: #373636;
+  background: white;
   padding: 10px;
-  color: white;
 `
 
 

@@ -39,10 +39,17 @@ export function selectMemo():Promise<ApiResponse<MemoResponseType[]>>{
 }
 
 export function insertMemo(param:MemoRequestType):Promise<ApiResponse<MemoResponseType>>{
-    console.log(param);
     return request({
         url: API_BASE  + "/memo" ,
         method: POST,
+        body: JSON.stringify(param)
+    })
+}
+
+export function deleteAllMemo(param:number[]):Promise<ApiResponse<boolean>>{
+    return request({
+        url: API_BASE  + "/memo" ,
+        method: DELETE,
         body: JSON.stringify(param)
     })
 }

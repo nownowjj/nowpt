@@ -2,37 +2,47 @@ import React from 'react';
 import styled from "styled-components";
 import {MemoResponseType} from "../../api/Memo";
 import {getFormatDay} from "../../services/formattingDay";
+import MemoCheckBoxComponent from "./MemoCheckBoxComponent";
 
 interface MemoItemInterface {
     data:MemoResponseType
     click:(data:MemoResponseType)=>void;
+    isDeleteMode:boolean;
 }
 
-const MemoItemComponent = ({data,click}:MemoItemInterface) => {
+const MemoItemComponent = ({data,click,isDeleteMode}:MemoItemInterface) => {
+    const handleClick = () => {
+        if (!isDeleteMode) {
+            click(data);
+        }
+    };
+
     return (
-        <MemoItemComponentWrap onClick={()=>click(data)}>
-        {/*<div onClick={()=>click(data)}>*/}
-            <MemoContent>{data.content}</MemoContent>
+        <MemoItemComponentWrap className="longPress">
+            <MemoContent onClick={handleClick}>
+                {(data.memoSn && isDeleteMode) &&  <MemoCheckBoxComponent checkKey={data.memoSn}/> }
+                {data.memoSn}{data.content}
+            </MemoContent>
             <MemoTitle>{data.title}</MemoTitle>
             <MemoDate>{getFormatDay(data.lastRegistDt , "YY.MM.DD ddd요일")}</MemoDate>
         </MemoItemComponentWrap>
     );
 };
-const MemoItemComponentWrap = styled.div`
+export const MemoItemComponentWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  
+  position: relative;
 `
 
-const MemoDate = styled.div`
+export const MemoDate = styled.div`
   text-align: center;
   color: gray;
   font-size: 11px;
 `
 
-const MemoTitle = styled.div`
+export const MemoTitle = styled.div`
   width: 100%;
   text-align: center;
   color: #202020;
@@ -43,11 +53,9 @@ const MemoTitle = styled.div`
   white-space: nowrap; /* 텍스트를 한 줄로만 표시 */
   overflow: hidden; /* 영역을 벗어나는 텍스트는 숨김 처리 */
   text-overflow: ellipsis; /* 영역을 벗어나는 텍스트에는 ... 처리 */
-
-  
 `
 
-const MemoContent = styled.div`
+export const MemoContent = styled.div`
   // MemoItem 영역에서 텍스트가 벗어나지 않도록 처리
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -58,7 +66,8 @@ const MemoContent = styled.div`
   white-space: pre-wrap;
   overflow-y: hidden;
   background: white;
-  
+  position: relative;
+  z-index: 1;
   border: 1px solid #e8e8e8;
   padding: 5px 10px;
   font-size: 14px;

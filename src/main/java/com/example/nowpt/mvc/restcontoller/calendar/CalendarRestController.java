@@ -84,6 +84,8 @@ public class CalendarRestController {
     @GetMapping("/detail")
     public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto) throws InterruptedException {
         log.debug("기록 일자 상세 조회 : {}"  ,recordDate);
+
+
         calendarDto.setMemberSn(member.getMemberSn());
         calendarDto.setRecordDate(recordDate);
         List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);

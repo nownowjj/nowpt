@@ -28,9 +28,11 @@ const CalendarDayDetailPage = () => {
     const { isLoading, data:detail, isError } = useQuery({
         queryKey: ['getDayDetail'], // 고유한 쿼리 키
         queryFn: async () => {
+            await new Promise(resolve => setTimeout(resolve, 1000));
             const result = await getMyDetailCalendar(param);
             return result.data;
         },
+        cacheTime: 0, // 캐싱 비활성화
     });
 
 
