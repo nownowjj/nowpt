@@ -2,6 +2,7 @@ package com.example.nowpt.mvc.schedule;
 
 
 import com.example.nowpt.mvc.service.MapperService;
+import com.example.nowpt.mvc.service.memo.MemoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class SchedulerService {
-
-
     private final MapperService mapperService;
+    private final MemoService memoService;
 
     //fixedDelay	이전 작업이 종료된 후 설정 시간만큼 기다린 후에 시작한다. (밀리세컨드) @Scheduled(fixedDelay = 1000)
 
@@ -34,6 +34,15 @@ public class SchedulerService {
         log.debug("[배치] 10분마다 실행 ");
         log.debug(mapperService.selectAllMember().toString());
     }
+
+
+
+    public void clearTrashMemo(){
+        log.debug("삭제된 메모 개수 : {}",memoService.clearTrashMemo());
+
+    }
+
+
 
 
 

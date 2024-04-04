@@ -25,10 +25,7 @@ const CalendarDayDetailPage = () => {
     const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
     const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
 
-    const param: RecordDate = {"recordDate":detailDay}
-
-
-    const {isLoading , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , param , 500), {
+    const {isLoading , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , {"recordDate":detailDay} , 300), {
         cacheTime: 0,
     });
 
@@ -37,10 +34,7 @@ const CalendarDayDetailPage = () => {
     // 디테일 페이지에서 삭제 요청 수행
     const removeRecord =async (calendarSn:number)  =>{
         const data = await getData(deleteRecord , {calendarSn:calendarSn})
-        console.log(data);
-        if(data > 0)  {
-            invalidateQueries(['getDayDetail'], ['myCalendar', getYmDay(detailDay)]);
-        }
+        data && invalidateQueries(['getDayDetail'], ['myCalendar', getYmDay(detailDay)]);
     }
 
     useEffect(() => {

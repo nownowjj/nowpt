@@ -1,17 +1,19 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import {BiTrash} from "react-icons/bi";
 import {PiWrenchFill} from "react-icons/pi";
 import dayjs from "dayjs";
 import 'dayjs/locale/ko';
-import {importRecord} from "../../../api/CalendarApi";
+import {deleteRecord, importRecord} from "../../../api/CalendarApi";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {route} from "../../../services/remocon";
-import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
 import {CalendarDto} from "../../../model/CalendarApiModel";
 import CommentIconComponent from "../Comment/CommentIconComponent";
+import {useConfirm} from "../../../hooks/useConfirm";
+import {getData} from "../../../api/Api";
+import {getYmDay} from "../../../services/formattingDay";
 
 dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
@@ -34,42 +36,17 @@ interface CalendarDetailContentComponentProps{
 const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent , friendPage }) => {
     const navigate = useNavigate();
     const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
-    const [isProcessing, setIsProcessing] = useState(false); // 상태 추가: 요청 처리 중 여부
+    const { showAlert, messageCall, confirmFunction, handleConfirm, handleClose } = useConfirm();
 
-    // Alert 여부
-    const [showAlert , setShowAlert] = useState<boolean>(false);
-    const [messageCall, setMessageCall] = useState<string>('');
-    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
-
-    const confirmFunction = (okCallBack: () => void,  message:string)=>{
-        setOkCallBackFn(() => okCallBack);
-        setMessageCall(message);
-        setShowAlert(true);
-    }
-
-    const importantRecord =useCallback(
-        (boolean)=>{
-        if (isProcessing) return; // 이미 요청 처리 중이면 함수 실행 중단
-        setIsProcessing(true); // 요청 처리 시작
+    const importantRecord =async (bool:boolean)=> {
 
         let param = {
             calendarSn: data.calendarSn,
-            importYn  : boolean
+            importYn: bool
         };
-
-        console.log(param);
-
-        importRecord(param)
-            .then(response=>{
-                setInitialYn(response.data.importYn);
-            })
-            .catch(error=>{
-                ApiErrorHandle(error);
-            }).finally(()=>{
-            setIsProcessing(false);
-            })
-        },[isProcessing]
-    );
+        const result = await getData(importRecord , param)
+        setInitialYn(result.importYn)
+    };
 
     const handleDelete = () => {
         if (removeRecord) removeRecord(data.calendarSn);
@@ -82,7 +59,6 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
 
             <DetailTimeAndFixDelete>
                 <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</span>
-                {/*<span style={{marginRight : "5px"}}>{dayjs(data.recordDate).format('YYYY-MM-DD')}</span>*/}
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>
@@ -107,7 +83,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                         }
                     >
                     </PiWrenchFill>
-                    <BiTrash  style={{marginRight : "3px"}} onClick={()=> confirmFunction(handleDelete ,`정말<br/> 삭제 하시겠습니까?` )} /> {/* 삭제 */}
+                    <BiTrash  style={{marginRight : "3px"}} onClick={()=> confirmFunction(handleDelete ,`기록을 삭제합니다` )} /> {/* 삭제 */}
                 </>
                 }
                 <CommentIconComponent
@@ -119,10 +95,9 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                 <ConfirmComponent
                     message= {messageCall}
                     okCallBack={() => {
-                        okCallBackFn && okCallBackFn(); // 확인 버튼 클릭 시, 콜백 함수를 실행
-                        setShowAlert(false);
+                        handleConfirm()
                     }}
-                    onClose={()=> setShowAlert(false)}
+                    onClose={()=> handleClose()}
                 />
             )}
             {/* 삭제전 Confirm */}

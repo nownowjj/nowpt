@@ -79,11 +79,10 @@ export function getMyInfoAndRecord():Promise<ApiResponse<CalendarMyInfoDto>>{
 export function importRecord(param:ImportParam):Promise<ApiResponse<CalendarDto>>{
     const url = API_BASE + CALENDAR;
     const fullUrl = url + "?" + commonSearchParam(param);
-    console.log(fullUrl);
     return request({
         url: fullUrl,
-        method: PUT,
-        body: JSON.stringify(param)
+        method: PUT
+        // body: JSON.stringify(param)
     })
 }
 

@@ -7,6 +7,7 @@ import com.example.nowpt.mvc.repository.memo.MemoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,5 +42,10 @@ public class MemoService {
 
     public boolean deleteMemo(List<Long> deleteLists) {
         return memoRepo.updateByMemoSnIn(deleteLists) > 0;
+    }
+
+    @Transactional
+    public long clearTrashMemo() {
+        return memoRepo.clearTrashMemo();
     }
 }
