@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import TopGnbComponent from "../calendar/TopGnb/TopGnbComponent";
 import styled from "styled-components";
 import CalendarBottomMenu from "../calendar/Bottom/CalendarBottomMenu";
@@ -8,34 +8,31 @@ import Base from "../../component/BottomSheet/Base";
 import {setVisible} from "../../redux/slice/bottomSheetSlice";
 import {useDispatch, useSelector} from "react-redux";
 import MemoAddComponent from "./MemoAddComponent";
-import {deleteAllMemo, insertMemo, MemoResponseType, selectMemo} from "../../api/Memo";
+import {deleteAllMemo, MemoResponseType, selectMemo} from "../../api/Memo";
 import {useQuery, useQueryClient} from "react-query";
 import MemoEmptyWrap from "./MemoEmptyWrap";
 import MemoItemLoadingComponent from "./MemoItemLoadingComponent";
 import {BsFillTrashFill} from "react-icons/bs";
 import {RootState} from "../../redux/store/store";
-import {setMemoLists} from "../../redux/slice/memoSlice";
+import {setMemoLists, setMemoSize} from "../../redux/slice/memoSlice";
+import {getData} from "../../api/Api";
+import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
-    const queryClient = useQueryClient();
+    const { invalidateQueries }= useCustomQueryClient();
 
     const [memoDetail, setMemoDetail] = useState<MemoResponseType | null>(null);
     const [deleteMode, setMode] =useState<boolean>(false);
     const selectSnLists = useSelector((state: RootState) => state.memo.deleteSnLists);
+    const memoSize = useSelector((state: RootState) => state.memo.memoSize);
+    
+    // api call 단계에서 callback 딜레이가 끝나기 전에 콜백을 수행 시킴. 1초 동안 loading component 노출
+    const memoLoadingCallback = (data: MemoResponseType[]) => {
+        dispatch(setMemoSize(data.length))
+    };
 
-    const [memoSize, setMemoSize] = useState<number>(0);
-
-
-    const {data: memoList,isFetching} = useQuery({
-        queryKey: ['myMemo'],
-        queryFn: async () => {
-            const result = await selectMemo();
-            console.log('result.data.length' , result.data.length);
-            setMemoSize(result.data.length);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            return result.data;
-        },
+    const {data: memoList,isFetching} = useQuery(['myMemo'], () => getData(selectMemo,{},800,memoLoadingCallback),{
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
 
@@ -45,31 +42,19 @@ const MemoPage = () => {
     }
 
 
-
-    // This useEffect will be triggered when memoList changes
-    useEffect(() => {
-        if (memoList) {
-            setMemoSize(memoList.length); // Update memoSize when memoList changes
-        }
-    }, [memoList]);
-
-
     const handleDeleteAll =async ()=>{
-        console.log(selectSnLists);
         if(selectSnLists.length == 0) return false;
         await deleteAllMemo(selectSnLists)
         dispatch(setMemoLists([]))
         setMode(false)
-        queryClient.invalidateQueries(['myMemo'])
+        invalidateQueries(['myMemo'])
     }
 
     return (
         <MemoPageWrap>
             <TopGnbComponent
                 subTitle={
-                    <span
-                        onClick={
-                        ()=>{
+                    <span onClick={()=>{
                             setMode(prevState => !prevState)
                             dispatch(setMemoLists([]))
                         }} style={{marginRight:"5px"}}>{deleteMode ? "취소":"삭제"}
@@ -83,30 +68,28 @@ const MemoPage = () => {
                 </MemoItemWrap>:
                     memoList && memoList.length > 0
                     ?
-                <React.Fragment>
-                    <MemoItemWrap>
-                        {memoList.map((memo) => (
-                            <MemoItemComponent
-                                isDeleteMode={deleteMode}
-                                key={memo.memoSn}
-                                click={() => openMemoDetail(memo)} data={memo}
-                            />
-                        ))
+                    <React.Fragment>
+                        <MemoItemWrap>
+                            {memoList.map((memo) => (
+                                <MemoItemComponent
+                                    isDeleteMode={deleteMode}
+                                    key={memo.memoSn}
+                                    click={() => openMemoDetail(memo)} data={memo}
+                                />
+                            ))
+                            }
+                        </MemoItemWrap>
+                        {deleteMode &&
+                            <TrashWrapBtnWrap>
+                                <MemoTrashBtn onClick={() => handleDeleteAll()}/>
+                            </TrashWrapBtnWrap>
+
                         }
-                    </MemoItemWrap>
-                    {deleteMode &&
-                        <TrashWrapBtnWrap>
-                            <MemoTrashBtn onClick={() => handleDeleteAll()}/>
-                        </TrashWrapBtnWrap>
-
-                    }
-                    <MemoAddBtn onClick={() => openMemoDetail(null)}/>
-                </React.Fragment>
-                :
-                <MemoEmptyWrap clickAction={()=>openMemoDetail(null)}/>
+                        <MemoAddBtn onClick={() => openMemoDetail(null)}/>
+                    </React.Fragment>
+                    :
+                    <MemoEmptyWrap clickAction={()=>openMemoDetail(null)}/>
             }
-
-
 
             <Base bottomComponent={
                 <MemoAddComponent data={memoDetail}/>

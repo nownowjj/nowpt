@@ -18,9 +18,9 @@ const CalendarHeaderBannerComponent = () => {
                 autoplaySpeed={5000} // Time in milliseconds to wait before moving to the next slide
                 fade={true}
             >
-                <BannerItem>NowNowjj</BannerItem>
-                <BannerItem>Calendar App</BannerItem>
-                <BannerItem>My Record</BannerItem>
+                <BannerItem>일정을 기록하세요!</BannerItem>
+                <BannerItem>메모장 기능 오픈!!</BannerItem>
+                {/*<BannerItem>My Record</BannerItem>*/}
             </Slider>
         </CalendarHeaderBannerWrap>
     );

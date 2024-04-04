@@ -73,11 +73,13 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
  * @param apiCallFunction  호출할 promise api function
  * @param param            넘길 param
  * @param delay            지연 발생 시간
+ * @param callback         callback funciton return data
  * 공통 result.data get 함수
  */
-export async function getData<T, P>(apiCallFunction: ApiCallFunction<T, P>,param: P, delay: number=0): Promise<T> {
-    await new Promise(resolve => setTimeout(resolve, delay));
+export async function getData<T, P>(apiCallFunction: ApiCallFunction<T, P>,param: P, delay: number=0 , callback: ((data:any) => void) | undefined = undefined): Promise<T> {
     const result = await apiCallFunction(param)
+    if(callback) callback(result.data)
+    await new Promise(resolve => setTimeout(resolve, delay));
     apiFailCheck(apiCallFunction.name ,result)
     return result.data;
 }

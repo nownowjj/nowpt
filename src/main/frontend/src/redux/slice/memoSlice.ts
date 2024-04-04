@@ -3,10 +3,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface MemoState {
     deleteSnLists:number[]
+    memoSize:number
 }
 
 const initialState:MemoState = {
-    deleteSnLists:[]
+    deleteSnLists:[],
+    memoSize:0,
 };
 
 
@@ -18,9 +20,12 @@ const memoSlice = createSlice({
         setMemoLists: (state,action:PayloadAction<number[]>) => {
             state.deleteSnLists = action.payload;
         },
+        setMemoSize:(state , action)=>{
+            state.memoSize = action.payload
+        }
     },
 });
 
-export const { setMemoLists, } = memoSlice.actions;
+export const { setMemoLists,setMemoSize } = memoSlice.actions;
 
 export default memoSlice.reducer;

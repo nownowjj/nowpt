@@ -3,12 +3,10 @@ package com.example.nowpt.mvc.restcontoller.calendar;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
-import com.example.nowpt.mvc.common.CustomException;
-import com.example.nowpt.mvc.common.RestBase;
+import com.example.nowpt.mvc.common.RestControllerBase;
 import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.Member;
-import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
 import com.example.nowpt.mvc.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,18 +24,16 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/calendar")
-public class CalendarRestController {
+public class CalendarRestController extends RestControllerBase {
     private final CalendarService calendarService;
 
     /**
-     * @param recordDate 조회 년월
+     * @param recordDate "yyyymm"
      * @return 기록 일자 List
      */
     @GetMapping
-    public ResponseDto<?> selectRecordDate(@AuthenticationPrincipal Member member, @RequestParam String recordDate){
-        log.debug("요청일자 : {}" , recordDate);
-        if(recordDate != null) throw new CustomException("요청일자가 있는데?");
-        List<String> calendarList = calendarService.selectRecordDate(recordDate , member.getMemberSn());
+    public ResponseDto<?> selectRecordDate(@RequestParam String recordDate){
+        List<String> calendarList = calendarService.selectRecordDate(recordDate , getMemberSn());
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
     }
 
@@ -52,15 +48,15 @@ public class CalendarRestController {
     }
 
     @PostMapping
-    public ResponseDto<?> upsertRecord(@AuthenticationPrincipal Member member, @RequestBody CalendarDto calendarDto){
-        calendarDto.setMemberSn(member.getMemberSn());
+    public ResponseDto<?> upsertRecord(@RequestBody CalendarDto calendarDto){
+        calendarDto.setMemberSn(getMemberSn());
         return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, calendarService.upsertRecord(calendarDto));
     }
 
 
     @GetMapping("/detail")
-    public ResponseDto<?> selectDetailRecord(@AuthenticationPrincipal Member member , @RequestParam String recordDate , CalendarDto calendarDto) throws InterruptedException {
-        calendarDto.setMemberSn(member.getMemberSn());
+    public ResponseDto<?> selectDetailRecord(@RequestParam String recordDate , CalendarDto calendarDto) {
+        calendarDto.setMemberSn(getMemberSn());
         calendarDto.setRecordDate(recordDate);
         List<CalendarDto> calendarList = calendarService.selectDetailRecord(calendarDto);
         return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendarList);
@@ -68,11 +64,11 @@ public class CalendarRestController {
 
 
     @GetMapping("/myRecord")
-    public ResponseDto<?> selectMyRecordSm(@AuthenticationPrincipal Member member){
+    public ResponseDto<?> selectMyRecordSm(){
         Map<String,List<?>> result = new HashMap<>();
 
-        List<Member> members = Arrays.asList(member);
-        List<CalendarSmDto> myRecordSmList = calendarService.selectMyRecordSm(member.getMemberSn());
+        List<Member> members = Arrays.asList(getMember());
+        List<CalendarSmDto> myRecordSmList = calendarService.selectMyRecordSm(getMemberSn());
 
 
         result.put("myRecordSmList",myRecordSmList);
@@ -83,8 +79,8 @@ public class CalendarRestController {
     }
 
     @GetMapping("/import")
-    public ResponseDto<?> selectImportRecord(@AuthenticationPrincipal Member member,Pageable pageable) throws InterruptedException {
-        Page<CalendarDto> calendar = calendarService.findImportRecordByMembSn(member.getMemberSn(),pageable);
+    public ResponseDto<?> selectImportRecord(Pageable pageable) throws InterruptedException {
+        Page<CalendarDto> calendar = calendarService.findImportRecordByMembSn(getMemberSn(),pageable);
         log.debug("페이징 ㅎㄹ : {}" , pageable);
         log.debug("결과 {} ",calendar.toString());
         if(calendar != null)return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, calendar);
