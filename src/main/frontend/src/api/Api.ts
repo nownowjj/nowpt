@@ -30,6 +30,7 @@ export interface ApiRequest {
     body?:string;
 }
 
+type ApiCallFunction<T, P> = (param: P) => Promise<ApiResponse<T>>;
 
 export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
     const headers = new Headers({
@@ -55,7 +56,10 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
         )
         .catch(e =>{
             console.log(e);
+            debugger;
             console.log('에러발생');
+
+
             if(e.code){
                 console.log(e);
                 if(e.code === '4444') window.location.replace("/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
@@ -64,6 +68,24 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
             }
         });
 };
+
+/**
+ * @param apiCallFunction  호출할 promise api function
+ * @param param            넘길 param
+ * @param delay            지연 발생 시간
+ * 공통 result.data get 함수
+ */
+export async function getData<T, P>(apiCallFunction: ApiCallFunction<T, P>,param: P, delay: number=0): Promise<T> {
+    await new Promise(resolve => setTimeout(resolve, delay));
+    const result = await apiCallFunction(param)
+    apiFailCheck(apiCallFunction.name ,result)
+    return result.data;
+}
+
+function apiFailCheck(apiCallFunctionName:string,result:any){
+    if(result.status == "FAILURE") console.log(`[🔴${apiCallFunctionName}🔴] 요청 에러 발생 message : [🔴${result.message}🔴]`);
+}
+
 
 export function homeTest():Promise<ApiResponse<HomeTestData>> {
     console.log("요청?");

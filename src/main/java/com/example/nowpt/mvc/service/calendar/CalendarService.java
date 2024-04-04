@@ -4,6 +4,7 @@ import com.example.nowpt.mvc.common.CommonUtils;
 import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.Calendar;
+import com.example.nowpt.mvc.model.Memo;
 import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,45 +32,33 @@ public class CalendarService {
         return calendarRepo.selectDetailRecord(calendarDto);
     }
 
-
-//    Data data = (OptionalData).orElseGet(Data::new);
-//    Optional로 감싸진 Data가 null이 아니면 Data 객체에 data가 들어갑니다.
-//    Optional로 감싸진 Data가 null이면 Data 객체에 new Data가 들어갑니다.
-    @Transactional
-    public Calendar recordSave(final Calendar calendar) {
-        Calendar newCalendar = calendarRepo.findById(calendar.getCalendarSn()).orElseGet(() -> new Calendar());
-        newCalendar.setTitle(calendar.getTitle());
-        newCalendar.setContent(calendar.getContent());
-        newCalendar.setLastChangeDt(LocalDateTime.now());
-        CommonUtils.saveIfNullId(calendar.getCalendarSn(), calendarRepo, newCalendar);
-        return newCalendar;
-    }
-
-
     // 일정 삭제
-    public int deleteRecord(long calendarSn) {
-        Calendar calendar = this.findByCalendarSn(calendarSn);
+    public boolean deleteRecord(long calendarSn) {
+        Calendar calendar = calendarRepo.findByCalendarSn(calendarSn);
         calendar.setUseYn("N");
-        try{
-            calendarRepo.save(calendar);
-            return 1;
-        }catch (Exception e){
-            log.error("일정 삭제 실패 : {}" , e.getMessage());
-            return 0;
-        }
+        calendarRepo.save(calendar);
+        return true;
     }
 
     // 기록 즐겨찾기
     public Calendar importRecord(long calendarSn , boolean importYn) {
-        Calendar calendar = this.findByCalendarSn(calendarSn);
+        Calendar calendar = calendarRepo.findByCalendarSn(calendarSn);
         calendar.setImportYn(importYn);
         return calendarRepo.save(calendar);
     }
 
-    // 일정 조회
-    public Calendar findByCalendarSn(Long calendarSn){
-        return calendarRepo.findByCalendarSn(calendarSn);
+    // 기록 등록 및 수정
+    public Calendar upsertRecord(CalendarDto calendarDto) {
+        Calendar newCalendar = calendarDto.getCalendarSn() != null ?  calendarRepo.findByCalendarSn(calendarDto.getCalendarSn()) : new Calendar();
+        if(calendarDto.getCalendarSn() == null) newCalendar.setRecordDate(calendarDto.getRecordDate());
+
+        newCalendar.setTitle(calendarDto.getTitle());
+        newCalendar.setContent(calendarDto.getContent());
+        newCalendar.setMemberSn(calendarDto.getMemberSn());
+        newCalendar.setImportYn(calendarDto.getImportYn());
+        return calendarRepo.save(newCalendar);
     }
+
 
     // 중요 일정 조회
     public Page<CalendarDto> findImportRecordByMembSn(Long memberSn , Pageable pageable){
@@ -80,7 +69,6 @@ public class CalendarService {
     public List<CalendarSmDto> selectMyRecordSm(Long membSn){
         return calendarRepo.selectMyRecordSm(membSn);
     }
-
 
     // 내 친구 일정 조회
     public Page<CalendarDto> selectMyFriendRecord(long memberSn , Pageable pageable){

@@ -1,6 +1,8 @@
 package com.example.nowpt.cmm.code;
 /*공통코드 관련*/
 public interface Cd {
+	String API_FAIL = "요청 실패";
+
 	String LIKE_SUCCESS = "좋아요 성공";
 	String LIKE_C_SUCCESS = "좋아요 취소";
 	String POST_SUCCESS = "등록 성공";

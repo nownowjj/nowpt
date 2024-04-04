@@ -10,7 +10,7 @@ interface ScheduleType{
 
 interface DotsComponentInterface {
     date:Date;
-    mark:string[];
+    mark?:string[];
     schedule ?: ScheduleType[];
     customSchedule ?:ScheduleDetailType[];
 }
@@ -20,7 +20,7 @@ const DotsComponent = (data:DotsComponentInterface) => {
     const date =dayjs(data.date).format('YYYYMMDD');// 해당 일자
 
     const mark = data.mark;                                   // 이벤트 일자 ex : ['2023-06-10','2023-06-23','2023..]
-    const count = mark.filter(item => item === date).length;  // 해당 일자가 이벤트 일자에 몇개 포함하는지
+    const count = mark ? mark.filter(item => item === date).length : 0;  // 해당 일자가 이벤트 일자에 몇개 포함하는지
     const dotsDivs = [];
     for (let index = 0; index < count; index++) {
         dotsDivs.push(<Dot key={index} color={colors[index]} />);

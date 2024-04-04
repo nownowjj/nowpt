@@ -5,7 +5,7 @@ import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
 import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
-import {getMyCalendar, getMySchedule} from "../../api/CalendarApi";
+import {getMyCalendar, getMyDetailCalendar, getMySchedule} from "../../api/CalendarApi";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
 import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
@@ -20,6 +20,7 @@ import {setDay, setYearHolidays} from "../../redux/slice/calendarSlice";
 import {useQuery} from "react-query";
 import holidaysJsonFile from "../../db/holiday.json"
 import {getFirstOrLastMonthYear, getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
+import {getData} from "../../api/Api";
 
 
 const CalendarPage = () => {
@@ -55,14 +56,12 @@ const CalendarPage = () => {
         if(recordData)  return <DotsComponent date={date} mark={recordData} />;
     }
 
+    // const {isLoading , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , param , 500), {
+    //     cacheTime: 0,
+    // });
+
     const param: RecordDate = { recordDate: month ? month : getYmDay(value as Date)};
-    const {data:recordData=[]} = useQuery({
-        queryKey: ['myCalendar', param.recordDate],
-        queryFn: async () => {
-            const result = await getMyCalendar(param);
-            return result.data;
-        },
-        // cacheTime: 60000, // 1분 동안 캐시로 저장
+    const {data:recordData} = useQuery(['myCalendar', param.recordDate], () => getData(getMyCalendar , param), {
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
 
@@ -70,7 +69,6 @@ const CalendarPage = () => {
         queryKey: ['mySchedule', param.recordDate],
         queryFn: async () => {
             const result = await getMySchedule(param);
-            console.log(result.data);
             return result.data;
         },
         // cacheTime: 60000, // 1분 동안 캐시로 저장
@@ -79,9 +77,8 @@ const CalendarPage = () => {
 
     // 일자 클릭
     const onClickDay =(date:Date)=> {
-        console.log("일변경@!@!");
         dispatch(setDay(date));
-        let filteredSchedule: ScheduleDetailType[]|null;
+        let filteredSchedule: ScheduleDetailType[]|null =[];
         if(customSchedule) {
             filteredSchedule = customSchedule.filter(schedule => {
                 const startDate = schedule.startDate;
@@ -89,8 +86,6 @@ const CalendarPage = () => {
                 return startDate <= getYmdDay(date) && endDate >= getYmdDay(date);
             });
         }
-
-        // @ts-ignore
         navigate(route.calendarDayDetail, { state: { detailDay: getYmdDay(date) , schedule:filteredSchedule }  });
     }
 
@@ -102,10 +97,10 @@ const CalendarPage = () => {
     }, [getYDay(value as Date)]);
 
 
-    useEffect(() => {
-        console.log(month , '월 변경 감지');
-        console.log(getFirstOrLastMonthYear(value as Date));
-    }, [month]);
+    // useEffect(() => {
+    //     console.log(month , '월 변경 감지');
+    //     console.log(getFirstOrLastMonthYear(value as Date));
+    // }, [month]);
 
     return (
         <CalendarWrap>

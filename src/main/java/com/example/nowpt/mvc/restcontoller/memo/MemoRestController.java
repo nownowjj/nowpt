@@ -42,12 +42,12 @@ public class MemoRestController {
     }
 
     /**
-     * @param memoDto {title, content}
+     * @param List<Long> deleteLists
      * @return boolean
      */
     @DeleteMapping
     public ResponseDto<?> deleteMemo(@RequestBody List<Long> deleteLists){
-        log.debug("메모 등록 : {}" , deleteLists);
+        log.debug("메모 삭제 : {}" , deleteLists);
         return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, memoService.deleteMemo(deleteLists));
     }
 

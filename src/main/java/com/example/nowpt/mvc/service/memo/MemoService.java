@@ -16,6 +16,7 @@ import java.util.List;
 public class MemoService {
     private final MemoRepo memoRepo;
 
+    // 메모 등록 및 수정
     public Memo upsertMemo(MemoDto memoDto) {
         return this.saveMemoFromDto(memoDto);
     }

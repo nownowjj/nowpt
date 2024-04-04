@@ -10,39 +10,36 @@ import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/Ca
 import {useQuery, useQueryClient} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
 import DetailSchedule from "./DetailSchedule";
+import {getData} from "../../../api/Api";
+import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
+    const { invalidateQueries } = useCustomQueryClient();
     const {state} = useLocation();
     const {detailDay , schedule} = state;
 
-    const queryClient = useQueryClient();
     const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
     const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
 
     const param: RecordDate = {"recordDate":detailDay}
 
-    const { isLoading, data:detail, isError } = useQuery({
-        queryKey: ['getDayDetail'], // 고유한 쿼리 키
-        queryFn: async () => {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            const result = await getMyDetailCalendar(param);
-            return result.data;
-        },
-        cacheTime: 0, // 캐싱 비활성화
+
+    const {isLoading , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , param , 500), {
+        cacheTime: 0,
     });
+
 
 
     // 디테일 페이지에서 삭제 요청 수행
     const removeRecord =async (calendarSn:number)  =>{
-        const deleteParam:CalendarSnParam={calendarSn:calendarSn};
-        const {data} = await deleteRecord(deleteParam);
+        const data = await getData(deleteRecord , {calendarSn:calendarSn})
+        console.log(data);
         if(data > 0)  {
-            await queryClient.invalidateQueries(['getDayDetail'])
-            await queryClient.invalidateQueries(['myCalendar', getYmDay(detailDay)]); //삭제 요청 성공시에 캘린더 조회 쿼리 초기화
+            invalidateQueries(['getDayDetail'], ['myCalendar', getYmDay(detailDay)]);
         }
     }
 
@@ -50,10 +47,8 @@ const CalendarDayDetailPage = () => {
         let holidayData = yearHolidays.filter((holiday: { startDate: string ; endDate: string ; }) => {
             const holidayStart = holiday.startDate
             const holidayEnd =holiday.endDate
-            // console.log(detailDay >= holidayStart && detailDay <= holidayEnd);
             return detailDay >= holidayStart && detailDay <= holidayEnd;
         });
-        // console.log(holidayData);
 
         if(schedule.length > 0) holidayData.push(...schedule);
         setDetailSchedule(holidayData);
@@ -66,7 +61,7 @@ const CalendarDayDetailPage = () => {
 
             <CalendarDetail>
                 {
-                  isLoading ? <DetailLoadingComponent size={4}/> :
+                  isLoading ? <DetailLoadingComponent size={3}/> :
                   detail && detail.length > 0 ?
                         <>
                         {detail.map((data) => (

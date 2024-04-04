@@ -1,4 +1,4 @@
-import {API_BASE, ApiResponse, CALENDAR, GET, request} from "./Api";
+import {API_BASE, ApiResponse, CALENDAR, DELETE, GET, POST, PUT, request} from "./Api";
 // import { URLSearchParams } from "url"
 import {
     CalendarDto,
@@ -45,7 +45,7 @@ export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<Calend
 
     return request({
         url: fullUrl,
-        method: 'GET'
+        method: GET
     })
 }
 
@@ -53,7 +53,7 @@ export function getMyDetailCalendar(param:RecordDate):Promise<ApiResponse<Calend
 export function insertRecord(param:NewRecordParam){
     return request({
         url: API_BASE + CALENDAR ,
-        method: 'POST',
+        method: POST,
         body: JSON.stringify(param)
     })
 }
@@ -63,8 +63,7 @@ export function deleteRecord(param:CalendarSnParam):Promise<ApiResponse<number>>
     const fullUrl = url + "?" + commonSearchParam(param);
     return request({
         url: fullUrl,
-        method: 'DELETE',
-        body: JSON.stringify(param)
+        method: DELETE,
     })
 }
 
@@ -72,7 +71,7 @@ export function deleteRecord(param:CalendarSnParam):Promise<ApiResponse<number>>
 export function getMyInfoAndRecord():Promise<ApiResponse<CalendarMyInfoDto>>{
     return request({
         url: API_BASE + CALENDAR + '/myRecord',
-        method: 'GET'
+        method: GET
     })
 }
 
@@ -83,7 +82,7 @@ export function importRecord(param:ImportParam):Promise<ApiResponse<CalendarDto>
     console.log(fullUrl);
     return request({
         url: fullUrl,
-        method: 'PUT',
+        method: PUT,
         body: JSON.stringify(param)
     })
 }
@@ -94,7 +93,7 @@ export function selectImportRecordPaging(pageNumber:number):Promise<ApiResponse<
     return request({
         url: API_BASE + CALENDAR + "/import?page=" + pageNumber +
             "&size=" + 10,
-        method: 'GET'
+        method: GET
     });
 }
 

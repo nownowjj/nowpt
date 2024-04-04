@@ -6,12 +6,20 @@ interface LoadingDotProps {
     size:number;
     delay?:boolean;
 }
+
+/**
+ *
+ * @param loop default= 3 보여줄 Dot의 개수
+ * @param size Dot size
+ * @param delay
+ * @constructor
+ */
 const LoadingDotComponent = ({loop=3 , size , delay=false}:LoadingDotProps) => {
     return (
         <DotWrap>
             {[...Array(loop)].map((_, index) => (
                 <LoadingDot
-                    style={delay ? { animationDelay: `0.${index + 1}s` } : {animationDelay: `1.5s`}}
+                    style={delay ? { animationDelay: `0.${index + 1}s` } : {animationDelay: `0.5s`}}
                     key={index}
                     size={size}
                 />

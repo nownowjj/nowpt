@@ -11,9 +11,9 @@ const DetailLoadingComponent =({size=4})=> {
         <>
             {[...Array(size)].map((_, index) => (
                 <DetailContentWrap key={index}>
-                    <DetailTitle><LoadingDotComponent size={15}/></DetailTitle>
-                    <DetailContent><LoadingDotComponent delay={true} loop={5} size={9}/></DetailContent>
-                    <DetailTimeAndFixDelete><LoadingDotComponent loop={5} size={10}/></DetailTimeAndFixDelete>
+                    <DetailTitle><LoadingDotComponent delay={true} size={12}/></DetailTitle>
+                    <DetailContent><LoadingDotComponent delay={true} loop={5} size={7}/></DetailContent>
+                    <DetailTimeAndFixDelete><LoadingDotComponent loop={5} size={8}/></DetailTimeAndFixDelete>
                 </DetailContentWrap>
             ))}
         </>
