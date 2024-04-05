@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
+import TopGnbComponent from "../Layout/TopGnbComponent";
 import ReceivedFriendComponent from "./ReceivedFriendComponent";
 import styled from "styled-components";
 // import {useNavigate} from "react-router-dom";

@@ -1,15 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import TopGnbComponent from "../calendar/TopGnb/TopGnbComponent";
+import React, {useState} from 'react';
 import styled from "styled-components";
-import CalendarBottomMenu from "../calendar/Bottom/CalendarBottomMenu";
 import MemoItemComponent from "./MemoItemComponent";
-import {AiFillEdit} from "react-icons/ai";
 import Base from "../../component/BottomSheet/Base";
 import {setVisible} from "../../redux/slice/bottomSheetSlice";
 import {useDispatch, useSelector} from "react-redux";
 import MemoAddComponent from "./MemoAddComponent";
 import {deleteAllMemo, MemoResponseType, selectMemo} from "../../api/Memo";
-import {useQuery, useQueryClient} from "react-query";
+import {useQuery} from "react-query";
 import MemoEmptyWrap from "./MemoEmptyWrap";
 import MemoItemLoadingComponent from "./MemoItemLoadingComponent";
 import {BsFillTrashFill} from "react-icons/bs";
@@ -18,6 +15,7 @@ import {setMemoLists, setMemoSize} from "../../redux/slice/memoSlice";
 import {getData} from "../../api/Api";
 import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
 import CalendarLayout from "../calendar/Layout/CalendarLayout";
+import {CiMemoPad} from "react-icons/ci";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
@@ -87,12 +85,12 @@ const MemoPage = () => {
                                 </TrashWrapBtnWrap>
 
                             }
-                            <MemoAddBtn onClick={() => openMemoDetail(null)}/>
+
                         </React.Fragment>
                         :
                         <MemoEmptyWrap clickAction={() => openMemoDetail(null)}/>
                 }
-
+                <MemoAddBtn onClick={() => openMemoDetail(null)}/>
                 <Base bottomComponent={
                     <MemoAddComponent data={memoDetail}/>
                 }/>
@@ -130,7 +128,7 @@ const MemoTrashBtn = styled(BsFillTrashFill)`
   }
 
 `
-const MemoAddBtn = styled(AiFillEdit)`
+const MemoAddBtn = styled(CiMemoPad)`
   z-index: 2;
   position: fixed;
   right: 6%;

@@ -10,7 +10,7 @@ const CalendarBottomMenu = () => {
 
 
     return (
-        <CalendarBottom className='menuBottom'>
+        <CalendarBottom>
             <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.memo} >
                 <MdArticle style={iconStyle}/>
             </StyledLink>

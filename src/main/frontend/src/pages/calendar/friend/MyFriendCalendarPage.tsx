@@ -4,11 +4,11 @@ import {getMyFriendCalendar} from "../../../api/friendApi";
 import {useInView} from "react-intersection-observer";
 import {CalendarDto} from "../../../model/CalendarApiModel";
 import {ImportWrap, ObserverArea} from "../Import/CalendarImportPage";
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
+import TopGnbComponent from "../Layout/TopGnbComponent";
 import LoadingComponent from "../../../component/LoadingComponent";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
-import CalendarDetailNo from "../component/CalendarDetailNo";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
+import CalendarDetailNo from "../Detail/CalendarDetailNo";
+import CalendarBottomMenu from "../Layout/CalendarBottomMenu";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
 
 const MyFriendCalendarPage = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import dayjs from "dayjs";
 import {ScheduleDetailType} from "../../../model/CalendarApiModel";
+import {getYmdDay} from "../../../services/formattingDay";
 
 interface ScheduleType{
     color:string;
@@ -17,7 +17,7 @@ interface DotsComponentInterface {
 
 const DotsComponent = (data:DotsComponentInterface) => {
     const colors = ['red', 'blue', 'purple', 'green', 'black', 'black', 'black', 'black', 'black', 'black'];
-    const date =dayjs(data.date).format('YYYYMMDD');// 해당 일자
+    const date =getYmdDay(data.date);// 해당 일자
 
     const mark = data.mark;                                   // 이벤트 일자 ex : ['2023-06-10','2023-06-23','2023..]
     const count = mark ? mark.filter(item => item === date).length : 0;  // 해당 일자가 이벤트 일자에 몇개 포함하는지

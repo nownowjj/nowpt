@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import {setMemoLists} from "../../../redux/slice/memoSlice";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
+import CalendarBottomMenu from "../Layout/CalendarBottomMenu";
+import CalendarLayout from "../Layout/CalendarLayout";
 
 const WeatherPage = () => {
     const [apiMode , setApiMode] = useState<string>("");
@@ -71,17 +70,17 @@ const WeatherPage = () => {
         setCityName(e.target.value);
     }
     return (
-        <WeatherPageWrap>
-            <TopGnbComponent page={'날씨'}/>
+        <CalendarLayout gnbTitle={"날씨"}>
+            <WeatherPageWrap>
+                <div onClick={()=> setApiMode("position")}>현재 위치로 조회</div>
+                <br/>
+                <button onClick={()=>callCityWeather(cityName)}>지역명으로 조회</button>
+                <input name="cityName" onChange={onChange} value={cityName}/>
+                <img src={imgsSrc} alt='dsadas'/>
 
-            <div onClick={()=> setApiMode("position")}>현재 위치로 조회</div>
-            <br/>
-            <button onClick={()=>callCityWeather(cityName)}>지역명으로 조회</button>
-            <input name="cityName" onChange={onChange} value={cityName}/>
-            <img src={imgsSrc} alt='dsadas'/>
-
-            <CalendarBottomMenu/>
-        </WeatherPageWrap>
+                <CalendarBottomMenu/>
+            </WeatherPageWrap>
+        </CalendarLayout>
     );
 };
 

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import {route} from "../../../services/remocon";
-import CalendarDetailNo from "../component/CalendarDetailNo";
-import {ScheduleDetailType} from "../../../model/CalendarApiModel";
+import CalendarDetailNo from "./CalendarDetailNo";
+import {CalendarDto, ScheduleDetailType} from "../../../model/CalendarApiModel";
 import {useQuery} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
@@ -15,6 +15,7 @@ import DetailSchedule from "../Schedule/DetailSchedule";
 import {getData} from "../../../api/Api";
 import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
 import CalendarLayout from "../Layout/CalendarLayout";
+import {AiFillEdit} from "react-icons/ai";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -25,7 +26,13 @@ const CalendarDayDetailPage = () => {
     const yearHolidays = useSelector((state: RootState) => state.calendar.yearHolidaysJson);
     const [detailSchedule, setDetailSchedule] = useState<ScheduleDetailType[]>([]);
 
-    const {isLoading , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , {"recordDate":detailDay} , 300), {
+    const [loadingSize , setLoadingSize] = useState(0);
+
+    const loadingCallback = (data:CalendarDto[]) => {
+        setLoadingSize(data.length);
+    };
+
+    const {isFetching , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , {"recordDate":detailDay} , 350, loadingCallback), {
         cacheTime: 0,
     });
 
@@ -54,26 +61,22 @@ const CalendarDayDetailPage = () => {
                 <DetailSchedule data={detailSchedule} />
                 <CalendarDetail>
                     {
-                      isLoading ? <DetailLoadingComponent size={3}/> :
-                      detail && detail.length > 0 ?
-                            <>
-                            {detail.map((data) => (
-                                <CalendarDetailContentComponent
-                                    key={data.calendarSn}
-                                    data={data}
-                                    removeRecord={removeRecord}
-                                    importPage={false}
-                                />
-                            ))}
-                                <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>
-                            </>
-                        :
-                            <>
-                            <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
+                      isFetching ?
+                          <DetailLoadingComponent size={loadingSize}/>
+                          :
+                          detail && detail.length > 0 ?
+                              <React.Fragment>
+                                {detail.map((data) => (
+                                    <CalendarDetailContentComponent
+                                        key={data.calendarSn}
+                                        data={data}
+                                        removeRecord={removeRecord}
+                                        importPage={false}
+                                    />
+                                ))}
+                              </React.Fragment>
+                          :
                             <CalendarDetailNo/>
-                            </>
-
-
                     }
                     <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
                 </CalendarDetail>
@@ -86,7 +89,7 @@ const CalendarDayDetailPage = () => {
 const CalendarDetail = styled.div`
     width:100%;
     height:fit-content;
-    background:white;
+    background:white
 `
 const CalendarDetailWrap = styled.div`
     position:relative;
@@ -95,53 +98,16 @@ const CalendarDetailWrap = styled.div`
     padding-top: 55px;
 `
 
-interface DetailNoBalloonProps{
-    leftSize:string;
-}
-const DetailNoBalloon = styled.div<DetailNoBalloonProps>`
-    z-index:100;
+const CalendarRecordAdd = styled(AiFillEdit)`
+    z-index: 2;
     position: fixed;
-    background: skyblue;
-    color: #fff;
+    right: 3%;
+    bottom: 50px;
+    font-size: 50px;
+    border-radius: 50%;
+    border: 1px solid #e8e8e8;
+    color: #373636;
+    background: white;
     padding: 10px;
-    border-radius: 20rem;
-    bottom: 79px;
-    right: 9px;
-    font-size: 10pt;
-    box-shadow: 2px 2px 3px #d1d1d1;
-  
-  &::after {
-    transform: translate(-1px,3px);
-    left : ${({leftSize}) => (leftSize ? `${leftSize}` : `72%` )} ;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(56,77,157,0);
-    border-top-color: skyblue;
-    border-width: 11px;
-    top: 92%;
-}
-`
-
-const CalendarRecordAdd = styled.div`
-    position:fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    line-height: 50px;
-    height: 50px;
-    border-radius:50%;
-    background:skyblue;
-    font-size: 40px;
-    text-align: center;
-    cursor:pointer;
-    color:white;
-    &:hover{
-    color:#4486ce;
-    }
-    
 `
 export default CalendarDayDetailPage;

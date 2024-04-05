@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {deleteAllNotification, getMyNotification, updateNotification} from "../../../api/NotificationApi";
 import ApiErrorHandle from "../../../services/ApiErrorHandle";
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import LoadingComponent from "../../../component/LoadingComponent";
 import styled from "styled-components";
 import {useInView} from "react-intersection-observer";
 import NotificationComponent from "./NotificationComponent";
-import CalendarDetailNo from "../component/CalendarDetailNo";
+import CalendarDetailNo from "../Detail/CalendarDetailNo";
 import {NotificationDto, NotificationSn} from "../../../model/NotificationApiModel";
+import CalendarLayout from "../Layout/CalendarLayout";
 
 const NotificationPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -78,12 +78,7 @@ const NotificationPage = () => {
     }
 
     return (
-        <>
-            {/* 상단 gnb */}
-            <TopGnbComponent page={'알림'}/>
-            {/* 상단 gnb */}
-
-            {/* 반복 출력시킬 element 영역 */}
+        <CalendarLayout gnbTitle={"알림"} useBottom={false}>
             <ImportWrap>
                 {isLoading ? (
                         <LoadingComponent/>
@@ -106,14 +101,8 @@ const NotificationPage = () => {
                 {/*  스크롤 하단 감지 영역  */}
             </ImportWrap>
             {/* 반복 출력시킬 element 영역 */}
+        </CalendarLayout>
 
-
-
-
-            {/* 하단 메뉴 */}
-            {/*<CalendarBottomMenu/>*/}
-            {/* 하단 메뉴 */}
-        </>
     );
 };
 

@@ -9,7 +9,7 @@ import {firstEvent, fiveEvent} from "../../../redux/slice/friendSlice";
 import AlertComponent from "../component/AlertComponent";
 import {FriendMemberSn} from "../../../model/FriendApiModel";
 import {friendDto} from "./FriendPage";
-import CalendarDetailNo from "../component/CalendarDetailNo";
+import CalendarDetailNo from "../Detail/CalendarDetailNo";
 
 interface FriendRecommendComponentInterface {
     data:friendDto[];

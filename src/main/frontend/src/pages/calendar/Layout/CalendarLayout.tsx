@@ -1,6 +1,6 @@
 import React from 'react';
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
+import TopGnbComponent from "./TopGnbComponent";
+import CalendarBottomMenu from "./CalendarBottomMenu";
 import ConfirmLayout from "./ConfirmLayout";
 
 interface CalendarLayoutInterface {
@@ -18,13 +18,13 @@ interface CalendarLayoutInterface {
  */
 const CalendarLayout = ({children  , gnbTitle , gnbSubElement , useBottom=true }:CalendarLayoutInterface) => {
     return (
-        <div>
+        <React.Fragment>
             {gnbTitle && <TopGnbComponent page={gnbTitle} subTitle={gnbSubElement}/>}
             {children}
             {useBottom && <CalendarBottomMenu/>}
 
             <ConfirmLayout/>
-        </div>
+        </React.Fragment>
     );
 };
 

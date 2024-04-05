@@ -4,7 +4,6 @@ import '../../styles/calendarCss/cal.css' // css import
 import DotsComponent from "./Detail/DotsComponent";
 import ProfileComponent from "../../component/ProfileComponent";
 import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponent";
-import CalendarBottomMenu from "./Bottom/CalendarBottomMenu";
 import {getMyCalendar, getMySchedule} from "../../api/CalendarApi";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
@@ -13,13 +12,12 @@ import styled from "styled-components";
 import {RecordDate, ScheduleDetailType, ScheduleType} from "../../model/CalendarApiModel";
 import {Value} from "react-calendar/src/shared/types";
 import {OnArgs} from "react-calendar/dist/cjs/shared/types";
-import dayjs from "dayjs";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store/store";
 import {setDay, setYearHolidays} from "../../redux/slice/calendarSlice";
 import {useQuery} from "react-query";
 import holidaysJsonFile from "../../db/holiday.json"
-import {getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
+import {getFormatDay, getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
 import {getData} from "../../api/Api";
 import CalendarLayout from "./Layout/CalendarLayout";
 
@@ -103,7 +101,8 @@ const CalendarPage = () => {
                 {/* 캘린더 */}
                 <CalendarLib
                     onClickDay={onClickDay}
-                    formatDay={(locale, date) => dayjs(date).format('DD')}
+                    formatDay={(locale, date) => getFormatDay(date ,'DD')}
+                    // formatDay={(locale, date) => dayjs(date).format('DD')}
                     value={value} // 일자
                     tileContent={tileContent}
                     showNeighboringMonth={true} // 해당 월 일자만 보여줄지

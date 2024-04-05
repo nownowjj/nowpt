@@ -2,20 +2,17 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {BiTrash} from "react-icons/bi";
 import {PiWrenchFill} from "react-icons/pi";
-import dayjs from "dayjs";
 import 'dayjs/locale/ko';
-import {deleteRecord, importRecord} from "../../../api/CalendarApi";
+import {importRecord} from "../../../api/CalendarApi";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {route} from "../../../services/remocon";
-import ConfirmComponent from "../component/ConfirmComponent";
 import {useNavigate} from "react-router-dom";
 import {CalendarDto} from "../../../model/CalendarApiModel";
 import CommentIconComponent from "../Comment/CommentIconComponent";
 import {useConfirm} from "../../../hooks/useConfirm";
 import {getData} from "../../../api/Api";
-import {getYmDay} from "../../../services/formattingDay";
+import {getFormatDay} from "../../../services/formattingDay";
 
-dayjs.locale('ko'); // 로케일을 설정합니다 (한국어 기준)
 
 /**
  *
@@ -59,7 +56,7 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
             <DetailContent>{data.content}</DetailContent>
 
             <DetailTimeAndFixDelete>
-                <span style={{marginRight : "5px"}}>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</span>
+                <span style={{marginRight : "5px"}}>{getFormatDay(data.frstRegistDt ,'YYYY.MM.DD HH:mm')}</span>
                 {
                     !friendPage  &&     // 친구가 보러왔을땐  중요,수정,삭제 보여주지 않음
                 <>

@@ -29,7 +29,6 @@ const ScheduleAddComponent = ({insertFunction,deleteFunction,data}:ScheduleAddCo
     const [currentColor , setCurrentColor] = useState<string>(data ? data.color : "skyblue");
 
     const selectedDay = useSelector((state: RootState) => state.calendar.selectedDay);
-    console.log(`selectedDay  :  ${selectedDay}`);
     const [startDate, setStartDate] = useState<Date>(data ? getYmdToDate(data.startDate) : selectedDay);
     const [endDate, setEndDate] = useState<Date>(data ? getYmdToDate(data.endDate) : selectedDay);
 
@@ -47,7 +46,7 @@ const ScheduleAddComponent = ({insertFunction,deleteFunction,data}:ScheduleAddCo
 
     // 작성한 일정 체크
     const checkNewSchedule=(param:ScheduleDetailType)=>{
-        let {title ,startDate , endDate} = param;
+        let {title} = param;
         if(title.length === 0) {
             setWarningText("제목을 입력 하셔야 합니다")
             return false;

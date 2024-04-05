@@ -26,7 +26,6 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
 
     // 스케줄 데이터 set
     useEffect(() => {
-        console.log(data);
         setScheduleData(data);
     }, [data]);
 
@@ -122,7 +121,6 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
     };
 
     return (
-        <>
         <DetailScheduleWrap>
                 <Base
                     bottomComponent={
@@ -159,12 +157,7 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
                 }
             </Swiper>
             <ScheduleAddText><span onClick={()=> handleNewSchedule()}>일정 등록</span></ScheduleAddText>
-
-
-
         </DetailScheduleWrap>
-
-        </>
     );
 };
 
@@ -180,6 +173,7 @@ const DetailScheduleWrap = styled.div`
     padding: 5px 0 5px 10px;
     //margin-top: 55px;
     border-bottom: 1px solid #e8e8e8;
+    background:rgb(249, 249, 249);
 `
 const ScheduleItem=styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import FriendTitleComponent from "./FriendTitleComponent";
 import FriendComponent from "./FriendComponent";
-import CalendarDetailNo from "../component/CalendarDetailNo";
+import CalendarDetailNo from "../Detail/CalendarDetailNo";
 import {friendDto} from "./FriendPage";
 import {useDispatch} from "react-redux";
 import {deleteFriendApi} from "../../../api/friendApi";
