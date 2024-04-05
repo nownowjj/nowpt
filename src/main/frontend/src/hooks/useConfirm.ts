@@ -1,23 +1,27 @@
-import { useState } from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../redux/store/store";
+import {isNoShowConfirm, isShowConfirm, setMessage, setOkCallBackFn} from "../redux/slice/confirmSlice";
 
 export const useConfirm = () => {
-    const [showAlert, setShowAlert] = useState<boolean>(false);
-    const [messageCall, setMessageCall] = useState<string>('');
-    const [okCallBackFn, setOkCallBackFn] = useState<() => void>();
+    const dispatch = useDispatch();
+
+    const showAlert = useSelector((state:RootState) => state.confirm.showConfirm);
+    const messageCall = useSelector((state:RootState) => state.confirm.message);
+    const okCallBackFn = useSelector((state:RootState) => state.confirm.okCallBackFn);
 
     const confirmFunction = (okCallBack: () => void, message: string) => {
-        setOkCallBackFn(() => okCallBack);
-        setMessageCall(message);
-        setShowAlert(true);
+        dispatch(setOkCallBackFn(okCallBack));
+        dispatch(setMessage(message));
+        dispatch(isShowConfirm())
     };
 
     const handleConfirm = () => {
         okCallBackFn && okCallBackFn(); // 확인 버튼 클릭 시, 콜백 함수를 실행
-        setShowAlert(false);
+        handleClose()
     };
 
     const handleClose = () => {
-        setShowAlert(false);
+        dispatch(isNoShowConfirm())
     };
 
     return { showAlert, messageCall, confirmFunction, handleConfirm, handleClose };

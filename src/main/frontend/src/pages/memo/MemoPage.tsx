@@ -17,22 +17,23 @@ import {RootState} from "../../redux/store/store";
 import {setMemoLists, setMemoSize} from "../../redux/slice/memoSlice";
 import {getData} from "../../api/Api";
 import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
+import CalendarLayout from "../calendar/Layout/CalendarLayout";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
-    const { invalidateQueries }= useCustomQueryClient();
+    const {invalidateQueries} = useCustomQueryClient();
 
     const [memoDetail, setMemoDetail] = useState<MemoResponseType | null>(null);
-    const [deleteMode, setMode] =useState<boolean>(false);
+    const [deleteMode, setMode] = useState<boolean>(false);
     const selectSnLists = useSelector((state: RootState) => state.memo.deleteSnLists);
     const memoSize = useSelector((state: RootState) => state.memo.memoSize);
-    
+
     // api call 단계에서 callback 딜레이가 끝나기 전에 콜백을 수행 시킴. 1초 동안 loading component 노출
     const memoLoadingCallback = (data: MemoResponseType[]) => {
         dispatch(setMemoSize(data.length))
     };
 
-    const {data: memoList,isFetching} = useQuery(['myMemo'], () => getData(selectMemo,{},800,memoLoadingCallback),{
+    const {data: memoList, isFetching} = useQuery(['myMemo'], () => getData(selectMemo, {}, 800, memoLoadingCallback), {
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
 
@@ -42,61 +43,61 @@ const MemoPage = () => {
     }
 
 
-    const handleDeleteAll =async ()=>{
-        if(selectSnLists.length == 0) return false;
+    const handleDeleteAll = async () => {
+        if (selectSnLists.length == 0) return false;
         await deleteAllMemo(selectSnLists)
         dispatch(setMemoLists([]))
         setMode(false)
         invalidateQueries(['myMemo'])
     }
 
-    return (
-        <MemoPageWrap>
-            <TopGnbComponent
-                subTitle={
-                    <span onClick={()=>{
+
+    const gnbSubTitle =(
+           <span onClick={()=>{
                             setMode(prevState => !prevState)
                             dispatch(setMemoLists([]))
-                        }} style={{marginRight:"5px"}}>{deleteMode ? "취소":"삭제"}
-                    </span>
-                }
-                page={'메모'}/>
+                        }}
+                style={{marginRight:"5px"}}>{deleteMode ? "취소":"삭제"}
+           </span>
+    );
 
-            {isFetching ?
-                <MemoItemWrap>
-                    <MemoItemLoadingComponent size={memoSize}/>
-                </MemoItemWrap>:
+    return (
+        <CalendarLayout gnbTitle={"메모"} gnbSubElement={gnbSubTitle}>
+            <MemoPageWrap>
+                {isFetching ?
+                    <MemoItemWrap>
+                        <MemoItemLoadingComponent size={memoSize}/>
+                    </MemoItemWrap> :
                     memoList && memoList.length > 0
-                    ?
-                    <React.Fragment>
-                        <MemoItemWrap>
-                            {memoList.map((memo) => (
-                                <MemoItemComponent
-                                    isDeleteMode={deleteMode}
-                                    key={memo.memoSn}
-                                    click={() => openMemoDetail(memo)} data={memo}
-                                />
-                            ))
+                        ?
+                        <React.Fragment>
+                            <MemoItemWrap>
+                                {memoList.map((memo) => (
+                                    <MemoItemComponent
+                                        isDeleteMode={deleteMode}
+                                        key={memo.memoSn}
+                                        click={() => openMemoDetail(memo)} data={memo}
+                                    />
+                                ))
+                                }
+                            </MemoItemWrap>
+                            {deleteMode &&
+                                <TrashWrapBtnWrap>
+                                    <MemoTrashBtn onClick={() => handleDeleteAll()}/>
+                                </TrashWrapBtnWrap>
+
                             }
-                        </MemoItemWrap>
-                        {deleteMode &&
-                            <TrashWrapBtnWrap>
-                                <MemoTrashBtn onClick={() => handleDeleteAll()}/>
-                            </TrashWrapBtnWrap>
+                            <MemoAddBtn onClick={() => openMemoDetail(null)}/>
+                        </React.Fragment>
+                        :
+                        <MemoEmptyWrap clickAction={() => openMemoDetail(null)}/>
+                }
 
-                        }
-                        <MemoAddBtn onClick={() => openMemoDetail(null)}/>
-                    </React.Fragment>
-                    :
-                    <MemoEmptyWrap clickAction={()=>openMemoDetail(null)}/>
-            }
-
-            <Base bottomComponent={
-                <MemoAddComponent data={memoDetail}/>
-            }/>
-
-            <CalendarBottomMenu/>
-        </MemoPageWrap>
+                <Base bottomComponent={
+                    <MemoAddComponent data={memoDetail}/>
+                }/>
+            </MemoPageWrap>
+        </CalendarLayout>
     );
 };
 
@@ -111,7 +112,7 @@ const TrashWrapBtnWrap = styled.div`
   height: 50px;
   border-radius: 50%;
   padding: 10px;
-  border:1px solid #e8e8e8;
+  border: 1px solid #e8e8e8;
   color: #373636;
   background: white;
   z-index: 2;
@@ -119,15 +120,15 @@ const TrashWrapBtnWrap = styled.div`
 
 const MemoTrashBtn = styled(BsFillTrashFill)`
   font-size: 24px;
-  
+
   animation: bounce 0.3s 0.1s cubic-bezier(0, 0, 0.18, 0.99) infinite alternate;
-  
-  @keyframes bounce{
-    to{
+
+  @keyframes bounce {
+    to {
       transform: translateY(-4px);
     }
   }
-  
+
 `
 const MemoAddBtn = styled(AiFillEdit)`
   z-index: 2;
@@ -136,7 +137,7 @@ const MemoAddBtn = styled(AiFillEdit)`
   bottom: 70px;
   font-size: 50px;
   border-radius: 50%;
-  border:1px solid #e8e8e8;
+  border: 1px solid #e8e8e8;
   color: #373636;
   background: white;
   padding: 10px;

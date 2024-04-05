@@ -1,14 +1,16 @@
 import React, {useEffect} from 'react';
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import styled from "styled-components";
 import CalendarDetailContentComponent from "../Detail/CalendarDetailContentComponent";
 import {useInView} from "react-intersection-observer";
 import {useInfiniteScrollQuery} from "./useInfiniteScrollQuery";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
+import CalendarLayout from "../Layout/CalendarLayout";
+import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
+import {getData} from "../../../api/Api";
+import {deleteRecord} from "../../../api/CalendarApi";
 
 const CalendarImportPage = () => {
-
+    const {invalidateQueries} = useCustomQueryClient();
     const { isLoading , isFetching,queryResult, getNextPage, getIsSuccess, getNextPageIsPossible } = useInfiniteScrollQuery();
     console.log(isLoading , isFetching ,queryResult  , getIsSuccess , getNextPageIsPossible);
 
@@ -19,14 +21,14 @@ const CalendarImportPage = () => {
         }
     }, [isView, queryResult]);
 
+    const removeRecord =async (calendarSn:number)  =>{
+        const data = await getData(deleteRecord , {calendarSn:calendarSn})
+        data && invalidateQueries(['importRecord']);
+    }
+
 
     return (
-        <>
-            {/* 상단 gnb */}
-            <TopGnbComponent page={'중요한 일정'}/>
-            {/* 상단 gnb */}
-
-            {/* 반복 출력시킬 element 영역 */}
+        <CalendarLayout gnbTitle={"중요한 일정"}>
             <ImportWrap>
                 {
                     isLoading ? <DetailLoadingComponent size={4}/> :
@@ -37,24 +39,15 @@ const CalendarImportPage = () => {
                                 key={data.calendarSn}
                                 data={data}
                                 importPage={true}
+                                removeRecord={removeRecord}
                             />
                         ))
                     )
                 }
-                {(!isLoading &&  getNextPageIsPossible )&& <div ref={ref}>!!</div>}
+                {(!isLoading &&  getNextPageIsPossible )&& <div ref={ref}></div>}
 
             </ImportWrap>
-            {/* 반복 출력시킬 element 영역 */}
-            {/* 무한 스크롤 옵저버 */}
-
-
-
-
-
-            {/* 하단 메뉴 */}
-            <CalendarBottomMenu/>
-            {/* 하단 메뉴 */}
-        </>
+        </CalendarLayout>
     );
 };
 

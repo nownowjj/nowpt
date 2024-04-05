@@ -35,13 +35,9 @@ const MyPageRecordSmComponent :React.FC<MyPageRecordSmComponentInterface> = ({re
         yearGrouped[year].monthCountSum += parseInt(monthCount.toString());
         yearGrouped[year].data.push({ month, monthCount });
     })
-    console.log(yearGrouped);
 
 
-    // const [visibility, setVisibility] = useState({});
     const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
-
-
 
     const handleToggle = (itemId:number) => {
         setVisibility((prevVisibility) => ({

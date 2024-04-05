@@ -1,4 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import styled from "styled-components";
+import TopGnbComponent from "../TopGnb/TopGnbComponent";
+import {setMemoLists} from "../../../redux/slice/memoSlice";
+import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 
 const WeatherPage = () => {
     const [apiMode , setApiMode] = useState<string>("");
@@ -26,7 +30,7 @@ const WeatherPage = () => {
     const callCityWeather=(cityName:string)=>{
         getWeatherCityName(cityName)
             .then(r =>{
-                console.log(r);
+                console.log(`getWeatherCityName : ${JSON.stringify(r)}`);
                 console.log(r.weather[0].icon)
                 setImg(r.weather[0].icon);
             }).catch(e =>{
@@ -67,14 +71,25 @@ const WeatherPage = () => {
         setCityName(e.target.value);
     }
     return (
-        <div>
+        <WeatherPageWrap>
+            <TopGnbComponent page={'날씨'}/>
+
             <div onClick={()=> setApiMode("position")}>현재 위치로 조회</div>
             <br/>
             <button onClick={()=>callCityWeather(cityName)}>지역명으로 조회</button>
             <input name="cityName" onChange={onChange} value={cityName}/>
             <img src={imgsSrc} alt='dsadas'/>
-        </div>
+
+            <CalendarBottomMenu/>
+        </WeatherPageWrap>
     );
 };
 
+const WeatherPageWrap = styled.div`
+  position: relative;
+  background: rgb(249 249 249);
+  min-height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 100px;
+`
 export default WeatherPage;

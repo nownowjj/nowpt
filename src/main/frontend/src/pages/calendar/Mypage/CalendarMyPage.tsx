@@ -1,17 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 import "aos/dist/aos.css";
 import ProfileComponent from "../../../component/ProfileComponent";
 import styled from "styled-components";
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import dayjs from "dayjs";
 import {getMyInfoAndRecord} from "../../../api/CalendarApi";
-import CalendarBottomMenu from "../Bottom/CalendarBottomMenu";
 import MyPageRecordSmComponent from "./MyPageRecordSmComponent";
 import {useDispatch} from "react-redux";
 import {logoutAction} from "../../../redux/slice/userSlice";
-import ConfirmComponent from "../component/ConfirmComponent";
 import Aos from "aos";
 import {useQuery} from "react-query";
+import CalendarLayout from "../Layout/CalendarLayout";
+import {getData} from "../../../api/Api";
+import {useConfirm} from "../../../hooks/useConfirm";
 
 
 interface ProfileItemProps{
@@ -20,40 +20,18 @@ interface ProfileItemProps{
 
 const CalendarMyPage = () => {
     const dispatch = useDispatch();
-    // 해당 멤버 정보
 
-    // Alert 여부
-    const [showAlert , setShowAlert] = useState<boolean>(false);
-    const [messageCall, setMessageCall] = useState<string>('');
-    const [okCallBackFn, setOkCallBackFn] = useState<()=>void>();
+    const { confirmFunction } = useConfirm();
 
-    // useEffect(() => {
     Aos.init();
-    // },[])
 
-
-    const { isLoading, error, data:myInfo, isFetching } = useQuery({
-        queryKey: ['myInfoData'],
-        queryFn: async () => {
-            const result = await getMyInfoAndRecord();
-            return result.data;
-        },
+    const {data:myInfo , isFetching} = useQuery(['myInfoData'], () => getData(getMyInfoAndRecord,{} ,500 ),{
         staleTime: 60 * 1000, // 1분
-    })
-
-    const confirmFunction = (okCallBack: () => void,  message:string)=>{
-        setOkCallBackFn(() => okCallBack);
-        setMessageCall(message);
-        setShowAlert(true);
-    }
-
+    });
 
     return (
+        <CalendarLayout gnbTitle={"마이페이지"}>
         <MyPageWrap>
-            {/* 상단 gnb */}
-            <TopGnbComponent page={'마이페이지'}/>
-            {/* 상단 gnb */}
-
             {/* 프로필 */}
             <ProfileComponent isMy={true} style={{marginTop:"60px"}} naviUse={false} size={150} />
             {/* 프로필 */}
@@ -89,29 +67,10 @@ const CalendarMyPage = () => {
             </>
             {/* 기록 통계 */}
 
-            {/* 로그아웃 버튼 */}
             <LogOutButton onClick={()=> confirmFunction(()=> dispatch(logoutAction()) ,`정말<br/> 로그아웃 하시겠습니까?` )}>로그아웃</LogOutButton>
-            {/* 로그아웃 버튼 */}
-
-
-            {/*바텀 메뉴*/}
-            <CalendarBottomMenu/>
-            {/*바텀 메뉴*/}
-
-            {/* confirm 영역 */}
-            {showAlert &&(
-                <ConfirmComponent
-                    message= {messageCall}
-                    okCallBack={() => {
-                        okCallBackFn && okCallBackFn(); // 확인 버튼 클릭 시, 콜백 함수를 실행
-                        setShowAlert(false);
-                    }}
-                    onClose={()=> setShowAlert(false)}
-                />
-            )}
-            {/* confirm 영역 */}
 
         </MyPageWrap>
+        </CalendarLayout>
 
     )
 }

@@ -23,7 +23,7 @@ const CalendarBottomMenu = () => {
             <StyledLink className={({ isActive }) => isActive ? 'active' : ''}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
             </StyledLink>
-            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={"/"}>
+            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.weather}>
                 <MdErrorOutline style={iconStyle}/>
             </StyledLink>
         </CalendarBottom>

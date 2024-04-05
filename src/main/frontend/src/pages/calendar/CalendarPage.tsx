@@ -21,6 +21,7 @@ import {useQuery} from "react-query";
 import holidaysJsonFile from "../../db/holiday.json"
 import {getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
 import {getData} from "../../api/Api";
+import CalendarLayout from "./Layout/CalendarLayout";
 
 
 const CalendarPage = () => {
@@ -88,31 +89,30 @@ const CalendarPage = () => {
     }, [getYDay(value as Date)]);
 
     return (
-        <CalendarWrap>
-            <CalendarHeaderBannerComponent />
+        <CalendarLayout>
+            <CalendarWrap>
+                <CalendarHeaderBannerComponent />
 
-            {/*헤더*/}
-            <div className="header">
-                <ProfileComponent naviUse={true} size={45} isMy={true}/>
-                <FriendAndNotificationArea/>
-            </div>
-            {/*헤더*/}
+                {/*헤더*/}
+                <div className="header">
+                    <ProfileComponent naviUse={true} size={45} isMy={true}/>
+                    <FriendAndNotificationArea/>
+                </div>
+                {/*헤더*/}
 
-            {/* 캘린더 */}
-            <CalendarLib
-                onClickDay={onClickDay}
-                formatDay={(locale, date) => dayjs(date).format('DD')}
-                value={value} // 일자
-                tileContent={tileContent}
-                showNeighboringMonth={true} // 해당 월 일자만 보여줄지
-                onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
-                calendarType={"gregory"}
-                onChange={onChange}
-                // onChange={changeValue}
-            />
-
-            <CalendarBottomMenu/>
-        </CalendarWrap>
+                {/* 캘린더 */}
+                <CalendarLib
+                    onClickDay={onClickDay}
+                    formatDay={(locale, date) => dayjs(date).format('DD')}
+                    value={value} // 일자
+                    tileContent={tileContent}
+                    showNeighboringMonth={true} // 해당 월 일자만 보여줄지
+                    onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
+                    calendarType={"gregory"}
+                    onChange={onChange}
+                />
+            </CalendarWrap>
+        </CalendarLayout>
     );
 };
 

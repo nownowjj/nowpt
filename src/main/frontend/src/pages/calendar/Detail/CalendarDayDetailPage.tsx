@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import TopGnbComponent from "../TopGnb/TopGnbComponent";
 import CalendarDetailContentComponent from "./CalendarDetailContentComponent";
 import {deleteRecord, getMyDetailCalendar} from "../../../api/CalendarApi";
 import {route} from "../../../services/remocon";
 import CalendarDetailNo from "../component/CalendarDetailNo";
-import {CalendarSnParam, RecordDate, ScheduleDetailType} from "../../../model/CalendarApiModel";
-import {useQuery, useQueryClient} from "react-query";
+import {ScheduleDetailType} from "../../../model/CalendarApiModel";
+import {useQuery} from "react-query";
 import DetailLoadingComponent from "../../../component/DetailLoadingComponent";
 import {getY_m_dDay, getYmDay} from "../../../services/formattingDay";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store/store";
-import DetailSchedule from "./DetailSchedule";
+import DetailSchedule from "../Schedule/DetailSchedule";
 import {getData} from "../../../api/Api";
 import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
+import CalendarLayout from "../Layout/CalendarLayout";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -49,39 +49,36 @@ const CalendarDayDetailPage = () => {
     }, []);
 
     return (
-        <CalendarDetailWrap>
-            <TopGnbComponent page={getY_m_dDay(detailDay)}/>
-            <DetailSchedule data={detailSchedule} />
-
-            <CalendarDetail>
-                {
-                  isLoading ? <DetailLoadingComponent size={3}/> :
-                  detail && detail.length > 0 ?
-                        <>
-                        {detail.map((data) => (
-                            <CalendarDetailContentComponent
-                                key={data.calendarSn}
-                                data={data}
-                                removeRecord={removeRecord}
-                                importPage={false}
-                            />
-                        ))}
-                            <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>
-                        </>
-                    :
-                        <>
-                        <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
-                        <CalendarDetailNo/>
-                        </>
-
-
-                }
-                <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
-            </CalendarDetail>
+        <CalendarLayout gnbTitle={getY_m_dDay(detailDay)} useBottom={false}>
+            <CalendarDetailWrap>
+                <DetailSchedule data={detailSchedule} />
+                <CalendarDetail>
+                    {
+                      isLoading ? <DetailLoadingComponent size={3}/> :
+                      detail && detail.length > 0 ?
+                            <>
+                            {detail.map((data) => (
+                                <CalendarDetailContentComponent
+                                    key={data.calendarSn}
+                                    data={data}
+                                    removeRecord={removeRecord}
+                                    importPage={false}
+                                />
+                            ))}
+                                <DetailNoBalloon leftSize="73%">일정을 추가 등록 하세요!</DetailNoBalloon>
+                            </>
+                        :
+                            <>
+                            <DetailNoBalloon leftSize="77%">버튼을 눌러 일정을 등록 하세요!</DetailNoBalloon>
+                            <CalendarDetailNo/>
+                            </>
 
 
-
-        </CalendarDetailWrap>
+                    }
+                    <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
+                </CalendarDetail>
+            </CalendarDetailWrap>
+        </CalendarLayout>
     );
 };
 

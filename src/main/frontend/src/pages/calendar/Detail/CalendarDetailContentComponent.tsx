@@ -36,7 +36,8 @@ interface CalendarDetailContentComponentProps{
 const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProps> = ({ data, removeRecord,importPage ,importEvent , friendPage }) => {
     const navigate = useNavigate();
     const [initialYn, setInitialYn] = useState<boolean>(data.importYn);
-    const { showAlert, messageCall, confirmFunction, handleConfirm, handleClose } = useConfirm();
+
+    const { confirmFunction } = useConfirm();
 
     const importantRecord =async (bool:boolean)=> {
 
@@ -90,17 +91,6 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
                     data={data}
                 />
             </DetailTimeAndFixDelete>
-            {/* 삭제전 Confirm */}
-            {showAlert &&(
-                <ConfirmComponent
-                    message= {messageCall}
-                    okCallBack={() => {
-                        handleConfirm()
-                    }}
-                    onClose={()=> handleClose()}
-                />
-            )}
-            {/* 삭제전 Confirm */}
         </DetailContentWrap>
     )
 }

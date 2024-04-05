@@ -14,13 +14,12 @@
     /*margin-bottom: 60px;*/
 }
 
-.react-calendar__viewContainer
-
 .react-calendar--doubleView {
     width: 700px;
 }
 
 .react-calendar__viewContainer{
+    padding-bottom: 50px;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer {

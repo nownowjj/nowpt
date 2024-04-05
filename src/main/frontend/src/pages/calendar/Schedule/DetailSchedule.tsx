@@ -7,7 +7,6 @@ import {getMyDay, getYmdDay} from "../../../services/formattingDay";
 import {ScheduleDetailType} from "../../../model/CalendarApiModel";
 import {deleteSchedule, insertScheduleApi, ScheduleSn} from "../../../api/ScheduleApi";
 import {useQueryClient} from "react-query";
-import ConfirmComponent from "../component/ConfirmComponent";
 import Base from "../../../component/BottomSheet/Base";
 import {useDispatch, useSelector} from "react-redux";
 import {setInvisible, setVisible} from "../../../redux/slice/bottomSheetSlice";
@@ -20,7 +19,7 @@ interface DetailScheduleProps {
 }
 
 const DetailSchedule = ({data}:DetailScheduleProps) => {
-    const { showAlert, messageCall, confirmFunction, handleConfirm, handleClose } = useConfirm();
+    const {confirmFunction } = useConfirm();
 
     const selectedDay = useSelector((state: RootState) => state.calendar.selectedDay);
     const [scheduleData , setScheduleData] = useState<ScheduleDetailType[] | null>(data);
@@ -161,20 +160,6 @@ const DetailSchedule = ({data}:DetailScheduleProps) => {
             </Swiper>
             <ScheduleAddText><span onClick={()=> handleNewSchedule()}>일정 등록</span></ScheduleAddText>
 
-            {showAlert &&(
-                <ConfirmComponent
-                    message= {messageCall}
-                    okCallBack={() => {
-                        handleConfirm()
-                    }}
-                    onClose={()=> handleClose()}
-                />
-            )}
-
-
-            {/*<BottomSlideWrap>*/}
-            {/*    <div></div>*/}
-            {/*</BottomSlideWrap>*/}
 
 
         </DetailScheduleWrap>
