@@ -118,6 +118,5 @@ const CalendarPage = () => {
 
 const CalendarWrap = styled.div`
     width:100%;
-    //height:100%;
 `
 export default CalendarPage;

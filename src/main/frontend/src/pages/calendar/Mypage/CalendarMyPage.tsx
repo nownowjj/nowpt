@@ -2,7 +2,6 @@ import React from "react";
 import "aos/dist/aos.css";
 import ProfileComponent from "../../../component/ProfileComponent";
 import styled from "styled-components";
-import dayjs from "dayjs";
 import {getMyInfoAndRecord} from "../../../api/CalendarApi";
 import MyPageRecordSmComponent from "./MyPageRecordSmComponent";
 import {useDispatch} from "react-redux";
@@ -12,6 +11,7 @@ import {useQuery} from "react-query";
 import CalendarLayout from "../Layout/CalendarLayout";
 import {getData} from "../../../api/Api";
 import {useConfirm} from "../../../hooks/useConfirm";
+import {getFormatDay} from "../../../services/formattingDay";
 
 
 interface ProfileItemProps{
@@ -52,7 +52,7 @@ const CalendarMyPage = () => {
                 </ProfileItem>
                 <ProfileItem borderBottom="none">
                     <ProfileItemLeft>가입일자</ProfileItemLeft>
-                    <ProfileItemRight>{(dayjs(myInfo?.member[0].frstRegistDt).format('YYYY년 MM월DD일'))}</ProfileItemRight>
+                    <ProfileItemRight>{myInfo && getFormatDay( myInfo?.member[0].frstRegistDt , 'YYYY년 MM월DD일') } </ProfileItemRight>
                 </ProfileItem>
             </ProfileItemBox>
             {/* 개인정보 */}

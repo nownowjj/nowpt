@@ -7,8 +7,8 @@ import ApiErrorHandle from "../../../services/ApiErrorHandle";
 import AlertComponent from "../component/AlertComponent";
 import DetailStarSubComponent from "./DetailStarSubComponent";
 import {FixParam, NewRecordParam} from "../../../model/CalendarApiModel";
-import dayjs from "dayjs";
 import {useQueryClient} from "react-query";
+import {getY_m_dDay} from "../../../services/formattingDay";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -96,7 +96,8 @@ const CalendarRecordNewOrFixPage = () => {
                 {/* back button*/}
                 <CalendarBack>
                     <span onClick={()=> navigate(-1) }>◀</span>
-                    <span style={{color:"black"}}>{dayjs(recordDate).format('YYYY-MM-DD')}</span>
+                    <span style={{color:"black"}}>{getY_m_dDay(recordDate)}</span>
+                    {/*<span style={{color:"black"}}>{dayjs(recordDate).format('YYYY-MM-DD')}</span>*/}
                 </CalendarBack>
 
 

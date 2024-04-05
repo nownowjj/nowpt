@@ -2,8 +2,8 @@ import React from 'react';
 import {CommentDto} from "../../../model/CommentApiModel";
 import styled from "styled-components";
 import ProfileComponent from "../../../component/ProfileComponent";
-import dayjs from "dayjs";
 import {BiTrash} from "react-icons/bi";
+import {getFormatDay} from "../../../services/formattingDay";
 
 interface CommentDetailComponentProps {
     data: CommentDto;
@@ -19,7 +19,7 @@ const CommentDetailComponent:React.FC<CommentDetailComponentProps> = ({data,isMy
 
             <CommentInnerWrap>
                 <CommentWriter>{data.membNm}</CommentWriter>
-                <CommentDt>{dayjs(data.frstRegistDt).format('YYYY.MM.DD HH:mm')}</CommentDt>
+                <CommentDt>{getFormatDay(data.frstRegistDt ,'YYYY.MM.DD HH:mm')}</CommentDt>
                 {isMyComment &&<CommentRemove onClick={()=> trashFuntion(data.commentSn)}/>}
                 <CommentContent>{data.commentContent}</CommentContent>
             </CommentInnerWrap>
