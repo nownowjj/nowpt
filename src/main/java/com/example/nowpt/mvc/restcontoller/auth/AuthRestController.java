@@ -6,14 +6,12 @@ import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.cmm.rvo.ResponseDto;
 import com.example.nowpt.cmm.rvo.ResponseStatus;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
-import com.example.nowpt.mvc.dto.JoinDto;
-import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
-import com.example.nowpt.mvc.dto.LoginDto;
-import com.example.nowpt.mvc.dto.MemberDto;
+import com.example.nowpt.mvc.dto.*;
 import com.example.nowpt.mvc.mapper.MemberMapper;
 import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.mvc.repository.member.MemberRepo;
+import com.example.nowpt.mvc.service.MailService;
 import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +39,7 @@ import java.util.Map;
 public class AuthRestController {
 
     private final AuthService authService;
+    private final MailService mailService;
     private final MapperService mapperService;
     private final MemberMapper memberMapper;
     private final MemberRepo memberRepo;
@@ -72,14 +71,6 @@ public class AuthRestController {
         return result;
     }
 
-//    @PostMapping("/userLogin")
-//    public ResponseEntity<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
-//        log.debug("[getRemoteAddr]{}",request.getRemoteAddr());
-//        String token = authService.gettoken(loginDto.getMembId(), loginDto.getMembPw(), request.getRemoteAddr(),sns);
-////        if(token.equals("fail"))
-//        log.debug("응에 > {}", new JwtAuthenticationResponse(token));
-//        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
-//    }
 
     @PostMapping("/userLogin")
     public ResponseDto<?> userLogin(HttpServletRequest request, @RequestBody LoginDto loginDto){
@@ -108,13 +99,13 @@ public class AuthRestController {
                 .build();
     }
 
-
-
-    @GetMapping("/swift")
-    public List<MemberDto> swiftApiTest(){
-        log.debug("요청이 왔다");
-        List<MemberDto> list  = memberRepo.selectAllMember();
-        return list;
+    @PostMapping("/sendEmail")
+    public void sendEmail(@RequestBody EmailRequest emailRequest) {
+        mailService.sendEmail(emailRequest);
     }
+
+
+
+
 
 }

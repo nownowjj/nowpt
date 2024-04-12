@@ -1,84 +1,99 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import CalendarBottomMenu from "../Layout/CalendarBottomMenu";
 import CalendarLayout from "../Layout/CalendarLayout";
 
+interface WeatherData {
+    coord: {
+        lon: number;
+        lat: number;
+    };
+    weather: {
+        id: number;
+        main: string;
+        description: string;
+        icon: string;
+    }[];
+    base: string;
+    main: {
+        temp: number;
+        feels_like: number;
+        temp_min: number;
+        temp_max: number;
+        pressure: number;
+        humidity: number;
+        sea_level: number;
+        grnd_level: number;
+    };
+    visibility: number;
+    wind: {
+        speed: number;
+        deg: number;
+        gust: number;
+    };
+    clouds: {
+        all: number;
+    };
+    dt: number;
+    sys: {
+        type: number;
+        id: number;
+        country: string;
+        sunrise: number;
+        sunset: number;
+    };
+    timezone: number;
+    id: number;
+    name: string;
+    cod: number;
+}
+
+
 const WeatherPage = () => {
-    const [apiMode , setApiMode] = useState<string>("");
-    const [cityName , setCityName] = useState<string>("seoul");
-    const [weatherData , setWeatherData] = useState({});
-    const [imgSrc, setImg] = useState<string>("dd");
+    const [weeklyForecast, setWeeklyForecast] = useState<WeatherData | null>(null);
 
-
-    const getWeatherMyPosition = async(lat:number, lon:number) => {
-        const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-            let url  = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`; // 위,경도 API 호출 URL
-            let response = await fetch(url);
-
-            return await response.json();
-    };
-    const getWeatherCityName = async(cityName:string) => {
-        console.log(cityName + "지역명 조회");
-        const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-        let url  = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`; // 위,경도 API 호출 URL
-        let response = await fetch(url);
-
-        return await response.json();
-    };
-
-    const callCityWeather=(cityName:string)=>{
-        getWeatherCityName(cityName)
-            .then(r =>{
-                console.log(`getWeatherCityName : ${JSON.stringify(r)}`);
-                console.log(r.weather[0].icon)
-                setImg(r.weather[0].icon);
-            }).catch(e =>{
-                console.log(e);
-        })
+    const getWeahter=async (lat:number,lon:number)=>{
+        const apiKey = "ed2c360f57bf8b6d2532dbf8702ecf49";
+        // const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${apiKey}&units=metric&lang=kr`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&cnt=7&appid=${apiKey}&lang=kr`);
+        // const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=kr`);
+        // const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
+        const data = await response.json();
+        console.log(data);
+        setWeeklyForecast(data);
     }
 
+
+
     useEffect(() => {
-        console.log('발동');
-        if (apiMode === "position"){
+
             // 현재 위치로 조회
             navigator.geolocation.getCurrentPosition((position) => {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
-                getWeatherMyPosition(lat, lon).then(r => {
-                    console.log('위치모드');
-                    console.log(r)
-                    console.log(r.weather[0].icon)
-                    setImg(r.weather[0].icon);
-                });
+                console.log();
+                getWeahter(lat,lon)
             });
-        }
-        // else if(apiMode === "city"){
-        //     getWeatherCityName(cityName)
-        //         .then(response =>{
-        //             console.log('지역모드');
-        //             console.log(response);
-        //         })
-        // }
-        else{
-            console.log('모드선택 필요');
-        }
+    }, []);
 
-    }, [apiMode]);
-    const imgsSrc = `http://openweathermap.com/img/w/${imgSrc}.png`;
-
-    const onChange =(e:React.ChangeEvent<HTMLInputElement>) => {
-        setCityName(e.target.value);
-    }
     return (
         <CalendarLayout gnbTitle={"날씨"}>
             <WeatherPageWrap>
-                <div onClick={()=> setApiMode("position")}>현재 위치로 조회</div>
-                <br/>
-                <button onClick={()=>callCityWeather(cityName)}>지역명으로 조회</button>
-                <input name="cityName" onChange={onChange} value={cityName}/>
-                <img src={imgsSrc} alt='dsadas'/>
+                {weeklyForecast ? (
+                    <div>
+                        <h2>Weekly Weather Forecast</h2>
+                        {/*{weeklyForecast && weeklyForecast.daily.map((day, index) => (*/}
+                        {/*    <div key={index}>*/}
+                        {/*        <p>Date: {new Date(day.dt * 1000).toLocaleDateString()}</p>*/}
+                        {/*        <p>Temperature: {day.temp.day} °C</p>*/}
+                        {/*        <p>Description: {day.weather[0].description}</p>*/}
+                        {/*        /!* Add more weather details as needed *!/*/}
+                        {/*    </div>*/}
+                        {/*))}*/}
+                    </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
 
-                <CalendarBottomMenu/>
             </WeatherPageWrap>
         </CalendarLayout>
     );

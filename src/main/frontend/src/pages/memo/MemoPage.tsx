@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import MemoItemComponent from "./MemoItemComponent";
 import Base from "../../component/BottomSheet/Base";
@@ -16,6 +16,7 @@ import {getData} from "../../api/Api";
 import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
 import CalendarLayout from "../calendar/Layout/CalendarLayout";
 import {CiMemoPad} from "react-icons/ci";
+import MemoSearchComponent from "./MemoSearchComponent";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
@@ -35,11 +36,11 @@ const MemoPage = () => {
         staleTime: Infinity, // 캐시된 결과를 무기한으로 사용
     });
 
+
     const openMemoDetail = (data: MemoResponseType | null) => {
         setMemoDetail(data);
         dispatch(setVisible())
     }
-
 
     const handleDeleteAll = async () => {
         if (selectSnLists.length == 0) return false;
@@ -49,47 +50,90 @@ const MemoPage = () => {
         invalidateQueries(['myMemo'])
     }
 
-
-    const gnbSubTitle =(
-           <span onClick={()=>{
-                            setMode(prevState => !prevState)
-                            dispatch(setMemoLists([]))
-                        }}
-                style={{marginRight:"5px"}}>{deleteMode ? "취소":"삭제"}
-           </span>
+    const gnbSubTitle = (
+        <span style={{marginRight: "5px"}} onClick={() => {
+            setMode(prevState => !prevState)
+            dispatch(setMemoLists([]))
+        }}>
+            {deleteMode ? "취소" : "삭제"}
+        </span>
     );
+
+
+    const [isSearching , setIsSearching] = useState(false);
+    const [filterList,setFilterList]=useState<MemoResponseType[]|undefined>([]);
+
+    // 검색어 입력시 발동
+    const findSearchText=(searchText:any)=>{
+        if (!searchText) { // 검색어 없을 시에 검색 상태 변경
+            setIsSearching(false)
+            return false;
+        }
+
+        setIsSearching(true) // 검색어 존재 검색 상태 변경
+        // 메모 내용 또는 제목에 입력받은 검색어가 존재 하는지 필터링
+        const searchResults = memoList && memoList.filter(memo => {
+            const titleIncludesText = memo.title?.toLowerCase().includes(searchText.toLowerCase());
+            const contentIncludesText = memo.content.toLowerCase().includes(searchText.toLowerCase());
+            return titleIncludesText || contentIncludesText;
+        });
+        setFilterList(searchResults); // 필터링 리스트
+    }
 
     return (
         <CalendarLayout gnbTitle={"메모"} gnbSubElement={gnbSubTitle}>
             <MemoPageWrap>
-                {isFetching ?
-                    <MemoItemWrap>
-                        <MemoItemLoadingComponent size={memoSize}/>
-                    </MemoItemWrap> :
-                    memoList && memoList.length > 0
-                        ?
-                        <React.Fragment>
-                            <MemoItemWrap>
-                                {memoList.map((memo) => (
-                                    <MemoItemComponent
-                                        isDeleteMode={deleteMode}
-                                        key={memo.memoSn}
-                                        click={() => openMemoDetail(memo)} data={memo}
-                                    />
-                                ))
-                                }
-                            </MemoItemWrap>
-                            {deleteMode &&
-                                <TrashWrapBtnWrap>
-                                    <MemoTrashBtn onClick={() => handleDeleteAll()}/>
-                                </TrashWrapBtnWrap>
-
-                            }
-
-                        </React.Fragment>
+                <MemoSearchComponent searchCallback={findSearchText}/>
+                {
+                    // useQuery 딜레이 발생 요청
+                    isFetching ?
+                        <MemoItemWrap>
+                            <MemoItemLoadingComponent size={memoSize}/>
+                        </MemoItemWrap>
                         :
-                        <MemoEmptyWrap clickAction={() => openMemoDetail(null)}/>
+                            isSearching ?
+                                <MemoItemWrap>
+                                    {
+                                        filterList && filterList.length > 0 ?
+                                        filterList.map((memo) => (
+                                        <MemoItemComponent
+                                            isDeleteMode={deleteMode}
+                                            key={memo.memoSn}
+                                            click={() => openMemoDetail(memo)} data={memo}
+                                        />
+                                    ))
+                                        : <div>검색 결과가 없어요</div>
+                                    }
+                                </MemoItemWrap>
+                                :
+                        memoList && memoList.length > 0
+                            ? // 데이터 존재
+                            <React.Fragment>
+                                <MemoItemWrap>
+                                    {memoList.map((memo) => (
+                                        <MemoItemComponent
+                                            isDeleteMode={deleteMode}
+                                            key={memo.memoSn}
+                                            click={() => openMemoDetail(memo)} data={memo}
+                                        />
+                                    ))
+                                    }
+                                </MemoItemWrap>
+                                {/*{deleteMode &&*/}
+                                {/*    <TrashWrapBtnWrap>*/}
+                                {/*        <MemoTrashBtn onClick={() => handleDeleteAll()}/>*/}
+                                {/*    </TrashWrapBtnWrap>*/}
+                                {/*}*/}
+                            </React.Fragment>
+                            : // 데이터 없음
+                            <MemoEmptyWrap clickAction={() => openMemoDetail(null)}/>
                 }
+                {deleteMode &&
+                    <TrashWrapBtnWrap>
+                        <MemoTrashBtn onClick={() => handleDeleteAll()}/>
+                    </TrashWrapBtnWrap>
+                }
+
                 <MemoAddBtn onClick={() => openMemoDetail(null)}/>
                 <Base bottomComponent={
                     <MemoAddComponent data={memoDetail}/>
@@ -151,7 +195,7 @@ const MemoPageWrap = styled.div`
 `
 const MemoItemWrap = styled.div`
   width: 100%;
-  padding-top: 20px;
+  //padding-top: 20px;
   justify-items: center;
   display: grid; /* 행 당 2개의 요소를 표시하고 싶으므로 grid-template-columns를 사용하여 설정 */
   //grid-template-columns: repeat(2, minmax(165px, 1fr));  /* 각 행의 높이를 자동으로 설정하고 싶으므로 grid-auto-rows를 사용하여 설정 */

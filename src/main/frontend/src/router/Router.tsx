@@ -1,6 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainComponent from "../pages/MainComponent";
-import LoginComponent from "../pages/LoginPage";
+import LoginComponent from "../pages/auth/LoginPage";
 import CalendarMyPage from "../pages/calendar/Mypage/CalendarMyPage";
 import Oauth from "../api/Oauth";
 import LoadingComponent from "../component/LoadingComponent";
@@ -19,6 +19,8 @@ import IsExpiredComponent from "../component/IsExpiredComponent";
 import ErrorComponent from "../component/ErrorComponent";
 import LoginWaitComponent from "../component/LoginWaitComponent";
 import MemoPage from "../pages/memo/MemoPage";
+import MailPage from "../pages/auth/MailPage";
+import RegisterPage from "../pages/auth/RegisterPage";
 
 
 const Router = () => {
@@ -29,15 +31,15 @@ const Router = () => {
                 <Route path="/" element={<Calendar />} />
                 <Route path="/go/main" element={<MainComponent />} />
                 <Route path="/go/login" element={<LoginComponent />} />
+                <Route path="/register" element={<RegisterPage />} />
                 <Route path="/oauth" element={<Oauth />} />
                 <Route path="/loading" element={<LoadingComponent />} />
                 <Route path="/loginwait" element={<LoginWaitComponent />} />
 
                 <Route path="/isExpired" element={<IsExpiredComponent />} />
                 <Route path="/isError" element={<ErrorComponent />} />
-                {/*<Route path="/bottom" element={<Base/>} />*/}
 
-
+                <Route path="/mail" element={<MailPage/>} />
 
                 <Route element={<PrivateRouteNew />}>
                     <Route path="/go/common/myPage" element={<CalendarMyPage />} />

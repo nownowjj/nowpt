@@ -27,7 +27,7 @@ public class MemoRestController {
 
     @GetMapping
     public ResponseDto<?> getMemo(@AuthenticationPrincipal Member member){
-        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, memoRepo.findAllByMemberSnAndUseYn(member.getMemberSn(),"Y"));
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, memoRepo.findAllByMemberSnAndUseYnOrderByFrstRegistDtDesc(member.getMemberSn(),"Y"));
     }
 
     /**

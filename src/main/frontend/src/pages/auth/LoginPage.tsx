@@ -1,16 +1,17 @@
 import styled from 'styled-components'
 import React, {useState} from 'react'
 import {useNavigate} from "react-router";
-import {ACCESS_TOKEN, login} from "../api/Api";
-import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../api/OauthLoginUrl";
-import '../styles/style.css'
-import '../styles/css/loginPage.css'
-import {validateLogin} from "../services/validate";
+import {ACCESS_TOKEN, login} from "../../api/Api";
+import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../api/OauthLoginUrl";
+import '../../styles/style.css'
+import '../../styles/css/loginPage.css'
+import {validateLogin} from "../../services/validate";
 import {useDispatch} from "react-redux";
-import {loginAction} from "../redux/slice/userSlice";
-import ApiErrorHandle from "../services/ApiErrorHandle";
-import AlertComponent from "./calendar/component/AlertComponent";
-import {UserLoginInfo} from "../model/model";
+import {loginAction} from "../../redux/slice/userSlice";
+import ApiErrorHandle from "../../services/ApiErrorHandle";
+import AlertComponent from "../calendar/component/AlertComponent";
+import {UserLoginInfo} from "../../model/model";
+import {route} from "../../services/remocon";
 
 
 const LoginPage = () => {
@@ -109,7 +110,7 @@ const LoginPage = () => {
                     <div className="emailTextBox">
                         <span>아이디 찾기</span>
                         <span>비밀번호 찾기</span>
-                        <span>회원가입</span>
+                        <span onClick={()=>navigate('/register')}>회원가입</span>
                     </div>
                 </LoginEmailBox>
 

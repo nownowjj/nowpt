@@ -2,7 +2,7 @@ import {UserLoginInfo} from "../model/model";
 import {HomeTestData} from "../pages/HomeComponent";
 import {REDIRECT_URI} from "./OauthLoginUrl";
 
-export const API_BASE = "http://192.168.10.215:8060/api";
+export const API_BASE = "http://192.168.20.17:8060/api";
 export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
 export const RESERVATION = "/reservation";
@@ -56,7 +56,7 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
         )
         .catch(e =>{
             console.log(e);
-            debugger;
+            // debugger;
             console.log('에러발생');
 
 

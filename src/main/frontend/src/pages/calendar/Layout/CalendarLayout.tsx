@@ -22,7 +22,6 @@ const CalendarLayout = ({children  , gnbTitle , gnbSubElement , useBottom=true }
             {gnbTitle && <TopGnbComponent page={gnbTitle} subTitle={gnbSubElement}/>}
             {children}
             {useBottom && <CalendarBottomMenu/>}
-
             <ConfirmLayout/>
         </React.Fragment>
     );

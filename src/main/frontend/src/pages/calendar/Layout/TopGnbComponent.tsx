@@ -22,6 +22,7 @@ const TopGnbComponent = (data:TopGnbComponentInterface) => {
                 <span>{data.page}</span>
                 {data.friendProfile && <ProfileComponent naviUse={false} size={40} friendImageSrc={data.friendProfile} style={{marginLeft:"5px"}}/> }
             </GnbTitle>
+            {/*<div></div>*/}
         </TopGnbWrap>
     );
 };

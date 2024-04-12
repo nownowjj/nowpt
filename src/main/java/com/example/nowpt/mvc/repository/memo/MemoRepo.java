@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface MemoRepo extends JpaRepository<Memo, Long> , MemoCustomRepo {
-//    List<Memo> findAllByMemberSn(long membSn);
-    List<Memo> findAllByMemberSnAndUseYn(long membSn, String useYn);
+    List<Memo> findAllByMemberSnAndUseYnOrderByFrstRegistDtDesc(long membSn, String useYn);
+
     Memo findByMemoSn(long memoSn);
 
     @Modifying
