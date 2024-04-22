@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import CalendarLayout from "../Layout/CalendarLayout";
+import {useConfirm} from "../../../hooks/useConfirm";
+import {useNavigate} from "react-router-dom";
 
 interface WeatherData {
     coord: {
@@ -50,13 +52,12 @@ interface WeatherData {
 
 const WeatherPage = () => {
     const [weeklyForecast, setWeeklyForecast] = useState<WeatherData | null>(null);
+    const {confirmFunction , isNotCancelBtn } = useConfirm();
+    const navigate = useNavigate();
 
     const getWeahter=async (lat:number,lon:number)=>{
         const apiKey = "ed2c360f57bf8b6d2532dbf8702ecf49";
-        // const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly&appid=${apiKey}&units=metric&lang=kr`);
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&cnt=7&appid=${apiKey}&lang=kr`);
-        // const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=kr`);
-        // const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=kr`);
         const data = await response.json();
         console.log(data);
         setWeeklyForecast(data);
@@ -65,14 +66,17 @@ const WeatherPage = () => {
 
 
     useEffect(() => {
+        isNotCancelBtn()
+        confirmFunction(()=>navigate(-1),"개발중 입니다.")
 
-            // 현재 위치로 조회
-            navigator.geolocation.getCurrentPosition((position) => {
-                let lat = position.coords.latitude;
-                let lon = position.coords.longitude;
-                console.log();
-                getWeahter(lat,lon)
-            });
+        // console.log("!!");
+        //     // 현재 위치로 조회
+        //     navigator.geolocation.getCurrentPosition((position) => {
+        //         let lat = position.coords.latitude;
+        //         let lon = position.coords.longitude;
+        //         console.log("??");
+        //         getWeahter(lat,lon)
+        //     });
     }, []);
 
     return (

@@ -78,6 +78,7 @@ const FriendComponent : React.FC<FriendComponentTypeInterface> = ({data , leftTe
                         setShowConfirm(false);
                     }}
                     onClose={()=> setShowConfirm(false)}
+                    cancelBtnShow={true}
                 />
             )}
             {/* 삭제전 Confirm */}

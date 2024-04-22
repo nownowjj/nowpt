@@ -15,7 +15,7 @@ function App() {
           <PersistGate loading={null} persistor={persistor}>
               <QueryClientProvider client={queryClient}>
                   <Router />
-                  <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+                  {/*<ReactQueryDevtools  initialIsOpen={false} position='bottom-right' />*/}
               </QueryClientProvider>
           </PersistGate>
       </Provider>

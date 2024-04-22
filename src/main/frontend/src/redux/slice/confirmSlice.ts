@@ -5,12 +5,14 @@ interface ConfirmState {
     showConfirm:boolean;
     okCallBackFn:()=>void;
     message:string;
+    cancelBtnShow:boolean;
 }
 
 const initialState:ConfirmState = {
     showConfirm:false,
     okCallBackFn:()=>{},
-    message:""
+    message:"",
+    cancelBtnShow:true
 };
 
 
@@ -31,10 +33,16 @@ const confirmSlice = createSlice({
         },
         setMessage: (state,action)=>{
             state.message = action.payload
-        }
+        },
+        isShowCancelBtn: (state) => {
+            state.cancelBtnShow = true;
+        },
+        isNoShowCancelBtn:(state )=>{
+            state.cancelBtnShow = false;
+        },
     },
 });
 
-export const { isShowConfirm,isNoShowConfirm,setOkCallBackFn,setMessage } = confirmSlice.actions;
+export const {isShowCancelBtn,isNoShowCancelBtn, isShowConfirm,isNoShowConfirm,setOkCallBackFn,setMessage } = confirmSlice.actions;
 
 export default confirmSlice.reducer;

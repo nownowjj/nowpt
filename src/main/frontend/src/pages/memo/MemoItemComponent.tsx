@@ -21,7 +21,7 @@ const MemoItemComponent = ({data,click,isDeleteMode}:MemoItemInterface) => {
         <MemoItemComponentWrap className="longPress">
             <MemoContent onClick={handleClick}>
                 {(data.memoSn && isDeleteMode) &&  <MemoCheckBoxComponent checkKey={data.memoSn}/> }
-                {data.memoSn}{data.content}
+                {data.content}
             </MemoContent>
             <MemoTitle>{data.title}</MemoTitle>
             <MemoDate>{getFormatDay(data.lastRegistDt , "YY.MM.DD ddd요일")}</MemoDate>

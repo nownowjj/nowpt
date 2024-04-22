@@ -13,13 +13,14 @@ interface ConfirmComponentProps{
     message:string;
     okCallBack:()=> void;
     onClose:()=>void;
+    cancelBtnShow:boolean;
 }
 
 interface ConfirmButtonProps {
     backGround?: string|null; // Define the prop type here
 }
 
-const ConfirmComponent:React.FC<ConfirmComponentProps> = ({ message, okCallBack, onClose }) => {
+const ConfirmComponent:React.FC<ConfirmComponentProps> = ({ message, okCallBack, onClose , cancelBtnShow }) => {
     return (
         <ConfirmWrap>
             <ConfirmBox>
@@ -28,7 +29,7 @@ const ConfirmComponent:React.FC<ConfirmComponentProps> = ({ message, okCallBack,
                     <ConfirmMessage dangerouslySetInnerHTML={{ __html: message }}></ConfirmMessage>
                 </ConfirmTextTop>
                 <ConfirmButtonBottom>
-                    <ConfirmButton  onClick={()=> onClose()}>취소</ConfirmButton>
+                    {cancelBtnShow && <ConfirmButton  onClick={()=> onClose()}>취소</ConfirmButton>}
                     <ConfirmButton backGround="#ff8b39" onClick={()=> okCallBack()}>확인</ConfirmButton>
                 </ConfirmButtonBottom>
             </ConfirmBox>

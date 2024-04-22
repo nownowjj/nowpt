@@ -55,7 +55,7 @@ const MemoPage = () => {
             setMode(prevState => !prevState)
             dispatch(setMemoLists([]))
         }}>
-            {deleteMode ? "취소" : "삭제"}
+            {deleteMode ? "취소" :  memoList && memoList.length > 0 && "삭제"}
         </span>
     );
 
@@ -119,11 +119,6 @@ const MemoPage = () => {
                                     ))
                                     }
                                 </MemoItemWrap>
-                                {/*{deleteMode &&*/}
-                                {/*    <TrashWrapBtnWrap>*/}
-                                {/*        <MemoTrashBtn onClick={() => handleDeleteAll()}/>*/}
-                                {/*    </TrashWrapBtnWrap>*/}
-                                {/*}*/}
                             </React.Fragment>
                             : // 데이터 없음
                             <MemoEmptyWrap clickAction={() => openMemoDetail(null)}/>
