@@ -24,7 +24,7 @@ const MemoItemComponent = ({data,click,isDeleteMode}:MemoItemInterface) => {
                 {data.content}
             </MemoContent>
             <MemoTitle>{data.title}</MemoTitle>
-            <MemoDate>{getFormatDay(data.lastRegistDt , "YY.MM.DD ddd요일")}</MemoDate>
+            <MemoDate>{getFormatDay(data.frstRegistDt , "YY.MM.DD ddd요일")}</MemoDate>
         </MemoItemComponentWrap>
     );
 };

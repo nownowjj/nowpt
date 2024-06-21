@@ -69,7 +69,7 @@ const ScheduleAddComponent = ({insertFunction,deleteFunction,data}:ScheduleAddCo
             </ColorBoxWrap>
 
             <ColorBoxWrap>
-                {["red","Orange","green","blue","skyblue","purple"].map((color)=> (
+                {["red","pink","Orange","green","blue","skyblue","purple"].map((color)=> (
                     <ColorBox onClick={()=> setCurrentColor(color)} key={color} color={color} />
                 ))}
             </ColorBoxWrap>

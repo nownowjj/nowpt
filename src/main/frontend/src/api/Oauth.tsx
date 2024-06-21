@@ -22,7 +22,7 @@ const Oauth = () => {
                 navigate("/calendar");
             })
             .catch((error:any) => {
-                alert("로그인 실패ㅇ?");
+                alert(error);
                 console.log(error);
                 navigate('/go/login');
             });

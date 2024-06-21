@@ -89,7 +89,7 @@ const MemoContent = styled.textarea`
     width: 100%;
     border: none;
     border-radius: 5px;
-    height: 400px;
+    height: 100%;
     outline: none;
     resize: none;
     padding-top: 10px;

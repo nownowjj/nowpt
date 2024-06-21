@@ -11,7 +11,6 @@ import {loginAction} from "../../redux/slice/userSlice";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
 import AlertComponent from "../calendar/component/AlertComponent";
 import {UserLoginInfo} from "../../model/model";
-import {route} from "../../services/remocon";
 
 
 const LoginPage = () => {
@@ -149,7 +148,7 @@ const LoginPage = () => {
 }
 const Wrap =styled.div`
     width:100%;
-    height:100%;
+    height:100vh;
     display:flex;
     align-items:center;
     justify-content: center;

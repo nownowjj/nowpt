@@ -4,28 +4,24 @@ import com.example.nowpt.cmm.code.ApiCd;
 import com.example.nowpt.cmm.code.Cd;
 import com.example.nowpt.cmm.rvo.RVO;
 import com.example.nowpt.cmm.rvo.ResponseDto;
-import com.example.nowpt.cmm.rvo.ResponseStatus;
 import com.example.nowpt.cmm.rvo.ResponseUtil;
-import com.example.nowpt.mvc.dto.*;
+import com.example.nowpt.mvc.dto.JoinDto;
+import com.example.nowpt.mvc.dto.JwtAuthenticationResponse;
+import com.example.nowpt.mvc.dto.LoginDto;
 import com.example.nowpt.mvc.mapper.MemberMapper;
-import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.mvc.repository.member.MemberRepo;
+import com.example.nowpt.mvc.service.AuthService;
 import com.example.nowpt.mvc.service.MailService;
 import com.example.nowpt.mvc.service.MapperService;
-import com.example.nowpt.mvc.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
+import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +39,7 @@ public class AuthRestController {
     private final MapperService mapperService;
     private final MemberMapper memberMapper;
     private final MemberRepo memberRepo;
+    private final CacheManager cacheManager;
 
     String  sns = "N";
 
@@ -99,12 +96,20 @@ public class AuthRestController {
                 .build();
     }
 
-    @PostMapping("/sendEmail")
-    public void sendEmail(@RequestBody EmailRequest emailRequest) {
-        mailService.sendEmail(emailRequest);
+    @GetMapping("/cache")
+    public ResponseDto<?> selectMemberCacheList(){
+        log.debug("RestApi request");
+        for (String cacheName : cacheManager.getCacheNames()){
+            log.debug("cacheName : {}" , cacheName);
+        }
+        Collection<String> cacheNames = cacheManager.getCacheNames();
+        log.debug("cacheNames :: {}",cacheNames);
+        for (String cacheName : cacheNames) {
+            System.out.println("cacheName = " + cacheName);
+        }
+
+        return ResponseUtil.SUCCESS(Cd.SELECT_SUCCESS, authService.findAllMember());
     }
-
-
 
 
 

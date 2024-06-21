@@ -1,4 +1,4 @@
-const KAKAO_CLIENT_ID = "77cbf4dbfe4487f6bb02d3360642a389";
+const KAKAO_CLIENT_ID = "b700a332c015772d85ff96c69eed7665";
 const NAVER_CLIENT_ID = "4cwWn7LL7M_zyYFJyzDy";
 
 const HOST_NAME = `${window.location.protocol}//${window.location.host}`
