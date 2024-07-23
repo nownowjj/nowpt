@@ -42,7 +42,7 @@ spring:
     auth-code-expiration-millis: 1800000
 
   profiles:
-    active: local
+    active: prod
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@sbddr3_high?TNS_ADMIN=./src/main/resources/Wallet_sbddr3_2/
