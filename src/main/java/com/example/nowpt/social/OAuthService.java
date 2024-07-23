@@ -12,8 +12,6 @@ import java.net.URL;
 @Service
 public class OAuthService{
     @Value("${kakaoLogin.clientId}") private String KAKAO_CLIENT_ID ;
-    @Deprecated
-    @Value("${kakaoLogin.redirectUri}") private String KAKAO_REDIRECT_URI ;
 
     public String getKakaoAccessToken (String code ,String redirectUrl) {
         String access_Token = "";

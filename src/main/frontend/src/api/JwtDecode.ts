@@ -5,7 +5,7 @@ const getDecodedJwtJsonData =(token:string) =>{
 
 const isExpiredCall = ()=>{
     console.log("토큰이 있지만 만료되었음");
-    window.location.href ="/isExpired";
+    window.location.href ="/page/isExpired";
     return;
 }
 

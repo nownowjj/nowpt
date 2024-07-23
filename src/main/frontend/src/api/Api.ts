@@ -62,7 +62,7 @@ export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
 
             if(e.code){
                 console.log(e);
-                if(e.code === '4444') window.location.replace("/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
+                if(e.code === '4444') window.location.replace("/page/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
             }else{
                 window.location.replace("/isError");
             }

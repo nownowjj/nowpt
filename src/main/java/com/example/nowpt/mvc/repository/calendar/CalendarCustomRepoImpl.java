@@ -10,12 +10,14 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -130,14 +132,13 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
 
     @Override
     public Page<CalendarDto> selectMyFriendRecord(long memberSn, Pageable pageable) {
-        long total = queryFactory
+        JPAQuery<Long> total = queryFactory
                 .select(qSubCalendar.count())
                 .from(qSubCalendar)
                 .where(
                         qSubCalendar.memberSn.eq(memberSn)
                         .and(qSubCalendar.useYn.eq("Y"))
-                )
-                .fetchOne();
+                );
 
 
         List<CalendarDto> content = queryFactory
@@ -168,7 +169,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        return new PageImpl<>(content, pageable, total);
+        return PageableExecutionUtils.getPage(content, pageable, total::fetchOne);
     }
 
 }

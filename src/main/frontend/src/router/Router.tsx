@@ -21,6 +21,7 @@ import LoginWaitComponent from "../component/LoginWaitComponent";
 import MemoPage from "../pages/memo/MemoPage";
 import MailPage from "../pages/auth/MailPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import AdminMainPage from "../pages/admin/AdminMainPage";
 
 
 const Router = () => {
@@ -36,7 +37,7 @@ const Router = () => {
                 <Route path="/loading" element={<LoadingComponent />} />
                 <Route path="/loginwait" element={<LoginWaitComponent />} />
 
-                <Route path="/isExpired" element={<IsExpiredComponent />} />
+                <Route path="/page/isExpired" element={<IsExpiredComponent />} />
                 <Route path="/isError" element={<ErrorComponent />} />
 
                 <Route path="/mail" element={<MailPage/>} />
@@ -75,6 +76,9 @@ const Router = () => {
                     <Route path="/memo" element={<MemoPage />} />
                 </Route>
 
+                <Route element={<PrivateRouteNew />}>
+                    <Route path="/admin/memo" element={<AdminMainPage />} />
+                </Route>
                 {/*<ReactQueryDevtools initialIsOpen={false} position='bottom-right' />*/}
             </Routes>
 

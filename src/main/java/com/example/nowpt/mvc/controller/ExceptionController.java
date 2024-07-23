@@ -44,6 +44,6 @@ public class ExceptionController implements ErrorController   {
             }
         }
         log.debug("no if");
-        return "index.html";
+        return "/";
     }
 }

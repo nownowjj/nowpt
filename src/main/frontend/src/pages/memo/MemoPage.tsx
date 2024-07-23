@@ -17,6 +17,7 @@ import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
 import CalendarLayout from "../calendar/Layout/CalendarLayout";
 import {CiMemoPad} from "react-icons/ci";
 import MemoSearchComponent from "./MemoSearchComponent";
+import {useConfirm} from "../../hooks/useConfirm";
 
 const MemoPage = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const MemoPage = () => {
     const [deleteMode, setMode] = useState<boolean>(false);
     const selectSnLists = useSelector((state: RootState) => state.memo.deleteSnLists);
     const memoSize = useSelector((state: RootState) => state.memo.memoSize);
+    const { showAlert, messageCall, confirmFunction, handleConfirm, handleClose } = useConfirm();
 
     // api call 단계에서 callback 딜레이가 끝나기 전에 콜백을 수행 시킴. 1초 동안 loading component 노출
     const memoLoadingCallback = (data: MemoResponseType[]) => {
@@ -43,7 +45,9 @@ const MemoPage = () => {
     }
 
     const handleDeleteAll = async () => {
-        if (selectSnLists.length == 0) return false;
+        if (selectSnLists.length == 0) {
+            return false;
+        }
         await deleteAllMemo(selectSnLists)
         dispatch(setMemoLists([]))
         setMode(false)

@@ -15,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 public class MovieApiClient {
     private final RestTemplate restTemplate;
 
-    @Value("${spring.naver.clientId}") private  String CLIENT_ID;
-    @Value("${spring.naver.clientSecret}") private String CLIENT_SECRET;
+    @Value("${naverLogin.clientId}") private  String CLIENT_ID;
+    @Value("${naverLogin.clientSecret}") private String CLIENT_SECRET;
 
     private final String OpenNaverMovieUrl_getMovies = "https://openapi.naver.com/v1/search/movie.json?query={keyword}&display=100";
 
