@@ -42,8 +42,8 @@ spring:
     auth-code-expiration-millis: 1800000
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-#    url: jdbc:oracle:thin:@sbddr3_high?TNS_ADMIN=./src/main/resources/Wallet_sbddr3_2/
-    url: jdbc:oracle:thin:@adb.ap-chuncheon-1.oraclecloud.com:1522/g9fa8594d6820a7_sbddr3_high.adb.oraclecloud.com
+    url: jdbc:oracle:thin:@sbddr3_high?TNS_ADMIN=${TNS_ADMIN}
+#    url: jdbc:oracle:thin:@adb.ap-chuncheon-1.oraclecloud.com:1522/g9fa8594d6820a7_sbddr3_high.adb.oraclecloud.com
     username: ${DB_NAME}
     password: ${DB_PW}
   jpa:
