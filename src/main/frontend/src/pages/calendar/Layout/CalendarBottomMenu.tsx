@@ -1,9 +1,10 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-import {MdArticle, MdErrorOutline, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
+import {MdArticle, MdOutlineCalendarMonth, MdPerson} from "react-icons/md";
 import styled from "styled-components";
 import {route} from "../../../services/remocon";
 import {BiBookmarks} from "react-icons/bi";
+import {FaMapMarkedAlt} from "react-icons/fa";
 
 const CalendarBottomMenu = () => {
     const iconStyle = {width:"50%",height:"50%"};
@@ -24,7 +25,7 @@ const CalendarBottomMenu = () => {
                 <MdPerson style={iconStyle}/>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.weather}>
-                <MdErrorOutline style={iconStyle}/>
+                <FaMapMarkedAlt   style={iconStyle}/>
             </StyledLink>
         </CalendarBottom>
     );

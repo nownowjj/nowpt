@@ -12,7 +12,7 @@ import CalendarDayDetailPage from "../pages/calendar/Detail/CalendarDayDetailPag
 import NotificationPage from "../pages/calendar/Notification/NotificationPage";
 import FriendPage from "../pages/calendar/friend/FriendPage";
 import React from "react";
-import WeatherPage from "../pages/calendar/Weather/WeatherPage";
+import MapPage from "../pages/calendar/Weather/MapPage";
 import MyFriendCalendarPage from "../pages/calendar/friend/MyFriendCalendarPage";
 import CalendarCommentPage from "../pages/calendar/Comment/CalendarCommentPage";
 import IsExpiredComponent from "../component/IsExpiredComponent";
@@ -67,7 +67,7 @@ const Router = () => {
                     <Route path="/myFriend" element={<MyFriendCalendarPage />} />
                 </Route>
                 <Route element={<PrivateRouteNew />}>
-                    <Route path="/weather" element={<WeatherPage />} />
+                    <Route path="/weather" element={<MapPage />} />
                 </Route>
                 <Route element={<PrivateRouteNew />}>
                     <Route path="/comment" element={<CalendarCommentPage />} />

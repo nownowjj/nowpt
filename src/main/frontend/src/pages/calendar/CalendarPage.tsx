@@ -37,7 +37,7 @@ const CalendarPage = () => {
         if(getYDay(selectedDay) !== getYDay(date)){
             dispatch(setYearHolidays({ year: getYDay(date), holidays: holidaysJson[getYDay(date)] }));
         }
-        // dispatch(setDay(date));
+        dispatch(setDay(date));
         setMonth(getYmDay(date));
     }
 
