@@ -2,7 +2,7 @@ import {UserLoginInfo} from "../model/model";
 import {HomeTestData} from "../pages/HomeComponent";
 import {REDIRECT_URI} from "./OauthLoginUrl";
 
-export const API_BASE = window.location.protocol + window.location.host + '/api';
+export const API_BASE = '/api';
 export const ACCESS_TOKEN = 'accessToken';
 export const NOTICE = "/notice";
 export const RESERVATION = "/reservation";
