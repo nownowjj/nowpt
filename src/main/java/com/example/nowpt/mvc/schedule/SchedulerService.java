@@ -1,16 +1,12 @@
 package com.example.nowpt.mvc.schedule;
 
 
-import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.service.MapperService;
 import com.example.nowpt.mvc.service.memo.MemoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -35,13 +31,7 @@ public class SchedulerService {
     @Scheduled(cron = "0  0/10  *  *  * *")
     public void testSchedule(){
         log.debug("[배치] 10분마다 실행 ");
-        List<String> memberNmList = new ArrayList<>();
-        List<Member> memberList = mapperService.selectAllMember();
-
-        for(Member member : memberList){
-            memberNmList.add(member.getMembNm());
-        }
-        log.debug("AllMemberNm !! : {}",memberNmList);
+        log.debug("AllMemberNm !! : {}",mapperService.selectAllMember());
     }
 
 

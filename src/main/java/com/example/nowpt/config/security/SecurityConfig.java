@@ -49,9 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.accessDeniedHandler(cad)
 				.and()
 				.authorizeHttpRequests()
-					.antMatchers( "/","/api/auth/**","/error","/oauth/**","/api/notice/auth/**","/chat/**","/ws/**","/socket/**","/page/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
+					.antMatchers( "/", "/index.html", "/static/**", "/*.js", "/*.css","/api/auth/**","/error","/oauth/**","/api/notice/auth/**","/chat/**","/ws/**","/socket/**","/page/**").permitAll() // /auth/**에 대한 접근을 인증 절차 없이 허용(로그인 관련 url)
 					.antMatchers("/api/test/**","/api/notice/admin/**","/api/admin/**").hasAuthority("ROLE_ADMIN")
 					.antMatchers("/api/common/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER", "ROLE_USER")
+					.antMatchers("/{x:^(?!api$).*$}/**").permitAll() // 모든 비-API 요청을 허용 (추가된 부분) 24.07.24
 					.anyRequest().authenticated() // 위에서 따로 지정한 접근허용 리소스 설정 후 그 외 나머지 리소스들은 무조건 인증을 완료해야 접근 가능
 				.and()
 				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 커스텀 필터 등록하며, 기존에 지정된 필터에 앞서 실행

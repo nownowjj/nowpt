@@ -11,10 +11,16 @@ public class SinglePageAppController {
 
     @Value("${spring.profiles.active}") private  String profiles;
 
-    @RequestMapping(value = {"/", "/api/**"})
-    public String index() {
+//    @RequestMapping(value = {"/", "/api/**"})
+//    public String index() {
+//
+//        log.debug("SinglePageAppController 개발 환경 : {}",profiles);
+//        return "index.html";
+//    }
 
-        log.debug("SinglePageAppController 개발 환경 : {}",profiles);
-        return "index.html";
+    @RequestMapping(value = { "/", "/{x:[\\w\\-]+}", "/{x:^(?!api$).*$}/**/{y:[\\w\\-]+}" })
+    public String forward() {
+        log.debug("SPA forward index.html !! profiles : {}",profiles);
+        return "forward:/index.html";
     }
 }

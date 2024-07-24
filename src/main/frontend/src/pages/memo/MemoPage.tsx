@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import MemoItemComponent from "./MemoItemComponent";
 import Base from "../../component/BottomSheet/Base";
