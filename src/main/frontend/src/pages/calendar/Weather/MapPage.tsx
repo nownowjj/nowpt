@@ -5,6 +5,7 @@ import {useConfirm} from "../../../hooks/useConfirm";
 import {useNavigate} from "react-router-dom";
 import MapBox from "./MapBox";
 import LevelBoxComponent from "./LevelBoxComponent";
+import MapSearchBoxComponent from "./MapSearchBoxComponent";
 
 interface WeatherData {
     coord: {
@@ -109,11 +110,22 @@ const MapPage = () => {
     };
     const [level, setLevel] = useState(5);
 
+    //--------------------
+    //--------------------
+
+    const [Keyword, setKeyword] = useState("");
+    const searchCallBack =(searchText:string)=>{
+        setKeyword(searchText);
+    }
+
+
     return (
         <CalendarLayout gnbTitle={"지도"}>
             <MapPageWrap>
+
+                <MapSearchBoxComponent searchCallBack={searchCallBack}/>
                 <LevelBoxComponent level={level} setLevel={setLevel} />
-                {location.loaded ? <MapBox coordinates={location} level={level}/> : 'Loading...'}
+                {location.loaded ? <MapBox coordinates={location} level={level} searchKeyword={Keyword}/> : 'Loading...'}
             </MapPageWrap>
         </CalendarLayout>
     );

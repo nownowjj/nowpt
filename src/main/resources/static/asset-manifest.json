@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.fcee88fc.css",
-    "main.js": "/static/js/main.ac1b1ac8.js",
+    "main.css": "/static/css/main.87728857.css",
+    "main.js": "/static/js/main.d2419e2f.js",
     "static/media/error_2.png": "/static/media/error_2.361a97a2fb9c8d71e592.png",
     "static/media/ggwak-removebg-preview.png": "/static/media/ggwak-removebg-preview.561f958dcd6254ff816d.png",
     "static/media/error_ori.png": "/static/media/error_ori.649e826d503620aaed27.png",
@@ -12,7 +12,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.fcee88fc.css",
-    "static/js/main.ac1b1ac8.js"
+    "static/css/main.87728857.css",
+    "static/js/main.d2419e2f.js"
   ]
 }
