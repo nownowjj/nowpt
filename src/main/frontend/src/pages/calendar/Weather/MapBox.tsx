@@ -2,6 +2,28 @@ import React, {useEffect, useState} from "react";
 import {locationType} from "./MapPage";
 import MapSearchResultComponent from "./MapSearchResultComponent";
 import {markerImgSrc, SearchResultData, SearchResultPagination, SearchResultStatus} from "./map";
+import styled from "styled-components";
+import ReactDOMServer from 'react-dom/server';
+import {useSelector} from "react-redux";
+import {RootState} from "../../../redux/store/store";
+
+interface MarkerInfoProps {
+    title: string;
+}
+const MarkerInfo =({title}:MarkerInfoProps)=>{
+    return(
+        <MarkerInfoWrap>{title}</MarkerInfoWrap>
+    )
+}
+const MarkerInfoWrap = styled.div`
+  //width: 100%;
+  white-space: nowrap;
+  background: black;
+  color: #fff;
+  padding: 10px;
+  height: 100%;
+  text-align: center;
+`
 
 interface placeType {
     place_name: string,
@@ -24,15 +46,6 @@ interface MapBoxProps {
 }
 const { kakao } = window as any;
 
-// export interface SearchResultProps {
-//     data: string|any[];
-//     status:string;
-//     pagination:{
-//         last: number;
-//         current: number;
-//         gotoPage: (arg0: number) => void
-//     }
-// }
 export interface SearchResultProps {
     data: SearchResultData[];
     status:SearchResultStatus;
@@ -40,6 +53,8 @@ export interface SearchResultProps {
 }
 
 const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
+
+
     // 내 위치 마커 찍기
     const setMyPositionMarker=(map:any)=>{
         if(coordinates.loaded){
@@ -68,6 +83,7 @@ const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
     let markers: any[] = [];
 
 
+    const {lat,lng}  = useSelector((state: RootState) => state.map.coordinate);
     const [searchResults,setSearchResults]=useState<SearchResultProps| null>(null);
 
     useEffect(() => {
@@ -80,9 +96,7 @@ const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
             };
             const map = new kakao.maps.Map(container, options);
             // map.setZoomable(false); // 마우스 휠로 지도 확대,축소 가능여부
-
             setMyPositionMarker(map);
-
             //-----------------------------------------------------------------
             //-----------------------------------------------------------------
 
@@ -94,44 +108,36 @@ const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
             }
 
             function searchCallBack(data: SearchResultData[], status: SearchResultStatus, pagination: SearchResultPagination) {
+                console.log(data,status,pagination);
                 setSearchResults({ data, status, pagination });
-
-                // 지도에 표시되고 있는 마커를 제거
-                const bounds = new kakao.maps.LatLngBounds();
-
 
                 removeMarker();
                 for ( var i=0; i<data.length; i++ ) {
-                    // 마커를 생성하고 지도에 표시
                     let placePosition = new kakao.maps.LatLng(data[i].y, data[i].x),
                         marker = addMarker(placePosition, i, undefined);
-                        // itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
+                    if(i==0) moveMapCenter(placePosition);
 
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                    // LatLngBounds 객체에 좌표를 추가
-                    bounds.extend(placePosition);
-
-                    // 마커와 검색결과 항목에 mouseover 했을때
-                    // 해당 장소에 인포윈도우에 장소명을 표시
-                    // mouseout 했을 때는 인포윈도우를 닫기
                     (function(marker, title) {
                         kakao.maps.event.addListener(marker, 'mouseover', function() {
                             displayInfowindow(marker, title);
                         });
-
                         kakao.maps.event.addListener(marker, 'mouseout', function() {
                             infowindow.close();
                         });
-                        //
-                        // itemEl.onmouseover =  function () {
-                        //     displayInfowindow(marker, title);
-                        // };
-                        //
-                        // itemEl.onmouseout =  function () {
-                        //     infowindow.close();
-                        // };
                     })(marker, data[i].place_name);
 
+                }
+            }
+
+            // 중심 좌표 이동
+            function moveMapCenter(placePosition:any){
+                if(lat !== "" && lng !== ""){
+                    console.log(lat,lng);
+                    console.log("선택 장소 이동");
+                    map.setCenter(new kakao.maps.LatLng(lat, lng))
+                }else {
+                    console.log("첫번째 장소 이동");
+                    map.setCenter(placePosition)
                 }
             }
 
@@ -166,15 +172,15 @@ const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
             }
 
 
-            function displayInfowindow(marker: any, title: string) {
-                const content = '<div style="padding:5px;z-index:1;" class="marker-title">' + title + '</div>';
 
+            function displayInfowindow(marker: any, title: string) {
+                const content = ReactDOMServer.renderToString(<MarkerInfo title={title} />);
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
             }
 
         });
-    }, [level,searchKeyword])
+    }, [level,searchKeyword,lat])
 
     return (
         <React.Fragment>

@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {BiSearch} from "react-icons/bi";
+import {useDispatch} from "react-redux";
+import {setCoordinate} from "../../../redux/slice/mapSlice";
 
 interface MapSearchBoxProps {
     searchCallBack : (searchText:string)=>void;
 }
 
 const MapSearchBoxComponent = ({searchCallBack}:MapSearchBoxProps) => {
-
+    const dispatch = useDispatch();
     const [searchText , setSearchText] = useState("");
     const handleChange=(value:any)=>{
         setSearchText(value)
@@ -20,8 +22,8 @@ const MapSearchBoxComponent = ({searchCallBack}:MapSearchBoxProps) => {
             alert("검색어를 입력해 주세요")
             return
         }
+        dispatch(setCoordinate({lat:"",lng:""}));
         searchCallBack(searchText);
-
     }
 
     return (

@@ -9,6 +9,7 @@ import calendarReducer from "../slice/calendarSlice";
 import bottomSheetReducer from "../slice/bottomSheetSlice";
 import memoReducer from "../slice/memoSlice";
 import confirmReducer from "../slice/confirmSlice";
+import mapReducer from "../slice/mapSlice";
 
 
 // useSelector, useDispatch 타입 선언 추가
@@ -23,7 +24,8 @@ const reducers = combineReducers({
     calendar:calendarReducer,
     bottomSheet:bottomSheetReducer,
     memo:memoReducer,
-    confirm:confirmReducer
+    confirm:confirmReducer,
+    map:mapReducer
 })
 
 const persistConfig = {

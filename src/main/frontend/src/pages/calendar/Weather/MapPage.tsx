@@ -109,7 +109,6 @@ const MapPage = () => {
         });
     };
     const [level, setLevel] = useState(5);
-
     //--------------------
     //--------------------
 

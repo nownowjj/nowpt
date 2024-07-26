@@ -12,25 +12,33 @@ interface MapSearchResultProps {
 
 
 const MapSearchResultComponent = ({searchKeyword,searchResults}:MapSearchResultProps) => {
-    console.log(searchResults);
     return (
         <MapSearchResultWrap>
             <SearchKeyword>"<strong>{searchKeyword}</strong>" 검색 결과</SearchKeyword>
             <SearchResultWrap>
-                {(searchResults?.data != null) &&
+                {
+                    (searchResults?.data != null) ?
                     searchResults.data.map((result,index)=>(
                         <SearchItemComponent data={result} index={index+1}/>
-                ))}
+                ))
+                    :
+                        <SearchEmptyWrap>
+                            검색결과가 존재하지 않습니다!
+                        </SearchEmptyWrap>
+                }
             </SearchResultWrap>
 
-            {searchResults?.pagination != null &&
-                <SearchPaginationComponent pagination={searchResults.pagination}/>
+            {
+                <SearchPaginationComponent pagination={searchResults?.pagination}/>
             }
 
         </MapSearchResultWrap>
     );
 };
 
+const SearchEmptyWrap = styled.div`
+  
+`
 const SearchKeyword = styled.div`
     height: 50px;
     border-bottom: 1px solid #e8e8e8;

@@ -13,6 +13,7 @@ const LevelBoxComponent = ({level ,setLevel}:LevelBoxComponentProps) => {
         setLevel(level);
         setView(false); // 레벨 클릭하면 view 닫기
     };
+    console.log("sadsda");
 
     return (
         <LevelBox onClick={()=>setView(!view)}>

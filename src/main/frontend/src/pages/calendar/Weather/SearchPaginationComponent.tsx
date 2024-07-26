@@ -3,13 +3,15 @@ import {SearchResultPagination} from "./map";
 import styled from "styled-components";
 
 interface SearchPaginationProps {
-    pagination: SearchResultPagination;
+    pagination?: SearchResultPagination;
 }
 
 const SearchPaginationComponent = ({pagination}:SearchPaginationProps) => {
     return (
         <SearchPagination>
-            {Array.from({ length: pagination.last }, (_, i) => {
+            {
+                pagination &&
+                Array.from({ length: pagination.last }, (_, i) => {
                 const pageIndex = i + 1;
                 return (
                     <Button
@@ -17,7 +19,9 @@ const SearchPaginationComponent = ({pagination}:SearchPaginationProps) => {
                         className={pageIndex === pagination.current ? 'activeBtn' : ''}
                         onClick={(e) => {
                             e.preventDefault();
-                            pagination.gotoPage(pageIndex);
+                            if ("gotoPage" in pagination) {
+                                pagination.gotoPage(pageIndex);
+                            }
                         }}
                     >
                         {pageIndex}

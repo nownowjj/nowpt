@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import {markerImgSrc, SearchResultData} from "./map";
+import {SearchResultData} from "./map";
+import {useDispatch} from "react-redux";
+import {setCoordinate} from "../../../redux/slice/mapSlice";
 
 
 interface SearchItemProps {
@@ -11,12 +13,13 @@ interface SearchItemProps {
 // x ,
 // y
 const SearchItemComponent = ({data,index}:SearchItemProps) => {
+    const dispatch = useDispatch();
 
     return (
         <SearchItem>
             <PlaceName>
-                <Marker>{index}</Marker>
-                <PlaceNameSub>{data.place_name}</PlaceNameSub>
+                <Marker onClick={()=>dispatch(setCoordinate({lat:data.y, lng:data.x}))}>{index}</Marker>
+                <PlaceNameSub target={"_blank"} href={`${data.place_url}`}>{data.place_name}</PlaceNameSub>
                 <CategoryGroupName>{data.category_group_name}</CategoryGroupName>
             </PlaceName>
             <AddressName>{data.address_name}</AddressName>
@@ -26,7 +29,7 @@ const SearchItemComponent = ({data,index}:SearchItemProps) => {
     );
 };
 
-const PlaceNameSub = styled.span`
+const PlaceNameSub = styled.a`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
