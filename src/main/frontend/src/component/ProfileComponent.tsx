@@ -45,7 +45,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = (data) => {
     if(data.useSrc) imageSrc = data.useSrc;
 
     useEffect(() => {
-        console.log("프로필 변경 감지!?");
+        console.log("프로필 변경 감지  !?");
     }, [userProfile]);
 
     return (
