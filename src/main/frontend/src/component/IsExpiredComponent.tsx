@@ -22,10 +22,10 @@ const IsExpiredComponent = () => {
     }
 
 
-    useEffect(() => {
+    // useEffect(() => {
         dispatch(logoutAction());
         alertFunction(()=> setShowAlert(false),'로그인 정보가 만료 되었습니다<br/>로그인 페이지로 이동합니다')
-    }, []);
+    // }, []);
 
     
     return (

@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import CalendarLayout from "../Layout/CalendarLayout";
 import {useConfirm} from "../../../hooks/useConfirm";
-import {useNavigate} from "react-router-dom";
 import MapBox from "./MapBox";
 import LevelBoxComponent from "./LevelBoxComponent";
 import MapSearchBoxComponent from "./MapSearchBoxComponent";
+import {setMemoLists} from "../../../redux/slice/memoSlice";
 
 interface WeatherData {
     coord: {
@@ -121,7 +121,6 @@ const MapPage = () => {
     return (
         <CalendarLayout gnbTitle={"지도"}>
             <MapPageWrap>
-
                 <MapSearchBoxComponent searchCallBack={searchCallBack}/>
                 <LevelBoxComponent level={level} setLevel={setLevel} />
                 {location.loaded ? <MapBox coordinates={location} level={level} searchKeyword={Keyword}/> : 'Loading...'}

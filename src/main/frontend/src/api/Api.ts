@@ -108,7 +108,7 @@ export async function getData<T, P>(
 }
 
 function apiFailCheck(apiCallFunctionName:string,result:any){
-    if(result.status == "FAILURE") console.log(`[🔴${apiCallFunctionName}🔴] 요청 에러 발생 message : [🔴${result.message}🔴]`);
+    if(result.status === "FAILURE") console.log(`[🔴${apiCallFunctionName}🔴] 요청 에러 발생 message : [🔴${result.message}🔴]`);
 }
 
 

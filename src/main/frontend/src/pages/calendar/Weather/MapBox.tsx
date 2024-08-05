@@ -182,14 +182,29 @@ const MapBox = ({ coordinates,level,searchKeyword }: MapBoxProps) => {
         });
     }, [level,searchKeyword,lat])
 
+    const [open,setOpen] = useState(false);
+
     return (
         <React.Fragment>
             <div style={{width:"100%",height:"calc(100vh - 100px)"}}>
                 <div id="map" style={{ width: "100%", height: "100%" }} ></div>
             </div>
-            <MapSearchResultComponent searchKeyword={searchKeyword} searchResults={searchResults}/>
+
+            <MapResultToggle>
+                {open ?
+                <span onClick={()=>setOpen(false)}>닫기</span> :
+                <span onClick={()=>setOpen(true)}>열기</span>
+            }</MapResultToggle>
+            {open && <MapSearchResultComponent searchKeyword={searchKeyword} searchResults={searchResults}/>}
         </React.Fragment>
     );
 };
+
+const MapResultToggle = styled.div`
+  position: absolute;
+  z-index: 100;
+  top: 13px;
+  right: 43px;
+`
 
 export default MapBox;

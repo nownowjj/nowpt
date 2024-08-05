@@ -5,14 +5,9 @@ import {updateUserProfile} from "../../../api/Api";
 import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
 import defaultImg from "../../../assets/imgUpload.png";
 
-interface FixProps {
-    callback:()=>void;
-}
-
-const ProfileImageFixComponent = ({callback}:FixProps) => {
+const ProfileImageFixComponent = () => {
     const [mainImg, setMainImg] = useState<string>(defaultImg);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [uploadStatus, setUploadStatus] = useState<string>('');
     const {invalidateQueries} = useCustomQueryClient();
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +47,6 @@ const ProfileImageFixComponent = ({callback}:FixProps) => {
 
         if(apiResult) {
             invalidateQueries(['userProfile']);
-            // window.location.reload()
         }
 
     };

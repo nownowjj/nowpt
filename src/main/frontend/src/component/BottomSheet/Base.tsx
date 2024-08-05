@@ -28,7 +28,7 @@ const Base = ({bottomComponent}:BaseInterface) => {
 
     return (
         <>
-            {isDismiss == false &&
+            {isDismiss === false &&
                 <>
                     <BaseDiv onClick={()=> dispatch(setInvisible())}/>
                     <BottomSheet component={bottomComponent}/>

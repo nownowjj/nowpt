@@ -24,7 +24,6 @@ const CalendarMyPage = () => {
     const dispatch = useDispatch();
     const { confirmFunction } = useConfirm();
     Aos.init();
-    const [isChange,setChange] = useState(false);
 
     const [isEdit , setEdit] = useState(false);
 
@@ -32,11 +31,7 @@ const CalendarMyPage = () => {
         staleTime: 60 * 1000, // 1분
     });
 
-    useEffect(() => {
-        console.log('변경 되었음');
-        setChange(false);
-        setEdit(false);
-    }, [isChange]);
+
 
     return (
         <CalendarLayout gnbTitle={"마이페이지"}>
@@ -49,7 +44,7 @@ const CalendarMyPage = () => {
                         <span onClick={()=>setEdit(true)}>프로필 변경</span>
                 }</EditBtn>
                 {isEdit?
-                    <ProfileImageFixComponent callback={()=>setChange(true)}/> :
+                    <ProfileImageFixComponent/> :
                     <ProfileComponent isMy={true} naviUse={false} size={150} />
                 }
             </ProfileWrap>

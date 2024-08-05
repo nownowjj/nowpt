@@ -2,15 +2,6 @@ import React from 'react';
 import styled, {keyframes} from "styled-components";
 import LoadingDotComponent from "./LoadingDotComponent";
 
-const rotation = keyframes`
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-`;
-
 const LoginWaitComponent = () => {
     return (
         <LoginWaitWrap>

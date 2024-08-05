@@ -54,7 +54,7 @@ const MapSearchResultWrap = styled.div`
   max-width: 300px;
   background: #fff;
   bottom: 0;
-  right: 0;
+  left: 0;
   border-left: 1px solid #e8e8e8;
   top: 0;
   overflow: auto;
