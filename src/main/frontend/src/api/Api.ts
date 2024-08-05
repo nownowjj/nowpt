@@ -32,40 +32,57 @@ export interface ApiRequest {
 
 type ApiCallFunction<T, P> = (param: P) => Promise<ApiResponse<T>>;
 
-export const request = <T>(options: ApiRequest) :Promise<ApiResponse<T>> => {
+function checkMethod(method?:string){
+    const dim = window.document.getElementById('dim');
+    if(method){
+        if(dim) {
+            console.log(`check method : ${method} 가려!!!`);
+            dim.classList.add('dimOn');
+        }
+    }else{
+        if(dim){
+            console.log('지워@!@!@!@!@!@');
+            dim.classList.remove('dimOn');
+        }
+    }
+}
+
+export const request = async <T>(options: ApiRequest): Promise<ApiResponse<T>> => {
+    if(options.method !== GET) checkMethod(options.method);
+
     const headers = new Headers({
-        'Content-Type' : 'application/json',
+        'Content-Type': 'application/json',
     })
 
     const token = localStorage.getItem(ACCESS_TOKEN);
     // @ts-ignore
-    if(token) headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
-
-
+    if (token) headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
     const defaults = {headers: headers};
     options = Object.assign({}, defaults, options);
 
     return fetch(options.url, options)
         .then(response =>
             response.json().then(json => {
-                if(!response.ok) {
+                if (!response.ok) {
                     return Promise.reject(json);
                 }
                 return json;
             })
         )
-        .catch(e =>{
+        .catch(e => {
             console.log(e);
             // debugger;
             console.log('에러발생');
 
 
-            if(e.code){
+            if (e.code) {
                 console.log(e);
-                if(e.code === '4444') window.location.replace("/page/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
-            }else{
+                if (e.code === '4444') window.location.replace("/page/isExpired"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}
+            } else {
                 window.location.replace("/isError");
             }
+        }).finally(() => {
+            if(options.method !== GET) checkMethod();
         });
 };
 
@@ -164,3 +181,31 @@ export function naverMovie(search:string) {
         method: GET
     });
 }
+
+
+// 프로필 이미지 변경
+export function updateUserProfile(profileImg:string):Promise<ApiResponse<boolean>> {
+    return request({
+        url: API_BASE + "/common/profile",
+        method: PUT,
+        body: JSON.stringify({profileImg})
+    });
+}
+
+// 프로필 이미지 변경
+export function updateUserAutoProfile(yn:boolean):Promise<ApiResponse<boolean>> {
+    return request({
+        url: API_BASE + "/common/autoProfile",
+        method: PUT,
+        body: JSON.stringify({yn})
+    });
+}
+
+// 프로필 이미지 변경
+export function getUserProfile():Promise<ApiResponse<string>> {
+    return request({
+        url: API_BASE + "/common/profile",
+        method: GET
+    });
+}
+

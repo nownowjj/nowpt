@@ -9,6 +9,7 @@ import DetailStarSubComponent from "./DetailStarSubComponent";
 import {FixParam, NewRecordParam} from "../../../model/CalendarApiModel";
 import {useQueryClient} from "react-query";
 import {getY_m_dDay} from "../../../services/formattingDay";
+import ApiLoadingComponent from "../component/ApiLoadingComponent";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -72,6 +73,7 @@ const CalendarRecordNewOrFixPage = () => {
             return;
         }
 
+
         insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
             .then(response =>{
                 alertFunction(newOrFixRecordSuccess,response.message);
@@ -92,6 +94,7 @@ const CalendarRecordNewOrFixPage = () => {
     }
     return (
         <CalendarWrap>
+            <ApiLoadingComponent/>
             <CalendarRecordNewOrFixWrap>
                 {/* back button*/}
                 <CalendarBack>

@@ -82,17 +82,20 @@ public class OAuthController {
 
 
             // 프로필 이미지 갱신
-            String origin_image = mem.getProfileImage();
-            if(!(origin_image.equals(profile_image))){
-                log.debug("가입된 유저의 프로필이 변경 되었습니다. 새로운 이미지로 변경 합니다.");
-                mem.setProfileImage(profile_image);
-                memRepo.save(mem);
+            log.debug("유저 프로필 자동 변경 여부 : {}",mem.getAutoProfileChange());
+            if(mem.getAutoProfileChange()) {
+                String origin_image = mem.getProfileImage();
+                if (!(origin_image.equals(profile_image))) {
+                    log.debug("가입된 유저의 프로필이 변경 되었습니다. 새로운 이미지로 변경 합니다.");
+                    mem.setProfileImage(profile_image);
+                    memRepo.save(mem);
+                }
             }
 
             // 이미 가입된 유저라 바로 로그인(토큰 발급) 시키면 됨.
-            String token = authService.gettoken(mem.getMembId(),mem.getMembPw(),request.getRemoteAddr(),sns);
-            log.debug("token!! : {}" , (new JwtAuthenticationResponse(token)).getAccessToken());
-            result.put("token",(new JwtAuthenticationResponse(token)));
+            String token = authService.gettoken(mem.getMembId(), mem.getMembPw(), request.getRemoteAddr(), sns);
+            log.debug("token!! : {}", (new JwtAuthenticationResponse(token)).getAccessToken());
+            result.put("token", (new JwtAuthenticationResponse(token)));
 
         } else {
             // 미가입 유저 이므로 가입 시킨 후 , 토큰 발급

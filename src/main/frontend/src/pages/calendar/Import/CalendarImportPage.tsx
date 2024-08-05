@@ -56,6 +56,8 @@ export const ImportWrap =styled.div`
     padding-top: 50px;
     padding-bottom: 50px;
     width:100%;
+    //max-width: 720px;
+    //margin: 0 auto;
 `
 
 export const ObserverArea = styled.p`

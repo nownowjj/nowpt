@@ -2,6 +2,7 @@ import React from 'react';
 import TopGnbComponent from "./TopGnbComponent";
 import CalendarBottomMenu from "./CalendarBottomMenu";
 import ConfirmLayout from "./ConfirmLayout";
+import ApiLoadingComponent from "../component/ApiLoadingComponent";
 
 interface CalendarLayoutInterface {
     children: JSX.Element ;
@@ -22,6 +23,7 @@ const CalendarLayout = ({children  , gnbTitle , gnbSubElement , useBottom=true }
             {gnbTitle && <TopGnbComponent page={gnbTitle} subTitle={gnbSubElement}/>}
             {children}
             {useBottom && <CalendarBottomMenu/>}
+            <ApiLoadingComponent/>
             <ConfirmLayout/>
         </React.Fragment>
     );

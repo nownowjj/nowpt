@@ -93,6 +93,10 @@ public class Member extends Base implements UserDetails{
     @Column(name = "memb_ncm" , length = 30 , unique = true) // 23.06.15 닉네임 추가
     private String membNcm;
 
+    @Column(name = "auto_profile_change", columnDefinition = "NUMBER(1,0) DEFAULT 1")
+    private boolean autoProfileChange; // 이미지 업로드를 뚫은 기념으로 프로필 체인지도 추가 하도록 함. default true
+
+
     //-------------------------------------------------------
     //SecurityConfig
     //-------------------------------------------------------
@@ -134,7 +138,9 @@ public class Member extends Base implements UserDetails{
         return true;
     }
 
-
+    public boolean getAutoProfileChange() {
+        return this.autoProfileChange;
+    }
 //    public Member(){
 //
 //    }

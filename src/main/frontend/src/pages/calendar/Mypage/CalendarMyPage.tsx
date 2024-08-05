@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "aos/dist/aos.css";
 import ProfileComponent from "../../../component/ProfileComponent";
 import styled from "styled-components";
@@ -12,6 +12,8 @@ import CalendarLayout from "../Layout/CalendarLayout";
 import {getData} from "../../../api/Api";
 import {useConfirm} from "../../../hooks/useConfirm";
 import {getFormatDay} from "../../../services/formattingDay";
+import {uploadImage} from "../../../api/ImageApi";
+import ProfileImageFixComponent from "./ProfileImageFixComponent";
 
 
 interface ProfileItemProps{
@@ -20,20 +22,37 @@ interface ProfileItemProps{
 
 const CalendarMyPage = () => {
     const dispatch = useDispatch();
-
     const { confirmFunction } = useConfirm();
-
     Aos.init();
+    const [isChange,setChange] = useState(false);
+
+    const [isEdit , setEdit] = useState(false);
 
     const {data:myInfo , isFetching} = useQuery(['myInfoData'], () => getData(getMyInfoAndRecord,{} ,500 ),{
         staleTime: 60 * 1000, // 1분
     });
 
+    useEffect(() => {
+        console.log('변경 되었음');
+        setChange(false);
+        setEdit(false);
+    }, [isChange]);
+
     return (
         <CalendarLayout gnbTitle={"마이페이지"}>
         <MyPageWrap>
             {/* 프로필 */}
-            <ProfileComponent isMy={true} style={{marginTop:"60px"}} naviUse={false} size={150} />
+            <ProfileWrap>
+                <EditBtn>{
+                    isEdit ?
+                        <span onClick={()=> setEdit(false)}>취소</span> :
+                        <span onClick={()=>setEdit(true)}>프로필 변경</span>
+                }</EditBtn>
+                {isEdit?
+                    <ProfileImageFixComponent callback={()=>setChange(true)}/> :
+                    <ProfileComponent isMy={true} naviUse={false} size={150} />
+                }
+            </ProfileWrap>
             {/* 프로필 */}
 
             {/* 개인정보 */}
@@ -109,11 +128,26 @@ const ProfileItemBox = styled.div`
 const MyPageWrap = styled.div`
     display:flex;
     position:relative;
-    padding:0 10px ;
+    padding:50px 10px 70px;
     width:100%;
     height:fit-content;
     flex-direction:column;
     align-items: center;
-    padding-bottom: 70px;
+    max-width: 720px;
+    margin:0 auto;
 `
+
+const ProfileWrap = styled.div`
+  width: 100%;
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+`
+
+const EditBtn = styled.p`
+  position: absolute;
+  right:20px;
+`
+
 export default CalendarMyPage;

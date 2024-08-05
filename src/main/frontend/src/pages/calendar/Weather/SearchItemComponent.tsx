@@ -18,7 +18,11 @@ const SearchItemComponent = ({data,index}:SearchItemProps) => {
     return (
         <SearchItem>
             <PlaceName>
-                <Marker onClick={()=>dispatch(setCoordinate({lat:data.y, lng:data.x}))}>{index}</Marker>
+                <Marker
+                    onClick={
+                        ()=> dispatch(setCoordinate({lat:data.y, lng:data.x}))
+                    }>{index}
+                </Marker>
                 <PlaceNameSub target={"_blank"} href={`${data.place_url}`}>{data.place_name}</PlaceNameSub>
                 <CategoryGroupName>{data.category_group_name}</CategoryGroupName>
             </PlaceName>

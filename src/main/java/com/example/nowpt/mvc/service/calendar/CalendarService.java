@@ -4,8 +4,10 @@ import com.example.nowpt.mvc.common.CommonUtils;
 import com.example.nowpt.mvc.dto.CalendarDto;
 import com.example.nowpt.mvc.dto.CalendarSmDto;
 import com.example.nowpt.mvc.model.Calendar;
+import com.example.nowpt.mvc.model.Member;
 import com.example.nowpt.mvc.model.Memo;
 import com.example.nowpt.mvc.repository.calendar.CalendarRepo;
+import com.example.nowpt.mvc.repository.member.MemberRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CalendarService {
     private final CalendarRepo calendarRepo;
+    private final MemberRepo memberRepo;
 
     // 기록한 일자 조회
     public List<String> selectRecordDate(String recordDate , long memberSn){

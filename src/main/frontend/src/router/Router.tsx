@@ -22,6 +22,7 @@ import MemoPage from "../pages/memo/MemoPage";
 import MailPage from "../pages/auth/MailPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import AdminMainPage from "../pages/admin/AdminMainPage";
+import ImageUploadTestPage from "../pages/auth/ImageUploadTestPage";
 
 
 const Router = () => {
@@ -41,6 +42,7 @@ const Router = () => {
                 <Route path="/isError" element={<ErrorComponent />} />
 
                 <Route path="/mail" element={<MailPage/>} />
+                <Route path="/image" element={<ImageUploadTestPage/>} />
 
                 <Route element={<PrivateRouteNew />}>
                     <Route path="/go/common/myPage" element={<CalendarMyPage />} />

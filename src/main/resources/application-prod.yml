@@ -20,6 +20,9 @@ naverLogin:
 weather:
   api-key: ${WEATHER_KEY}
 
+imgBB:
+  api-key: ${IMGBB_KEY}
+
 spring:
   mvc:
     pathmatch:
