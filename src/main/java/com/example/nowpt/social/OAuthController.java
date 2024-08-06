@@ -58,20 +58,21 @@ public class OAuthController {
         JsonObject jsonObject = element.getAsJsonObject();
 
         // kakao에서 준 데이터에서 email이 있는지 여부
+        JsonObject kakaoAccount = jsonObject.get("kakao_account").getAsJsonObject();
+        JsonObject properties = jsonObject.get("properties").getAsJsonObject();
         boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
-        // kakao response에 email이 true
+
         String email = "";
         int id = 0;
         String nickname = "";
         String profile_image = "";
 
-        JsonObject properties = jsonObject.get("properties").getAsJsonObject();
 
         if (hasEmail) {
-            email = jsonObject.get("kakao_account").getAsJsonObject().get("email").getAsString() != null ? jsonObject.get("kakao_account").getAsJsonObject().get("email").getAsString() : "";
+            email = kakaoAccount.has("email") ? jsonObject.get("kakao_account").getAsJsonObject().get("email").getAsString() : "";
             id = jsonObject.get("id").getAsInt();
-            nickname = properties.get("nickname").getAsString() != null ? properties.get("nickname").getAsString() : "";
-            profile_image = properties.get("profile_image").getAsString() != null ? properties.get("profile_image").getAsString() : "";
+            nickname =  properties.has("nickname") ? properties.get("nickname").getAsString() : "";
+            profile_image =  properties.has("profile_image") ? properties.get("profile_image").getAsString() : "";
         }
         log.debug("email : {} , id : {} , nickname : {} , profile_image : {}", email, id, nickname, profile_image);
 
