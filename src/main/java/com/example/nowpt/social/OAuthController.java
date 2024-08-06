@@ -8,6 +8,7 @@ import com.example.nowpt.mvc.model.MemberMoney;
 import com.example.nowpt.mvc.repository.member.MemberRepo;
 import com.example.nowpt.mvc.service.AuthService;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,6 +55,7 @@ public class OAuthController {
 
         // 카카오 access_token으로 요청하여
         JsonElement element = oAuthService.createKakaoUser(access_token);
+        JsonObject jsonObject = element.getAsJsonObject();
 
         // kakao에서 준 데이터에서 email이 있는지 여부
         boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
@@ -62,11 +64,14 @@ public class OAuthController {
         int id = 0;
         String nickname = "";
         String profile_image = "";
+
+        JsonObject properties = jsonObject.get("properties").getAsJsonObject();
+
         if (hasEmail) {
-            email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
-            id = element.getAsJsonObject().get("id").getAsInt();
-            nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
-            profile_image = element.getAsJsonObject().get("properties").getAsJsonObject().get("profile_image").getAsString();
+            email = jsonObject.get("kakao_account").getAsJsonObject().get("email").getAsString() != null ? jsonObject.get("kakao_account").getAsJsonObject().get("email").getAsString() : "";
+            id = jsonObject.get("id").getAsInt();
+            nickname = properties.get("nickname").getAsString() != null ? properties.get("nickname").getAsString() : "";
+            profile_image = properties.get("profile_image").getAsString() != null ? properties.get("profile_image").getAsString() : "";
         }
         log.debug("email : {} , id : {} , nickname : {} , profile_image : {}", email, id, nickname, profile_image);
 

@@ -1,5 +1,6 @@
 package com.example.nowpt.social;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Value;
@@ -102,20 +103,24 @@ public class OAuthService{
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            int id = element.getAsJsonObject().get("id").getAsInt();
-            boolean hasEmail = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsBoolean();
-            String email = "";
-            if(hasEmail){
-                email = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
-            }
-            String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
-            String profile_image = element.getAsJsonObject().get("properties").getAsJsonObject().get("profile_image").getAsString();
+//            JsonObject jsonObject = element.getAsJsonObject();
+//
+//            int id = jsonObject.get("id").getAsInt();
+//            JsonObject kakaoAccount = jsonObject.getAsJsonObject("kakao_account");
+//            boolean hasEmail = kakaoAccount.get("has_email").getAsBoolean();
+//
+//            String email = "";
+//            if (hasEmail && kakaoAccount.has("email")) {
+//                email = kakaoAccount.get("email").getAsString();
+//            }
+//            String nickname = element.getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
+//            String profile_image = element.getAsJsonObject().get("properties").getAsJsonObject().get("profile_image").getAsString();
 
 
-            System.out.println("id : " + id);
-            System.out.println("email : " + email);
-            System.out.println("nickname : " + nickname);
-            System.out.println("profile_image : " + profile_image);
+//            System.out.println("id : " + id);
+//            System.out.println("email : " + email);
+//            System.out.println("nickname : " + nickname);
+//            System.out.println("profile_image : " + profile_image);
 
             br.close();
             return element;
