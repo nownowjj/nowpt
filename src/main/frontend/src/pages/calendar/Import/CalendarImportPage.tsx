@@ -28,7 +28,7 @@ const CalendarImportPage = () => {
 
 
     return (
-        <CalendarLayout gnbTitle={"중요한 일정"}>
+        <CalendarLayout gnbTitle={"중요한 일정"} useBottom={false}>
             <ImportWrap>
                 {
                     isLoading ? <DetailLoadingComponent size={4}/> :

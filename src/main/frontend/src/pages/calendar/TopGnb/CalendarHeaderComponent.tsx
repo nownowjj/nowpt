@@ -6,12 +6,13 @@ import {useNavigate} from "react-router-dom";
 import {route} from "../../../services/remocon";
 import {getMyNotificationCount} from "../../../api/NotificationApi";
 import {useQuery} from "react-query";
+import {BiBookmarks} from "react-icons/bi";
 
 interface AnimatedBellWrapInterface {
     redDots:boolean;
 }
 
-const FriendAndNotificationArea = () => {
+const CalendarHeaderComponent = () => {
     const navigate = useNavigate();
     const [isActiveBell , setIsActiveBell] = useState<boolean>(false);
 
@@ -31,22 +32,22 @@ const FriendAndNotificationArea = () => {
         }
     }, [data]);
 
-    // onClick={()=> navigate(route.notification)}
     return (
-        <AnimatedBellWrap  redDots={isActiveBell}>
+        <CalendarHeaderWrap  redDots={isActiveBell}>
             <StyledBsPeopleFill onClick={()=> navigate(route.friend)}/>
             {isActiveBell ? <LuBellRing onClick={()=> navigate(route.notification)} className="vibrating-bell-icon" />:<LuBell onClick={()=> navigate(route.notification)} />}
-        </AnimatedBellWrap>
+            <BiBookmarks onClick={()=>navigate(route.calendarImport)}/>
+        </CalendarHeaderWrap>
     );
 };
 
 const StyledBsPeopleFill = styled(BsPeopleFill)`
-    margin-right: 5px;
+  
     padding-bottom: 3px;
     font-size: 30px;
 `
 
-const AnimatedBellWrap = styled.div<AnimatedBellWrapInterface>`
+const CalendarHeaderWrap = styled.div<AnimatedBellWrapInterface>`
     font-size:28px;
     color:#000000;
     height:100%;
@@ -55,6 +56,7 @@ const AnimatedBellWrap = styled.div<AnimatedBellWrapInterface>`
     align-items: center;
     justify-content: center;
     margin-right: 10px;
+    gap: 7px;
     
     &::before{
         content: '';
@@ -70,4 +72,4 @@ const AnimatedBellWrap = styled.div<AnimatedBellWrapInterface>`
     
 `
 
-export default FriendAndNotificationArea;
+export default CalendarHeaderComponent;

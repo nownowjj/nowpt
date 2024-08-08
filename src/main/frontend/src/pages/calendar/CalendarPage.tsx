@@ -7,7 +7,7 @@ import CalendarHeaderBannerComponent from "./Banner/CalendarHeaderBannerComponen
 import {getMyCalendar, getMySchedule} from "../../api/CalendarApi";
 import {useNavigate} from "react-router-dom";
 import {route} from "../../services/remocon";
-import FriendAndNotificationArea from "./TopGnb/FriendAndNotificationArea";
+import CalendarHeaderComponent from "./TopGnb/CalendarHeaderComponent";
 import styled from "styled-components";
 import {RecordDate, ScheduleDetailType, ScheduleType} from "../../model/CalendarApiModel";
 import {Value} from "react-calendar/src/shared/types";
@@ -20,6 +20,7 @@ import holidaysJsonFile from "../../db/holiday.json"
 import {getFormatDay, getYDay, getYmDay, getYmdDay} from "../../services/formattingDay";
 import {getData} from "../../api/Api";
 import CalendarLayout from "./Layout/CalendarLayout";
+import CalendarUnderComponent from "./component/CalendarUnderComponent";
 
 
 const CalendarPage = () => {
@@ -34,6 +35,7 @@ const CalendarPage = () => {
     // 월이 변경 될 경우
     const handleMonthChange = ({ activeStartDate }: OnArgs) => {
         const date =activeStartDate as Date;
+        console.log(`월 변경! ${getYmdDay(date)}`);
         if(getYDay(selectedDay) !== getYDay(date)){
             dispatch(setYearHolidays({ year: getYDay(date), holidays: holidaysJson[getYDay(date)] }));
         }
@@ -80,8 +82,8 @@ const CalendarPage = () => {
     }
 
     useEffect(() => {
+        console.log("연도 변경됨");
         if(holidaysJson.hasOwnProperty(getYDay(value as Date))){ // 공휴일 json 데이터에 보고 있는 연도 데이터가 존재 하는지 체크
-
             dispatch(setYearHolidays({ year: getYDay(value as Date), holidays: holidaysJson[getYDay(value as Date)] })); //연도와 공휴일 데이터를 넘긴다 , 이미 넘긴 연도라면 함수 종료
         }
     }, [getYDay(value as Date)]);
@@ -92,31 +94,43 @@ const CalendarPage = () => {
                 <CalendarHeaderBannerComponent />
 
                 {/*헤더*/}
-                <div className="header">
+                <CalendarHeader>
+                    {/*<p onClick={handleTodayClick}>오늘</p>*/}
                     <ProfileComponent naviUse={true} size={45} isMy={true}/>
-                    <FriendAndNotificationArea/>
-                </div>
+                    <CalendarHeaderComponent/>
+                </CalendarHeader>
                 {/*헤더*/}
 
                 {/* 캘린더 */}
                 <CalendarLib
                     onClickDay={onClickDay}
-                    formatDay={(locale, date) => getFormatDay(date ,'DD')}
-                    // formatDay={(locale, date) => dayjs(date).format('DD')}
+                    formatDay={(locale, date) => getFormatDay(date ,'D')}
+                    // formatYear={(locale, date) => getFormatDay(date,"YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
+                    formatMonthYear={(locale, date) => getFormatDay(date,"YYYY.MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
                     value={value} // 일자
                     tileContent={tileContent}
-                    showNeighboringMonth={true} // 해당 월 일자만 보여줄지
+                    showNeighboringMonth={false} // 해당 월 일자만 보여줄지
                     onActiveStartDateChange={handleMonthChange} // 월 변경 이벤트
                     calendarType={"gregory"}
                     onChange={onChange}
+                    locale="en"
                 />
             </CalendarWrap>
         </CalendarLayout>
     );
 };
 
+const CalendarHeader = styled.header`
+    display: flex;
+    padding: 0 6px;
+    margin-bottom: 6px;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+`
 
 const CalendarWrap = styled.div`
     width:100%;
+    height: 100vh;
 `
 export default CalendarPage;

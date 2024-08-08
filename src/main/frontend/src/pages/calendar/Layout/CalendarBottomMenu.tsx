@@ -14,18 +14,22 @@ const CalendarBottomMenu = () => {
         <CalendarBottom>
             <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.memo} >
                 <MdArticle style={iconStyle}/>
+                <BottomTitle>메모</BottomTitle>
             </StyledLink>
-            <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendarImport} >
-                <BiBookmarks style={iconStyle}/>
-            </StyledLink>
+            {/*<StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendarImport} >*/}
+            {/*    <BiBookmarks style={iconStyle}/>*/}
+            {/*</StyledLink>*/}
             <StyledLink  className={({ isActive }) => isActive ? 'active' : ''}  to={route.calendar}>
                 <MdOutlineCalendarMonth style={iconStyle}/>
+                <BottomTitle>캘린더</BottomTitle>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : ''}   to={route.myPage} >
                 <MdPerson style={iconStyle}/>
+                <BottomTitle>내정보</BottomTitle>
             </StyledLink>
             <StyledLink className={({ isActive }) => isActive ? 'active' : ''}  to={route.weather}>
                 <FaMapMarkedAlt   style={iconStyle}/>
+                <BottomTitle>지도</BottomTitle>
             </StyledLink>
         </CalendarBottom>
     );
@@ -55,12 +59,16 @@ const StyledLink = styled(NavLink)`
     justify-content: center;
     height: 100%;
     text-decoration: none;
-    color: #00000052;
+    //color: #00000052;
+    color: rgba(0, 0, 0, 0.52);
     flex-direction: column;
     font-size:12px;
     flex:1;
-    
 `;
+
+const BottomTitle = styled.p`
+  //color: gray;
+`
 
 
 export default CalendarBottomMenu;

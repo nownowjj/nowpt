@@ -57,9 +57,6 @@ const DotsComponent = (data:DotsComponentInterface) => {
         }
     }
 
-
-
-
     return (
         <>
             {divs.length >0 && <ScheduleWrap>{divs}</ScheduleWrap>}
@@ -72,16 +69,15 @@ const DotsComponent = (data:DotsComponentInterface) => {
 };
 const Schedule = styled.div<{color:string}>`
     margin-bottom: 1.5px;
-    border-radius: 2px;
     color: white ;
     height: 14px;
     line-height: 14px;
     font-size: 11px;
-    //text-overflow: ellipsis;
-    white-space: nowrap;
+    text-align: center;
+    border-radius: 6px;
+    white-space: break-spaces;
     overflow: hidden;
     background-color: ${({ color }) => color};
-    text-align: left;
 `
 
 const ScheduleWrap = styled.div`

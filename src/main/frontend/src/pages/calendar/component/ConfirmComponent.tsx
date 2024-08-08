@@ -93,7 +93,7 @@ const ConfirmBox = styled.div`
     position:fixed;
     background:white;
     opacity:1 !important;
-    top: 48%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display:flex;

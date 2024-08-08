@@ -45,8 +45,10 @@ const MemoAddComponent = ({ data }: { data: MemoResponseType | null }) => {
         <MemoAddComponentWrap>
             <MemoTop>
                 <MemoTitle name="title" value={memo.title} onChange={handleInputChange} type="text" maxLength={100} placeholder='제목입력'/>
-                {data && <ScheduleButton onClick={()=> upsertMemo(true)}><BiTrash/> </ScheduleButton>}
-                <ScheduleButton onClick={()=> upsertMemo()} style={{marginLeft : "3px"}}> <IoCheckmarkOutline/> </ScheduleButton>
+                <div>
+                    {data && <ScheduleButton onClick={()=> upsertMemo(true)}><BiTrash/> </ScheduleButton>}
+                    <ScheduleButton onClick={()=> upsertMemo()} style={{marginLeft : "3px"}}> <IoCheckmarkOutline/> </ScheduleButton>
+                </div>
             </MemoTop>
             <MemoContent name="content" value={memo.content} onChange={handleInputChange} maxLength={2000} placeholder='내용입력'/>
 
