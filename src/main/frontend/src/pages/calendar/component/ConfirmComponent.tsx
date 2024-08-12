@@ -98,6 +98,10 @@ const ConfirmBox = styled.div`
     transform: translate(-50%, -50%);
     display:flex;
     flex-direction:column;
+
+  @media (min-width: 768px) {
+    width: 480px;
+  };
     
 `
 
@@ -109,9 +113,7 @@ const ConfirmWrap = styled.div`
     position: fixed;
     top:0;
     left:0;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
+
     z-index:1001;
 `
 export default ConfirmComponent;

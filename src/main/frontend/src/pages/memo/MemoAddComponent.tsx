@@ -7,10 +7,8 @@ import {useQueryClient} from "react-query";
 import {useDispatch} from "react-redux";
 import {setInvisible} from "../../redux/slice/bottomSheetSlice";
 import {useConfirm} from "../../hooks/useConfirm";
-import ConfirmComponent from "../calendar/component/ConfirmComponent";
 import AlertComponent from "../calendar/component/AlertComponent";
-import {route} from "../../services/remocon";
-
+import {FlexBox} from "../calendar/component/StyledComponent";
 
 
 const MemoAddComponent = ({ data }: { data: MemoResponseType | null }) => {
@@ -45,10 +43,10 @@ const MemoAddComponent = ({ data }: { data: MemoResponseType | null }) => {
         <MemoAddComponentWrap>
             <MemoTop>
                 <MemoTitle name="title" value={memo.title} onChange={handleInputChange} type="text" maxLength={100} placeholder='제목입력'/>
-                <div>
+                <FlexBox>
                     {data && <ScheduleButton onClick={()=> upsertMemo(true)}><BiTrash/> </ScheduleButton>}
                     <ScheduleButton onClick={()=> upsertMemo()} style={{marginLeft : "3px"}}> <IoCheckmarkOutline/> </ScheduleButton>
-                </div>
+                </FlexBox>
             </MemoTop>
             <MemoContent name="content" value={memo.content} onChange={handleInputChange} maxLength={2000} placeholder='내용입력'/>
 

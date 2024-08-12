@@ -17,20 +17,23 @@ export const useConfirm = () => {
     const okCallBackFn = useSelector((state:RootState) => state.confirm.okCallBackFn);
     const cancelBtnShow = useSelector((state:RootState) => state.confirm.cancelBtnShow);
 
-    const confirmFunction = (okCallBack: () => void, message: string) => {
+    const confirmFunction = (okCallBack: () => void, message: string , isNoCancel = false) => {
+        isNoCancel ? dispatch(isNoShowCancelBtn()) : dispatch(isShowCancelBtn());
+
         dispatch(setOkCallBackFn(okCallBack));
         dispatch(setMessage(message));
         dispatch(isShowConfirm())
+
     };
 
     const handleConfirm = () => {
         okCallBackFn && okCallBackFn(); // 확인 버튼 클릭 시, 콜백 함수를 실행
-        handleClose()
+        handleClose();
     };
 
     const handleClose = () => {
         dispatch(isNoShowConfirm())
-        dispatch(isShowCancelBtn())
+        dispatch(isShowCancelBtn());
     };
 
     const isNotCancelBtn = () => {

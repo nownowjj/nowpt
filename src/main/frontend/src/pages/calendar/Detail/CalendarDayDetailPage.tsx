@@ -32,7 +32,7 @@ const CalendarDayDetailPage = () => {
         setLoadingSize(data.length);
     };
 
-    const {isFetching , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , {"recordDate":detailDay} , 350, loadingCallback), {
+    const {isFetching , data:detail } = useQuery(["getDayDetail"], () => getData(getMyDetailCalendar , {"recordDate":detailDay} , 200, loadingCallback), {
         cacheTime: 0,
     });
 
