@@ -59,6 +59,10 @@ public class CalendarService {
         newCalendar.setContent(calendarDto.getContent());
         newCalendar.setMemberSn(calendarDto.getMemberSn());
         newCalendar.setImportYn(calendarDto.getImportYn());
+        if(calendarDto.getImageUrl() != null){
+            newCalendar.setImageUrl(calendarDto.getImageUrl());
+        }
+
         return calendarRepo.save(newCalendar);
     }
 

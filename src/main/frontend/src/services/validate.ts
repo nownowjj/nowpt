@@ -78,7 +78,7 @@ const validateRecordInsertOrUpdate =(param:NewRecordParam , fixParam:FixParam)=>
     if(title.length <= 1){
         return '제목이 너무 짧아요'
     }
-    if(content.length <= 3){
+    if(content.length <= 1){
         return '내용이 너무 짧아요'
     }
     if(title === titleValue && content === contentValue){

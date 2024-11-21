@@ -16,6 +16,7 @@ export interface NewRecordParam extends RecordDate,ImportParam{
     title: string;
     content: string;
     importYn: boolean;
+    imageUrl ?: string;
 }
 
 export interface FixParam {
@@ -34,6 +35,7 @@ export interface CalendarDto{
     useYn:string;
     importYn:boolean;
     commentCount:number;
+    imageUrl:string;
 }
 
 

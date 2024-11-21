@@ -50,10 +50,15 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
         if (removeRecord) removeRecord(data.calendarSn);
     };
 
+    console.log(data);
     return (
         <DetailContentWrap key={data.calendarSn}>
             <DetailTitle>{data.title}</DetailTitle>
-            <DetailContent>{data.content}</DetailContent>
+            <DetailContent>
+                {data.content}
+            </DetailContent>
+
+            {data.imageUrl ? <DetailImg src={data.imageUrl} /> : ''}
 
             <DetailTimeAndFixDelete>
                 <span style={{marginRight : "5px"}}>{getFormatDay(data.frstRegistDt ,'YYYY.MM.DD HH:mm')}</span>
@@ -91,7 +96,13 @@ const CalendarDetailContentComponent:React.FC<CalendarDetailContentComponentProp
         </DetailContentWrap>
     )
 }
-
+const DetailImg = styled.img`
+  width : 100px;
+  height: 100px;
+  border : 1px solid #e8e8e8;
+  border-radius: 10px;
+  object-fit: cover;
+`
 
 export const DetailContentWrap = styled.div`
     width:100%;

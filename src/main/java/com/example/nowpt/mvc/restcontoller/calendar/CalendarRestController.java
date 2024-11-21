@@ -49,9 +49,6 @@ public class CalendarRestController extends RestControllerBase {
 
     @PostMapping
     public ResponseDto<?> upsertRecord(@RequestBody CalendarDto calendarDto) throws InterruptedException {
-        log.debug("기다려");
-        Thread.sleep(2000);
-        log.debug("응응 기다려");
         calendarDto.setMemberSn(getMemberSn());
         return ResponseUtil.SUCCESS(Cd.POST_SUCCESS, calendarService.upsertRecord(calendarDto));
     }

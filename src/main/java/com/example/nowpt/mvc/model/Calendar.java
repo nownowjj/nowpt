@@ -48,6 +48,9 @@ public class Calendar extends BaseTime {
     @Column(name = "import_yn", columnDefinition = "NUMBER(1,0) DEFAULT 0")
     private boolean importYn;
 
+    @Column(name = "image_url" , length = 200)
+    private String imageUrl;
+
 //    @NotNull
 //    @Builder.Default
 //    @ColumnDefault("false")

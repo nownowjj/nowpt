@@ -11,6 +11,8 @@ import CalendarLayout from "../Layout/CalendarLayout";
 import {FlexBox, InnerWrap} from "../component/StyledComponent";
 import BottomButtonComponent from "../component/BottomButtonComponent";
 import {useConfirm} from "../../../hooks/useConfirm";
+import ImageComponent from "../component/ImageComponent";
+import {uploadImage} from "../../../api/ImageApi";
 
 const CalendarRecordNewOrFixPage = () => {
     const navigate = useNavigate();
@@ -24,6 +26,8 @@ const CalendarRecordNewOrFixPage = () => {
     const [titleValue, setTitleValue] = useState<string>(initialTitle);
     const [contentValue, setContentValue] = useState<string>(initialContent);
     const [importYn, setImportYn] = useState<boolean>(initialImportYn);
+
+    const [imageFile , setImageFile] = useState<File|null>(null);
 
     const {recordDate} = state;
     // 수정 모드 경우에는 validate 추가
@@ -42,23 +46,56 @@ const CalendarRecordNewOrFixPage = () => {
         calendarSn: state.sn && state.sn,
         title: titleValue,
         content: contentValue,
-        importYn: importYn,
+        importYn: importYn
     };
 
-    const newRecordEvent = () => {
-        // api 요청전에 validate 실행 true가 아니라면 return 받은 message를 alert에 띄워줌 callback은 필요하지 않다.
-        const validationResult = validateRecordInsertOrUpdate(param, fixParam);
-        if (validationResult !== true) {
-            confirmFunction(() => {
-            }, validationResult,true);
-            return;
+    const newRecordEvent = async () => {
+
+        try{
+            console.log(imageFile ? '이미지 있음' : '업슨ㄴ데');
+            console.log(imageFile);
+
+            if(imageFile){
+                console.log("1. 이미지 존재함");
+                const formData = new FormData();
+                formData.append('image',imageFile);
+                const result = await uploadImage(formData);
+                console.log("2. 이미지 url 받아옴");
+                param.imageUrl = result;
+            }
+            console.log('엥ㅋㅋㅋ');
+            
+
+            // api 요청전에 validate 실행 true가 아니라면 return 받은 message를 alert에 띄워줌 callback은 필요하지 않다.
+            const validationResult = validateRecordInsertOrUpdate(param, fixParam);
+            if (validationResult !== true) {
+                confirmFunction(() => {}, validationResult,true);
+                return;
+            }
+            console.log(param);
+            // 데이터 전송 API 호출
+            const response = await insertRecord(param);
+            confirmFunction(() => { navigate(-1); }, response.message, true);
+
+            // 캐시 무효화
+            queryClient.invalidateQueries(['myCalendar', recordDate.substring(0, 6)]);
+
+        }catch (e){
+
+            console.log('이벤트 error 발생',e);
         }
 
-        insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
-            .then(response => {
-                confirmFunction(()=>{navigate(-1)}, response.message,true);
-                queryClient.invalidateQueries(['myCalendar', recordDate.substring(0, 6)]) // 일정 새로 등록시에 cache 제거
-            })
+
+
+
+        //
+        // insertRecord(param)  /*param sn의 존재 유무로 Update , Insert 구분*/
+        //     .then(response => {
+        //         confirmFunction(()=>{navigate(-1)}, response.message,true);
+        //         queryClient.invalidateQueries(['myCalendar', recordDate.substring(0, 6)]) // 일정 새로 등록시에 cache 제거
+        //     })
+
+
     }
 
     const changeTitleHandle = (e: React.ChangeEvent<HTMLInputElement>) => setTitleValue(e.target.value);
@@ -85,6 +122,8 @@ const CalendarRecordNewOrFixPage = () => {
                     </FlexBox>
                     <RecordContentTextArea onChange={changeContentHandle} value={contentValue} maxLength={2000} placeholder='내용입력'/>
 
+                    <ImageComponent setImg={setImageFile}/>
+
                     <BottomButtonComponent clickFunction={newRecordEvent} buttonText={isFix ? '수정' : '등록'}/>
 
                 </InnerWrap>
@@ -110,7 +149,7 @@ const RecordTitleInput = styled.input`
 const RecordContentTextArea = styled.textarea`
   width: 100%;
   border-radius: 15px;
-  height: 75%;
+  height: 500px;
   outline: none;
   padding: 5px;
   resize: none;

@@ -32,7 +32,7 @@ export interface ApiRequest {
 
 type ApiCallFunction<T, P> = (param: P) => Promise<ApiResponse<T>>;
 
-function checkMethod(method?:string){
+export function checkMethod(method?:string){
     const dim = window.document.getElementById('dim');
     if(method){
         if(dim) {

@@ -20,6 +20,7 @@ public class CalendarDto {
     private String useYn;
     private boolean importYn;
     private long commentCount;
+    private String imageUrl;
 
     // importYn 필드의 접근자 메서드 정의
     public boolean getImportYn() {

@@ -57,6 +57,7 @@ public class CalendarCustomRepoImpl implements CalendarCustomRepo {
                         qCalendar.lastChangeDt.as("lastChangeDt"),
                         qCalendar.useYn.as("useYn"),
                         qCalendar.importYn.as("importYn"),
+                        qCalendar.imageUrl.as("imageUrl"),
                         ExpressionUtils.as(
                                 JPAExpressions.select(qComment.count())
                                         .from(qComment)
