@@ -16,6 +16,7 @@ import {getData} from "../../../api/Api";
 import {useCustomQueryClient} from "../../../hooks/useCustomQueryClient";
 import CalendarLayout from "../Layout/CalendarLayout";
 import {AiFillEdit} from "react-icons/ai";
+import {JSInterface} from "../../../hooks/JSInterface";
 
 const CalendarDayDetailPage = () => {
     const navigate = useNavigate();
@@ -36,6 +37,9 @@ const CalendarDayDetailPage = () => {
         cacheTime: 0,
     });
 
+    const handleShowToast = () => {
+        JSInterface.showToast('Hello from React!',"3");
+    };
 
 
     // 디테일 페이지에서 삭제 요청 수행
@@ -78,6 +82,7 @@ const CalendarDayDetailPage = () => {
                           :
                             <CalendarDetailNo/>
                     }
+                    <button onClick={()=>handleShowToast()}>ㅁㅇㄴㅁㄴㅇㅁㅇㄴ</button>
                     <CalendarRecordAdd onClick={()=> navigate(route.calendarRecordNewOrFix,{state : {"recordDate" : detailDay} })}>+</CalendarRecordAdd>
                 </CalendarDetail>
             </CalendarDetailWrap>

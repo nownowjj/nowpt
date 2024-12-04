@@ -18,7 +18,7 @@ const Oauth = () => {
                 dispatch(loginAction(response.token.accessToken));
                 localStorage.setItem(ACCESS_TOKEN, response.token.accessToken);
                 console.log(successMessage);
-                navigate("/calendar");
+                navigate("/calendar", { replace: true });
             })
             .catch((error:any) => {
                 alert(error);

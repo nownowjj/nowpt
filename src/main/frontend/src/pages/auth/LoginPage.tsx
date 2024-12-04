@@ -1,16 +1,18 @@
 import styled from 'styled-components'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router";
 import {ACCESS_TOKEN, login} from "../../api/Api";
 import {KAKAO_AUTH_URL, NAVER_AUTH_URL} from "../../api/OauthLoginUrl";
 import '../../styles/style.css'
 import '../../styles/css/loginPage.css'
 import {validateLogin} from "../../services/validate";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginAction} from "../../redux/slice/userSlice";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
 import AlertComponent from "../calendar/component/AlertComponent";
 import {UserLoginInfo} from "../../model/model";
+import {RootState} from "../../redux/store/store";
+import {useCustomQueryClient} from "../../hooks/useCustomQueryClient";
 
 
 const LoginPage = () => {
@@ -18,6 +20,7 @@ const LoginPage = () => {
     const [showAlert , setShowAlert] = useState<boolean>(false);
     const [messageCall, setMessageCall] = useState<string>('');
     const [closeCallBackFn , setCloseCallBackFn] = useState<()=>void>();
+    const useQueryClient = useCustomQueryClient();
 
     const alertFunction =(closeCallBack: ()=> void , message:string)=>{
         setCloseCallBackFn(() => closeCallBack);
@@ -31,6 +34,15 @@ const LoginPage = () => {
         membId: "",
         membPw: "",
     });
+
+    const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);
+    useEffect(() => {
+        useQueryClient.clearCache();
+        if (isLogin) {
+            navigate("/calendar", { replace: true });
+        }
+    }, [isLogin, navigate]);
+
 
     // id, pw input handle event
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

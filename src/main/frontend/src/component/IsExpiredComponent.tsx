@@ -37,7 +37,7 @@ const IsExpiredComponent = () => {
                     onClose={()=> {
                         closeCallBackFn && closeCallBackFn();
                         setShowAlert(false);
-                        navigate(route.login);
+                        navigate(route.login, { replace: true });
                     }}
                 />
             )}
