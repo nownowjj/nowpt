@@ -70,11 +70,6 @@ export const request = async <T>(options: ApiRequest): Promise<ApiResponse<T>> =
             })
         )
         .catch(e => {
-            console.log(e);
-            // debugger;
-            console.log('에러발생');
-
-
             if (e.code) {
                 console.log(e);
                 if (e.code === '4444') window.location.replace("/go/login"); // {msg: '인증에 실패 하였습니다.', code: '4444', data: 'NOT-AUTH'}

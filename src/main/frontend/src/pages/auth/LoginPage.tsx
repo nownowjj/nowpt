@@ -7,7 +7,7 @@ import '../../styles/style.css'
 import '../../styles/css/loginPage.css'
 import {validateLogin} from "../../services/validate";
 import {useDispatch, useSelector} from "react-redux";
-import {loginAction} from "../../redux/slice/userSlice";
+import {loginAction, logoutAction} from "../../redux/slice/userSlice";
 import ApiErrorHandle from "../../services/ApiErrorHandle";
 import AlertComponent from "../calendar/component/AlertComponent";
 import {UserLoginInfo} from "../../model/model";
@@ -37,6 +37,7 @@ const LoginPage = () => {
 
     const isLogin = useSelector((state:RootState) => state.user.isLoggedIn);
     useEffect(() => {
+        dispatch(logoutAction());
         useQueryClient.clearCache();
         if (isLogin) {
             navigate("/calendar", { replace: true });
